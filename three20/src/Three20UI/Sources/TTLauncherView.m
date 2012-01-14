@@ -14,8 +14,6 @@
 // limitations under the License.
 //
 
-#import "LauncherViewEnv.h"
-
 #import "Three20UI/TTLauncherView.h"
 
 // UI

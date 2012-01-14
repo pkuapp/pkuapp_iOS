@@ -11,4 +11,7 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import "Three20UI/TTLauncherView.h"
+    #import "Three20UI/TTLauncherItem.h"
+    #import "Three20UI/TTLauncherViewDelegate.h"
 #endif

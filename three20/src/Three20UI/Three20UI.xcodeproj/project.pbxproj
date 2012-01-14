@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		412EA86D14C1864000D7A5E4 /* LauncherViewEnv.h in Headers */ = {isa = PBXBuildFile; fileRef = 412EA86C14C1864000D7A5E4 /* LauncherViewEnv.h */; };
 		666E18E912945430001C1D97 /* TTSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666E18E712945430001C1D97 /* TTSplitViewController.m */; };
 		666E18F51294543F001C1D97 /* TTSplitViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 666E18F41294543F001C1D97 /* TTSplitViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		66ADC8C91290AC0200855386 /* TTExtensionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ADC8C61290AC0200855386 /* TTExtensionsController.m */; };
@@ -441,7 +440,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		412EA86C14C1864000D7A5E4 /* LauncherViewEnv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LauncherViewEnv.h; path = ../../../PkuApp/iOSOne/LauncherViewEnv.h; sourceTree = "<group>"; };
 		666E18E712945430001C1D97 /* TTSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTSplitViewController.m; path = Sources/TTSplitViewController.m; sourceTree = "<group>"; };
 		666E18F41294543F001C1D97 /* TTSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTSplitViewController.h; path = Headers/TTSplitViewController.h; sourceTree = "<group>"; };
 		66ADC8C61290AC0200855386 /* TTExtensionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTExtensionsController.m; path = Sources/TTExtensionsController.m; sourceTree = "<group>"; };
@@ -1591,7 +1589,6 @@
 		6E64583E1184E26500F08CB1 /* Launcher */ = {
 			isa = PBXGroup;
 			children = (
-				412EA86C14C1864000D7A5E4 /* LauncherViewEnv.h */,
 				6DB1E37C13CA885B00A72466 /* TTLauncherPersistenceMode.h */,
 				6E6454D61184D4C500F08CB1 /* TTLauncherView.h */,
 				6E6456121184D4DA00F08CB1 /* TTLauncherView.m */,
@@ -1895,7 +1892,6 @@
 				6DD20D35141D0C1B00916A4A /* TTTableSettingsItem.h in Headers */,
 				6DD20D3B141D0C4800916A4A /* TTTableSettingsItemCell.h in Headers */,
 				6D31FEDB14312683006C6B7F /* TTTableSection.h in Headers */,
-				412EA86D14C1864000D7A5E4 /* LauncherViewEnv.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

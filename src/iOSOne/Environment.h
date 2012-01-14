@@ -6,6 +6,8 @@
  *  Copyright 2011 __MyCompanyName__. All rights reserved.
  *
  */
+
+
 #define urlImgDean @"http://dean.pku.edu.cn/student/yanzheng.php?act=init"
 #define urlLogin @"http://www.pkucada.org:8082/Server/login"
 
