@@ -1,0 +1,12 @@
+h1, p {
+    font: 14px/1.5 sans-serif;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+p {
+    padding-left: 1em;
+}
