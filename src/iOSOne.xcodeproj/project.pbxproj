@@ -647,7 +647,6 @@
 		41D0121614C0443B00FE6D3F /* 256-box2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-box2@2x.png"; sourceTree = "<group>"; };
 		41D0121714C0443B00FE6D3F /* 265-download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "265-download.png"; sourceTree = "<group>"; };
 		41D0121814C0443B00FE6D3F /* 265-download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "265-download@2x.png"; sourceTree = "<group>"; };
-		41D0122514C050AB00FE6D3F /* README.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = README.h; sourceTree = SOURCE_ROOT; };
 		41D1068113AFCD85006E2D10 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41D368ED13CCA09F00789429 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		41D368EE13CCA09F00789429 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
@@ -861,7 +860,6 @@
 				320B6C86F11D9990244A9730 /* Three20.bundle */,
 				414AEA7914765C51007292B2 /* Default@2x.png */,
 				414AEA7714765C4C007292B2 /* Default.png */,
-				41D0122514C050AB00FE6D3F /* README.h */,
 				41D0120F14C0443B00FE6D3F /* 96-book.png */,
 				41D0121014C0443B00FE6D3F /* 96-book@2x.png */,
 				41D0121114C0443B00FE6D3F /* 179-notepad.png */,
