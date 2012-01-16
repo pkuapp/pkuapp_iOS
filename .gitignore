@@ -1,4 +1,4 @@
-.DS_Store
+.DS_Store*
 build
 Build
 Products
@@ -8,6 +8,4 @@ Products
 *.xcworkspace
 xcuserdata
 *.xcworkspacedata
-.DS_Store
-
 *.pyc
