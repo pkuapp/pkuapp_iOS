@@ -254,6 +254,7 @@
 						<string key="NSFrame">{{0, 200}, {320, 216}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:418</string>
 						<reference key="IBUIBackgroundColor" ref="656270776"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -270,7 +271,7 @@
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
+				<reference key="NSNextKeyView" ref="158518071"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">2</int>
 					<bytes key="NSRGB">MC45MDE5NjA4NDk4IDAuOTI5NDExODI4NSAwLjk0OTAxOTY3MDUAA</bytes>
@@ -543,7 +544,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">53</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -555,11 +556,11 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>navToCoursesView:</string>
-							<string>queryClassroom</string>
-							<string>switchToCanlendar</string>
+							<string>navToCanlendar</string>
+							<string>navToClassroom</string>
+							<string>navToCoursesView</string>
+							<string>navToGateView</string>
 							<string>testTableView:</string>
-							<string>toIpView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -574,32 +575,32 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>navToCoursesView:</string>
-							<string>queryClassroom</string>
-							<string>switchToCanlendar</string>
+							<string>navToCanlendar</string>
+							<string>navToClassroom</string>
+							<string>navToCoursesView</string>
+							<string>navToGateView</string>
 							<string>testTableView:</string>
-							<string>toIpView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">navToCoursesView:</string>
+								<string key="name">navToCanlendar</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">queryClassroom</string>
+								<string key="name">navToClassroom</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">switchToCanlendar</string>
+								<string key="name">navToCoursesView</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">navToGateView</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">testTableView:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">toIpView</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

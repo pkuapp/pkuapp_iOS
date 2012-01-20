@@ -22,7 +22,7 @@
 {
     for (int i = 0; i < 12 ; i++) {
     float start = [Course starthourForClass:i+1];
-    CGRect tagFrame = CGRectMake(widthHourTag, heightOffset + start*heightHour, widthClassTag, heightClassTag);
+    CGRect tagFrame = CGRectMake(wHourTag, heightOffset + start*hHour, wClassTag, hClassTag);
     UILabel *tagLabel = [[UILabel alloc] initWithFrame:tagFrame];
     tagLabel.textAlignment = UITextAlignmentCenter;
     tagLabel.text = [NSString stringWithFormat:@"%d",i+1];
@@ -50,43 +50,57 @@
     float x = widthOffsetDayView;
     float y = heightOffset;
     const CGFloat  patterns[1] = {1};
-    for (int i = 0;i < 25 ; i++, y += heightHour) {
-        CGContextSetRGBFillColor(context, 145/255, 145/255, 145/255, 1.0);
+    for (int i = 0;i < 25 ; i++, y += hHour) {
+        
+        CGContextSetRGBFillColor(context, 145/255.0, 145/255.0, 145/255.0, 0.25);
         CGContextSetLineDash(context, 0, NULL, 0);
         CGContextMoveToPoint(context, x, y);
         CGContextAddLineToPoint(context, widthTotal, y);
         CGContextStrokePath(context);
         
-        CGContextMoveToPoint(context, x, y+heightHour/2.0);
-        CGContextAddLineToPoint(context, widthTotal, y+heightHour/2.0);
+        CGContextMoveToPoint(context, x, y + hHour/2.0);
+        CGContextAddLineToPoint(context, widthTotal, y+hHour/2.0);
         
         CGContextSetLineDash(context, 0, patterns, 1);
         CGContextStrokePath(context);
         
-        
-        [[NSString stringWithFormat:@"%d:00",i] drawInRect:CGRectMake(0.0, y-sizeFontHourTag/2.0, widthHourTag, 24) withFont:fontHourTag lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentRight];
+        CGContextSetRGBFillColor(context, 0/255, 0/255, 0/255, 0.25);
+        [[NSString stringWithFormat:@"%d:00",i] drawInRect:CGRectMake(0.0, y-fontHourTag.pointSize/2.0, wAxis, 24) withFont:day_font_hourTag lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentCenter];
         //int length = [[NSString stringWithFormat:@"%d:00",i] length];
         //CGContextShowTextAtPoint(context, 5.0, y + sizeFont / 2,kstring ,length);
         
     }
     
-    const CGFloat *colorTagComp = CGColorGetComponents([colorClassTag CGColor]);
-    const CGFloat *colorTagBgComp = CGColorGetComponents([colorClassTaBg CGColor]);
+//    const CGFloat *colorTagComp = CGColorGetComponents([colorClassTag CGColor]);
     
-    CGContextSetRGBFillColor(context, colorTagBgComp[0], colorTagBgComp[1], colorTagBgComp[2], 1.0);
-    CGContextFillRect(context, CGRectMake(widthHourTag, 0, widthClassTag, heightTotal));
-    CGContextSetRGBFillColor(context, colorTagComp[0], colorTagComp[1], colorTagComp[2], 1.0);
-    for (int i = 0; i < 12; i ++) {
-        float start = [Course starthourForClass:i+1];
-        CGRect tagFrame = CGRectMake(widthHourTag, heightOffset + start*heightHour, widthClassTag, heightClassTag);
-        CGContextFillRect(context,tagFrame);
-        }
+//    const CGFloat *colorTagBgComp = CGColorGetComponents([colorClassTaBg CGColor]);
+    
+//    CGContextSetRGBFillColor(context, colorTagBgComp[0], colorTagBgComp[1], colorTagBgComp[2], 1.0);
+    
+//    CGContextFillRect(context, CGRectMake(wHourTag+1, 0, wClassTag, heightTotal));
+    CGContextMoveToPoint(context, wAxis, 0);
+    CGContextAddLineToPoint(context, wAxis, heightTotal);
+    
+    CGContextSetLineDash(context, 0, patterns, 1);
+    CGContextStrokePath(context);
+    
+//    CGContextSetRGBFillColor(context, colorTagComp[0], colorTagComp[1], colorTagComp[2], 1.0);
+    
+//    for (int i = 0; i < 12; i ++) {
+//        
+//        float start = [Course starthourForClass:i+1];
+//        
+//        CGRect tagFrame = CGRectMake(wHourTag+1, heightOffset + start*hHour, wClassTag, hClassTag);
+//        
+//        CGContextFillRect(context,tagFrame);
+//        
+//        }
     /*CGContextSetRGBFillColor(context, 0.5, 1.0, 1.0, 1.0);
      
      for (int i ; i < 12; i++) {
      float start =  [Course starthourForClass:i+1];
      NSString *tag = [NSString stringWithFormat:@"%d",i+1];
-     [tag drawInRect:CGRectMake(widthHourTag, heightOffset + start*heightHour, widthClassTag, heightClassTag) withFont:fontHourTag lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentCenter];
+     [tag drawInRect:CGRectMake(widthHourTag, heightOffset + start*heightHour, wClassTag, hClassTag) withFont:fontHourTag lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentCenter];
      
      }*/
 }
@@ -183,17 +197,6 @@
 
 - (void)drawInWeekContext:(CGContextRef)context
 {
-    /*
-    CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
-    
-    CGContextSelectFont(context, "Helvetica", 7.0, kCGEncodingMacRoman);
-    CGContextSetTextDrawingMode(context, kCGTextFill);
-    CGContextSetTextMatrix(context, CGAffineTransformMakeScale(1.0, -1.0));
-    CGContextSetLineWidth(context, 0.3);
-    CGContextShowTextAtPoint(context,3.0,10.0,[self.EventName UTF8String], 7);
-    */
-    
-    
     CGContextSetRGBFillColor(context,1.0 , 1.0, 1.0, 1.0);
     CGRect frame = CGRectMake( 5,5 , self.bounds.size.width-10, self.bounds.size.height-10);
     [self.EventName drawInRect:frame withFont:fontTitleWeek lineBreakMode:UILineBreakModeWordWrap];
@@ -202,26 +205,39 @@
 - (void)drawInDayContext:(CGContextRef)context
 {
     CGPoint titlePoint,subtitlePoint;
+    
     float titleWidth;
+    
     CGContextSetRGBFillColor(context,1.0 , 1.0, 1.0, 1.0);
-    float lineWidthOffset = 0;
-    if (self.viewType == EventViewCourse) {
-        lineWidthOffset = widthClassTag;
-    }
-    titlePoint = CGPointMake(5+lineWidthOffset,5);
-    titleWidth = self.bounds.size.width - lineWidthOffset -10;
-    subtitlePoint = CGPointMake(5+lineWidthOffset, 5+18);
-    float fulltitleWidth = [self.EventName sizeWithFont:fontTitle].width;
+    
+//    float lineWidthOffset = 0;
+    
+//    if (self.viewType == EventViewCourse) {
+//        
+//        lineWidthOffset = wClassTag;
+//        
+//    }
+    
+    titlePoint = CGPointMake(5,5);
+    
+    titleWidth = self.bounds.size.width -10;
+    
+    subtitlePoint = CGPointMake(5, 5+18);
+    
+    float fulltitleWidth = [self.EventName sizeWithFont:day_font_title].width;
+    
     if (fulltitleWidth > titleWidth) {
-        //rangeString = NSString stringWithFormat:@"{%d,%d}",widthTotal / sizeFont -1,NSString
-        //NSRangeFromString(@"");
+  
         NSInteger index = self.EventName.length * titleWidth/fulltitleWidth -2;
+        
         if (index > 0) {
             self.EventName = [[self.EventName substringToIndex:index] stringByAppendingFormat:@"..."];   
         }
     }
-    [self.EventName drawAtPoint:titlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
-    [self.stringLocation drawAtPoint:subtitlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
+    
+//    [self.EventName drawAtPoint:titlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
+    
+    [self.stringLocation drawAtPoint:subtitlePoint forWidth:titleWidth withFont:day_font_sub lineBreakMode:UILineBreakModeWordWrap];
     
 }
 
@@ -229,6 +245,7 @@
 
 {
     if (self.groundType == CalendarGroundTypeDay) {
+        
         [self drawInDayContext:UIGraphicsGetCurrentContext()];
     }
     else if (self.groundType == CalendarGroundTypeWeek)
@@ -246,7 +263,7 @@
     NSString *location = [dict objectForKey:@"place"];
     
     if (thegroundType == CalendarGroundTypeWeek) {
-        CGRect  frame = CGRectMake(widthHourTag+ widthOffset + (day-1)*widthColumn ,heightOffset + start * heightHour, widthColumn,heightHour * (end - start));
+        CGRect  frame = CGRectMake(wHourTag + (day-1)*widthColumn ,heightOffset + start * hHour, widthColumn,hHour * (end - start));
         self = [self initWithFrame:frame];
 
     }
@@ -276,6 +293,7 @@
     if (thegroundType == CalendarGroundTypeDay) {
     
     float start = [self floatHourForDate:event.startDate inDate:date];
+        
     float end = [self floatHourForDate:event.endDate inDate:date];
     
     NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
@@ -283,13 +301,17 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil];
         
     return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
+        
     }
     else if (thegroundType == CalendarGroundTypeWeek){
         if ([event.endDate timeIntervalSinceDate:event.startDate] < 86400) {
+            
             float start = [self floatHourForDate:event.startDate inDate:date];
+            
             float end = [self floatHourForDate:event.endDate inDate:date];
 
             NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+            
             NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil];
             
             return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
@@ -302,54 +324,102 @@
 - (void)setupForDayDisplay
 {
     float width = widthNormalDayView * weight;
-    float offset;
-    if (self.xIndent == 0 && self.viewType == EventViewCourse) {
-        offset = widthOffsetDayView - widthClassTag;
-    }
-    else offset = widthOffsetDayView;
     
-    [self setFrame:CGRectMake(offset + xIndent*width+1 ,heightOffset+self.startHour*heightHour, width-2, heightHour*(self.endHour-startHour))];
-    self.layer.cornerRadius = 6.0;
+    [self setFrame:CGRectMake(wAxis + xIndent*width+1 ,heightOffset+self.startHour*hHour, width-2, hHour*(self.endHour-startHour))];
+    
+//    self.layer.cornerRadius = 6.0;
+    
     self.layer.masksToBounds = YES;
+    
     self.layer.borderWidth = 1.0;
     
     self.clearsContextBeforeDrawing = YES;
+    
        if (self.viewType == EventViewCourse) {
-        self.layer.borderColor = colorCourseBorder;
-        self.backgroundColor = colorCourseBg;
 
-        UIButton *buttonDiz = [UIButton buttonWithType:UIButtonTypeCustom];
+           self.layer.borderColor = colorCourseBorder;
+
+           self.backgroundColor = colorCourseBg;
+           
+
+           UIButton *buttonDiz = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        UIButton *buttonAssign = [UIButton buttonWithType:UIButtonTypeCustom];
+           UIButton *buttonAssign = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        [buttonDiz setFrame:CGRectMake(widthClassTag+5, self.bounds.size.height-heightButton-5, widthButton, heightButton)];
+           [buttonDiz setImage:[UIImage imageNamed:@"discuss.png"] forState:UIControlStateNormal];
+           
+           [buttonAssign setImage:[UIImage imageNamed:@"assignment.png"] forState:UIControlStateNormal];
+           //a fix for image offset
+           
+           float wbound = self.bounds.size.width;
+           
+           float ybound = self.bounds.size.height;
+           
+           float xBtnDiz = wbound - btn_size - btn_padding_right;
+           
+           float xBtnAssign = xBtnDiz - btn_size - btn_padding_right;
+           
+           [buttonDiz setFrame:CGRectMake(xBtnDiz, ybound - btn_padding_bottom - btn_size, btn_size, btn_size)];
+           
+           buttonDiz.layer.opacity = btn_opacity_inactive;
+           
+           [buttonAssign setFrame:CGRectMake(xBtnAssign, ybound - btn_padding_bottom - btn_size, btn_size, btn_size)];
         
-        [buttonAssign setFrame:CGRectMake(widthClassTag+5+widthButton, self.bounds.size.height-heightButton-5, widthButton, heightButton)];
-        
-        buttonDiz.layer.cornerRadius = radius;
-        buttonAssign.layer.cornerRadius = radius;
-        buttonDiz.layer.borderColor = colorCourseBorder;
-        buttonDiz.backgroundColor = colorCourseBg;
-        buttonAssign.layer.borderColor = colorCourseBorder;
-        buttonAssign.backgroundColor = colorCourseBg;
-        buttonAssign.titleLabel.font = fontTitle;
-        buttonDiz.titleLabel.font = fontTitle;
-        
-        buttonDiz.layer.borderWidth = 1.0;
-        buttonAssign.layer.borderWidth = 1.0;
-        
-        [buttonAssign addTarget:self action:@selector(didHitDizButtonInEventView:) forControlEvents:UIControlEventTouchUpInside];
+           buttonAssign.layer.opacity = btn_opacity_active;
+           
+           buttonAssign.imageEdgeInsets = UIEdgeInsetsMake(2, 0, -2, 0);
+
+//        buttonDiz.layer.cornerRadius = radius;
+//        buttonAssign.layer.cornerRadius = radius;
+//        buttonDiz.layer.borderColor = colorCourseBorder;
+//        buttonDiz.backgroundColor = colorCourseBg;
+//        buttonAssign.layer.borderColor = colorCourseBorder;
+//        buttonAssign.backgroundColor = colorCourseBg;
+//        buttonAssign.titleLabel.font = fontTitle;
+//        buttonDiz.titleLabel.font = fontTitle;
+//        
+//        buttonDiz.layer.borderWidth = 1.0;
+//        buttonAssign.layer.borderWidth = 1.0;
+//        
+           [buttonAssign addTarget:self action:@selector(didHitDizButtonInEventView:) forControlEvents:UIControlEventTouchUpInside];
         
         //buttonAssign.highlighted = YES;
         
-        [buttonDiz setTitle:@"讨论" forState:UIControlStateNormal];
-        [buttonAssign setTitle:@"作业" forState:UIControlStateNormal];
-        [self addSubview:buttonAssign];
-        [self addSubview:buttonDiz];
+           [buttonDiz setTitle:@"讨论" forState:UIControlStateNormal];
+           
+           [buttonAssign setTitle:@"作业" forState:UIControlStateNormal];
+           
+           [self addSubview:buttonAssign];
+            
+           [self addSubview:buttonDiz];
+           
+           // handle title display
+           
+           UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.bounds.size.width - 10, 21)];
+           
+           titleLabel.textAlignment = UITextAlignmentLeft;
+           
+           titleLabel.text = self.EventName;
+           
+           titleLabel.adjustsFontSizeToFitWidth = NO;
+           
+           titleLabel.font = day_font_title;
+           
+           titleLabel.textColor = [UIColor whiteColor];
+           
+           titleLabel.backgroundColor = [UIColor clearColor];
+           
+           titleLabel.shadowColor = colorEventTitleShadow;
+           
+           titleLabel.shadowOffset = CGSizeMake(0, -1);
+           
+           [self addSubview:titleLabel];
     }
     else {
         self.layer.borderColor = colorLocalBorder;
+        
         self.backgroundColor = colorLocalBg;
+        
         [self addTarget:self action:@selector(didSelectSelfView) forControlEvents:UIControlEventTouchUpInside];
     }
 }
@@ -358,7 +428,7 @@
     self.layer.masksToBounds = YES;
     self.layer.borderWidth = 1.0;
     float width = widthNormalWeekView * weight;
-    [self setFrame:CGRectMake((self.numDay-1)*widthNormalWeekView +widthOffsetWeekView + xIndent*width ,heightOffset+self.startHour*heightHour, width, heightHour*(self.endHour-startHour))];
+    [self setFrame:CGRectMake((self.numDay-1)*widthNormalWeekView + wAxis + xIndent*width ,heightOffset+self.startHour*hHour, width, hHour*(self.endHour-startHour))];
     if (self.viewType == EventViewCourse) {
         self.layer.borderColor = colorCourseBorder;
         self.backgroundColor = colorCourseBg;

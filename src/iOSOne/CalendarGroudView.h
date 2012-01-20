@@ -13,46 +13,74 @@
 @class EKEvent;
 #pragma mark - appearance params
 
-#define heightHour 48.0
-#define widthHourTag 35
-#define heightWeekNumber 20.0
+#define radius 5.0
+//define width
+#define padding_right 10
+#define widthTotal 320
+#define widthButton 60
+#define wAxis 46
+
+
+//define height
+#define hHour 48.0
 #define heightOffset 24.0
-#define widthOffset 5.0
-#define widthColumn   (320.0 - widthHourTag) / 7
+#define heightWeekNumber 20.0
+#define yOffsetAboveBottom 5
+#define heightTotal (24 * hHour + heightOffset *2)
+#define heightButton 30
 
-#define heightTotal   (24 * heightHour + heightOffset *2)
-#define widthTotal   (widthColumn *7 + widthHourTag)
-
-#define sizeFont 14.0
-#define colorCourseBorder [UIColorFromRGB(0x3265B2) CGColor]
-#define colorCourseBg UIColorFromRGB(0x3886CF)
+//color
+#define colorCourseBorder [[UIColor colorWithRed:0 green:28/255.0 blue:62/255.0 alpha:0.85] CGColor]
+#define colorCourseBg [UIColor colorWithRed:0 green:73/255.0 blue:164/255.0 alpha:0.85]
 
 #define colorLocalBorder [UIColorFromRGB(0x7A52BA) CGColor]
 #define colorLocalBg UIColorFromRGB(0x9581E3)
 
-#define fontNameHourTag @"HelveticaNeue-Bold" //Neue-CondensedBold
+//font
+#define fsizeM 14
+#define fsizeS 12
+#define fontNameHourTag @"HelveticaNeue-Bold"
 #define fontNameClassTag @"HelveticaNeue-Bold"
 #define fontTitle [UIFont fontWithName:@"Helvetica-Bold" size:12]
-#define sizeFontHourTag 10
-#define fontHourTag [UIFont fontWithName:fontNameHourTag size:sizeFontHourTag]
-//define For DayView
-#define heightClassTag (heightHour * 5/6.0)
-#define widthClassTag 14
+#define fontHourTag [UIFont fontWithName:fontNameHourTag size:10]
+/////////////////////////////////////////////////
+//setup DayView specially
+#define btn_size 24
+#define btn_opacity_active 0.8
+#define btn_opacity_inactive 0.05
+//height
+#define hClassTag (hHour * 5/6.0)
+#define btn_padding_bottom 4
+//width
+#define wClassTag 14
+#define wHourTag wAxis - wClassTag
+#define btn_padding_right 4
+
+//color
 #define colorClassTag UIColorFromRGB(0xC8E8FA)
 #define colorClassTaBg UIColorFromRGB(0xE0F4FF)
-#define widthOffsetDayView  widthHourTag + widthClassTag
+#define colorEventBg [UIColor colorWithRed:0 green:73/255.0 blue:164/255.0 alpha:0.85]
+#define colorEventTitleShadow colorEventBg
+
+#define widthOffsetDayView  wHourTag + wClassTag
 #define widthNormalDayView  (320.0 - widthOffsetDayView-14)
+//font
+#define day_font_title [UIFont fontWithName:@"Helvetica Neue" size:fsizeM]
+#define day_font_sub [UIFont fontWithName:@"Helvetica Neue" size:fsizeS]
+#define day_font_hourTag [UIFont fontWithName:@"Helvetica Neue" size:fsizeS]
+/////////////////////////////////////////////////
 
-//define For WeekView
-#define widthNormalWeekView (320.0 - widthHourTag) / 7
-#define widthOffsetWeekView widthHourTag + widthClassTag
-#define fontTitleWeek [UIFont fontWithName:@"Helvetica-Bold" size:10]
+//setup WeekView specially
+#define widthColumn   (320.0 - wAxis - padding_right) / 7
 
-//定义课程按钮外观
-#define yOffsetAboveBottom 5
-#define widthButton 60
-#define heightButton 30
-#define radius 5.0
+//width
+
+#define widthNormalWeekView (320.0 - wAxis - padding_right) / 7
+
+//font 
+#define fontTitleWeek [UIFont fontWithName:@"Helvetica-Bold" size:fsizeS]
+
+
 
 typedef enum{
     CalendarGroundTypeDay,

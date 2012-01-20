@@ -310,7 +310,7 @@
         NSLog(@"FetchError: %@", [error localizedDescription]);
 	[fetchRequest release];
 	[sortDescriptor release];
-    NSLog(@"%d",[self.results.fetchedObjects count] );
+//    NSLog(@"%d",[self.results.fetchedObjects count] );
 }
 
 
@@ -392,7 +392,7 @@
                                 [[TTLauncherItem alloc] initWithTitle:@"教室" image:@"bundle://rooms.png" URL:@"main/rooms"],
                                 [[TTLauncherItem alloc] initWithTitle:@"日程" image:@"bundle://calendar.png" URL:@"main/calendar"],[[TTLauncherItem alloc] initWithTitle:@"课程" image:@"bundle://courses.png" URL:@"main/courses"],[[TTLauncherItem alloc] initWithTitle:@"新鲜事" image:@"bundle://feed.png" URL:@"main/room"],[[TTLauncherItem alloc] initWithTitle:@"活动" image:@"bundle://events.png" URL:@"main/events"], nil]
                                , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
-    [self.view insertSubview:self.launcherView atIndex:2];
+    [self.view insertSubview:self.launcherView belowSubview:self.tableView];
 
 }
 
