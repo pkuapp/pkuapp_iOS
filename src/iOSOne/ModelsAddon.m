@@ -57,25 +57,54 @@
     return code;
 }
 
-- (NSDictionary *)dictStartEndHourForIntCode:(NSInteger)code inday:(NSInteger)day inWeek:(NSInteger)weeknumber
-{
++ (DayVector)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day {
+    
+    DayVector vector;
+    
+    vector.startclass = -1;
     
     if (!code) {
-        return nil;
+        return vector;
     }
-    int doubleornot = weeknumber % 2;
-    if ((256 & code) > 0 && doubleornot) {
-        return nil;
-    }
-    else if (512 & code && !doubleornot) return nil;
     
-    NSMutableDictionary* tempDict = [[[NSMutableDictionary alloc] init] autorelease];
+    if ((256 & code) > 0) {
+        vector.doubleType = doubleTypeSingle;
+    }
+    else if (512 & code) vector.doubleType = doubleTypeDouble;
+    else vector.doubleType = doubleTypeBoth;
+    
     NSInteger startclass = 15 & code;
+    
     NSInteger endclass = (240 & code) / 16;
     
+    vector.day = day;
     
-    float startHour = [Course starthourForClass:startclass];
-    float endHour = [Course starthourForClass:endclass] + 5.0 / 6.0;
+    vector.startclass = startclass;
+    
+    vector.endclass = endclass;
+    
+    return vector;
+}
+
+- (NSDictionary *)dictStartEndHourForIntCode:(NSInteger)code inday:(NSInteger)day inWeek:(NSInteger)weeknumber
+{
+    int singleWeek = weeknumber % 2;
+    
+    DayVector vector = [Course dayVectorForIntCode:code inday:day];
+    
+    if (vector.startclass == -1) {
+        return nil;
+    }
+    
+    if (singleWeek && vector.doubleType == doubleTypeDouble) {
+        return nil;
+    }
+    else if (!singleWeek && vector.doubleType == doubleTypeSingle) return nil;
+        
+    NSMutableDictionary* tempDict = [[[NSMutableDictionary alloc] init] autorelease];
+    
+    float startHour = [Course starthourForClass:vector.startclass];
+    float endHour = [Course starthourForClass:vector.endclass] + 5.0 / 6.0;
     
     // NSLog(@"%d--%d:%f--%d:%f",code,startclass,startHour,endclass,endHour);
     
@@ -84,12 +113,15 @@
     [tempDict setObject:[NSNumber numberWithInt:day] forKey:@"day"];
     [tempDict setObject:self.name forKey:@"name"];
     [tempDict setObject:self forKey:@"course"];
+    
     if (self.rawplace != nil) {
         [tempDict setObject:self.rawplace forKey:@"place"];
     }
     else
         [tempDict setObject:@"" forKey:@"place"];
+    
     [tempDict setObject:self.id forKey:@"identifier"];
+    
     return tempDict;
     
 }
@@ -121,6 +153,55 @@
         return [NSString stringWithFormat:@"通选 %@",self.txType];
     }
     return self.Coursetype;
+}
+
+- (NSArray *)arrayStringTime {
+    
+    
+    NSArray *array = [NSArray arrayWithObjects:@"一",@"二",@"三",@"四", @"五",@"六",@"日",nil];
+    
+    NSMutableArray *arrayResult = [NSMutableArray arrayWithCapacity:2];
+    
+    NSMutableString *string = [[NSMutableString alloc] initWithCapacity:12];
+
+    NSInteger count = 0;
+    
+    for (int i = 0; i < 6; i++) {
+        
+        
+        DayVector vector = [Course dayVectorForIntCode:[self dayCodeForDay:i+1] inday:i+1];
+        
+        if (vector.startclass != -1) {
+            
+            ++count;
+            
+            if (![string isEqualToString:@""]) {
+                [string appendFormat:@"\n"];
+            }
+            
+            if (vector.doubleType == doubleTypeSingle) {
+                [string appendFormat:@"单周"];
+            }
+            else if (vector.doubleType == doubleTypeDouble) [string appendFormat:@"双周"];
+                 
+                
+            [string appendFormat:@"周%@ %d–%d 节",[array objectAtIndex:i],vector.startclass,vector.endclass];
+            
+            
+        }
+        
+    }
+    if ([string isEqualToString:@""]) {
+        [string appendFormat:@"无"];
+    }
+    count++;
+    
+    [arrayResult addObject:[NSNumber numberWithInt:count]];
+    
+    [arrayResult addObject:string];
+    
+    
+    return arrayResult;
 }
 
 @end

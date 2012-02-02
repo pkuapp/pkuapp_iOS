@@ -9,6 +9,20 @@
 #import "Course.h"
 #import "AppUser.h"
 @interface Course (ModelsAddOn)
+
+typedef enum DoubleType{
+    doubleTypeSingle,
+    doubleTypeDouble,
+    doubleTypeBoth
+}DoubleType;
+
+typedef struct {
+    NSInteger day;
+    NSInteger startclass;
+    NSInteger endclass;
+    DoubleType doubleType;
+}DayVector;
+
 @property (nonatomic, readonly)NSString *courseSectionName;
 
 - (NSDictionary *)dictStartEndHourForIntCode:(NSInteger)code inday:(NSInteger)day inWeek:(NSInteger)weeknumber;
@@ -19,11 +33,15 @@
 
 - (NSInteger)dayCodeForDay:(NSInteger)day;
 
-- (NSTimeInterval)timeIntervalBeforeNextSince:(NSDate *)date;
 
 + (float)starthourForClass:(NSInteger) classnumber;
 
 - (NSString *)stringType;
+
+- (NSArray *)arrayStringTime;
+
++ (DayVector)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day;
+
 
 @end
 

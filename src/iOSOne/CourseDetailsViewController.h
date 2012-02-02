@@ -12,6 +12,7 @@
 @interface CourseDetailsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
+
 @property (retain, nonatomic) Course *course;
 
 @end
