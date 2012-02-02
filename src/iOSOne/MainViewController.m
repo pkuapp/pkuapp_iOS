@@ -88,6 +88,21 @@
     return [self.arrayNotices count];;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
+    
+    switch (notice.type) {
+        case PKUNoticeTypeLatestCourse:
+            [self navToCourseDetail:(Course *)notice.object];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"NoticeCell";
@@ -95,6 +110,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
+        
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
 
     }
@@ -127,17 +143,37 @@
 }
 
 #pragma mark - IBAcion Setup
+
+- (void)navToCourseDetail:(Course *)course {
+    
+    CourseDetailsViewController *cdvc = [[CourseDetailsViewController alloc] init];
+    
+    cdvc.course = course;
+    
+    [self.navigationController pushViewController:cdvc animated:YES];
+    
+    [cdvc release];
+}
+
+
 - (IBAction)navToCoursesView {
+    
     UITabBarController *tbc = [[UITabBarController alloc] init];
     
     CoursesCategoryController *ccc = [[CoursesCategoryController alloc] initWithNibName:@"CoursesCategory" bundle:nil];
+    
     ccc.title = @"所有课程";
+    
     ccc.delegate = self.delegate;
+    
     ccc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"所有课程" image:[UIImage imageNamed:@"256-box2.png"] tag:4];
     
     CoursesSearchViewController *csvc = [[CoursesSearchViewController alloc] initWithNibName:@"CoursesSearchView" bundle:nil];
+    
     csvc.context = self.context;
+    
     csvc.title = @"搜索";
+    
     csvc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"搜索" image:[UIImage imageNamed:@"180-stickynote.png"] tag:2];
     
     /*
@@ -145,20 +181,24 @@
     lcvc.delegate = self.delegate;
     lcvc.title = @"我的旁听";
     */
+    //UINavigationController *mcvc = [[UINavigationController alloc] initWithNibName:@"MyCoursesViewController.xib" bundle:nil];
     
     MyCoursesViewController *mcvc = [[MyCoursesViewController alloc] init];
     mcvc.delegate = self.delegate;
+    
     mcvc.title = @"我的课程";
+    
     mcvc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的课程" image:[UIImage imageNamed:@"96-book.png"] tag:1];
     
     
     AssignmentsListViewController *asvs = [[AssignmentsListViewController alloc] init];
     asvs.title = @"作业";
+    
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     
     tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,ccc,nil];
-    
+    tbc.navigationItem.titleView = mcvc.segmentedControl;
     [self.navigationController pushViewController:tbc animated:YES];
     
     [tbc release];

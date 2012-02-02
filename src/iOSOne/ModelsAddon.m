@@ -17,6 +17,8 @@
 }
 @end
 
+#pragma mark - Course
+
 @implementation Course (ModelsAddOn)
 
 -(NSString *)courseSectionName
@@ -114,8 +116,17 @@
     return hour;
 }
 
+- (NSString *)stringType {
+    if ([self.Coursetype isEqualToString:@"通选课"]){
+        return [NSString stringWithFormat:@"通选 %@",self.txType];
+    }
+    return self.Coursetype;
+}
 
 @end
+
+
+#pragma mark - AppUser
 @implementation AppUser(ModelsAddOn)
 
 - (NSArray *)sortedAssignmentNotDone{
@@ -123,7 +134,6 @@
     NSArray *arrayDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"endDate" ascending:YES]];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isDone == NO"];
-    NSSet * set= self.assignset;
     NSArray *array = [[[self.assignset allObjects] filteredArrayUsingPredicate: predicate] sortedArrayUsingDescriptors:arrayDescriptors];
     
     return array;

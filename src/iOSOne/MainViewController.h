@@ -17,7 +17,7 @@
 #import "NoticeCenterHepler.h"
 #import "PKUNoticeCenterProtocols.h"
 #import "AssignmentsListViewController.h"
-
+#import "CourseDetailsViewController.h"
 @class iOSOneAppDelegate;
 @class GateViewController;
 @class IPGateHelper;
@@ -54,5 +54,6 @@
 
 - (IBAction)testTableView:(id)sender;
 - (void)performFetch;
+- (void)navToCourseDetail:(Course *)course;
 
 @end

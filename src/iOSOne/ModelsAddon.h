@@ -23,6 +23,8 @@
 
 + (float)starthourForClass:(NSInteger) classnumber;
 
+- (NSString *)stringType;
+
 @end
 
 @interface NSString(ModelsAddOn)

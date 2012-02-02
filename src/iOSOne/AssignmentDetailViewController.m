@@ -106,6 +106,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectBtn)];
     // Do any additional setup after loading the view from its nib.
 }

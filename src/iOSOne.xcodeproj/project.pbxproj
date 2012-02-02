@@ -135,6 +135,8 @@
 		4195E8FA143ECE6D0015BDFD /* ChineseFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4195E8F9143ECE6D0015BDFD /* ChineseFetchedResultsController.m */; };
 		41ACB477148B141200B00624 /* EULANavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ACB476148B141200B00624 /* EULANavController.m */; };
 		41B6962613F5A52C00ED4F18 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B6962513F5A52C00ED4F18 /* AsyncUdpSocket.m */; };
+		41B76E6114DA58FF004FE2C0 /* CourseDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */; };
+		41B76E6214DA58FF004FE2C0 /* CourseDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */; };
 		41B8617513DC7E9B00F84182 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B8617413DC7E9B00F84182 /* RegexKitLite.m */; };
 		41B8617713DC865E00F84182 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B8617613DC865E00F84182 /* libicucore.dylib */; };
 		41BF88D813AD2C680098959D /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF88C013AD2C680098959D /* NSObject+SBJson.m */; };
@@ -540,6 +542,9 @@
 		41B1271F1396047B00B460C2 /* iOSOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B6962413F5A52C00ED4F18 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
 		41B6962513F5A52C00ED4F18 /* AsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
+		41B76E5E14DA58FF004FE2C0 /* CourseDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailsViewController.h; sourceTree = "<group>"; };
+		41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseDetailsViewController.m; sourceTree = "<group>"; };
+		41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailsViewController.xib; sourceTree = "<group>"; };
 		41B8617313DC7E9A00F84182 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		41B8617413DC7E9B00F84182 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		41B8617613DC865E00F84182 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -1212,6 +1217,9 @@
 		41ED390F143C5DE400BBF866 /* CoursesView */ = {
 			isa = PBXGroup;
 			children = (
+				41B76E5E14DA58FF004FE2C0 /* CourseDetailsViewController.h */,
+				41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */,
+				41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */,
 				412D608314A3650400E0B7B5 /* AssignmentEditViewController.h */,
 				412D608414A3650400E0B7B5 /* AssignmentEditViewController.m */,
 				412D608514A3650500E0B7B5 /* AssignmentEditViewController.xib */,
@@ -1566,6 +1574,7 @@
 				4146DD2314C9CD8E005694BF /* assignment@2x.png in Resources */,
 				4146DD2414C9CD8E005694BF /* discuss.png in Resources */,
 				4146DD2514C9CD8E005694BF /* discuss@2x.png in Resources */,
+				41B76E6214DA58FF004FE2C0 /* CourseDetailsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1678,6 +1687,7 @@
 				411588F514A394F200FBFA59 /* NoticeCenterHepler.m in Sources */,
 				41E63D2B14BDA7C200CE50BF /* SNSData.xcdatamodel in Sources */,
 				41E63D3014BDF8D400CE50BF /* Assignment.m in Sources */,
+				41B76E6114DA58FF004FE2C0 /* CourseDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1725,7 +1735,10 @@
 		410B41A613902BA400002A46 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: PKU CADA (2FQB5YJ958)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1749,7 +1762,10 @@
 		410B41A713902BA400002A46 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: PKU CADA (2FQB5YJ958)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
