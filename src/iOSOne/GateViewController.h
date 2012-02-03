@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
+#import "Environment.h"
 
 @interface GateViewController : UITableViewController<IPGateDelegate,MBProgressHUDDelegate> { 
 }

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Course.h"
 #import "ModelsAddon.h"
+#import "Environment.h"
 @interface CourseDetailsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;

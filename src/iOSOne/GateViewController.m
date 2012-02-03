@@ -416,6 +416,7 @@
     self.Password = self.delegate.appUser.password;//[defaults objectForKey:@"Password"];
     self.title = @"网关";
     self.gateConfigDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:@"GateConfigDictionary"]];
+    self.tableView.backgroundColor = tableBgColor;
 
 	// Do any additional setup after loading the view from its nib.
 }

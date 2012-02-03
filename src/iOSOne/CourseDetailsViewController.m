@@ -21,7 +21,9 @@
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 87)];
         headerView.backgroundColor = [UIColor clearColor];
         
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 17)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 20)];
+        nameLabel.shadowColor = [UIColor whiteColor];
+        nameLabel.shadowOffset = CGSizeMake(0, 1);
         nameLabel.textAlignment = UITextAlignmentLeft;
         nameLabel.text = self.course.name;
         nameLabel.backgroundColor = [UIColor clearColor];
@@ -31,6 +33,8 @@
         UILabel *idLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 47, 280, 15)];
         idLabel.textAlignment = UITextAlignmentLeft;
         idLabel.text = self.course.courseid;
+        idLabel.shadowColor = [UIColor whiteColor];
+        idLabel.shadowOffset = CGSizeMake(0, 1);
         idLabel.backgroundColor = [UIColor clearColor];
         idLabel.font = [UIFont systemFontOfSize:15];
 
@@ -252,7 +256,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"课程信息";    
+    self.title = @"课程信息";
+    self.tableView.backgroundColor = tableBgColor;
+    
+    //NSLog(@"table%@",[[self.tableView subviews] objectAtIndex:0]);
     // Do any additional setup after loading the view from its nib.
 }
 

@@ -194,6 +194,7 @@
     if (mvc == nil) {
         mvc = [[UINavigationController alloc] initWithRootViewController:nil];
         mvc.delegate = self;
+        mvc.navigationBar.tintColor = navigationBgColor;
     }
     return mvc;
 }

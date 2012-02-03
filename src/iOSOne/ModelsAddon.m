@@ -86,6 +86,21 @@
     return vector;
 }
 
+- (NSString *)stringTimeForDay:(NSInteger)day {
+    DayVector vector = [self dayVectorInDay:day];
+    
+    if (vector.startclass != -1) {
+        return [[NSString stringWithFormat:@"%d–%d 节",vector.startclass,vector.endclass] autorelease];
+    }
+    return @"";
+}
+
+- (DayVector)dayVectorInDay:(NSInteger)day {
+    return [Course dayVectorForIntCode:[self dayCodeForDay:day] inday:day];
+}
+
+
+
 - (NSDictionary *)dictStartEndHourForIntCode:(NSInteger)code inday:(NSInteger)day inWeek:(NSInteger)weeknumber
 {
     int singleWeek = weeknumber % 2;

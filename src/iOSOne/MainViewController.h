@@ -11,6 +11,9 @@
 #import "Three20UI/TTLauncherView.h"
 #import "Three20UI/TTLauncherItem.h"
 #import "Three20UI/TTLauncherViewDelegate.h"
+#import "Three20UI/TTStyledTextLabel.h"
+
+#import "Three20Style/Three20Style.h"
 
 #import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
@@ -18,6 +21,10 @@
 #import "PKUNoticeCenterProtocols.h"
 #import "AssignmentsListViewController.h"
 #import "CourseDetailsViewController.h"
+
+#import "NotificationCell.h"
+#import "SystemHelper.h"
+
 @class iOSOneAppDelegate;
 @class GateViewController;
 @class IPGateHelper;
@@ -44,6 +51,7 @@
 @property (assign) IPGateHelper *connector;
 @property (retain, nonatomic) NoticeCenterHepler *noticeCenterHelper;
 @property (retain, nonatomic) NSArray *arrayNotices;
+@property (retain, nonatomic) IBOutlet UILabel *noticeLabel;
 
 - (IBAction) navToClassroom;
 - (IBAction) navToGateView;
@@ -55,5 +63,8 @@
 - (IBAction)testTableView:(id)sender;
 - (void)performFetch;
 - (void)navToCourseDetail:(Course *)course;
+@end
 
+@interface MainViewController (Private)
+- (UILabel *)detailLabel;
 @end

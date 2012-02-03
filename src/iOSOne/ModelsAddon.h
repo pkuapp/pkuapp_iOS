@@ -40,7 +40,11 @@ typedef struct {
 
 - (NSArray *)arrayStringTime;
 
+- (DayVector)dayVectorInDay:(NSInteger)day;
+
 + (DayVector)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day;
+
+- (NSString *)stringTimeForDay:(NSInteger)day;
 
 
 @end

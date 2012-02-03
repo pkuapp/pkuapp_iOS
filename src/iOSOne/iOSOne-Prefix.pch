@@ -14,4 +14,6 @@
     #import "Three20UI/TTLauncherView.h"
     #import "Three20UI/TTLauncherItem.h"
     #import "Three20UI/TTLauncherViewDelegate.h"
+    #import "Three20Style/TTStyle.h"
+    //#import "Three20Core/Three20Core.h"
 #endif
