@@ -24,12 +24,14 @@
 
 #import "NotificationCell.h"
 #import "SystemHelper.h"
-
+#import "IPGateHelper.h"
+#import "Reachability.h"
+#import "ReachablityProtocol.h"
 @class iOSOneAppDelegate;
 @class GateViewController;
 @class IPGateHelper;
 
-@interface MainViewController : UIViewController <NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate>{
+@interface MainViewController : UIViewController <IPGateListenDelegate,IPGateConnectDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate>{
     iOSOneAppDelegate *delegate;
     NSManagedObjectContext *context;
     IPGateHelper *connector;
@@ -46,20 +48,20 @@
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *context;
 @property (nonatomic, retain) NSFetchedResultsController *results;
-@property (nonatomic, readonly) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
+@property (nonatomic, readonly) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol> *delegate;
 @property (retain, nonatomic) GateViewController *gvc;
 @property (assign) IPGateHelper *connector;
 @property (retain, nonatomic) NoticeCenterHepler *noticeCenterHelper;
 @property (retain, nonatomic) NSArray *arrayNotices;
 @property (retain, nonatomic) IBOutlet UILabel *noticeLabel;
 
+
+
 - (IBAction) navToClassroom;
 - (IBAction) navToGateView;
 - (IBAction) navToCanlendar;
 - (void) performActionSheet;
 - (IBAction)navToCoursesView;
-
-
 - (IBAction)testTableView:(id)sender;
 - (void)performFetch;
 - (void)navToCourseDetail:(Course *)course;

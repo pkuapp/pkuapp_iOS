@@ -204,46 +204,47 @@
 
 - (void)drawInDayContext:(CGContextRef)context
 {
-    CGPoint titlePoint,subtitlePoint;
-    
-    float titleWidth;
-    
-    CGContextSetRGBFillColor(context,1.0 , 1.0, 1.0, 1.0);
-    
-//    float lineWidthOffset = 0;
-    
-//    if (self.viewType == EventViewCourse) {
+//    CGPoint titlePoint,subtitlePoint;
+//    
+//    float titleWidth;
+//    
+//    CGContextSetRGBFillColor(context,1.0 , 1.0, 1.0, 1.0);
+//    
+////    float lineWidthOffset = 0;
+//    
+////    if (self.viewType == EventViewCourse) {
+////        
+////        lineWidthOffset = wClassTag;
+////        
+////    }
+//    
+//    titlePoint = CGPointMake(5,5);
+//    
+//    titleWidth = self.bounds.size.width -10;
+//    
+//    subtitlePoint = CGPointMake(5, 10+18);
+//    
+//    float fulltitleWidth = [self.EventName sizeWithFont:day_font_title].width;
+//    
+//    if (fulltitleWidth > titleWidth) {
+//  
+//        NSInteger index = self.EventName.length * titleWidth/fulltitleWidth -2;
 //        
-//        lineWidthOffset = wClassTag;
-//        
+//        if (index > 0) {
+//            self.EventName = [[self.EventName substringToIndex:index] stringByAppendingFormat:@"..."];   
+//        }
 //    }
-    
-    titlePoint = CGPointMake(5,5);
-    
-    titleWidth = self.bounds.size.width -10;
-    
-    subtitlePoint = CGPointMake(5, 5+18);
-    
-    float fulltitleWidth = [self.EventName sizeWithFont:day_font_title].width;
-    
-    if (fulltitleWidth > titleWidth) {
-  
-        NSInteger index = self.EventName.length * titleWidth/fulltitleWidth -2;
-        
-        if (index > 0) {
-            self.EventName = [[self.EventName substringToIndex:index] stringByAppendingFormat:@"..."];   
-        }
-    }
-    
-//    [self.EventName drawAtPoint:titlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
-    
-    [self.stringLocation drawAtPoint:subtitlePoint forWidth:titleWidth withFont:day_font_sub lineBreakMode:UILineBreakModeWordWrap];
+//    
+////    [self.EventName drawAtPoint:titlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
+//    
+//    [self.stringLocation drawAtPoint:subtitlePoint forWidth:titleWidth withFont:day_font_sub lineBreakMode:UILineBreakModeWordWrap];
     
 }
 
 - (void)drawRect:(CGRect)rect
 
 {
+    [super drawRect:rect];
     if (self.groundType == CalendarGroundTypeDay) {
         
         [self drawInDayContext:UIGraphicsGetCurrentContext()];
@@ -331,7 +332,7 @@
     
     self.layer.masksToBounds = YES;
     
-    self.layer.borderWidth = 1.0;
+    //self.layer.borderWidth = 1.0;
     
     self.clearsContextBeforeDrawing = YES;
     
@@ -339,15 +340,16 @@
 
            self.layer.borderColor = colorCourseBorder;
 
-           self.backgroundColor = colorCourseBg;
-           
+           //self.backgroundColor = colorCourseBg;
+           self.backgroundColor = [UIColor clearColor];
+           UIImageView *bgView = [[UIImageView alloc] initWithFrame:self.bounds];
+           bgView.image = [[UIImage imageNamed:@"event-bg-course.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:19];
+           // bgView.image =  ];
+           [self addSubview:bgView];
 
            UIButton *buttonDiz = [UIButton buttonWithType:UIButtonTypeCustom];
-        
            UIButton *buttonAssign = [UIButton buttonWithType:UIButtonTypeCustom];
-        
            [buttonDiz setImage:[UIImage imageNamed:@"discuss.png"] forState:UIControlStateNormal];
-           
            [buttonAssign setImage:[UIImage imageNamed:@"assignment.png"] forState:UIControlStateNormal];
            //a fix for image offset
            
@@ -360,15 +362,12 @@
            float xBtnAssign = xBtnDiz - btn_size - btn_padding_right;
            
            [buttonDiz setFrame:CGRectMake(xBtnDiz, ybound - btn_padding_bottom - btn_size, btn_size, btn_size)];
-           
            buttonDiz.layer.opacity = btn_opacity_inactive;
-           
            [buttonAssign setFrame:CGRectMake(xBtnAssign, ybound - btn_padding_bottom - btn_size, btn_size, btn_size)];
-        
            buttonAssign.layer.opacity = btn_opacity_active;
-           
            buttonAssign.imageEdgeInsets = UIEdgeInsetsMake(2, 0, -2, 0);
-
+           
+           
 //        buttonDiz.layer.cornerRadius = radius;
 //        buttonAssign.layer.cornerRadius = radius;
 //        buttonDiz.layer.borderColor = colorCourseBorder;
@@ -395,25 +394,29 @@
            
            // handle title display
            
-           UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.bounds.size.width - 10, 21)];
+           UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, self.bounds.size.width - 10, 21)];
            
            titleLabel.textAlignment = UITextAlignmentLeft;
-           
            titleLabel.text = self.EventName;
-           
            titleLabel.adjustsFontSizeToFitWidth = NO;
-           
            titleLabel.font = day_font_title;
-           
            titleLabel.textColor = [UIColor whiteColor];
-           
-           titleLabel.backgroundColor = [UIColor clearColor];
-           
+           titleLabel.backgroundColor = [UIColor blackColor];
            titleLabel.shadowColor = colorEventTitleShadow;
-           
            titleLabel.shadowOffset = CGSizeMake(0, -1);
-           
            [self addSubview:titleLabel];
+           
+           UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 26, self.bounds.size.width - 10, 16)];
+           locationLabel.textAlignment = UITextAlignmentLeft;
+           locationLabel.adjustsFontSizeToFitWidth = NO;
+           locationLabel.font = day_font_sub;
+           locationLabel.textColor = [UIColor whiteColor];
+           locationLabel.text = self.stringLocation;
+           locationLabel.backgroundColor = [UIColor clearColor];
+           //locationLabel.shadowColor = colorEventTitleShadow;
+           //locationLabel.shadowOffset = CGSizeMake(0, -1);
+           [self addSubview:locationLabel];
+           
     }
     else {
         self.layer.borderColor = colorLocalBorder;

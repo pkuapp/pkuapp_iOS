@@ -25,7 +25,14 @@
 #define patternAccountDetail @"包月状态：</td><td>([^ ]+?)<[^#]+?([0-9.]+)小时[^#]+>([0-9.]+)"
 #define pTime @"([0-9]+)小时"
 
-@protocol IPGateDelegate <NSObject>
+@protocol IPGateListenDelegate <NSObject>
+
+- (void)didConnectToIPGate;
+- (void)didLoseConnectToIpGate;
+
+@end
+
+@protocol IPGateConnectDelegate <NSObject>
 
 @required
 - (NSString*)Username;
@@ -35,19 +42,18 @@
 ;
 - (void)disconnectSuccess;
 - (void)connectFailed:(NSDictionary *)dict;
-- (void)didConnectToIPGate;
-- (void)didLoseConnectToIpGate;
+
 - (BOOL)shouldReConnectWithDisconnectrequest;
 @end
 
 @interface IPGateHelper : NSObject<AsyncUdpSocketDelegate> {
 @private
-    NSObject <IPGateDelegate> *delegate;
+    NSObject <IPGateConnectDelegate> *delegate;
     NSString *stirngRange;
     BOOL isConnected;
 }
 @property (assign) NSString *stringRange;
-@property (assign) id<IPGateDelegate> delegate;
+@property (assign) id<IPGateConnectDelegate> delegate;
 @property (retain, nonatomic)ASIHTTPRequest* request;
 @property BOOL isConnected;
 @property NSInteger numberListenRetry;

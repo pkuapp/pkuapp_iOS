@@ -24,7 +24,9 @@
 
 @synthesize window = _window;
 @synthesize operationQueue;
-
+@synthesize wifiTester,internetTester,globalTester,freeTester,localTester;
+@synthesize netStatus;
+@synthesize hasWifi;
 #pragma mark - UserControl Setup
 
 -(AppUser *)appUser
@@ -199,7 +201,33 @@
     return mvc;
 }
 
-
+- (void)netStatusDidChanged:(NSNotification *)notice {
+    Reachability *r = [notice object];
+    if ([r.key isEqualToString:@"global"]) {
+        NSLog(@"reachable%d",r.isReachable);
+        self.netStatus = r.isReachable?PKUNetStatusGlobal:self.netStatus;
+        
+    }
+    else if ([r.key isEqualToString:@"free"]){
+        if (r.isReachable) {
+            self.netStatus = self.netStatus < PKUNetStatusFree?PKUNetStatusFree:self.netStatus;
+        }
+        else self.netStatus = self.netStatus > PKUNetStatusLocal?PKUNetStatusLocal:self.netStatus;
+    }
+    else if ([r.key isEqualToString:@"local"]){
+        if (r.isReachable) {
+            self.netStatus = self.netStatus < PKUNetStatusLocal?PKUNetStatusLocal:self.netStatus;
+        }
+        else self.netStatus = PKUNetStatusNone;
+    }
+    else if ([r.key isEqualToString:@"wifi"]){
+        self.hasWifi = r.isReachable?YES:NO;
+    }
+    //[r startNotifier];
+    NSLog(@"%d",r.currentReachabilityStatus);
+    //NSLog(@"%d",self.netStatus);
+    
+}
 #pragma mark UINavigation...Delegate Setup
 
 - (void)navigationController:(UINavigationController *)navigationController 
@@ -248,10 +276,30 @@
     else {
         [self showWithLoginView];
     }
-   
+    
+    self.globalTester = [Reachability reachabilityWithHostName: @"www.apple.com"];
+    self.globalTester.key = @"global";
+	[self.globalTester startNotifier];
+	
+    self.freeTester = [Reachability reachabilityWithHostName:@"renren.com"];
+    self.freeTester.key = @"free";
+    [self.freeTester startNotifier];
+    
+    self.internetTester = [Reachability reachabilityForInternetConnection];
+    self.internetTester.key = @"internet";
+	[self.internetTester startNotifier];
+    
+    self.wifiTester = [Reachability reachabilityForLocalWiFi];
+    self.wifiTester.key = @"wifi";
+	[self.wifiTester startNotifier];
+    
+    self.localTester = [Reachability reachabilityWithHostName:@"its.pku.edu.cn"];
+    self.localTester.key = @"local";
+    [self.localTester startNotifier];
+    
     // Override point for customization after application launch.
     [self.window makeKeyAndVisible];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStatusDidChanged:) name:kReachabilityChangedNotification object:nil];
     return YES;
 }
 

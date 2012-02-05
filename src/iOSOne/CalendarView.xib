@@ -14,9 +14,9 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>IBProxyObject</string>
 			<string>IBUIBarButtonItem</string>
-			<string>IBUILabel</string>
-			<string>IBUIToolbar</string>
 			<string>IBUIButton</string>
+			<string>IBUIToolbar</string>
+			<string>IBUILabel</string>
 			<string>IBUISegmentedControl</string>
 			<string>IBUIScrollView</string>
 			<string>IBUIView</string>
@@ -187,14 +187,14 @@
 									<object class="IBUILabel" id="842594012">
 										<reference key="NSNextResponder" ref="36527784"/>
 										<int key="NSvFlags">310</int>
-										<string key="NSFrame">{{45, 10}, {230, 20}}</string>
+										<string key="NSFrame">{{45, 0}, {230, 44}}</string>
 										<reference key="NSSuperview" ref="36527784"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="38036536"/>
 										<string key="NSReuseIdentifierKey">_NS:311</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
-										<int key="IBUIContentMode">7</int>
+										<int key="IBUIContentMode">4</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<string key="IBUIText">Label</string>
@@ -212,16 +212,15 @@
 										</object>
 										<string key="IBUIShadowOffset">{0, 1}</string>
 										<int key="IBUIBaselineAdjustment">1</int>
+										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 										<float key="IBUIMinimumFontSize">10</float>
 										<int key="IBUITextAlignment">1</int>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
-											<string key="name">HelveticaNeue</string>
-											<string key="family">Helvetica Neue</string>
-											<int key="traits">0</int>
+											<int key="type">2</int>
 											<double key="pointSize">20</double>
 										</object>
 										<object class="NSFont" key="IBUIFont">
-											<string key="NSName">HelveticaNeue-Medium</string>
+											<string key="NSName">Helvetica-Bold</string>
 											<double key="NSSize">20</double>
 											<int key="NSfFlags">16</int>
 										</object>
@@ -427,19 +426,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">titleLabel</string>
-						<reference key="source" ref="36527784"/>
-						<reference key="destination" ref="842594012"/>
-					</object>
-					<int key="connectionID">61</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="36527784"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">62</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">titleLabel</string>
+						<reference key="source" ref="36527784"/>
+						<reference key="destination" ref="842594012"/>
+					</object>
+					<int key="connectionID">61</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -542,6 +541,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">42</int>
 						<reference key="object" ref="928766230"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
 						<reference key="parent" ref="565455114"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -573,11 +575,6 @@
 						<string key="objectName">Calendar Day Bar</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">55</int>
-						<reference key="object" ref="842594012"/>
-						<reference key="parent" ref="36527784"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">56</int>
 						<reference key="object" ref="352271686"/>
 						<reference key="parent" ref="36527784"/>
@@ -592,6 +589,11 @@
 						<reference key="object" ref="325661122"/>
 						<reference key="parent" ref="457040447"/>
 						<string key="objectName">Calendar Week Bar</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="842594012"/>
+						<reference key="parent" ref="36527784"/>
 					</object>
 				</object>
 			</object>

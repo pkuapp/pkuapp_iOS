@@ -124,6 +124,44 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
 
 
 
+#pragma mark - IPGate Listen delegate
+
+- (void)connectFreeSuccessWithDict:(NSDictionary *)dict andDetail:(NSDictionary *)dictDetail {
+    [self.gvc connectFreeSuccessWithDict:dict andDetail:dictDetail];
+}
+
+- (void)connectGlobalSuccessWithDict:(NSDictionary *)dict andDetail:(NSDictionary *)dictDetail {
+    [self.gvc connectGlobalSuccessWithDict:dict andDetail:dictDetail];
+}
+
+- (void)connectFailed:(NSDictionary *)dict {
+    [self.gvc connectFailed:dict];
+}
+
+- (NSString*)Username {
+    return self.delegate.appUser.deanid;
+}
+- (NSString*)Password {
+    return self.delegate.appUser.password;
+}
+
+- (void)disconnectSuccess {
+    [self.gvc disconnectSuccess];
+}
+
+
+- (BOOL)shouldReConnectWithDisconnectrequest {
+    return [self.gvc shouldReConnectWithDisconnectrequest];
+}
+
+- (void)didConnectToIPGate {
+    
+}
+
+- (void)didLoseConnectToIpGate {
+
+}
+
 #pragma mark - TableView delegate and dataSource setup
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
@@ -396,7 +434,7 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
          GateViewController *ivc = [[GateViewController alloc] initWithStyle:UITableViewStyleGrouped];
         ivc.connector = self.connector;
         ivc.delegate = self.delegate;
-        [self.connector setDelegate:ivc];
+        //ivc.delegate = self.delegate;
          self.gvc = ivc;
         [ivc release];
     }
@@ -415,6 +453,8 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
 }
 
 #pragma mark - ActionSheetDelegate Setup
+
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [actionSheet release];
@@ -506,6 +546,8 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
     
 }
 
+
+
 #pragma mark - life-cycle Setup
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -549,13 +591,12 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
 	self.scrollView.contentSize = CGSizeMake(320, 416); // i add this to make mainView scrollable
 	[super viewDidLoad];
     self.connector = [[IPGateHelper alloc] init];
+    self.connector.delegate = self;
     
-    
-    //[self.connector startListening];
+    [self.connector startListening];
     [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];
     self.title = @"主页";
     noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-header-bg.png"]];
-   
 }
 
 /*

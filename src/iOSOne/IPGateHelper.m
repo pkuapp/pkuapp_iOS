@@ -211,14 +211,14 @@
 -(void)onUdpSocket:(AsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
 {
     self.numberListenRetry = self.numberListenRetry + 1;
-    NSLog(@"FailedSendData:%@",error);
+    //NSLog(@"FailedSendData:%@",error);
     
 }
 
 -(void)onUdpSocket:(AsyncUdpSocket *)sock didNotReceiveDataWithTag:(long)tag dueToError:(NSError *)error
 {
     self.numberListenRetry = self.numberListenRetry + 1;
-    NSLog(@"FailedRound:%d",self.numberListenRetry);
+    //NSLog(@"FailedRound:%d",self.numberListenRetry);
 }
 -(BOOL)onUdpSocket:(AsyncUdpSocket *)sock didReceiveData:(NSData *)data withTag:(long)tag fromHost:(NSString *)host port:(UInt16)port
 {

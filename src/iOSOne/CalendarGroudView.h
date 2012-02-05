@@ -10,6 +10,7 @@
 //  1. CalendarWeekGroundView is the ground in the scroll view for week display and *DayGroundView for day display. They both inherits CalendarGroundView to share its drawing code.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIkit.h>
 @class EKEvent;
 #pragma mark - appearance params
 
@@ -65,7 +66,7 @@
 #define widthOffsetDayView  wHourTag + wClassTag
 #define widthNormalDayView  (320.0 - widthOffsetDayView-14)
 //font
-#define day_font_title [UIFont fontWithName:@"Helvetica Neue" size:fsizeM]
+#define day_font_title [UIFont boldSystemFontOfSize:fsizeM]
 #define day_font_sub [UIFont fontWithName:@"Helvetica Neue" size:fsizeS]
 #define day_font_hourTag [UIFont fontWithName:@"Helvetica Neue" size:fsizeS]
 /////////////////////////////////////////////////

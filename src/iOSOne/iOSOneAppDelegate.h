@@ -9,13 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "AppUserDelegateProtocol.h"
 #import "AppCoreDataProtocol.h"
+#import "Reachability.h"
+#import "ReachablityProtocol.h"
+
 @class SwitchViewController,NSPersistentStoreCoordinator,NSManagedObjectContext;
 @class FirstViewController;
 @class MainViewController;
 @class WelcomeViewController;
 @class AppUser;
 
-@interface iOSOneAppDelegate : NSObject <UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,AppUserDelegateProtocol> {
+
+@interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,AppUserDelegateProtocol> {
     IBOutlet UIWindow *window;
     NSManagedObjectContext *managedObjectContext;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -36,7 +40,13 @@
 
 @property (nonatomic, retain, readonly) UINavigationController *wvc;
 @property (nonatomic, retain, readonly)AppUser *appUser;
-
+@property (atomic, retain) Reachability *wifiTester;
+@property (atomic, retain) Reachability *internetTester;
+@property (atomic, retain) Reachability *globalTester;
+@property (atomic, retain) Reachability *freeTester;
+@property (atomic, retain) Reachability *localTester;
+@property (atomic) PKUNetStatus netStatus;
+@property (nonatomic) BOOL hasWifi;
 - (void)showWithLoginView;
 - (void)showwithMainView;
 - (void)logout;
@@ -44,4 +54,6 @@
 - (BOOL)refreshAppSession;
 - (void)updateAppUserProfile;
 - (void)updateServerCourses;
+- (void)netStatusDidChanged:(Reachability *)notice;
+
 @end

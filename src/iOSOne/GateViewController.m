@@ -100,7 +100,7 @@
 }
 
 - (void)didLoseConnectToIpGate{
-
+    
 }
 
 - (BOOL)shouldReConnectWithDisconnectrequest
@@ -312,8 +312,32 @@
 
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = @"网络状态未知";
-            cell.imageView.image = [UIImage imageNamed:@"status-0.png"];
+            NSLog(@"%d",self.delegate.netStatus);
+            switch (self.delegate.netStatus) {
+                case PKUNetStatusNone:
+                    cell.textLabel.text = @"当前无法访问校园网";
+                    cell.imageView.image = [UIImage imageNamed:@"status-0.png"];
+                    break;
+                case PKUNetStatusLocal:
+                    cell.textLabel.text = @"当前连接到校园网";
+                    cell.imageView.image = [UIImage imageNamed:@"status-1.png"];
+                    break;
+                case PKUNetStatusFree:
+                    cell.textLabel.text = @"当前连接到免费地址";
+                    cell.imageView.image = [UIImage imageNamed:@"button-2.png"];
+
+                    break;
+                case PKUNetStatusGlobal:
+                    cell.textLabel.text = @"当前连接到收费地址";
+                    cell.imageView.image = [UIImage imageNamed:@"button-3.png"];
+
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         case 1:
@@ -412,7 +436,7 @@
     
     [super viewDidLoad];
     self.defaults = [NSUserDefaults standardUserDefaults];
-    self.Username = self.delegate.appUser.deanid;//[defaults objectForKey:@"Username"];
+    self.Username = @"1000012926";//[defaults objectForKey:@"Username"];
     self.Password = self.delegate.appUser.password;//[defaults objectForKey:@"Password"];
     self.title = @"网关";
     self.gateConfigDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:@"GateConfigDictionary"]];

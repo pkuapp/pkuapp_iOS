@@ -12,8 +12,10 @@
 #import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "Environment.h"
+#import "Reachability.h"
+#import "ReachablityProtocol.h"
 
-@interface GateViewController : UITableViewController<IPGateDelegate,MBProgressHUDDelegate> { 
+@interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate> { 
 }
 @property (retain, nonatomic) NSString* Username;
 @property (retain, nonatomic) NSString* Password;
@@ -26,7 +28,7 @@
 @property (retain, nonatomic) UILabel *labelStatus;
 @property (retain, nonatomic) UILabel *labelWarning;
 @property (retain, nonatomic) MBProgressHUD *progressHub;
-@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
+@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol> *delegate;
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
