@@ -22,6 +22,12 @@
 #import "MyCoursesViewController.h"
 #import "School.h"
 
+@interface MainViewController (Private)
+- (UILabel *)detailLabel;
+- (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course;
+- (void)prepareCell:(NotificationCell *)cell WithAssignment:(Course *)assignment;
+
+@end
 
 @implementation MainViewController
 @synthesize noticeCenterHelper;
@@ -56,8 +62,7 @@
 
 - (NSArray *)arrayNotices{
     if (arrayNotices == nil){
-        arrayNotices = [[self.noticeCenterHelper getAllNotice] retain];
-        
+        arrayNotices = [[self.noticeCenterHelper getAllNotice] retain];        
     }
     return arrayNotices;
 }
@@ -73,6 +78,18 @@
 
 #pragma mark - TTLauncherView Delegate
 
+- (void)didSelectDoneBtn {
+    self.navigationItem.rightBarButtonItem = nil;
+    [self.launcherView endEditing];
+}
+
+- (void)launcherViewDidEndEditing:(TTLauncherView *)launcher {
+    [self.launcherView persistLauncherItems];
+}
+- (void)launcherViewDidBeginEditing:(TTLauncherView *)launcher {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)];
+}
+
 - (void)launcherView:(TTLauncherView*)launcher didSelectItem:(TTLauncherItem*)item {
     if ([item.URL isEqualToString:@"main/its"]) {
         [self navToGateView];
@@ -85,42 +102,42 @@
 
 #pragma mark - //define for TTStyledTextLabel
 
-- (TTStyle*)blueText {
-return [TTTextStyle styleWithColor:[UIColor blueColor] next:nil];
-}
-- (TTStyle*)largeText {
-return [TTTextStyle styleWithFont:[UIFont systemFontOfSize:32] next:nil];
-}
-- (TTStyle*)smallText {
-return [TTTextStyle styleWithFont:[UIFont systemFontOfSize:12] next:nil];
-}
-- (TTStyle*)floated {
-return [TTBoxStyle styleWithMargin:UIEdgeInsetsMake(0, 0, 5, 5)
-padding:UIEdgeInsetsMake(0, 0, 0, 0)
-minSize:CGSizeZero position:TTPositionFloatLeft next:nil];
-}
-- (TTStyle*)blueBox {
-return
-[TTShapeStyle styleWithShape:[TTRoundedRectangleShape shapeWithRadius:6] next:
-[TTInsetStyle styleWithInset:UIEdgeInsetsMake(0, -5, -4, -6) next:
-[TTShadowStyle styleWithColor:[UIColor grayColor] blur:2 offset:CGSizeMake(1,1) next:
-[TTSolidFillStyle styleWithColor:[UIColor cyanColor] next:
-[TTSolidBorderStyle styleWithColor:[UIColor grayColor] width:1 next:nil]]]]];
-}
-- (TTStyle*)inlineBox {
-    NSLog(@"inlineBox");
-    
-return
-[TTSolidFillStyle styleWithColor:[UIColor blueColor] next:
-[TTBoxStyle styleWithPadding:UIEdgeInsetsMake(5,0,-5,0) next:
-[TTSolidBorderStyle styleWithColor:[UIColor blackColor] width:1 next:nil]]];
-}
-- (TTStyle*)inlineBox2 {
-return
-[TTSolidFillStyle styleWithColor:[UIColor cyanColor] next:
-[TTBoxStyle styleWithMargin:UIEdgeInsetsMake(5,50,0,50)
-padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
-}
+//- (TTStyle*)blueText {
+//return [TTTextStyle styleWithColor:[UIColor blueColor] next:nil];
+//}
+//- (TTStyle*)largeText {
+//return [TTTextStyle styleWithFont:[UIFont systemFontOfSize:32] next:nil];
+//}
+//- (TTStyle*)smallText {
+//return [TTTextStyle styleWithFont:[UIFont systemFontOfSize:12] next:nil];
+//}
+//- (TTStyle*)floated {
+//return [TTBoxStyle styleWithMargin:UIEdgeInsetsMake(0, 0, 5, 5)
+//padding:UIEdgeInsetsMake(0, 0, 0, 0)
+//minSize:CGSizeZero position:TTPositionFloatLeft next:nil];
+//}
+//- (TTStyle*)blueBox {
+//return
+//[TTShapeStyle styleWithShape:[TTRoundedRectangleShape shapeWithRadius:6] next:
+//[TTInsetStyle styleWithInset:UIEdgeInsetsMake(0, -5, -4, -6) next:
+//[TTShadowStyle styleWithColor:[UIColor grayColor] blur:2 offset:CGSizeMake(1,1) next:
+//[TTSolidFillStyle styleWithColor:[UIColor cyanColor] next:
+//[TTSolidBorderStyle styleWithColor:[UIColor grayColor] width:1 next:nil]]]]];
+//}
+//- (TTStyle*)inlineBox {
+//    NSLog(@"inlineBox");
+//    
+//return
+//[TTSolidFillStyle styleWithColor:[UIColor blueColor] next:
+//[TTBoxStyle styleWithPadding:UIEdgeInsetsMake(5,0,-5,0) next:
+//[TTSolidBorderStyle styleWithColor:[UIColor blackColor] width:1 next:nil]]];
+//}
+//- (TTStyle*)inlineBox2 {
+//return
+//[TTSolidFillStyle styleWithColor:[UIColor cyanColor] next:
+//[TTBoxStyle styleWithMargin:UIEdgeInsetsMake(5,50,0,50)
+//padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
+//}
 
 
 
@@ -188,6 +205,22 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
     }
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
+    
+    switch (notice.type) {
+        case PKUNoticeTypeNowCourse:
+            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-cell-bg-current.png"]];
+            //cell.backgroundColor = [UIColor redColor];
+            break;
+        default:
+            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-cell-bg.png"]];
+            break;
+    }
+    cell.opaque = NO;
+    cell.layer.opaque = NO;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"NotificationCell";
@@ -202,66 +235,33 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
 
     }
     Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
-    
+    Course *_course;
     switch (notice.type) {
         case  PKUNoticeTypeLatestCourse:
+            _course = (Course *)notice.object;
+
+            [self prepareCell:cell WithCourse:_course];
             cell.typeLabel.text = @"下一";
-            
             cell.typeLabel.highlightedTextColor = [UIColor whiteColor];
             cell.typeImg.image = [UIImage imageNamed:@"notification-course.png"];
             cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-course.png"];
-            Course *_course = (Course *)notice.object;
-            cell.contentLabel.text = [_course name];
-            cell.contentLabel.highlightedTextColor = [UIColor whiteColor];
-            
-            if (![_course.rawplace isEqualToString:@""]) {
-                
-                UIImageView *_locationImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location.png"] highlightedImage:[UIImage imageNamed:@"location-selected.png"]];
-                _locationImg.frame = CGRectMake(0, 0, 11, 11);
-                
-                [cell.detailView addSubview:_locationImg];
-                
-                UILabel *_locationLabel = [self detailLabel];
-                _locationLabel.frame = CGRectMake(12, 0, 60, 11);
-
-                _locationLabel.text = _course.rawplace;
-                [cell.detailView addSubview:_locationLabel];
-            
-            }
-            if (![[_course stringTimeForDay:[SystemHelper getDayNow]] isEqualToString:@""]) {
-                
-                NSInteger offset = cell.subviews.count?83:0;
-                
-                UIImageView *_timeImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"time.png"] highlightedImage:[UIImage imageNamed:@"time-selected.png"]];
-                _timeImg.frame = CGRectMake(0+offset, 0, 11, 11);
-                
-                [cell.detailView addSubview:_timeImg];
-                
-                UILabel *_timeLabel = [self detailLabel];
-                _timeLabel.frame = CGRectMake(12+offset, 0, 60, 11);
-                _timeLabel.text = [_course stringTimeForDay:[SystemHelper getDayNow]];
-                [cell.detailView addSubview:_timeLabel];
-                NSLog(@"%@",[_course stringTimeForDay:[SystemHelper getDayNow]]);
-            }
-            
-            
-//            TTStyledTextLabel* label1 = [[[TTStyledTextLabel alloc] initWithFrame:cell.bounds] autorelease];
-//
-//            label1.font = [UIFont systemFontOfSize:11];
-//
-//            label1.text = [TTStyledText textFromXHTML:@"<span class=\"blueText\">当前</span><span class=\"inlineBox\"><img src=\"bundle://notification-course.png\"/></span>" lineBreaks:YES URLs:YES];
-//            
-//            [cell addSubview:label1];
-            
-            break;
-        case PKUNoticeTypeLatestEvent:
-            cell.textLabel.text = [(EKEvent *)notice.object title];
-            break;
-        case PKUNoticeTypeAssignment:
-            cell.textLabel.text = [(Assignment *)notice.object content];
             break;
         case PKUNoticeTypeNowCourse:
-            cell.textLabel.text = [(Course *)notice.object name];
+            _course = (Course *)notice.object;
+            cell.typeLabel.textColor = color_current_blue;
+
+            [self prepareCell:cell WithCourse:_course];
+
+            cell.typeLabel.text = @"当前";
+            cell.typeImg.image = [UIImage imageNamed:@"notification-current-course.png"];
+            cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-course.png"];
+            break;
+
+        case PKUNoticeTypeLatestEvent:
+                
+            break;
+        case PKUNoticeTypeAssignment:
+            [self prepareCell:cell WithAssignment:notice.object];
             break;
         default:
             break;
@@ -269,6 +269,53 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
     
     
     return  cell;
+}
+
+- (void)prepareCell:(NotificationCell *)cell WithAssignment:(Assignment *)assignment {
+    cell.contentLabel.text = assignment.content;
+    UILabel *_courseLabel = [self detailLabel];
+    _courseLabel.frame = CGRectMake(0, 0, cell.detailView.bounds.size.width, 11);
+    _courseLabel.text = assignment.course.name;
+    cell.typeLabel.text = @"最近";
+    cell.typeImg.image = [UIImage imageNamed:@"notification-assignment.png"];
+    cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-assignment.png"];
+    [cell.detailView addSubview:_courseLabel];
+}
+
+
+- (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course {
+
+    cell.contentLabel.text = course.name;
+    
+    if (![course.rawplace isEqualToString:@""]) {
+        
+        UIImageView *_locationImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location.png"] highlightedImage:[UIImage imageNamed:@"location-selected.png"]];
+        _locationImg.frame = CGRectMake(0, 0, 11, 11);
+        
+        [cell.detailView addSubview:_locationImg];
+        
+        UILabel *_locationLabel = [self detailLabel];
+        _locationLabel.frame = CGRectMake(12, 0, 60, 11);
+        
+        _locationLabel.text = course.rawplace;
+        [cell.detailView addSubview:_locationLabel];
+        
+    }
+    
+    if (![[course stringTimeForDay:[SystemHelper getDayNow]] isEqualToString:@""]) {
+        
+        NSInteger offset = cell.subviews.count?83:0;
+        
+        UIImageView *_timeImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"time.png"] highlightedImage:[UIImage imageNamed:@"time-selected.png"]];
+        _timeImg.frame = CGRectMake(0+offset, 0, 11, 11);
+        
+        [cell.detailView addSubview:_timeImg];
+        
+        UILabel *_timeLabel = [self detailLabel];
+        _timeLabel.frame = CGRectMake(12+offset, 0, 60, 11);
+        _timeLabel.text = [course stringTimeForDay:[SystemHelper getDayNow]];
+        [cell.detailView addSubview:_timeLabel];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -281,6 +328,7 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
     label.textColor = UIColorFromRGB(0x999999);
     label.font = [UIFont systemFontOfSize:11];
     label.highlightedTextColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor clearColor];
     return [label autorelease];    
 }
 #pragma mark - IBAcion Setup
@@ -334,7 +382,7 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
     
     AssignmentsListViewController *asvs = [[AssignmentsListViewController alloc] init];
     asvs.title = @"作业";
-    
+    asvs.delegate = self.delegate;
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     
@@ -567,15 +615,21 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
 
 - (void)loadView {
     [super loadView];
-    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
+    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 204)];
+    self.launcherView.persistenceMode = TTLauncherPersistenceModeAll;
     self.launcherView.delegate = self;
-    self.launcherView.columnCount = 3;
-    self.launcherView.pages = [NSArray arrayWithObjects:
-                               [NSArray arrayWithObjects:
-                                [[TTLauncherItem alloc] initWithTitle:@"网关" image:@"bundle://its.png" URL:@"main/its"],
-                                [[TTLauncherItem alloc] initWithTitle:@"教室" image:@"bundle://rooms.png" URL:@"main/rooms"],
-                                [[TTLauncherItem alloc] initWithTitle:@"日程" image:@"bundle://calendar.png" URL:@"main/calendar"],[[TTLauncherItem alloc] initWithTitle:@"课程" image:@"bundle://courses.png" URL:@"main/courses"],[[TTLauncherItem alloc] initWithTitle:@"新鲜事" image:@"bundle://feed.png" URL:@"main/room"],[[TTLauncherItem alloc] initWithTitle:@"活动" image:@"bundle://events.png" URL:@"main/events"], nil]
-                               , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
+    if ([self.launcherView restoreLauncherItems])
+        NSLog(@"did restore launcher");
+    else {
+        self.launcherView.columnCount = 3;
+        self.launcherView.pages = [NSArray arrayWithObjects:
+                                   [NSArray arrayWithObjects:
+                                    [[TTLauncherItem alloc] initWithTitle:@"网关" image:@"bundle://its.png" URL:@"main/its"],
+                                    [[TTLauncherItem alloc] initWithTitle:@"空闲教室" image:@"bundle://rooms.png" URL:@"main/rooms"],
+                                    [[TTLauncherItem alloc] initWithTitle:@"日程" image:@"bundle://calendar.png" URL:@"main/calendar"],[[TTLauncherItem alloc] initWithTitle:@"课程" image:@"bundle://courses.png" URL:@"main/courses"], nil]
+                                   , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
+    }
+    
     [self.view insertSubview:self.launcherView belowSubview:self.tableView];
 
 }
@@ -588,14 +642,14 @@ padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     
-	self.scrollView.contentSize = CGSizeMake(320, 416); // i add this to make mainView scrollable
 	[super viewDidLoad];
     self.connector = [[IPGateHelper alloc] init];
     self.connector.delegate = self;
-    
-    [self.connector startListening];
-    [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];
     self.title = @"主页";
+    //[self.connector startListening];
+    [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mainView-header.png"]];
+    
     noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-header-bg.png"]];
 }
 

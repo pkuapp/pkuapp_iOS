@@ -401,7 +401,7 @@
            titleLabel.adjustsFontSizeToFitWidth = NO;
            titleLabel.font = day_font_title;
            titleLabel.textColor = [UIColor whiteColor];
-           titleLabel.backgroundColor = [UIColor blackColor];
+           titleLabel.backgroundColor = [UIColor clearColor];
            titleLabel.shadowColor = colorEventTitleShadow;
            titleLabel.shadowOffset = CGSizeMake(0, -1);
            [self addSubview:titleLabel];

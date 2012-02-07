@@ -139,7 +139,7 @@ static const NSInteger kDefaultColumnCount = 3;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)rowHeight {
-  return round(_scrollView.height / 3);
+  return round(_scrollView.height / 2);
 }
 
 
@@ -1025,6 +1025,7 @@ static const NSInteger kDefaultColumnCount = 3;
     }
 
     if (pagesData!=nil && pages!=nil && [pages isKindOfClass:[NSArray class]]) {
+
       self.pages = (NSArray*)pages;
       return YES;
     }
@@ -1051,7 +1052,7 @@ static const NSInteger kDefaultColumnCount = 3;
     [self.window addSubview:_highlightView];
   }
 
-  TTLauncherButton* button = [self buttonForItem:item];
+    TTLauncherButton* button = [self buttonForItem:item];
   _highlightView.text = text;
   _highlightView.highlightRect = TTRectInset([self.window convertRect:button.frame
                                                              fromView:_scrollView],

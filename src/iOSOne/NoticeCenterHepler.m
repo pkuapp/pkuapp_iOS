@@ -19,6 +19,10 @@
     return notice;
 }
 
+- (NSString *)description {
+    return [self.object description];
+}
+
 @end
 
 @implementation NoticeCenterHepler
@@ -78,25 +82,27 @@
     
     NSDate *nowDate = [NSDate date];
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
+    
     EKEventStore *store = [[EKEventStore alloc] init];
     
     EKCalendar *calendar = [store defaultCalendarForNewEvents];
     
-    NSMutableArray *arrayCourseDicts = [NSMutableArray arrayWithCapacity:10];
     
     NSArray *calendarArray = [NSArray arrayWithObject:calendar];
     
     NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:calendarArray];
     
-    
     NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
-    
+    //fetch all courses event
+    NSMutableArray *arrayCourseDicts = [NSMutableArray arrayWithCapacity:10];
+
     for (Course *course in self.delegate.appUser.courses) {
         
         [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]]];
     }
     
     NSInteger PKUWeekDayNow = [SystemHelper getDayNow];
+    NSLog(@"now it's weekday %d",PKUWeekDayNow);
     //NSDateComponents *components = [[NSDateComponents alloc] init];
     
     NSCalendar *nsCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -127,21 +133,25 @@
     } ];
     
     */
+    //initial minutes interval with 7*24*60 minutes = 10080
     NSInteger minMinuteInterVal = 10080;
     
     for (NSDictionary *dict in arrayCourseDicts) {
         
         NSInteger day = ([[dict objectForKey:@"day"] intValue] - PKUWeekDayNow +7) % 7;
+        //NSLog(@"course %@ is in day %d",[dict objectForKey:@"name"],day);
         
         NSInteger minute = [[dict objectForKey:@"start"] intValue] * 60;
         
         NSInteger minuteInterval = (day *24 * 60 + minute - dayMinuteNow +10080) % 10080;
         
+        //NSLog(@"and minute interval is %d",minuteInterval);
+        
         if (minuteInterval < minMinuteInterVal) {
             minMinuteInterVal = minuteInterval;
             self.latestCourse = [dict objectForKey:@"course"];
         }
-        if (day == PKUWeekDayNow && [[dict objectForKey:@"start"] floatValue] * 60 < dayMinuteNow && [[dict objectForKey:@"end"] floatValue]*60 > dayMinuteNow) {
+        if (day == 0 && [[dict objectForKey:@"start"] floatValue] * 60 <= dayMinuteNow && [[dict objectForKey:@"end"] floatValue]*60 > dayMinuteNow) {
             self.nowCourse = [dict objectForKey:@"course"];
         }
     }

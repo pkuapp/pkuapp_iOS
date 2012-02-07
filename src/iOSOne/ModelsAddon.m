@@ -90,7 +90,7 @@
     DayVector vector = [self dayVectorInDay:day];
     
     if (vector.startclass != -1) {
-        return [[NSString stringWithFormat:@"%d–%d 节",vector.startclass,vector.endclass] autorelease];
+        return [NSString stringWithFormat:@"%d–%d 节",vector.startclass,vector.endclass];
     }
     return @"";
 }

@@ -197,7 +197,7 @@
 	self.valueTargetBuilding = @"1";
     self.nameTargetName = @"一教";
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"更新" style:UIBarButtonItemStylePlain target:self action:@selector(performUpdateLocation)] autorelease];
-    self.title = @"自习室";
+    self.title = @"空闲教室";
 
 }
 

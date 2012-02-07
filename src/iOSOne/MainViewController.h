@@ -27,6 +27,8 @@
 #import "IPGateHelper.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
+
+#define color_current_blue UIColorFromRGB(0x0074e6)
 @class iOSOneAppDelegate;
 @class GateViewController;
 @class IPGateHelper;
@@ -67,6 +69,3 @@
 - (void)navToCourseDetail:(Course *)course;
 @end
 
-@interface MainViewController (Private)
-- (UILabel *)detailLabel;
-@end

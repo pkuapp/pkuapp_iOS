@@ -8,6 +8,7 @@
 
 #import "EULAViewController.h"
 #import "FirstViewController.h"
+#import "Environment.h"
 
 @implementation EULAViewController
 @synthesize secondNavController;
@@ -48,7 +49,7 @@
 {
     [super viewDidLoad];
     self.arrayCells = [[NSBundle mainBundle] loadNibNamed:@"EULACell" owner:self options:nil];
-    
+    self.tableView.backgroundColor = tableBgColor;
       // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  

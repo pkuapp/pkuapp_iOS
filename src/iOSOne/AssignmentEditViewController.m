@@ -7,6 +7,7 @@
 //
 
 #import "AssignmentEditViewController.h"
+#import "Environment.h"
 
 @implementation AssignmentEditViewController
 @synthesize tableView;
@@ -178,6 +179,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone  target:self action:@selector(didSelectEditDoneBtn)];
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel  target:self action:@selector(didSelectCancelBtn)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.tableView.backgroundColor = tableBgColor;
+
     // Do any additional setup after loading the view from its nib.
 }
 

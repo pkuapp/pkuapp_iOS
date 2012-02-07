@@ -215,7 +215,9 @@ static const CGFloat kVPadding = 7.0f;
       imageBoxStyle = [imageStyle.style firstStyleOfClass:[TTBoxStyle class]];
       imageSize = [imageStyle.style addToSize:CGSizeZero context:context];
       if (_isVertical) {
-        CGFloat height = imageSize.height + imageBoxStyle.margin.top + imageBoxStyle.margin.bottom;
+        CGFloat height = imageSize.height + imageBoxStyle.margin.top + \
+          imageBoxStyle.margin.bottom-3;
+          
         textFrame.origin.y += height;
         textFrame.size.height -= height;
 
