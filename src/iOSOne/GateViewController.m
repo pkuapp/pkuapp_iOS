@@ -436,7 +436,7 @@
     
     [super viewDidLoad];
     self.defaults = [NSUserDefaults standardUserDefaults];
-    self.Username = @"1000012926";//[defaults objectForKey:@"Username"];
+    self.Username = self.delegate.appUser.deanid;//[defaults objectForKey:@"Username"];
     self.Password = self.delegate.appUser.password;//[defaults objectForKey:@"Password"];
     self.title = @"网关";
     self.gateConfigDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:@"GateConfigDictionary"]];

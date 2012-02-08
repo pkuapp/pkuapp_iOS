@@ -397,6 +397,7 @@
            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, self.bounds.size.width - 10, 21)];
            
            titleLabel.textAlignment = UITextAlignmentLeft;
+           titleLabel.userInteractionEnabled = YES;
            titleLabel.text = self.EventName;
            titleLabel.adjustsFontSizeToFitWidth = NO;
            titleLabel.font = day_font_title;
@@ -407,6 +408,7 @@
            [self addSubview:titleLabel];
            
            UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 26, self.bounds.size.width - 10, 16)];
+           locationLabel.userInteractionEnabled = YES;
            locationLabel.textAlignment = UITextAlignmentLeft;
            locationLabel.adjustsFontSizeToFitWidth = NO;
            locationLabel.font = day_font_sub;

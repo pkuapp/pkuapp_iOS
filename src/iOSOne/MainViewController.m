@@ -236,6 +236,8 @@
     }
     Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
     Course *_course;
+    //remove all subviews of details view for Notification cell to avoid reuse issue
+    [cell.detailView removeAllSubviews];
     switch (notice.type) {
         case  PKUNoticeTypeLatestCourse:
             _course = (Course *)notice.object;
@@ -304,7 +306,7 @@
     
     if (![[course stringTimeForDay:[SystemHelper getDayNow]] isEqualToString:@""]) {
         
-        NSInteger offset = cell.subviews.count?83:0;
+        NSInteger offset = cell.detailView.subviews.count?83:0;
         
         UIImageView *_timeImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"time.png"] highlightedImage:[UIImage imageNamed:@"time-selected.png"]];
         _timeImg.frame = CGRectMake(0+offset, 0, 11, 11);
