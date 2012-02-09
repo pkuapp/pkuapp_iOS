@@ -38,7 +38,7 @@ const CGFloat ttkDefaultPadLandscapeKeyboardHeight  = 352.0f;
 const CGFloat ttkGroupedTableCellInset = 9.0f;
 const CGFloat ttkGroupedPadTableCellInset = 42.0f;
 
-const CGFloat ttkDefaultTransitionDuration      = 0.3f;
+const CGFloat ttkDefaultTransitionDuration      = 0.3f;//0.3f;
 const CGFloat ttkDefaultFastTransitionDuration  = 0.2f;
 const CGFloat ttkDefaultFlipTransitionDuration  = 0.7f;
 

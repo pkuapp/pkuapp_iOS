@@ -40,9 +40,19 @@
 @synthesize gvc,connector;
 @synthesize arrayNotices;
 @synthesize noticeLabel;
+@synthesize arrayCourses;
+#pragma mark - AssignmentDelegate
+- (void)didDoneAssignment:(Assignment *)assignment {
+    [self.tableView reloadData];
+}
 
 #pragma mark - accessor setup
-
+- (NSArray *)arrayCourses{
+    if (arrayCourses == nil) {
+        arrayCourses = [[NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]] retain];
+    }
+    return arrayCourses;
+}
 
 -(NSManagedObjectContext *)context
 {
@@ -102,61 +112,13 @@
 
 #pragma mark - //define for TTStyledTextLabel
 
-//- (TTStyle*)blueText {
-//return [TTTextStyle styleWithColor:[UIColor blueColor] next:nil];
-//}
-//- (TTStyle*)largeText {
-//return [TTTextStyle styleWithFont:[UIFont systemFontOfSize:32] next:nil];
-//}
-//- (TTStyle*)smallText {
-//return [TTTextStyle styleWithFont:[UIFont systemFontOfSize:12] next:nil];
-//}
-//- (TTStyle*)floated {
-//return [TTBoxStyle styleWithMargin:UIEdgeInsetsMake(0, 0, 5, 5)
-//padding:UIEdgeInsetsMake(0, 0, 0, 0)
-//minSize:CGSizeZero position:TTPositionFloatLeft next:nil];
-//}
-//- (TTStyle*)blueBox {
-//return
-//[TTShapeStyle styleWithShape:[TTRoundedRectangleShape shapeWithRadius:6] next:
-//[TTInsetStyle styleWithInset:UIEdgeInsetsMake(0, -5, -4, -6) next:
-//[TTShadowStyle styleWithColor:[UIColor grayColor] blur:2 offset:CGSizeMake(1,1) next:
-//[TTSolidFillStyle styleWithColor:[UIColor cyanColor] next:
-//[TTSolidBorderStyle styleWithColor:[UIColor grayColor] width:1 next:nil]]]]];
-//}
-//- (TTStyle*)inlineBox {
-//    NSLog(@"inlineBox");
-//    
-//return
-//[TTSolidFillStyle styleWithColor:[UIColor blueColor] next:
-//[TTBoxStyle styleWithPadding:UIEdgeInsetsMake(5,0,-5,0) next:
-//[TTSolidBorderStyle styleWithColor:[UIColor blackColor] width:1 next:nil]]];
-//}
-//- (TTStyle*)inlineBox2 {
-//return
-//[TTSolidFillStyle styleWithColor:[UIColor cyanColor] next:
-//[TTBoxStyle styleWithMargin:UIEdgeInsetsMake(5,50,0,50)
-//padding:UIEdgeInsetsMake(0,13,0,13) next:nil]];
-//}
 
+#pragma mark - IPGate delegate
 
-
-#pragma mark - IPGate Listen delegate
-
-- (void)connectFreeSuccessWithDict:(NSDictionary *)dict andDetail:(NSDictionary *)dictDetail {
-    [self.gvc connectFreeSuccessWithDict:dict andDetail:dictDetail];
-}
-
-- (void)connectGlobalSuccessWithDict:(NSDictionary *)dict andDetail:(NSDictionary *)dictDetail {
-    [self.gvc connectGlobalSuccessWithDict:dict andDetail:dictDetail];
-}
-
-- (void)connectFailed:(NSDictionary *)dict {
-    [self.gvc connectFailed:dict];
-}
 
 - (NSString*)Username {
-    return self.delegate.appUser.deanid;
+    //return self.delegate.appUser.deanid;
+    return @"00904084";
 }
 - (NSString*)Password {
     return self.delegate.appUser.password;
@@ -167,9 +129,6 @@
 }
 
 
-- (BOOL)shouldReConnectWithDisconnectrequest {
-    return [self.gvc shouldReConnectWithDisconnectrequest];
-}
 
 - (void)didConnectToIPGate {
     
@@ -199,7 +158,9 @@
         case PKUNoticeTypeLatestCourse:
             [self navToCourseDetail:(Course *)notice.object];
             break;
-            
+        case PKUNoticeTypeAssignment:
+            [self navToAssignment:(Assignment *)notice.object];
+            break;
         default:
             break;
     }
@@ -334,6 +295,24 @@
     return [label autorelease];    
 }
 #pragma mark - IBAcion Setup
+
+- (void)navToAssignment:(Assignment*)assignment {
+    AssignmentEditViewController *aevc = [[AssignmentEditViewController alloc] initWithType:AssignmentEditControllerModeEdit];
+    
+    aevc.delegate = self;
+        
+    aevc.coord_assign = assignment;
+    
+    [self.navigationController pushViewController:aevc animated:YES];
+}
+
+- (void)shouldDeleteAssignment:(Assignment *)assignment {
+    [self.context deleteObject:assignment];
+    [self.context save:nil];
+    self.arrayNotices = nil;
+    self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
+    [self.tableView reloadData];
+}
 
 - (void)navToCourseDetail:(Course *)course {
     
@@ -482,10 +461,15 @@
 {
 	if (self.gvc == nil) {
          GateViewController *ivc = [[GateViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        
         ivc.connector = self.connector;
+        
         ivc.delegate = self.delegate;
+        
+        self.connector.delegate = ivc;
         //ivc.delegate = self.delegate;
          self.gvc = ivc;
+        
         [ivc release];
     }
 	[self.navigationController pushViewController:self.gvc animated:YES]; 
@@ -527,20 +511,27 @@
 - (void) performFetch
 {
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.context];
+    
 	[fetchRequest setEntity:entity];
 	[fetchRequest setFetchBatchSize:20]; 
+    
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:nil];
+    
 	NSArray *descriptors = [NSArray arrayWithObject:sortDescriptor];
 	[fetchRequest setSortDescriptors:descriptors];
 	
 
 	NSError *error;
+    
 	self.results = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+    
     self.results.delegate = self;
     
 	if (![self.results performFetch:&error])
         NSLog(@"FetchError: %@", [error localizedDescription]);
+    
 	[fetchRequest release];
 	[sortDescriptor release];
 //    NSLog(@"%d",[self.results.fetchedObjects count] );
@@ -637,6 +628,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 
 }

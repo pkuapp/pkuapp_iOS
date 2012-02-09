@@ -97,12 +97,34 @@
     }
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = @"课程";
+            if (self.delegate.coord_assign.course == nil) {
+                cell.textLabel.text = @"所属课程";
+                [self.coursePicker selectedRowInComponent:0];
+                self.courseSetUp = YES;
+            }
+            else {
+                
+                cell.textLabel.text = self.delegate.coord_assign.course.name;
+            
+                [self.coursePicker selectedRowInComponent: [self.delegate.arrayCourses indexOfObject:self.delegate.coord_assign.course]];
+                
+                self.courseSetUp = YES;
+                
+            }
             self.courseLabel = cell.textLabel;
+
             
             break;
         case 1:
-            cell.textLabel.text = @"截止时间";
+            if (self.delegate.coord_assign.endDate == nil) {
+                cell.textLabel.text = @"截止时间";
+            }
+            else {
+                
+                [self.datePicker setDate:self.delegate.coord_assign.endDate];
+                
+                cell.textLabel.text = [self.delegate.formatter stringFromDate:self.datePicker.date];
+            }
             self.timeLabel = cell.textLabel;
         default:
             break;
@@ -119,6 +141,13 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+    [self.view bringSubviewToFront:self.coursePicker];
+    
+}
 
 - (void)viewDidLoad
 {

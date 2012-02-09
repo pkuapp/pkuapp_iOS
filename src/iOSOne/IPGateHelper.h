@@ -19,11 +19,39 @@
 #define IPG_HEART_BEAT_INTERVAL 3
 #define IPG_HeartBeatServer
 #define patternResponse @"<!--IPGWCLIENT_START.+(SUCCESS=([^ ]+).+)IPGWCLIENT_END-->"
+
 #define patternFailure @"SUCCESS=([^ ]+).+REASON=([^ ]+).+"
+
 #define patternConnectSuccess @"SUCCESS=([^ ]+) STATE=([^ ]+) USERNAME=([^ ]+) FIXRATE=([^ ]+) SCOPE=([^ ]+) DEFICIT=([^ ]+) CONNECTIONS=([^ ]+) BALANCE=([^ ]+) IP=([^ ]+) MESSAGE=(.+)"
+
 #define patternDisconnectSuccess @"SUCCESS=([^ ]+) IP=([^ ]+) CONNECTIONS=([^ ]+)"
+
 #define patternAccountDetail @"包月状态：</td><td>([^ ]+?)<[^#]+?([0-9.]+)小时[^#]+>([0-9.]+)"
 #define pTime @"([0-9]+)小时"
+
+typedef enum IPGateConnectError{
+    IPGateErrorTimeout, 
+    IPGateErrorOverCount, // 超过连接数
+    IPGateErrorNotPermitted,
+    IPGateErrorLimitted,
+    //
+    IPGateErrorUnknown,
+    IPGateErrorRawReason
+    
+}IPGateConnectError;
+
+typedef enum IPGateConnectingStatus{
+    IPGateConnectingFree,
+    IPGateConnectingGlobal,
+    IPGateDisconnecting,
+    IPGateConnectPending
+}IPGateConnectingStatus;
+
+typedef enum IPGateResult{
+    IPGateResultNone,
+    IPGateResultFree,
+    IPGateResultGlobal,
+}IPGateResult;
 
 @protocol IPGateListenDelegate <NSObject>
 
@@ -37,43 +65,38 @@
 @required
 - (NSString*)Username;
 - (NSString*)Password;
-- (void)connectFreeSuccessWithDict:(NSDictionary *)dict andDetail:(NSDictionary *)dictDetail;
-- (void)connectGlobalSuccessWithDict:(NSDictionary *)dict andDetail:(NSDictionary *)dictDetail;
-;
+- (void)connectFreeSuccess;
+- (void)connectGlobalSuccess;
 - (void)disconnectSuccess;
-- (void)connectFailed:(NSDictionary *)dict;
+- (void)connectFailed;
 
-- (BOOL)shouldReConnectWithDisconnectrequest;
 @end
 
-@interface IPGateHelper : NSObject<AsyncUdpSocketDelegate> {
+@interface IPGateHelper : NSObject<AsyncUdpSocketDelegate,ASIHTTPRequestDelegate> {
 @private
     NSObject <IPGateConnectDelegate> *delegate;
     NSString *stirngRange;
     BOOL isConnected;
+    
 }
 @property (assign) NSString *stringRange;
 @property (assign) id<IPGateConnectDelegate> delegate;
 @property (retain, nonatomic)ASIHTTPRequest* request;
 @property BOOL isConnected;
 @property NSInteger numberListenRetry;
+@property (assign, atomic) IPGateConnectError error;
+@property (assign, atomic) IPGateConnectingStatus connectingStatus;
+@property (assign, atomic) IPGateResult connectionResult;
+@property (retain, atomic) NSDictionary *dictResult;
+@property (retain, atomic) NSDictionary *dictDetail;
+
+
 - (void)connectFree;
-- (void)connectFreeFinished:(ASIHTTPRequest *)Request;
 
 - (void)connectGlobal;
-- (void)connectGlobalFinished:(ASIHTTPRequest *)Request;
 - (void)disConnect;
 - (void)startListening;
-- (NSDictionary *)dictSuccessForResponse:(NSString*) Target;
-- (NSDictionary *)dictDisconnectResponse:(NSString*) Target;
-- (NSDictionary *)dictRefuseForResponse:(NSString*)Target;
+- (void)reConnect;
 
-- (BOOL)connectAcceptAsExceptForResponse:(NSString *)stringResponse;
-
-- (NSURL* )urlConnect;
-- (NSURL* )urlDisconnect;
-- (NSURL* )urlWithOperation:(NSString* )arg;
-- (BOOL)terminate;
-- (BOOL)sendHeartBeatForHost:(NSString *)host Port:(UInt16)port;
 @end
 

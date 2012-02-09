@@ -17,6 +17,7 @@
 - (NSMutableArray *)arrayAssigns{
     if (arrayAssigns == nil) {
         arrayAssigns =  [[[NSMutableArray alloc] initWithArray:[self.delegate.appUser.assignset allObjects]] retain];
+        [arrayAssigns filterUsingPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
     }
     return arrayAssigns;
 }
@@ -30,8 +31,9 @@
 #pragma mark - action setup
 - (void)didFinnishedEdit {
     NSError *error;
-    [self.delegate.managedObjectContext save:&error];
-    //NSLog(@"%@",error);
+    if (![self.delegate.managedObjectContext save:&error]) {
+        NSLog(@"%@",error);
+    }
     self.arrayAssigns = nil;
     [self.tableView reloadData];
     [self dismissModalViewControllerAnimated:YES];
@@ -39,6 +41,7 @@
 
 - (void)didCancelEdit {
     [self.delegate.managedObjectContext undo];
+    [self.delegate.managedObjectContext save:nil];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -52,6 +55,8 @@
     AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
     evc.coord_assign = new_assign;
     evc.delegate = self;
+    evc.controllerMode = AssignmentEditControllerModeAdd;
+    
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:evc];
     
 
@@ -102,11 +107,15 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didSelectAddBtn)];
+    self.tabBarController.title = @"作业";
+
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.tabBarController.title = @"作业";
-    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didSelectAddBtn)];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

@@ -14,12 +14,18 @@
 #import "Environment.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
+#import "AppWindowProtocol.h"
+#import "NimbusModels.h"
+#import "Three20/Three20.h"
 
-@interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate> { 
+@interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate,NITableViewModelDelegate> { 
+    BOOL _autoDisconnect;
+    BOOL _alwaysGlobal;
+    BOOL _hasSilentCallback;
 }
 @property (retain, nonatomic) NSString* Username;
 @property (retain, nonatomic) NSString* Password;
-@property (retain, nonatomic) NSMutableDictionary* gateConfigDictionary;
+@property (retain, nonatomic) NSMutableDictionary* gateStateDictionary;
 @property (assign) IPGateHelper* connector;
 @property (retain,nonatomic) UISwitch *swAutoDisconnect;
 @property (retain,nonatomic) UISwitch *swAlwaysGlobal;
@@ -28,8 +34,9 @@
 @property (retain, nonatomic) UILabel *labelStatus;
 @property (retain, nonatomic) UILabel *labelWarning;
 @property (retain, nonatomic) MBProgressHUD *progressHub;
-@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol> *delegate;
-
+@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,AppWindowProtocol> *delegate;
+@property (retain, nonatomic) NITableViewModel *detailDataSource;
+@property (assign, atomic) UITableViewController *detailTVC;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section;
@@ -38,5 +45,5 @@
 - (void)configAutoDisconnectDidChanged:(UISwitch *)sender;
 - (void)configAlwaysGlobalDidChanged:(UISwitch *)sender;
 - (void)showProgressHubWithTitle:(NSString *)title;
-
+- (void)saveAccountState;
 @end

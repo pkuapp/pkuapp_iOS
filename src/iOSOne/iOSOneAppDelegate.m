@@ -163,6 +163,7 @@
 }
 
 -(void)showwithMainView {
+    
     [self.window addSubview:self.mvc.view];
     [self.mvc dismissModalViewControllerAnimated:YES];
     [self.mvc setViewControllers:[NSArray arrayWithObject:self.mv]];

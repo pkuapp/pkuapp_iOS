@@ -8,20 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "Three20UI/TTLauncherView.h"
-#import "Three20UI/TTLauncherItem.h"
-#import "Three20UI/TTLauncherViewDelegate.h"
-#import "Three20UI/TTStyledTextLabel.h"
-
-#import "Three20Style/Three20Style.h"
-
+#import "Three20/Three20.h"
 #import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "NoticeCenterHepler.h"
 #import "PKUNoticeCenterProtocols.h"
 #import "AssignmentsListViewController.h"
 #import "CourseDetailsViewController.h"
-
+#import "AssignmentEditViewController.h"
 #import "NotificationCell.h"
 #import "SystemHelper.h"
 #import "IPGateHelper.h"
@@ -33,7 +27,7 @@
 @class GateViewController;
 @class IPGateHelper;
 
-@interface MainViewController : UIViewController <IPGateListenDelegate,IPGateConnectDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate>{
+@interface MainViewController : UIViewController <IPGateListenDelegate,IPGateConnectDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate,AssignmentEditDelegate>{
     iOSOneAppDelegate *delegate;
     NSManagedObjectContext *context;
     IPGateHelper *connector;
@@ -56,9 +50,9 @@
 @property (retain, nonatomic) NoticeCenterHepler *noticeCenterHelper;
 @property (retain, nonatomic) NSArray *arrayNotices;
 @property (retain, nonatomic) IBOutlet UILabel *noticeLabel;
+@property (retain, nonatomic) NSArray *arrayCourses;
 
-
-
+- (void)navToAssignment:(Assignment*)assignment;
 - (IBAction) navToClassroom;
 - (IBAction) navToGateView;
 - (IBAction) navToCanlendar;

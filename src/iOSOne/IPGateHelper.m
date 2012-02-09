@@ -11,9 +11,33 @@
 #import "ASIHTTPRequest.h"
 #import "AsyncUdpSocket.h"
 
-@implementation IPGateHelper
-@synthesize stringRange,delegate,request,isConnected,numberListenRetry;
 
+@interface IPGateHelper (Private)
+- (BOOL)connectionSucceed:(NSString *)stringResponse;
+
+- (NSDictionary *)dictSuccessForResponse:(NSString*) Target;
+- (NSDictionary *)dictDisconnectResponse:(NSString*) Target;
+- (NSDictionary *)dictRefuseForResponse:(NSString*)Target;
+
+- (void)connectFreeFinished:(ASIHTTPRequest *)Request;
+- (void)connectGlobalFinished:(ASIHTTPRequest *)Request;
+
+- (NSURL* )urlConnect;
+- (NSURL* )urlDisconnect;
+- (NSURL* )urlWithOperation:(NSString* )arg;
+- (BOOL)terminate;
+- (BOOL)sendHeartBeatForHost:(NSString *)host Port:(UInt16)port;
+- (BOOL)connectAcceptAsExceptForResponse:(NSString *)stringResponse;
+@end
+
+@implementation IPGateHelper
+@synthesize stringRange,delegate,request = _request;
+@synthesize isConnected,numberListenRetry;
+@synthesize error = _error;
+@synthesize connectingStatus = _status;
+@synthesize connectionResult = _result;
+@synthesize dictResult = _dictResult;
+@synthesize dictDetail = _dictDetail;
 
 #pragma mark - Listening setup
 
@@ -24,143 +48,170 @@
 }
 
 - (void)listenHeartBeat:(NSTimer *)timer
-{
+{   
     [self sendHeartBeatForHost:@"202.112.7.13" Port:7777];
     [self sendHeartBeatForHost:@"162.105.129.27" Port:7777];
 }
-                      
+
+- (BOOL)connectionSucceed:(NSString *)stringResponse {
+    
+    BOOL _succeeded = [self connectAcceptAsExceptForResponse:stringResponse];
+    
+    if (_succeeded) {
+        
+        NSDictionary *dict = [self dictSuccessForResponse:stringResponse];
+        
+        self.dictResult = dict;
+        
+        NSMutableDictionary *dictDetail =[NSMutableDictionary dictionaryWithDictionary:[stringResponse dictionaryByMatchingRegex:patternAccountDetail withKeysAndCaptures:@"Type",1,@"Time",2,@"Balance",3, nil]];
+        
+        if (![[dictDetail objectForKey:@"Type"] isEqualToString:@"未包月"]) {
+            
+            NSArray *array = [[dictDetail objectForKey:@"Type"] captureComponentsMatchedByRegex:pTime];
+            
+            if (array != nil) {
+                
+                float timeAll = [[array objectAtIndex:1] floatValue];
+                
+                float timeLeft = timeAll - [[dictDetail objectForKey:@"Time"] floatValue];
+                [dictDetail setObject:[NSString stringWithFormat:@"包月剩余%1.2f小时",timeLeft] forKey:@"timeLeft"];
+            }
+            else
+                [dictDetail setObject:@"不限时" forKey:@"timeLeft"];
+            
+        }
+        else [dictDetail setObject:@"NO" forKey:@"Type"];
+        
+        self.dictDetail = dictDetail;
+        
+        return YES;
+    }
+    else {
+        NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
+        
+        NSString *reason = [dict objectForKey:@"REASON"];
+        
+        NSLog(@"%@",reason);
+        
+        NSRange range = [reason rangeOfString:@"超过预定值"];
+        if (range.location != NSNotFound) {
+            self.error = IPGateErrorOverCount;
+        }
+        else self.error = IPGateErrorRawReason;
+
+    }
+    return NO;
+}
+
 #pragma mark - ASIHttpDelegate
 
 - (void)connectFreeFinished:(ASIHTTPRequest *)Request
 {
     NSString *stringResponse = [Request responseString];
     
-    if ([self connectAcceptAsExceptForResponse:stringResponse]) {
-        NSDictionary *dict = [self dictSuccessForResponse:stringResponse];
-        NSMutableDictionary *dictDetail =[NSMutableDictionary dictionaryWithDictionary:[stringResponse dictionaryByMatchingRegex:patternAccountDetail withKeysAndCaptures:@"Type",1,@"Time",2,@"Balance",3, nil]];
-        //NSArray *array = [stringResponse captureComponentsMatchedByRegex:patternAccountDetail];
-        if (![[dictDetail objectForKey:@"Type"] isEqualToString:@"未包月"]) {
-            NSArray *array = [[dictDetail objectForKey:@"Type"] captureComponentsMatchedByRegex:pTime];
-            //NSLog(@"%@",array);
-            if (array != nil) {
-                float timeAll = [[array objectAtIndex:1] floatValue];
-                float timeLeft = timeAll - [[dictDetail objectForKey:@"Time"] floatValue];
-                [dictDetail setObject:[NSString stringWithFormat:@"%1.2f",timeLeft] forKey:@"timeLeft"];
-            }
-            else
-                [dictDetail setObject:@"∞" forKey:@"timeLeft"];
-            
-        }
-        else [dictDetail setObject:@"NO" forKey:@"Type"];
-        [self.delegate connectFreeSuccessWithDict:dict andDetail:dictDetail]; 
+    if ([self connectionSucceed:stringResponse]) {
+        [self.delegate connectFreeSuccess];        
     }
-    else //连接被拒绝
-    {
-        NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
-        NSString *reason = [dict objectForKey:@"REASON"];
-        NSLog(@"%@",reason);
-        NSRange range = [reason rangeOfString:@"超过预定值"];
-        if (range.location != NSNotFound) {
-            if ([self.delegate shouldReConnectWithDisconnectrequest]) {
-                [self disConnect];
-                [self connectFree];
-            }
-            else [self.delegate connectFailed:dict];
-        }
-        else [self.delegate connectFailed:dict];
-    }
+    else [self.delegate connectFailed];
 }
+
 - (void)connectGlobalFinished:(ASIHTTPRequest *)Request
 {
     NSString *stringResponse = [Request responseString];
-    if ([self connectAcceptAsExceptForResponse:stringResponse]) {
-        NSDictionary *dict = [self dictSuccessForResponse:stringResponse];
-        NSMutableDictionary *dictDetail =[NSMutableDictionary dictionaryWithDictionary:[stringResponse dictionaryByMatchingRegex:patternAccountDetail withKeysAndCaptures:@"Type",1,@"Time",2,@"Balance",3, nil]];
-        //NSArray *array = [stringResponse captureComponentsMatchedByRegex:patternAccountDetail];
-        if (![[dictDetail objectForKey:@"Type"] isEqualToString:@"未包月"]) {
-            NSArray *array = [[dictDetail objectForKey:@"Type"] captureComponentsMatchedByRegex:pTime];
-            //NSLog(@"%@",array);
-            if (array != nil) {
-                float timeAll = [[array objectAtIndex:1] floatValue];
-                float timeLeft = timeAll - [[dictDetail objectForKey:@"Time"] floatValue];
-                [dictDetail setObject:[NSString stringWithFormat:@"%1.2f",timeLeft] forKey:@"timeLeft"];
-            }
-            else
-                [dictDetail setObject:@"∞" forKey:@"timeLeft"];
-            
-        }
-        else [dictDetail setObject:@"NO" forKey:@"Type"];
-        [self.delegate connectGlobalSuccessWithDict:dict andDetail:dictDetail]; 
+        
+    if ([self connectionSucceed:stringResponse]) {
+        
+        [self.delegate connectGlobalSuccess]; 
     }
-    else //连接被拒绝
-    {
-        NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
-        NSString *reason = [dict objectForKey:@"REASON"];
-        NSLog(@"%@",reason);
-        NSRange range = [reason rangeOfString:@"超过预订值"];
-        if (range.location != NSNotFound) {
-            if ([self.delegate shouldReConnectWithDisconnectrequest]) {
-                [self disConnect];
-                [self connectGlobal];
-            }
-            else [self.delegate connectFailed:dict];
-        }
-        else [self.delegate connectFailed:dict];
-    }
+    else [self.delegate connectFailed];
 }
+
 - (void)disConnectFinished:(ASIHTTPRequest *)arequest
 {
     NSString *stringResponse = [arequest responseString];
+    
     if ([self connectAcceptAsExceptForResponse:stringResponse]){
     
-    [self.delegate disconnectSuccess];
+        [self.delegate disconnectSuccess];
+        
     }
     else {
+        
         NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
-        [self.delegate connectFailed:dict];
+        
+        self.dictResult = dict;
+        
+        self.error = IPGateErrorUnknown;
+        
+        [self.delegate connectFailed];
     }
 }
-- (void)requestFailed:(ASIHTTPRequest *)arequest
-{
-   NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"连接超时"] forKey:@"REASON"];
-    [self.delegate connectFailed:dict];
-    NSLog(@"%@",[[arequest error] localizedDescription]);
+
+- (void)requestFailed:(ASIHTTPRequest *)request {
+    self.error = IPGateErrorTimeout;
+    [self.delegate connectFailed];
 }
 
 #pragma mark - Interface Method
+- (void)reConnect {
+//    _request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
+//    [_request setValidatesSecureCertificate:NO];
+//    [_request setShouldRedirect:NO];
+//    _request.delegate = self;
+//    [_request startSynchronous];
+//    
+    
+    switch (_status) {
+        case IPGateConnectingFree:
+            [self connectFree];
+            break;
+            
+        case IPGateConnectingGlobal:
+            [self connectGlobal];
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 - (void)connectFree
 {
+    _status = IPGateConnectingFree;
     stringRange = @"2";
-    request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
+    _request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
+    
+    [_request setValidatesSecureCertificate:NO];
+    [_request setShouldRedirect:NO];
+    _request.delegate = self;
 
-    [request setValidatesSecureCertificate:NO];
-    [request setShouldRedirect:NO];
-    request.delegate = self;
-
-    request.shouldAttemptPersistentConnection = NO;
-    [request setDidFinishSelector:@selector(connectFreeFinished:)];
-    [request startAsynchronous];
+    _request.shouldAttemptPersistentConnection = NO;
+    [_request setDidFinishSelector:@selector(connectFreeFinished:)];
+    [_request startAsynchronous];
 }
 - (void)connectGlobal
 {
-    stringRange = @"1";
-    request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
-    [request setValidatesSecureCertificate:NO];
-    [request setShouldRedirect:NO];
-    request.delegate = self;
+    _status = IPGateConnectingGlobal;
     
-    [request setDidFinishSelector:@selector(connectGlobalFinished:)];
-    [request startAsynchronous];
+    stringRange = @"1";
+    _request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
+    [_request setValidatesSecureCertificate:NO];
+    [_request setShouldRedirect:NO];
+    _request.delegate = self;
+    
+    [_request setDidFinishSelector:@selector(connectGlobalFinished:)];
+    [_request startAsynchronous];
 
 }
 
 - (void)disConnect{
-    request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
-    [request setValidatesSecureCertificate:NO];
-    [request setShouldRedirect:NO];
-    request.delegate = self;
-    [request setDidFinishSelector:@selector(disConnectFinished:)];
-    [request startAsynchronous];
+    _request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
+    [_request setValidatesSecureCertificate:NO];
+    [_request setShouldRedirect:NO];
+    _request.delegate = self;
+    [_request setDidFinishSelector:@selector(disConnectFinished:)];
+    [_request startAsynchronous];
 }
 
 #pragma mark - lifecycle method setup 
@@ -187,25 +238,25 @@
 }
 
 #pragma mark - KVO
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (keyPath == @"numberListenRetry") {
-        NSNumber *numberRetry = [change objectForKey:@"new"];
-        if ([numberRetry intValue] >= Max_Listen_Rounds) {
-            if (self.isConnected == YES) {
-                self.isConnected = NO;
-            }
-        }
-    }
-    if (keyPath == @"isConnected") {
-        BOOL valueNew = [[change objectForKey:@"new"] boolValue];
-        if (valueNew == YES) {
-            [self.delegate didConnectToIPGate];
-        }
-        else [self.delegate didLoseConnectToIpGate];
-    }
-}
+//
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    if (keyPath == @"numberListenRetry") {
+//        NSNumber *numberRetry = [change objectForKey:@"new"];
+//        if ([numberRetry intValue] >= Max_Listen_Rounds) {
+//            if (self.isConnected == YES) {
+//                self.isConnected = NO;
+//            }
+//        }
+//    }
+//    if (keyPath == @"isConnected") {
+//        BOOL valueNew = [[change objectForKey:@"new"] boolValue];
+//        if (valueNew == YES) {
+//            [self.delegate didConnectToIPGate];
+//        }
+//        else [self.delegate didLoseConnectToIpGate];
+//    }
+//}
 #pragma mark - AsyUDPDelegate
 
 -(void)onUdpSocket:(AsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
@@ -304,13 +355,13 @@
 }
 -(BOOL)terminate
 {
-    request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
-    [request setValidatesSecureCertificate:NO];
-    [request setShouldRedirect:NO];
-    request.delegate = self.delegate;
-    [request setDidFinishSelector:@selector(disConnectFinished:)];
-    [request startSynchronous];
-    return [[[self dictDisconnectResponse:[request responseString]] objectForKey:@"SUCCESS"] isEqualToString:@"YES"];
+    _request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
+    [_request setValidatesSecureCertificate:NO];
+    [_request setShouldRedirect:NO];
+    _request.delegate = self.delegate;
+    [_request setDidFinishSelector:@selector(disConnectFinished:)];
+    [_request startSynchronous];
+    return [[[self dictDisconnectResponse:[_request responseString]] objectForKey:@"SUCCESS"] isEqualToString:@"YES"];
 
 }
 @end

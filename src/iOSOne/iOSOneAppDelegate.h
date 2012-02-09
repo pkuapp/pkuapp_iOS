@@ -11,6 +11,7 @@
 #import "AppCoreDataProtocol.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
+#import "AppWindowProtocol.h"
 
 @class SwitchViewController,NSPersistentStoreCoordinator,NSManagedObjectContext;
 @class FirstViewController;

@@ -264,6 +264,9 @@
 		41ED3914143C5E5000BBF866 /* CoursesCategory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41ED3912143C5E5000BBF866 /* CoursesCategory.xib */; };
 		41EF674513D172C5009A251C /* SystemHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EF674413D172C5009A251C /* SystemHelper.m */; };
 		41F2494213D0612B0019C223 /* CalendarGroudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F2494113D0612A0019C223 /* CalendarGroudView.m */; };
+		41FDB3EF14E29E07006A6451 /* NICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FDB3E714E29E07006A6451 /* NICellFactory.m */; };
+		41FDB3F014E29E07006A6451 /* NIFormCellCatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FDB3E914E29E07006A6451 /* NIFormCellCatalog.m */; };
+		41FDB3F114E29E07006A6451 /* NITableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FDB3ED14E29E07006A6451 /* NITableViewModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -529,6 +532,7 @@
 		414AEA7714765C4C007292B2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		414AEA7914765C51007292B2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		414BB8411481E35700CC8A4B /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		4155B1C514E41F7100EF5A17 /* AppWindowProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppWindowProtocol.h; sourceTree = "<group>"; };
 		415A80FB140421C0003F6EB9 /* PKUBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKUBarView.h; sourceTree = "<group>"; };
 		415A80FC140421C0003F6EB9 /* PKUBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKUBarView.m; sourceTree = "<group>"; };
 		415D3585145C05B900D492B6 /* button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-1.png"; sourceTree = "<group>"; };
@@ -782,6 +786,15 @@
 		41EF674413D172C5009A251C /* SystemHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemHelper.m; sourceTree = "<group>"; };
 		41F2494013D061290019C223 /* CalendarGroudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarGroudView.h; sourceTree = "<group>"; };
 		41F2494113D0612A0019C223 /* CalendarGroudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarGroudView.m; sourceTree = "<group>"; };
+		41FDB3E614E29E07006A6451 /* NICellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NICellFactory.h; sourceTree = "<group>"; };
+		41FDB3E714E29E07006A6451 /* NICellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NICellFactory.m; sourceTree = "<group>"; };
+		41FDB3E814E29E07006A6451 /* NIFormCellCatalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIFormCellCatalog.h; sourceTree = "<group>"; };
+		41FDB3E914E29E07006A6451 /* NIFormCellCatalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIFormCellCatalog.m; sourceTree = "<group>"; };
+		41FDB3EA14E29E07006A6451 /* NimbusModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusModels.h; sourceTree = "<group>"; };
+		41FDB3EB14E29E07006A6451 /* NimbusModels+Namespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NimbusModels+Namespace.h"; sourceTree = "<group>"; };
+		41FDB3EC14E29E07006A6451 /* NITableViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITableViewModel.h; sourceTree = "<group>"; };
+		41FDB3ED14E29E07006A6451 /* NITableViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NITableViewModel.m; sourceTree = "<group>"; };
+		41FDB3EE14E29E07006A6451 /* NITableViewModel+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NITableViewModel+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1007,6 +1020,7 @@
 		413E8FA4143D52690042BE88 /* ThirdPart Support */ = {
 			isa = PBXGroup;
 			children = (
+				41FDB3E514E29DDB006A6451 /* Nimbus Module */,
 				41BF88BD13AD2C680098959D /* SBJson */,
 				41CD38B313A7759A00CA3D3A /* ASI */,
 				41CD0BEF148B1F0B00F904CC /* Nimbus Core */,
@@ -1348,6 +1362,7 @@
 				41DFD9D013E6B12F00B19E24 /* IPGateHelper.m */,
 				41429C961397BBE700A62D9C /* GateViewController.h */,
 				41429C971397BBE700A62D9C /* GateViewController.m */,
+				4155B1C514E41F7100EF5A17 /* AppWindowProtocol.h */,
 			);
 			name = GateView;
 			sourceTree = "<group>";
@@ -1434,6 +1449,23 @@
 				413E8FC0143D8D7A0042BE88 /* ModelsAddon.m */,
 			);
 			name = CoreDataModels;
+			sourceTree = "<group>";
+		};
+		41FDB3E514E29DDB006A6451 /* Nimbus Module */ = {
+			isa = PBXGroup;
+			children = (
+				41FDB3E614E29E07006A6451 /* NICellFactory.h */,
+				41FDB3E714E29E07006A6451 /* NICellFactory.m */,
+				41FDB3E814E29E07006A6451 /* NIFormCellCatalog.h */,
+				41FDB3E914E29E07006A6451 /* NIFormCellCatalog.m */,
+				41FDB3EA14E29E07006A6451 /* NimbusModels.h */,
+				41FDB3EB14E29E07006A6451 /* NimbusModels+Namespace.h */,
+				41FDB3EC14E29E07006A6451 /* NITableViewModel.h */,
+				41FDB3ED14E29E07006A6451 /* NITableViewModel.m */,
+				41FDB3EE14E29E07006A6451 /* NITableViewModel+Private.h */,
+			);
+			name = "Nimbus Module";
+			path = "Nimbus Attributed Label";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1888,6 +1920,9 @@
 				41E63D3014BDF8D400CE50BF /* Assignment.m in Sources */,
 				41B76E6114DA58FF004FE2C0 /* CourseDetailsViewController.m in Sources */,
 				415F49BE14DC22E700260A08 /* NotificationCell.m in Sources */,
+				41FDB3EF14E29E07006A6451 /* NICellFactory.m in Sources */,
+				41FDB3F014E29E07006A6451 /* NIFormCellCatalog.m in Sources */,
+				41FDB3F114E29E07006A6451 /* NITableViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
