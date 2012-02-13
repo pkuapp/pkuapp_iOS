@@ -10,23 +10,23 @@
 #import "IpGateViewController.h"
 #import "ASIHTTPRequest.h"
 #import "Environment.h"
-#import "ASINetworkQueue.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import "MBProgressHUD.h"
 #import "Course.h"
 #import "AppUser.h"
 #import "SystemHelper.h"
-#define pathImgDean [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"deancode.png"]
+
+#define pathImg [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"deancode.png"]
 
 @implementation FirstViewController
 @synthesize tableView;
 @synthesize navigationBar;
-@synthesize Username=_Username;
-@synthesize UserPwd=_UserPwd;
-@synthesize DeanCode=_DeanCode;
-@synthesize requestImg=_requestImg;
-@synthesize firstImg,sidDean;
+@synthesize Username = _Username;
+@synthesize UserPwd = _UserPwd;
+@synthesize validCode = _validCode;
+@synthesize requestImg = _requestImg;
+@synthesize firstImg,sessionid;
 @synthesize HUD;
 @synthesize appUser;
 @synthesize didInputUsername = _didInputUsername;
@@ -45,14 +45,14 @@
 
 #pragma mark - getter OverRide
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField == self.DeanCode) {
-        [self.DeanCode resignFirstResponder];
+    if (textField == self.validCode) {
+        [self.validCode resignFirstResponder];
         [self myLogin:nil];
         return NO;
     }
     else if (textField == self.UserPwd) {
         
-        [self.DeanCode becomeFirstResponder];
+        [self.validCode becomeFirstResponder];
         return NO;
     }
     else if (textField == self.Username) {
@@ -65,7 +65,7 @@
 - (UIButton *)firstImg{
     if (firstImg == nil) {
         firstImg = [UIButton buttonWithType:UIButtonTypeCustom];
-        [firstImg addTarget:self action:@selector(refreshImgDean) forControlEvents:UIControlEventTouchUpInside];
+        [firstImg addTarget:self action:@selector(refreshImg) forControlEvents:UIControlEventTouchUpInside];
         [firstImg setFrame:CGRectMake(250, 13, deanImgWidth, deanImgHeight)];
         
         
@@ -106,20 +106,20 @@
     return UserPwd;
 }
 
-- (UITextField *)DeanCode{
-    if (DeanCode == nil) {
-        DeanCode = [[UITextField alloc] initWithFrame:CGRectMake(90, 11, 140, 20)];
-        DeanCode.autocapitalizationType = UITextAutocapitalizationTypeNone;
+- (UITextField *)validCode{
+    if (validCode == nil) {
+        validCode = [[UITextField alloc] initWithFrame:CGRectMake(90, 11, 140, 20)];
+        validCode.autocapitalizationType = UITextAutocapitalizationTypeNone;
 
-        DeanCode.borderStyle = UITextBorderStyleNone;
-        DeanCode.enablesReturnKeyAutomatically = YES;
-        DeanCode.autocorrectionType = UITextAutocorrectionTypeNo;
+        validCode.borderStyle = UITextBorderStyleNone;
+        validCode.enablesReturnKeyAutomatically = YES;
+        validCode.autocorrectionType = UITextAutocorrectionTypeNo;
 
-        DeanCode.keyboardType = UIKeyboardTypeASCIICapable;
-        DeanCode.returnKeyType = UIReturnKeyGo;
-        DeanCode.delegate = self;
+        validCode.keyboardType = UIKeyboardTypeASCIICapable;
+        validCode.returnKeyType = UIReturnKeyGo;
+        validCode.delegate = self;
     }
-    return DeanCode;
+    return validCode;
 }
 
 -(NSManagedObjectContext *)context
@@ -141,7 +141,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField == Username) {
         self.didInputUsername = YES;
-        [self refreshImgDean];
+        [self refreshImg];
     }
 }
 
@@ -170,7 +170,7 @@
             break;
         case 2:
             cell.textLabel.text = @"验证码";
-            [cell.contentView addSubview: self.DeanCode];
+            [cell.contentView addSubview: self.validCode];
             [cell.contentView addSubview:self.firstImg];
             self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             self.activityView.center = CGPointMake(270, 22);
@@ -201,13 +201,23 @@
 {
 	
 	NSArray *cookies = [request responseCookies];
-    NSAssert2([cookies count] > 0, @"Unhandled error at %s line %d", __FUNCTION__, __LINE__);    
-    NSString *tempString = [[cookies objectAtIndex:0] value];// cStringUsingEncoding:-2147481083];
-        
-    self.sidDean = [SystemHelper Utf8stringFromGB18030:tempString];
-    NSLog(@"%@",sidDean);
-	[self.firstImg setImage:[UIImage imageWithContentsOfFile: pathImgDean] forState:UIControlStateNormal];
-    DeanCode.placeholder = @"轻按图片以更新";
+    
+    NSAssert2([cookies count] > 0, @"Unhandled error at %s line %d", __FUNCTION__, __LINE__); 
+    
+    NSLog(@"%@",cookies);
+    
+    NSString *tempString = [[cookies objectAtIndex:0] valueForKey:@"value"];// cStringUsingEncoding:-2147481083];
+    if ([SystemHelper getPkuWeeknumberNow] > 2) {
+        self.sessionid = [SystemHelper Utf8stringFromGB18030:tempString];
+    }
+    else self.sessionid = tempString;
+    
+    NSLog(@"%@",sessionid);
+    
+	[self.firstImg setImage:[UIImage imageWithContentsOfFile: pathImg] forState:UIControlStateNormal];
+    
+    _validCode.placeholder = @"轻按图片以更新";
+    
     [self.activityView stopAnimating];
 	
 }
@@ -224,14 +234,22 @@
 
     
 }
--(BOOL)refreshImgDean
+-(BOOL)refreshImg
 {	
+    NSInteger pkuNumberNow = [SystemHelper getPkuWeeknumberNow];
+    NSString *urlImg;
+    
+    if (pkuNumberNow <= 2) {
+        urlImg = urlImgEle;
+    }
+    else urlImg = urlImgDean; 
+    
 	self.firstImg.imageView.image = nil;
     self.activityView.hidden = NO;
     [self.activityView startAnimating];
-	self.requestImg = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlImgDean]];
+	self.requestImg = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlImg]];
     
-	[self.requestImg setDownloadDestinationPath:pathImgDean];
+	[self.requestImg setDownloadDestinationPath:pathImg];
     
 	[self.requestImg setDelegate:self];
 
@@ -249,7 +267,7 @@
 {
     [self.Username resignFirstResponder];
     [self.UserPwd resignFirstResponder];
-    [self.DeanCode resignFirstResponder];
+    [self.validCode resignFirstResponder];
 }
 
 
@@ -262,7 +280,7 @@
 }
 
 - (IBAction) myLogin:(id)sender{
-    [self.DeanCode resignFirstResponder];
+    [self.validCode resignFirstResponder];
     HUD = [[MBProgressHUD alloc] initWithWindow:self.delegate.window];
     [self.delegate.window addSubview:HUD];
     [HUD showWhileExecuting:@selector(taskLogin) onTarget:self withObject:nil animated:YES];
@@ -271,7 +289,7 @@
 
 
 - (void)taskLogin {
-    if ([self.delegate authUserForAppWithUsername:self.Username.text password:self.UserPwd.text deanCode:self.DeanCode.text sessionid:self.sidDean]) {
+    if ([self.delegate authUserForAppWithUsername:self.Username.text password:self.UserPwd.text deanCode:self.validCode.text sessionid:self.sessionid]) {
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
@@ -308,12 +326,12 @@
 - (void)dealloc
 {
     NSFileManager *imgManager = [NSFileManager defaultManager];
-    [imgManager removeItemAtPath:pathImgDean error:nil];
+    [imgManager removeItemAtPath:pathImg error:nil];
     [self.Username release];
     [self.UserPwd release];
-    [self.DeanCode release];
+    [self.validCode release];
     [firstImg release];
-    [sidDean release];
+    [sessionid release];
     [_requestImg clearDelegatesAndCancel];
     [_requestImg release];
     [HUD release];
@@ -347,9 +365,9 @@
 {
     [self setUsername:nil];
     [self setUserPwd:nil];
-    [self setDeanCode:nil];
+    [self setValidCode:nil];
     firstImg = nil;
-    sidDean = nil;
+    sessionid = nil;
     HUD = nil;
     [self setNavigationBar:nil];
     [super viewDidUnload];

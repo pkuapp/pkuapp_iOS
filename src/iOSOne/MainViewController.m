@@ -107,7 +107,7 @@
     else if ([item.URL isEqualToString:@"main/rooms"]) [self navToClassroom];
     else if ([item.URL isEqualToString:@"main/calendar"]) [self navToCanlendar];
     else if ([item.URL isEqualToString:@"main/courses"]) [self navToCoursesView];
-    
+    else if ([item.URL isEqualToString:@"main/feedback"]) [self testTableView:nil];
 }
 
 #pragma mark - //define for TTStyledTextLabel
@@ -117,8 +117,7 @@
 
 
 - (NSString*)Username {
-    //return self.delegate.appUser.deanid;
-    return @"00904084";
+    return self.delegate.appUser.deanid;
 }
 - (NSString*)Password {
     return self.delegate.appUser.password;
@@ -428,6 +427,9 @@
     for (NSDictionary *dict in array) {
         Course *ccourse = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:context];
         for (NSString *key in [dict keyEnumerator]) {
+            if ([key isEqualToString:@"cname"]) {
+                key = @"name";
+            }
             NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",key];
             id object = [dict objectForKey:key];
             if (object != [NSNull null]) {

@@ -21,6 +21,7 @@
 		410B418013902BA300002A46 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410B417F13902BA300002A46 /* CoreGraphics.framework */; };
 		410B418913902BA300002A46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418813902BA300002A46 /* main.m */; };
 		410B418C13902BA400002A46 /* iOSOneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418B13902BA400002A46 /* iOSOneAppDelegate.m */; };
+		410C9E2614E80C5700F04E3E /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 410C9E2514E80C5700F04E3E /* coredata.sqlite */; };
 		410FF20B141E2D660056637A /* home-screen-courses.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FF206141E2D660056637A /* home-screen-courses.png */; };
 		410FF20C141E2D660056637A /* home-screen-feedback.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FF207141E2D660056637A /* home-screen-feedback.png */; };
 		410FF20D141E2D660056637A /* home-screen-free-classrooms.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FF208141E2D660056637A /* home-screen-free-classrooms.png */; };
@@ -257,7 +258,6 @@
 		41E3F0A214DE67140030D74A /* event-bg-course.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E3F09E14DE67140030D74A /* event-bg-course.png */; };
 		41E3F0A314DE67140030D74A /* event-bg-course@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E3F09F14DE67140030D74A /* event-bg-course@2x.png */; };
 		41E63D2B14BDA7C200CE50BF /* SNSData.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 41E63D2A14BDA7C200CE50BF /* SNSData.xcdatamodel */; };
-		41E63D2D14BDEB5300CE50BF /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 41E63D2C14BDEB5300CE50BF /* coredata.sqlite */; };
 		41E63D3014BDF8D400CE50BF /* Assignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E63D2F14BDF8D300CE50BF /* Assignment.m */; };
 		41EC28B913A7099E00566ACE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EC28B813A7099E00566ACE /* MainWindow.xib */; };
 		41ED3913143C5E5000BBF866 /* CoursesCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ED3911143C5E5000BBF866 /* CoursesCategoryController.m */; };
@@ -436,6 +436,7 @@
 		410B418813902BA300002A46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		410B418A13902BA400002A46 /* iOSOneAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSOneAppDelegate.h; sourceTree = "<group>"; };
 		410B418B13902BA400002A46 /* iOSOneAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSOneAppDelegate.m; sourceTree = "<group>"; };
+		410C9E2514E80C5700F04E3E /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		410FF206141E2D660056637A /* home-screen-courses.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-screen-courses.png"; sourceTree = "<group>"; };
 		410FF207141E2D660056637A /* home-screen-feedback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-screen-feedback.png"; sourceTree = "<group>"; };
 		410FF208141E2D660056637A /* home-screen-free-classrooms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-screen-free-classrooms.png"; sourceTree = "<group>"; };
@@ -774,7 +775,6 @@
 		41E3F09E14DE67140030D74A /* event-bg-course.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event-bg-course.png"; sourceTree = "<group>"; };
 		41E3F09F14DE67140030D74A /* event-bg-course@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event-bg-course@2x.png"; sourceTree = "<group>"; };
 		41E63D2A14BDA7C200CE50BF /* SNSData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SNSData.xcdatamodel; sourceTree = "<group>"; };
-		41E63D2C14BDEB5300CE50BF /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		41E63D2E14BDF8D300CE50BF /* Assignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assignment.h; sourceTree = "<group>"; };
 		41E63D2F14BDF8D300CE50BF /* Assignment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Assignment.m; sourceTree = "<group>"; };
 		41EC28B813A7099E00566ACE /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -966,6 +966,7 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				410C9E2514E80C5700F04E3E /* coredata.sqlite */,
 				41E3F08914DE5C300030D74A /* 0205 */,
 				415F49B514DC138A00260A08 /* notification */,
 				417C1DBD14C5AD5900567B7B /* Calendar */,
@@ -983,7 +984,6 @@
 				41D0121614C0443B00FE6D3F /* 256-box2@2x.png */,
 				41D0121714C0443B00FE6D3F /* 265-download.png */,
 				41D0121814C0443B00FE6D3F /* 265-download@2x.png */,
-				41E63D2C14BDEB5300CE50BF /* coredata.sqlite */,
 				41CD0C2E148B40E100F904CC /* EULA HTMLS */,
 				41442B0E147A813B003B3BB6 /* welcome-bg.png */,
 				41442B0F147A813B003B3BB6 /* welcome-bg@2x.png */,
@@ -1729,7 +1729,6 @@
 				412D608714A3650500E0B7B5 /* AssignmentEditViewController.xib in Resources */,
 				411588EB14A3783300FBFA59 /* AssignDatePickViewController.xib in Resources */,
 				411588F014A3785400FBFA59 /* AssignPickViewController.xib in Resources */,
-				41E63D2D14BDEB5300CE50BF /* coredata.sqlite in Resources */,
 				41D0121914C0443B00FE6D3F /* 96-book.png in Resources */,
 				41D0121A14C0443B00FE6D3F /* 96-book@2x.png in Resources */,
 				41D0121B14C0443B00FE6D3F /* 179-notepad.png in Resources */,
@@ -1806,6 +1805,7 @@
 				41E3F0A314DE67140030D74A /* event-bg-course@2x.png in Resources */,
 				41D977E014E0FC6100383F9E /* mainView-header.png in Resources */,
 				41D977E114E0FC6100383F9E /* mainView-header@2x.png in Resources */,
+				410C9E2614E80C5700F04E3E /* coredata.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

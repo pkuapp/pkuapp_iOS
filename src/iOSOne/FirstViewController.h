@@ -30,16 +30,16 @@
     
     UITextField *Username;
     UITextField *UserPwd;
-    UITextField *DeanCode;
+    UITextField *validCode;
     UINavigationBar *navigationBar;
 }
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 
 @property (nonatomic, retain) UITextField *Username;
 @property (nonatomic, retain) UITextField *UserPwd;
-@property (nonatomic, retain) UITextField *DeanCode;
+@property (nonatomic, retain) UITextField *validCode;
 @property (nonatomic, retain) UIButton *firstImg;
-@property (nonatomic, retain) NSString *sidDean;
+@property (nonatomic, retain) NSString *sessionid;
 @property (nonatomic, readonly) NSManagedObjectContext* context;
 @property (nonatomic, retain) ASIHTTPRequest *requestImg;
 @property (nonatomic, retain) MBProgressHUD *HUD;
@@ -51,7 +51,7 @@
 
 - (IBAction) myLogin:(id)sender;
 - (IBAction) editDoneTapBackground:(id)sender;
-- (BOOL) refreshImgDean;
+- (BOOL) refreshImg;
 
 - (void)didSelectNeXTBtn;
 - (void)requestFinished: (ASIHTTPRequest *)request;

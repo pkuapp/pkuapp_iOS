@@ -19,6 +19,10 @@
 #import "SBJson.h"
 #import "AppUserDelegateProtocol.h"
 #import "WelcomeViewController.h"
+#import "SystemHelper.h"
+#import "School.h"
+#import "Course.h"
+
 @implementation iOSOneAppDelegate
 
 
@@ -54,6 +58,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"didLogin"];
+    [NSUserDefaults resetStandardUserDefaults];
     [persistentStoreCoordinator release];
     persistentStoreCoordinator = nil;
     [managedObjectContext release];
@@ -65,17 +70,38 @@
 
 - (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid
 {
+    NSString *urlLogin;
+    NSString *usernameKey;
+    NSString *passwordKey;
+    NSString *validKey;
+    NSString *sessionKey;
+    if ([SystemHelper getPkuWeeknumberNow] <= 2) {
+        urlLogin = urlLoginEle;
+        usernameKey = @"username";
+        passwordKey = @"passwd";
+        validKey = @"valid";
+        sessionKey = @"sessionid";
+    }
+    else {
+        urlLogin = urlLoginDean;
+        usernameKey = @"sno";
+        passwordKey = @"pwd";
+        validKey = @"check";
+        sessionKey = @"sid";
+    }
+    NSLog(@"week%d%@,%@,%@",[SystemHelper getPkuWeeknumberNow],validKey,passwordKey,sessionKey);
+
     ASIFormDataRequest *requestLogin = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: urlLogin]];
-	
-	[requestLogin setPostValue:username forKey:@"sno"];
-	[requestLogin setPostValue:password forKey:@"pwd"];
-	[requestLogin setPostValue:deanCode forKey:@"check"];
-	[requestLogin setPostValue:sid forKey:@"sid"];
+	requestLogin.timeOutSeconds = 30;
+	[requestLogin setPostValue:username forKey:usernameKey];
+	[requestLogin setPostValue:password forKey:passwordKey];
+	[requestLogin setPostValue:deanCode forKey:validKey];
+	[requestLogin setPostValue:sid forKey:sessionKey];
 	
 	[requestLogin startSynchronous];
 	
-	NSString *loginmessage = [requestLogin responseString];
-    
+	NSString *loginmessage = [requestLogin responseString]; //[[NSString alloc] initWithData:[requestLogin responseData] encoding:NSStringEncodingConversionAllowLossy];
+    NSLog(@"%@",requestLogin.error);
     NSLog(@"get login response:%@",loginmessage);
     
     if ([loginmessage isEqualToString:@"0"]){
@@ -146,10 +172,12 @@
     
     NSSet *courseset = [NSSet setWithArray:arrayCourse];
     
+    NSLog(@"%@",arrayCourse);
+    
     [self.appUser addCourses:courseset];
     
     if (![self.managedObjectContext save:&error]) NSLog(@"SaveError: %@", [error localizedDescription]);
-
+    
 }
 
 - (BOOL)refreshAppSession
@@ -229,6 +257,72 @@
     //NSLog(@"%d",self.netStatus);
     
 }
+
+- (void)generateCoreDataBase {
+    /**/
+    NSFileManager *fmanager = [NSFileManager defaultManager];
+    [fmanager removeItemAtPath:pathsql2 error:nil];
+    
+    NSError *error;
+    
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[NSManagedObjectModel mergedModelFromBundles:nil]];
+    [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[NSURL fileURLWithPath:pathsql2] options:nil error:nil];
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    [context setPersistentStoreCoordinator:coordinator];
+    
+    ASIHTTPRequest *schoolrq = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlCourseCategory]];
+    [schoolrq startSynchronous];
+    NSString *responseString = [schoolrq responseString];
+    NSArray *tempArray = [responseString JSONValue];
+    tempArray = [tempArray objectAtIndex:5];
+    NSMutableDictionary *schoolDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+    for (NSDictionary *dict in tempArray) {
+        School *school = [NSEntityDescription insertNewObjectForEntityForName:@"School" inManagedObjectContext:context];
+        school.name = [dict objectForKey:@"name"];
+        school.code = [dict objectForKey:@"code"];
+        if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);
+        [schoolDict setObject:school forKey:school.code];
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"School" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    //NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"school"];
+    //[frc performFetch:&error];
+    //NSArray *schoolArray = frc.fetchedObjects;
+    
+    
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlCourseAll]];
+    [request startSynchronous];
+    responseString = [request responseString];
+    
+    
+    NSArray *array = [responseString JSONValue];
+    for (NSDictionary *dict in array) {
+        Course *ccourse = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:context];
+        for (NSString *key in [dict keyEnumerator]) {
+            id object = [dict objectForKey:key];
+            if ([key isEqualToString:@"cname"]) {
+                key = @"name";
+                object = [dict objectForKey:@"cname"];
+            }
+            NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",key];
+            if (object != [NSNull null]) {
+                [ccourse performSelector:sel_getUid([selector UTF8String]) withObject:object];
+            }
+            
+        }
+        //NSLog(@"%@",ccourse.name);
+        ccourse.school = [schoolDict objectForKey:ccourse.SchoolCode];
+        
+    }
+    if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);/**/
+}
+
 #pragma mark UINavigation...Delegate Setup
 
 - (void)navigationController:(UINavigationController *)navigationController 
@@ -246,6 +340,7 @@
 #pragma mark application life-cycle Setup
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSFileManager *fm = [NSFileManager defaultManager];
     if (![fm fileExistsAtPath:pathSQLCore]) {

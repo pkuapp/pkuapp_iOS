@@ -9,7 +9,10 @@
 
 
 #define urlImgDean @"http://dean.pku.edu.cn/student/yanzheng.php?act=init"
-#define urlLogin @"http://www.pkucada.org:8082/Server/login"
+#define urlImgEle @"http://elective.pku.edu.cn/elective2008/DrawServlet?Rand=1898"
+
+#define urlLoginDean @"http://www.pkucada.org:8082/Server/login"
+#define urlLoginEle @"http://www.pkucada.org:8082/Server/login_elective"
 
 #define urlUpdateLocation @"http://www.pkucada.org:8082/Server/classroom/jsonlocation"
 #define urlProfile @"http://www.pkucada.org:8082/Server/account/jsonprofile"

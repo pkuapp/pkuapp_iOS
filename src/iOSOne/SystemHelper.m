@@ -68,17 +68,16 @@
     begComponent = [calendar components:unitFlags fromDate:DateTermBegin];
     endComponent = [calendar components:unitFlags fromDate:date];
     //NSLog(@"%d-%d",[endComponent week],[begComponent week]);
-    return ([endComponent week] - [begComponent week] + 52)%52;
+    return ([endComponent week] - [begComponent week] + 52)%52 +1;
 }
 
 
 + (NSDate*)getDateBeginOnline
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy/MM/dd"];
-    NSString *dateString = @"2011/9/5";
+    [dateFormatter setDateFormat:@"yyyy/MM/dd/hh:mm"];
+    NSString *dateString = @"2012/2/13/00:00";
     NSDate *DateTermBegin = [dateFormatter dateFromString:dateString];
-    NSLog(@"%@",DateTermBegin);
     NSUserDefaults* userPres = [NSUserDefaults standardUserDefaults];
     [userPres setObject:DateTermBegin forKey:@"DateTermBegin"];
     return DateTermBegin;

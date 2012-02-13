@@ -80,7 +80,7 @@
 	ASIFormDataRequest *requestQuery = [ASIFormDataRequest requestWithURL:urlClassroom];
 	//[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
     //temporary set c as 18 for testing 
-    [requestQuery setPostValue:[NSNumber numberWithInt:14] forKey:@"c"];
+    [requestQuery setPostValue:[NSNumber numberWithInt:1] forKey:@"c"];
     NSLog(@"%d",[SystemHelper getPkuWeeknumberNow]);
 	[requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
 	[requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
@@ -144,6 +144,7 @@
 	[request startSynchronous];
 	
 	NSString *stringRequest = [request responseString];
+    NSLog(@"%@",stringRequest);
 	NSArray *dictLocation = [stringRequest JSONValue];
 	NSMutableArray *tempmarray = [NSMutableArray arrayWithCapacity:25];
     for (NSDictionary *temp in dictLocation){
@@ -156,6 +157,7 @@
 	
 	[SystemHelper getDateBeginOnline];
 	self.marrayForQuery = tempmarray;
+    NSLog(@"%@",self.marrayForQuery);
     [self saveQueryArray];
 }
 
@@ -180,13 +182,13 @@
 		
 	}
     self.marrayForQuery = [[NSMutableArray alloc] initWithCapacity:15];
-
+    //NSLog(@"%@",self.marrayForQuery);
     NSArray *array = [[[NSArray alloc] initWithContentsOfFile:pathLocation] autorelease];
     for (NSDictionary *tempdict in array) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:tempdict];
         [self.marrayForQuery addObject:dict];
     }
-    //NSLog(@"%@",self.marrayForQuery);
+    NSLog(@"%@",self.marrayForQuery);
 }
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
