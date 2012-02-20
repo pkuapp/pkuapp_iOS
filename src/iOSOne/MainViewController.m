@@ -21,6 +21,7 @@
 #import "LocalCoursesViewController.h"
 #import "MyCoursesViewController.h"
 #import "School.h"
+#import "UIKitAddon.h"
 
 @interface MainViewController (Private)
 - (UILabel *)detailLabel;
@@ -600,7 +601,7 @@
     if (self) {
         
         self.navigationController.navigationBar.topItem.title = @"Home"; 
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
+        self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithPAStyle:PABarButtonStylePlain title:@"账号" target:self selector:@selector(performActionSheet)];//[[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
         
         
         //[self.gvc.swGlobal addObserver:self forKeyPath:@"on" options:NSKeyValueObservingOptionNew context:@"Global"];
@@ -626,7 +627,7 @@
     }
     
     [self.view insertSubview:self.launcherView belowSubview:self.tableView];
-
+       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -639,15 +640,21 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     
+       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 	[super viewDidLoad];
     self.connector = [[IPGateHelper alloc] init];
     self.connector.delegate = self;
     self.title = @"主页";
     //[self.connector startListening];
     [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mainView-header.png"]];
     
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mainView-header.png"]];
     noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-header-bg.png"]];
+
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BarButton-bg-plain.png"] style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
+    
 }
 
 /*

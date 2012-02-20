@@ -23,6 +23,19 @@
 #import "School.h"
 #import "Course.h"
 
+@implementation UINavigationBar (Custom)
+-(void)setBackgroundImage:(UIImage*)image{
+    if(image == NULL){
+        return;
+    }
+    UIImageView *aTabBarBackground = [[UIImageView alloc]initWithImage:image];
+    aTabBarBackground.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
+    [self addSubview:aTabBarBackground];
+    [self sendSubviewToBack:aTabBarBackground];
+    [aTabBarBackground release];
+}
+@end
+
 @implementation iOSOneAppDelegate
 
 
@@ -207,6 +220,7 @@
     if (wvc == nil) {
         WelcomeViewController *wv = [[WelcomeViewController alloc] initWithNibName:nil bundle:nil];
         wvc = [[UINavigationController alloc] initWithRootViewController:wv];
+//        [wvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"]];
         [wv release];
     
     }
@@ -225,7 +239,12 @@
     if (mvc == nil) {
         mvc = [[UINavigationController alloc] initWithRootViewController:nil];
         mvc.delegate = self;
-        mvc.navigationBar.tintColor = navigationBgColor;
+        if ([mvc.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+            [mvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"] forBarMetrics:UIBarMetricsDefault];
+        }
+//        [mvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"]];
+        //mvc.navigationBar.tintColor = navigationBgColor;
+        //mvc.navigationBar
     }
     return mvc;
 }

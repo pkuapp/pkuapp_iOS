@@ -7,7 +7,7 @@
 //
 
 #import "CourseDetailsViewController.h"
-
+#import "UIKitAddon.h"
 @implementation CourseDetailsViewController
 @synthesize tableView;
 @synthesize course;
@@ -258,7 +258,7 @@
     [super viewDidLoad];
     self.title = @"课程信息";
     self.tableView.backgroundColor = tableBgColor;
-    
+     
     //NSLog(@"table%@",[[self.tableView subviews] objectAtIndex:0]);
     // Do any additional setup after loading the view from its nib.
 }

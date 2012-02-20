@@ -149,7 +149,12 @@
 		415F49B414DC137F00260A08 /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415F499614DC137F00260A08 /* time@2x.png */; };
 		415F49BB14DC1E4400260A08 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 415F49BA14DC1E4300260A08 /* NotificationCell.xib */; };
 		415F49BE14DC22E700260A08 /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415F49BD14DC22E700260A08 /* NotificationCell.m */; };
+		416374DF14EEA6D600F26CE6 /* BarButton-bg-plain.png in Resources */ = {isa = PBXBuildFile; fileRef = 416374DE14EEA6D600F26CE6 /* BarButton-bg-plain.png */; };
 		416523CF140807AE003E4E83 /* ModalAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 416523CD140807AD003E4E83 /* ModalAlert.m */; };
+		4171251814EE8EAB00B1C644 /* PAView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4171251714EE8EAB00B1C644 /* PAView.m */; };
+		4171251D14EE932800B1C644 /* NavigationBar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4171251B14EE932800B1C644 /* NavigationBar-bg.png */; };
+		4171251E14EE932800B1C644 /* NavigationBar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4171251C14EE932800B1C644 /* NavigationBar-bg@2x.png */; };
+		4171252214EE9D4000B1C644 /* UIKitAddon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4171252114EE9D4000B1C644 /* UIKitAddon.m */; };
 		417793061478E9B700890739 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417793041478E9B600890739 /* WelcomeViewController.m */; };
 		417793071478E9B700890739 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 417793051478E9B700890739 /* WelcomeViewController.xib */; };
 		417AC5E513F6F9F6003BD79B /* ClassroomQueryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417AC5E613F6F9F6003BD79B /* ClassroomQueryController.m */; };
@@ -591,8 +596,15 @@
 		415F49BA14DC1E4300260A08 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		415F49BC14DC22E700260A08 /* NotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCell.h; sourceTree = "<group>"; };
 		415F49BD14DC22E700260A08 /* NotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationCell.m; sourceTree = "<group>"; };
+		416374DE14EEA6D600F26CE6 /* BarButton-bg-plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BarButton-bg-plain.png"; sourceTree = "<group>"; };
 		416523CD140807AD003E4E83 /* ModalAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalAlert.m; sourceTree = "<group>"; };
 		416523CE140807AD003E4E83 /* ModalAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalAlert.h; sourceTree = "<group>"; };
+		4171251614EE8EAB00B1C644 /* PAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAView.h; sourceTree = "<group>"; };
+		4171251714EE8EAB00B1C644 /* PAView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAView.m; sourceTree = "<group>"; };
+		4171251B14EE932800B1C644 /* NavigationBar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBar-bg.png"; sourceTree = "<group>"; };
+		4171251C14EE932800B1C644 /* NavigationBar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBar-bg@2x.png"; sourceTree = "<group>"; };
+		4171252014EE9D4000B1C644 /* UIKitAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIKitAddon.h; sourceTree = "<group>"; };
+		4171252114EE9D4000B1C644 /* UIKitAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIKitAddon.m; sourceTree = "<group>"; };
 		4174449414DD89E1001E95DF /* ReachablityProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachablityProtocol.h; sourceTree = "<group>"; };
 		417793031478E9B600890739 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		417793041478E9B600890739 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
@@ -966,6 +978,7 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4171251F14EE932D00B1C644 /* Global */,
 				410C9E2514E80C5700F04E3E /* coredata.sqlite */,
 				41E3F08914DE5C300030D74A /* 0205 */,
 				415F49B514DC138A00260A08 /* notification */,
@@ -1052,6 +1065,8 @@
 				41829F5D148B1B5500788EA6 /* EULADetailView.h */,
 				41829F5E148B1B5500788EA6 /* EULADetailView.m */,
 				41829F5F148B1B5500788EA6 /* EULADetailView.xib */,
+				4171251614EE8EAB00B1C644 /* PAView.h */,
+				4171251714EE8EAB00B1C644 /* PAView.m */,
 			);
 			name = FirstView;
 			sourceTree = "<group>";
@@ -1126,6 +1141,16 @@
 				415F499614DC137F00260A08 /* time@2x.png */,
 			);
 			name = notification;
+			sourceTree = "<group>";
+		};
+		4171251F14EE932D00B1C644 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				416374DE14EEA6D600F26CE6 /* BarButton-bg-plain.png */,
+				4171251B14EE932800B1C644 /* NavigationBar-bg.png */,
+				4171251C14EE932800B1C644 /* NavigationBar-bg@2x.png */,
+			);
+			name = Global;
 			sourceTree = "<group>";
 		};
 		417C1DBD14C5AD5900567B7B /* Calendar */ = {
@@ -1322,6 +1347,8 @@
 				411E363214BD6C6F00410A53 /* PKUNoticeCenterProtocols.h */,
 				41CD391913A7A69200CA3D3A /* MainViewController.h */,
 				41CD391A13A7A69200CA3D3A /* MainViewController.m */,
+				4171252014EE9D4000B1C644 /* UIKitAddon.h */,
+				4171252114EE9D4000B1C644 /* UIKitAddon.m */,
 				412EA86B14C1845800D7A5E4 /* LauncherViewEnv.h */,
 				415F49BA14DC1E4300260A08 /* NotificationCell.xib */,
 				415F49BC14DC22E700260A08 /* NotificationCell.h */,
@@ -1806,6 +1833,9 @@
 				41D977E014E0FC6100383F9E /* mainView-header.png in Resources */,
 				41D977E114E0FC6100383F9E /* mainView-header@2x.png in Resources */,
 				410C9E2614E80C5700F04E3E /* coredata.sqlite in Resources */,
+				4171251D14EE932800B1C644 /* NavigationBar-bg.png in Resources */,
+				4171251E14EE932800B1C644 /* NavigationBar-bg@2x.png in Resources */,
+				416374DF14EEA6D600F26CE6 /* BarButton-bg-plain.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1923,6 +1953,8 @@
 				41FDB3EF14E29E07006A6451 /* NICellFactory.m in Sources */,
 				41FDB3F014E29E07006A6451 /* NIFormCellCatalog.m in Sources */,
 				41FDB3F114E29E07006A6451 /* NITableViewModel.m in Sources */,
+				4171251814EE8EAB00B1C644 /* PAView.m in Sources */,
+				4171252214EE9D4000B1C644 /* UIKitAddon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
