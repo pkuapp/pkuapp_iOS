@@ -4,7 +4,7 @@
  
 ### 一、服务器端接口
  
-本应用所使用的全部服务器端接口使用使用说明请参考颐和园路5号开发小组内部 wiki（<http://www.pkucada.org:3000/redmine/projects/org-pkucada-pkuapp-server/wiki/Server-based_Development_Kit>）说明。
+本应用所使用的全部服务器端接口使用使用说明请参考颐和园路5号开发小组内部 wiki（<http://www.pkucada.org:3000/redmine/projects/org-pkucada-pkuapp-server/wiki/Server-based_Development_Kit>）说明。未来会迁移至 github。
 
 ### 二、项目所使用的第三方库
  
