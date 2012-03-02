@@ -14,7 +14,7 @@
 #import "CalendarGroudView.h"
 #import "AppUserDelegateProtocol.h"
 #import "AssignmentsListViewController.h"
-
+#import "NoticeCenterHepler.h"
 @class ClassGroup;
 @class NSManagedObjectContext;
 @class NSFetchedResultsController;
@@ -77,7 +77,9 @@
 @property (nonatomic, retain, readonly) NSArray *serverCourses;//return all courses user on dean
 @property (nonatomic, retain) NSMutableArray *arrayClassGroup;
 @property (nonatomic, assign) NSInteger bitListControl;
-@property (nonatomic, assign) NSInteger dateOffset;
+@property (nonatomic, assign) NSInteger dayoffset;
+@property (nonatomic, assign) NoticeCenterHepler *noticeCenter;
+
 - (NSArray *) fetchEventsForWeek;
 - (NSArray *) fetchEventsForDay;
 - (IBAction) addEvent:(id)sender;

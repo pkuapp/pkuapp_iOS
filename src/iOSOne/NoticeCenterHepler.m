@@ -11,7 +11,7 @@
 
 
 @implementation Notice
-@synthesize object,type;
+@synthesize object,type,dictInfo;
 + (Notice *)noticeWithObject:(id) object Type:(PKUNoticeType)atype{
     Notice *notice = [[[self alloc] init] autorelease];
     notice.object = object;
@@ -30,6 +30,16 @@
 @synthesize arrayAssignments;
 @synthesize latestEvent,latestCourse,latestAssignment;
 @synthesize nowCourse;
+@synthesize dictLatestCourse;
+
+- (Notice *)getNoticeNextCourse {
+    if (self.latestCourse != nil) {
+        Notice *_notice = [Notice noticeWithObject:self.latestCourse Type:PKUNoticeTypeLatestCourse];
+        _notice.dictInfo = self.dictLatestCourse;
+        return _notice;
+    }
+    return nil;
+}
 
 - (NSArray *)getNews{
     return nil;
@@ -37,12 +47,16 @@
 
 
 - (NSArray *)getAllNotice {
+    [self loadData];
+
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:2];
     if (self.nowCourse != nil) {
         [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeNowCourse]];
     }
     if (self.latestCourse != nil) {
-        [array addObject:[Notice noticeWithObject:self.latestCourse Type:PKUNoticeTypeLatestCourse]];
+        Notice *_notice = [Notice noticeWithObject:self.latestCourse Type:PKUNoticeTypeLatestCourse];
+        _notice.dictInfo = self.dictLatestCourse;
+        [array addObject:_notice];
     }
     if (self.latestEvent!= nil) {
         [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeLatestEvent]];
@@ -55,6 +69,7 @@
 }
 
 - (NSArray *) getCourseNotice {
+    [self loadData];
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:2];
     if (self.nowCourse != nil) {
         [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeNowCourse]];
@@ -78,9 +93,70 @@
     return nil;
 }
 
-- (void) loadData {
-    
+- (NSArray *)getCourseNoticeInWeekOffset:(NSInteger)weekOffset {
     NSDate *nowDate = [NSDate date];
+
+    NSMutableArray *arrayCourseDicts = [NSMutableArray arrayWithCapacity:10];
+    
+    for (Course *course in self.delegate.appUser.courses) {
+        
+        [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]+weekOffset]];
+    }
+    
+    NSInteger PKUWeekDayNow = [SystemHelper getDayNow];
+    //    NSLog(@"now it's weekday %d",PKUWeekDayNow);
+    //NSDateComponents *components = [[NSDateComponents alloc] init];
+    
+    NSCalendar *nsCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    unsigned uniflag = NSHourCalendarUnit|NSMinuteCalendarUnit;
+    NSDateComponents *components = [nsCalendar components:uniflag fromDate:nowDate];
+    
+    NSInteger hour = [components hour];
+    NSInteger minute = [components minute];
+    
+    NSInteger dayMinuteNow = hour*60 +minute;
+    NSInteger minMinuteInterVal = 10080;
+    
+    
+    for (NSDictionary *dict in arrayCourseDicts) {
+        
+        NSInteger day = [[dict objectForKey:@"day"] intValue] - PKUWeekDayNow + 7*weekOffset;
+        
+        if (day < 0) {
+            continue;
+        }
+        //NSLog(@"course %@ is in day %d",[dict objectForKey:@"name"],day);
+        float start = [[dict objectForKey:@"start"] floatValue];
+        NSInteger minute = start * 60;
+        
+        NSInteger minuteInterval = day *24 * 60 + minute - dayMinuteNow;
+        
+        //NSLog(@"and minute interval is %d",minuteInterval);
+        
+        if (minuteInterval < minMinuteInterVal && minuteInterval > 0) {
+            minMinuteInterVal = minuteInterval;
+            self.latestCourse = [dict objectForKey:@"course"];
+            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:day],@"dayOffset",[NSNumber numberWithInt:minute],@"startMinute", nil];  
+        }
+        if (day == 0 && [[dict objectForKey:@"start"] floatValue] * 60 <= dayMinuteNow && [[dict objectForKey:@"end"] floatValue]*60 > dayMinuteNow) {
+            if (!nowCourse) {
+                self.nowCourse = [dict objectForKey:@"course"];
+            }
+            //            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:day+PKUWeekDayNow],@"weekDay",NSNumber numberWithInt:(),nil];
+        }
+    }
+    
+
+}
+
+
+
+- (void) loadData {
+    self.latestCourse = nil;
+    self.nowCourse = nil;
+    NSDate *nowDate = [NSDate date];
+    NSLog(@"now %@",nowDate);
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
     
     EKEventStore *store = [[EKEventStore alloc] init];
@@ -94,66 +170,10 @@
     
     NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
     //fetch all courses event
-    NSMutableArray *arrayCourseDicts = [NSMutableArray arrayWithCapacity:10];
-
-    for (Course *course in self.delegate.appUser.courses) {
-        
-        [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]]];
-    }
     
-    NSInteger PKUWeekDayNow = [SystemHelper getDayNow];
-    NSLog(@"now it's weekday %d",PKUWeekDayNow);
-    //NSDateComponents *components = [[NSDateComponents alloc] init];
-    
-    NSCalendar *nsCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    unsigned uniflag = NSHourCalendarUnit|NSMinuteCalendarUnit;
-    NSDateComponents *components = [nsCalendar components:uniflag fromDate:nowDate];
-    
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
-    
-    NSInteger dayMinuteNow = hour*60 +minute;
-    
-    /*code to sort this array, now seems to be useless.
-    [arrayCourseDicts sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSInteger dayObj1 = ([[obj1 objectForKey:@"day"] intValue] -PKUWeekDayNow) % 7;
-        NSInteger dayObj2 = ([[obj2 objectForKey:@"day"] intValue] - PKUWeekDayNow) % 7;
-        if (dayObj1 < dayObj2) {
-            return NSOrderedAscending;
-        }
-        else if (dayObj1 > dayObj2) {
-            return NSOrderedDescending;
-        }
-        else {
-            NSInteger startHour1 = ([[obj1 objectForKey:@"start"] intValue]*60 -dayMinute) % (7*24*3600) ;
-            NSInteger startHour2 = ([[obj2 objectForKey:@"start"] intValue]*60 -dayMinute) % (7*24*60);
-            return startHour1 < startHour2;
-        }
-    } ];
-    
-    */
-    //initial minutes interval with 7*24*60 minutes = 10080
-    NSInteger minMinuteInterVal = 10080;
-    
-    for (NSDictionary *dict in arrayCourseDicts) {
-        
-        NSInteger day = ([[dict objectForKey:@"day"] intValue] - PKUWeekDayNow +7) % 7;
-        //NSLog(@"course %@ is in day %d",[dict objectForKey:@"name"],day);
-        
-        NSInteger minute = [[dict objectForKey:@"start"] intValue] * 60;
-        
-        NSInteger minuteInterval = (day *24 * 60 + minute - dayMinuteNow +10080) % 10080;
-        
-        //NSLog(@"and minute interval is %d",minuteInterval);
-        
-        if (minuteInterval < minMinuteInterVal) {
-            minMinuteInterVal = minuteInterval;
-            self.latestCourse = [dict objectForKey:@"course"];
-        }
-        if (day == 0 && [[dict objectForKey:@"start"] floatValue] * 60 <= dayMinuteNow && [[dict objectForKey:@"end"] floatValue]*60 > dayMinuteNow) {
-            self.nowCourse = [dict objectForKey:@"course"];
-        }
+    [self getCourseNoticeInWeekOffset:0];
+    if (!latestCourse) {
+        [self getCourseNoticeInWeekOffset:1];
     }
     
     //setup latest event in code below

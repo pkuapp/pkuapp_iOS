@@ -14,6 +14,7 @@ typedef enum{
     ClassGroupTypeNow,
     ClassGroupTypeNext,
     ClassGroupTypeAllNone,
+    ClassGroupTypeDisable,
     ClassGroupTypeEnd,
 }ClassGroupType;
 

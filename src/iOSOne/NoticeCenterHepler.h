@@ -30,6 +30,8 @@ typedef enum{
 }
 @property (assign, nonatomic) id object;
 @property (assign, nonatomic) PKUNoticeType type;
+@property (nonatomic, retain) NSDictionary *dictInfo;
+
 + (Notice *)noticeWithObject:(id) object Type:(PKUNoticeType)atype;
 
 @end
@@ -41,11 +43,13 @@ typedef enum{
 @property (retain, nonatomic) EKEvent* latestEvent;
 @property (retain, nonatomic) Course* nowCourse;
 @property (retain, nonatomic) Assignment* latestAssignment;
+@property (nonatomic, retain) NSDictionary *dictLatestCourse;
 
 //i was thinking whether ot not break notices into four parts so that it could be use in different part in this app.
 - (NSArray *)getAllNotice;
 //getCourseNotice will defaultly return nowCourse, if not nil. So it mightly break the principle cause it 'knows' the style:)
-- (NSArray *)getCourseNotice;
+- (Notice *)getNoticeNextCourse;
+- (NSArray *)getCourseNoticeInWeekOffset:(NSInteger) weekOffset;
 - (NSArray *)getEventNotice;
 - (NSArray *)getAssignmentNotice;
 - (NSArray *)getNews;

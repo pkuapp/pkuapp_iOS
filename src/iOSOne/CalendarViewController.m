@@ -32,8 +32,8 @@
 @synthesize delegate;
 @synthesize listView,tableView = _tableView;
 @synthesize bitListControl = _bitListControl;
-@synthesize dateOffset;
-
+//@synthesize dateOffset;
+@synthesize noticeCenter;
 #pragma mark - getter method setup
 - (NSMutableArray *)arrayClassGroup {
     if (nil == arrayClassGroup) {
@@ -108,7 +108,6 @@
     [self prepareListViewDataSource];
     [self.tableView reloadData];
     for (ClassGroup *group in self.arrayClassGroup) {
-        NSLog(@"start in%d",group.endclass);
     }
 //    [self.view bringSubviewToFront:self.listView];
 }
@@ -234,7 +233,9 @@
     
     NSInteger weekNow = [SystemHelper getPkuWeeknumberForDate:self.dateInDayView];
     NSMutableSet *waitSet = [NSMutableSet setWithCapacity:0];
-    
+    Notice *_notice = [self.noticeCenter getNoticeNextCourse];
+    NSInteger dayOffset = [[_notice.dictInfo objectForKey:@"dayOffset"] intValue];
+    NSInteger startMinuteNextCourse = [[_notice.dictInfo objectForKey:@"startMinute"] intValue];
     BOOL foundCoursePresent = NO;
     
     for (Course *course in self.delegate.appUser.courses) {
@@ -250,15 +251,19 @@
             group.course = course;
             group.type = ClassGroupTypeCourse;
             
-            float startMinute = [Course starthourForClass:group.startclass] * 60;
+            NSInteger startMinute = [Course starthourForClass:group.startclass] * 60;
             float endMinute = [Course starthourForClass:group.endclass] *60 +50;
             
-            if (startMinute <= dayMinuteNow && endMinute > dayMinuteNow) {
+            if (startMinute <= dayMinuteNow && endMinute > dayMinuteNow && fabs([dateInDayView timeIntervalSinceNow]) <= 1) {
                 group.type = ClassGroupTypeNow;
+            }
+
+            if (fabs([self.dateBegInDayView timeIntervalSinceDate:[SystemHelper dateBeginForDate:[NSDate date]]] - dayOffset*86400) <= 1 && startMinute == startMinuteNextCourse ) {
+                group.type = ClassGroupTypeNext;
             }
             
             if ((weekNow%2 ==0 && _v.doubleType == doubleTypeSingle) || (weekNow%2==1 &&_v.doubleType == doubleTypeDouble)) {
-                group.type = ClassGroupTypeNext;
+                group.type = ClassGroupTypeDisable;
                 [waitSet addObject:group];
                 continue;
             }
@@ -290,7 +295,6 @@
             }
         }
     }
-    NSLog(@"bit list control\n%d",_bitListControl);
     int _bitClass = 0;
     BOOL _bitState = NO;
     for (int i = 1 ; i <= 12; i++) {
@@ -581,7 +585,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
     
-    if (group.type == ClassGroupTypeCourse) {
+    if (group.type == ClassGroupTypeCourse || group.type == ClassGroupTypeNext || group.type == ClassGroupTypeNow) {
         CourseDetailsViewController *cdv = [[CourseDetailsViewController alloc] init];
         cdv.course = group.course;
         [self.navigationController pushViewController:cdv animated:YES];
@@ -627,7 +631,8 @@
         [cell.contentView addSubview:placeLabel];
         [cell.contentView addSubview:nameLabel];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+//       
 //        cell.contentView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.85];
 //        cell.accessoryView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.85];
     }
@@ -650,6 +655,8 @@
         [cell.contentView addSubview:placeLabel];
         [cell.contentView addSubview:nameLabel];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
         //        
 
     }
@@ -666,14 +673,40 @@
         UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
         placeLabel.font = [UIFont systemFontOfSize:12];
-        placeLabel.textColor = [UIColor colorWithRed:83 green:138 blue:42 alpha:0.597656];
+        placeLabel.textColor = [UIColor colorWithRed:83/255.0 green:138/255.0 blue:42/255.0 alpha:0.597656];
+//        placeLabel.textColor = UIColorFromRGB(0xCCCCCC);
         placeLabel.backgroundColor = [UIColor clearColor];
         placeLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:placeLabel];
         [cell.contentView addSubview:nameLabel];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
     }
-    
+    else if (group.type == ClassGroupTypeDisable) {
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
+        nameLabel.text = group.course.name;
+        nameLabel.textColor = UIColorFromRGB(0xCCCCCC);
+        nameLabel.font = [UIFont boldSystemFontOfSize:18];
+        nameLabel.backgroundColor = [UIColor clearColor];
+        nameLabel.highlightedTextColor = [UIColor whiteColor];
+        [cell.contentView addSubview:nameLabel];
+        
+        
+        UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
+        placeLabel.text = group.course.rawplace;
+        placeLabel.font = [UIFont systemFontOfSize:12];
+//        placeLabel.textColor = [UIColor colorWithRed:83 green:138 blue:42 alpha:0.597656];
+        placeLabel.textColor = UIColorFromRGB(0xCCCCCC);
+        placeLabel.backgroundColor = [UIColor clearColor];
+        placeLabel.highlightedTextColor = [UIColor whiteColor];
+        [cell.contentView addSubview:placeLabel];
+        [cell.contentView addSubview:nameLabel];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        
+    }
+
     else {
 //        cell.contentView.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -682,7 +715,6 @@
     
     
     
-    NSLog(@"%d-%d",group.startclass,group.endclass);
     return cell;
 }
 
@@ -691,6 +723,9 @@
     
     if (group.type == ClassGroupTypeCourse || group.type == ClassGroupTypeNow || group.type == ClassGroupTypeNext) {
         cell.backgroundColor = [UIColor colorWithWhite:1 alpha:0.85];
+    }
+    else {
+    
     }
 }
 
@@ -838,9 +873,7 @@
         self.dateBegInDayView = [SystemHelper dateBeginForDate:self.dateInDayView];
         [self displayCoursesInDayView];
         [self prepareListViewDataSource];
-        [self.tableView reloadData];
-        NSLog(@"dateInDayView changed");
-        
+        [self.tableView reloadData];        
     }
     else if (key == @"dateInWeekView")
         NSLog(@"wait for action dateInWeekView");
@@ -900,6 +933,7 @@
     self.bitListControl = 0;
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+
     
     self.navigationItem.rightBarButtonItem = rightButton;
     

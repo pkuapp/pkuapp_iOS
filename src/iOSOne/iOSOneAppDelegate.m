@@ -147,7 +147,6 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%@",[error localizedDescription]);
     }
- 
 }
 
 - (void)updateServerCourses{
@@ -160,37 +159,61 @@
     if (jsonCourse.count == 0) {
         return;
     }
+    
+    NSMutableArray *arrayCourses = [NSMutableArray arrayWithCapacity:5];
+    
     NSDictionary *dictCourse;
     
-    NSMutableString *stringPredicate = [NSMutableString stringWithCapacity:0];
+    NSString *stringPredicate;// = [NSMutableString stringWithCapacity:0];
     
-	for (int i = 0 ;i < jsonCourse.count -1; i++){
+	for (int i = 0 ;i < jsonCourse.count; i++){
         dictCourse = [jsonCourse objectAtIndex:i];
+        stringPredicate = [NSString stringWithFormat:@"id == %@",[dictCourse objectForKey:@"id"]];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:stringPredicate];
+        request.entity = entity;
+        request.predicate = predicate;
+        NSArray *_array = [self.managedObjectContext executeFetchRequest:request error:&error];
+        Course *_course = nil;
+        if (!_array.count) {
+            _course = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
+            
+            for (NSString *key in [dictCourse keyEnumerator]) {
+                if ([key isEqualToString:@"cname"]) {
+                    key = @"name";
+                }
+                NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",key];
+                id object = [dictCourse objectForKey:key];
+                if (object != [NSNull null]) {
+                    [_course performSelector:sel_getUid([selector UTF8String]) withObject:[dictCourse objectForKey:key]];
+                }
+                
+            }
 
-        [stringPredicate appendFormat:@"id == %@ OR ",[dictCourse objectForKey:@"id"]];
+        }
+        else {
+            _course = [_array lastObject];
+        }
+        if (_course) {
+            [arrayCourses addObject:_course];
+        }
+
+//        [stringPredicate appendFormat:@"id == %@ OR ",[dictCourse objectForKey:@"id"]];
     }
+    [self.managedObjectContext save:&error];
     
-    dictCourse = [jsonCourse objectAtIndex:jsonCourse.count-1];
+//    dictCourse = [jsonCourse objectAtIndex:jsonCourse.count-1];
+//    
+//    [stringPredicate appendFormat:@"id == %@",[dictCourse objectForKey:@"id"]];
+//    
+   
     
-    [stringPredicate appendFormat:@"id == %@",[dictCourse objectForKey:@"id"]];
+    NSLog(@"count:%d",arrayCourses.count);
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSSet *courseset = [NSSet setWithArray:arrayCourses];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:stringPredicate];
-    
-    request.entity = entity;
-    
-    request.predicate = predicate;
-    
-    NSArray *arrayCourse = [self.managedObjectContext executeFetchRequest:request error:&error];
-    
-    NSLog(@"count:%d",arrayCourse.count);
-    
-    NSSet *courseset = [NSSet setWithArray:arrayCourse];
-    
-    NSLog(@"%@",arrayCourse);
     
     [self.appUser addCourses:courseset];
     

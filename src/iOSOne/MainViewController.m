@@ -72,10 +72,8 @@
 }
 
 - (NSArray *)arrayNotices{
-    if (arrayNotices == nil){
-        arrayNotices = [[self.noticeCenterHelper getAllNotice] retain];        
-    }
-    return arrayNotices;
+//    NSLog(@"notices %@",self.noticeCenterHelper.getAllNotice);
+    return self.noticeCenterHelper.getAllNotice;
 }
 
 - (NoticeCenterHepler *)noticeCenterHelper {
@@ -484,6 +482,7 @@
     CalendarViewController *cvc = [[CalendarViewController alloc] initWithNibName: @"CalendarView" bundle:nil];
     //cvc.EventResults = self.results;
     cvc.delegate = self.delegate;
+    cvc.noticeCenter = self.noticeCenterHelper;
     [self.navigationController pushViewController:cvc animated:YES];
     
     [cvc release];
@@ -601,7 +600,11 @@
     if (self) {
         
         self.navigationController.navigationBar.topItem.title = @"Home"; 
-        self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithPAStyle:PABarButtonStylePlain title:@"账号" target:self selector:@selector(performActionSheet)];//[[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
+//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:nil];
+//        item.tintColor = UIColorFromRGB(0x4d4d4d);
+        self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithPAStyle:PABarButtonStylePlain title:@"账号与野兽" target:self selector:@selector(performActionSheet)];
+        
+        //[[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
         
         
         //[self.gvc.swGlobal addObserver:self forKeyPath:@"on" options:NSKeyValueObservingOptionNew context:@"Global"];
@@ -627,20 +630,26 @@
     }
     
     [self.view insertSubview:self.launcherView belowSubview:self.tableView];
-       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
+//       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-header-bg.png"]];
 
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     
-       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
+//       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 	[super viewDidLoad];
     self.connector = [[IPGateHelper alloc] init];
     self.connector.delegate = self;
@@ -649,12 +658,13 @@
     [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];
     
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mainView-header.png"]];
-    noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-header-bg.png"]];
-
+//    [[UIBarButtonItem appearance] setTintColor:UIColorFromRGB(0x4d4d4d)];
     
-//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BarButton-bg-plain.png"] style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BarButton-bg-plain.png"] style:UIBarButtonItemStyleBordered target:nil action:nil];
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"BarButton-bg-plain"] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    
+
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButton-bg-plain"] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
 }
 
 /*
