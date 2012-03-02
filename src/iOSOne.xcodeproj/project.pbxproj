@@ -155,6 +155,8 @@
 		4171251D14EE932800B1C644 /* NavigationBar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4171251B14EE932800B1C644 /* NavigationBar-bg.png */; };
 		4171251E14EE932800B1C644 /* NavigationBar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4171251C14EE932800B1C644 /* NavigationBar-bg@2x.png */; };
 		4171252214EE9D4000B1C644 /* UIKitAddon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4171252114EE9D4000B1C644 /* UIKitAddon.m */; };
+		4177300D14FF7BC50024E0E8 /* calendar-list-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4177300B14FF7BC50024E0E8 /* calendar-list-bg.png */; };
+		4177300E14FF7BC50024E0E8 /* calendar-list-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4177300C14FF7BC50024E0E8 /* calendar-list-bg@2x.png */; };
 		417793061478E9B700890739 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417793041478E9B600890739 /* WelcomeViewController.m */; };
 		417793071478E9B700890739 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 417793051478E9B700890739 /* WelcomeViewController.xib */; };
 		417AC5E513F6F9F6003BD79B /* ClassroomQueryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417AC5E613F6F9F6003BD79B /* ClassroomQueryController.m */; };
@@ -606,6 +608,8 @@
 		4171252014EE9D4000B1C644 /* UIKitAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIKitAddon.h; sourceTree = "<group>"; };
 		4171252114EE9D4000B1C644 /* UIKitAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIKitAddon.m; sourceTree = "<group>"; };
 		4174449414DD89E1001E95DF /* ReachablityProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachablityProtocol.h; sourceTree = "<group>"; };
+		4177300B14FF7BC50024E0E8 /* calendar-list-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-list-bg.png"; sourceTree = "<group>"; };
+		4177300C14FF7BC50024E0E8 /* calendar-list-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-list-bg@2x.png"; sourceTree = "<group>"; };
 		417793031478E9B600890739 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		417793041478E9B600890739 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		417793051478E9B700890739 /* WelcomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
@@ -978,6 +982,8 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4177300B14FF7BC50024E0E8 /* calendar-list-bg.png */,
+				4177300C14FF7BC50024E0E8 /* calendar-list-bg@2x.png */,
 				4171251F14EE932D00B1C644 /* Global */,
 				410C9E2514E80C5700F04E3E /* coredata.sqlite */,
 				41E3F08914DE5C300030D74A /* 0205 */,
@@ -1836,6 +1842,8 @@
 				4171251D14EE932800B1C644 /* NavigationBar-bg.png in Resources */,
 				4171251E14EE932800B1C644 /* NavigationBar-bg@2x.png in Resources */,
 				416374DF14EEA6D600F26CE6 /* BarButton-bg-plain.png in Resources */,
+				4177300D14FF7BC50024E0E8 /* calendar-list-bg.png in Resources */,
+				4177300E14FF7BC50024E0E8 /* calendar-list-bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

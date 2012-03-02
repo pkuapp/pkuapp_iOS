@@ -8,6 +8,12 @@
 
 #import "ModelsAddon.h"
 
+@implementation ClassGroup
+
+@synthesize startclass,endclass,type,course;
+
+@end
+
 @implementation NSString(custom)
 
 - (NSComparisonResult)customCompare:(NSString *)aString

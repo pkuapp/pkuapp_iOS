@@ -8,6 +8,24 @@
 
 #import "Course.h"
 #import "AppUser.h"
+typedef enum{
+    ClassgroupTypeEmpty,
+    ClassGroupTypeCourse,
+    ClassGroupTypeNow,
+    ClassGroupTypeNext,
+    ClassGroupTypeAllNone,
+    ClassGroupTypeEnd,
+}ClassGroupType;
+
+@interface ClassGroup : NSObject {
+    
+}
+@property (nonatomic, assign) ClassGroupType type;
+@property (nonatomic, assign) NSInteger startclass;
+@property (nonatomic, assign) NSInteger endclass;
+@property (nonatomic, assign) Course *course;
+@end
+
 @interface Course (ModelsAddOn)
 
 typedef enum DoubleType{
@@ -30,7 +48,7 @@ typedef struct {
 - (NSArray*)arrayEventsForWeek:(NSInteger) week;
 
 - (NSDictionary*)dictEventForDay:(NSInteger)day inWeek:(NSInteger) week;
-
+- (ClassGroup*)classGroupForWeekDay:(NSInteger)day;
 - (NSInteger)dayCodeForDay:(NSInteger)day;
 
 
@@ -45,7 +63,6 @@ typedef struct {
 + (DayVector)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day;
 
 - (NSString *)stringTimeForDay:(NSInteger)day;
-
 
 @end
 

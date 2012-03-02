@@ -14,12 +14,14 @@
 #import "CalendarGroudView.h"
 #import "AppUserDelegateProtocol.h"
 #import "AssignmentsListViewController.h"
+
+@class ClassGroup;
 @class NSManagedObjectContext;
 @class NSFetchedResultsController;
 @class EventView;
 @class AppUser;
 
-@interface CalendarViewController : UIViewController<NSFetchedResultsControllerDelegate,EKEventEditViewDelegate,PKUCalendarBarDelegate,EventViewDelegate> {
+@interface CalendarViewController : UIViewController<NSFetchedResultsControllerDelegate,EKEventEditViewDelegate,PKUCalendarBarDelegate,EventViewDelegate,UITableViewDelegate,UITableViewDataSource> {
    /* 
     UIScrollView *scrollWeekView;
     UIScrollView *scrollDayView;
@@ -48,8 +50,6 @@
 @property (nonatomic, retain) EKEventViewController *detailViewController;
 @property (nonatomic, retain) NSMutableArray *systemEventWeekList;
 
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollDayView;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollWeekView;
 @property (nonatomic, assign) id<AppUserDelegateProtocol> delegate;
 @property (nonatomic, readonly,retain) NSArray *arrayEventDict;
 @property (nonatomic) BOOL didInitWeekView;
@@ -60,28 +60,42 @@
 @property (nonatomic, readonly) NSInteger numWeekInWeekView;
 @property (nonatomic, readonly) NSInteger numDayInDayView;
 @property (nonatomic, readonly) NSInteger numWeekInDayView;
+@property (retain, nonatomic) IBOutlet PKUCalendarDayBar *barListView;
 
 @property (nonatomic, retain) IBOutlet PKUCalendarDayBar *dayViewBar;
 @property (nonatomic, retain) IBOutlet PKUCalendarWeekBar *weekViewBar;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *calSwithSegment;
+
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollDayView;
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollWeekView;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
+
 @property (nonatomic, retain) IBOutlet UIView *weekView;
 @property (nonatomic, retain) IBOutlet UIView *dayView;
+@property (nonatomic, retain) IBOutlet UIView *listView;
+
 @property (nonatomic, retain, readonly) NSArray *serverCourses;//return all courses user on dean
+@property (nonatomic, retain) NSMutableArray *arrayClassGroup;
+@property (nonatomic, assign) NSInteger bitListControl;
+@property (nonatomic, assign) NSInteger dateOffset;
 - (NSArray *) fetchEventsForWeek;
 - (NSArray *) fetchEventsForDay;
 - (IBAction) addEvent:(id)sender;
 - (IBAction)toAssignmentView:(id)sender;
 - (void)toDayView;
 - (void)toWeekView;
+- (void)toListView;
 - (void)displayCoursesInWeekView;
 - (void)displayCoursesInDayView;
+- (void)prepareListViewDataSource;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)didSelectCalSegementControl;
 //- (void)numDisplayDayDidChanged;
 //- (void)numDisplayWeekDidChanged;
 - (void)prepareEventViewsForDayDisplay:(NSArray *)arrayEventViews;
 - (void)prepareEventViewsForWeekDisplay:(NSArray *)arrayEventViews;
-
+- (void)setupDefaultCell:(UITableViewCell *)cell withClassGroup:(ClassGroup *)group;
+- (void)configureGlobalAppearance;
 - (IBAction)chooseDate:(id)sender;
 
 @end
@@ -100,4 +114,8 @@
 - (void)setupEventsForDayDisplay;
 - (void)setupEventsForWeekDisplay;
 
-@end 
+@end
+
+
+
+

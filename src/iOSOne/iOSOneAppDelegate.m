@@ -114,7 +114,7 @@
 	[requestLogin startSynchronous];
 	
 	NSString *loginmessage = [requestLogin responseString]; //[[NSString alloc] initWithData:[requestLogin responseData] encoding:NSStringEncodingConversionAllowLossy];
-    NSLog(@"%@",requestLogin.error);
+    
     NSLog(@"get login response:%@",loginmessage);
     
     if ([loginmessage isEqualToString:@"0"]){
@@ -123,6 +123,11 @@
             
         appUser = (AppUser *) [NSEntityDescription insertNewObjectForEntityForName:@"AppUser" inManagedObjectContext:self.managedObjectContext];
         }
+        if (!appUser) {
+            NSLog(@"AddUserInCoreDataFault");
+            return NO;
+        }
+        [self.managedObjectContext save:NULL];
         appUser.deanid = username;
         appUser.password = password;
         [self.managedObjectContext save:NULL];
