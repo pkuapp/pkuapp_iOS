@@ -44,6 +44,19 @@
 @synthesize arrayCourses;
 #pragma mark - AssignmentDelegate
 - (void)didDoneAssignment:(Assignment *)assignment {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate.managedObjectContext save:nil];
+    [self.tableView reloadData];
+}
+
+
+
+- (void)shouldDeleteAssignment:(Assignment *)assignment {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.context deleteObject:assignment];
+    [self.context save:nil];
+    self.arrayNotices = nil;
+    self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
     [self.tableView reloadData];
 }
 
@@ -72,8 +85,11 @@
 }
 
 - (NSArray *)arrayNotices{
+    if (arrayNotices == nil) {
+        arrayNotices = [self.noticeCenterHelper.getAllNotice retain]; 
+    }
 //    NSLog(@"notices %@",self.noticeCenterHelper.getAllNotice);
-    return self.noticeCenterHelper.getAllNotice;
+    return arrayNotices;
 }
 
 - (NoticeCenterHepler *)noticeCenterHelper {
@@ -304,13 +320,6 @@
     [self.navigationController pushViewController:aevc animated:YES];
 }
 
-- (void)shouldDeleteAssignment:(Assignment *)assignment {
-    [self.context deleteObject:assignment];
-    [self.context save:nil];
-    self.arrayNotices = nil;
-    self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
-    [self.tableView reloadData];
-}
 
 - (void)navToCourseDetail:(Course *)course {
     
@@ -602,8 +611,8 @@
         self.navigationController.navigationBar.topItem.title = @"Home"; 
 //        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:nil];
 //        item.tintColor = UIColorFromRGB(0x4d4d4d);
-        self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithPAStyle:PABarButtonStylePlain title:@"账号与野兽" target:self selector:@selector(performActionSheet)];
-        
+//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"24-person.png"] style:UIBarButtonItemStyleDone target:self action:@selector(performActionSheet)];
         //[[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
         
         
@@ -614,7 +623,10 @@
 
 - (void)loadView {
     [super loadView];
-    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 204)];
+//    [[UITableView appearance] setBackgroundColor:tableBgColor];
+
+    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 206)];
+    self.launcherView.backgroundColor = UIColorFromRGB(0xefeade);
     self.launcherView.persistenceMode = TTLauncherPersistenceModeAll;
     self.launcherView.delegate = self;
     if ([self.launcherView restoreLauncherItems])
@@ -635,7 +647,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-header-bg.png"]];
+    noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-title.png"]];
 
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
@@ -643,6 +655,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.arrayNotices = nil;
     [self.tableView reloadData];
 }
 
@@ -657,13 +670,13 @@
     //[self.connector startListening];
     [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];
     
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mainView-header.png"]];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navbar-logotype.png"]];
 //    [[UIBarButtonItem appearance] setTintColor:UIColorFromRGB(0x4d4d4d)];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BarButton-bg-plain.png"] style:UIBarButtonItemStyleBordered target:nil action:nil];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"BarButton-bg-plain"] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButton-bg-plain"] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"38-house.png"]]];
+    self.navigationItem.backBarButtonItem.image = [UIImage imageNamed:@"38-house.png"];
+    self.tableView.backgroundColor = tableBgColor;
 
 }
 

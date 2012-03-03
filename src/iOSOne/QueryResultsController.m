@@ -231,7 +231,7 @@
     for (NSDictionary *dict in array) {
         int beg = [[dict objectForKey:@"begin"] intValue];
         int width = [[dict objectForKey:@"width"] intValue];
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(filterLeftMargin + beg*filterWidthUnit, 43.0, filterWidthUnit*width, self.view.bounds.size.height-43)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(filterLeftMargin + beg*filterWidthUnit, 32.0, filterWidthUnit*width, self.view.bounds.size.height-32)];
         view.backgroundColor = UIColorFromRGB(0x1D62AB);
         view.alpha = 0.2;
         view.layer.borderWidth = 1;

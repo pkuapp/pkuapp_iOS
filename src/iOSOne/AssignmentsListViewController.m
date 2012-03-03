@@ -13,6 +13,7 @@
 @synthesize delegate;
 @synthesize arrayAssigns;
 @synthesize arrayCourses;
+@synthesize coord_assign;
 
 - (NSMutableArray *)arrayAssigns{
     if (arrayAssigns == nil) {
@@ -40,20 +41,21 @@
 }
 
 - (void)didCancelEdit {
-    [self.delegate.managedObjectContext undo];
+    NSLog(@"Cancel");
+    [self.delegate.managedObjectContext deleteObject:coord_assign];
     [self.delegate.managedObjectContext save:nil];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didSelectAddBtn {
-    Assignment *new_assign = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.delegate.managedObjectContext];
+    coord_assign = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.delegate.managedObjectContext];
     
-    new_assign.Person = self.delegate.appUser;
+    coord_assign.Person = self.delegate.appUser;
     
-    new_assign.isDone = [NSNumber numberWithBool:NO];
+    coord_assign.isDone = [NSNumber numberWithBool:NO];
     
     AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
-    evc.coord_assign = new_assign;
+    evc.coord_assign = coord_assign;
     evc.delegate = self;
     evc.controllerMode = AssignmentEditControllerModeAdd;
     

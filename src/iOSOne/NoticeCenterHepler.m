@@ -93,7 +93,7 @@
     return nil;
 }
 
-- (NSArray *)getCourseNoticeInWeekOffset:(NSInteger)weekOffset {
+- (void)getCourseNoticeInWeekOffset:(NSInteger)weekOffset {
     NSDate *nowDate = [NSDate date];
 
     NSMutableArray *arrayCourseDicts = [NSMutableArray arrayWithCapacity:10];

@@ -19,6 +19,6 @@ typedef enum PABarButtonStyle{
 
 @interface UIBarButtonItem(PAAddon)
 
-+ (UIBarButtonItem *)itemWithPAStyle:(PABarButtonStyle)style title:(NSString*)title target:(id)target selector:(SEL)selector;
+//+ (UIBarButtonItem *)itemWithPAStyle:(PABarButtonStyle)style title:(NSString*)title target:(id)target selector:(SEL)selector;
 
 @end

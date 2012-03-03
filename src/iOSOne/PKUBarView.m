@@ -136,21 +136,21 @@
 }
 
 - (void)addFilterMark:(UILabel *)numLabel{
-    UIImageView *checkView = (UIImageView *)[numLabel viewWithTag:301];
-    if (checkView == nil) {
-        UIImage *checkedBG = [UIImage imageNamed:@"free-rooms-filter-bar-checkmark.png"];
-        checkView = [[UIImageView alloc] initWithImage:checkedBG];
-        checkView.frame = CGRectMake(0, 29, 22, 15);
-        checkView.tag = 301;
-        [numLabel addSubview:checkView];
-    }
-    checkView.hidden = NO;
+//    UIImageView *checkView = (UIImageView *)[numLabel viewWithTag:301];
+//    if (checkView == nil) {
+//        UIImage *checkedBG = [UIImage imageNamed:@"free-rooms-filter-bar-checkmark.png"];
+//        checkView = [[UIImageView alloc] initWithImage:checkedBG];
+//        checkView.frame = CGRectMake(0, 29, 22, 15);
+//        checkView.tag = 301;
+//        [numLabel addSubview:checkView];
+//    }
+//    checkView.hidden = NO;
     
 }
 
 - (void)removeFilterMark:(UILabel *)numLabel{
-    UIImageView *checkView = (UIImageView *)[numLabel viewWithTag:301];
-    checkView.hidden = YES;
+//    UIImageView *checkView = (UIImageView *)[numLabel viewWithTag:301];
+//    checkView.hidden = YES;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -202,7 +202,7 @@
 
     for (int i = 0; i < 12 ; i++) {
         
-        numlabel = [[UILabel alloc] initWithFrame:CGRectMake(roomWidth + i*unitWidth, 0, unitWidth, 44)];
+        numlabel = [[UILabel alloc] initWithFrame:CGRectMake(roomWidth + i*unitWidth, 0, unitWidth, 32)];
         numlabel.backgroundColor = [UIColor clearColor];
         numlabel.textAlignment = UITextAlignmentCenter;
         numlabel.tag = 200 + i;

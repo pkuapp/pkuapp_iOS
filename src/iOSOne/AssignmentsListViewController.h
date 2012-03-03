@@ -20,5 +20,6 @@
 @property (assign, nonatomic) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
 @property (retain, nonatomic) NSMutableArray *arrayAssigns;
 @property (retain, nonatomic) NSArray *arrayCourses;
+@property (assign, nonatomic) Assignment *coord_assign;
 - (void)didSelectAddBtn;
 @end

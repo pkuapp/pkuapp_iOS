@@ -863,7 +863,7 @@
 - (void)configureGlobalAppearance {
 //    [[UILabel appearance] setFontSize:16];
     [[UILabel appearance] setBackgroundColor:[UIColor clearColor]];
-    
+//    [UITableView.appearance setBackgroundColor: tableBgColor];
 }
 
 #pragma mark - KVO

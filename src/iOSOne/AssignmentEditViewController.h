@@ -23,6 +23,7 @@
 - (void)shouldDeleteAssignment:(Assignment *)assignment;
 - (void)didDoneAssignment:(Assignment *)assignment;
 - (NSArray *)arrayCourses;
+- (Assignment *)coord_assign;
 
 @end
 

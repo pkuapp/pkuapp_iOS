@@ -13,7 +13,7 @@
 
 - (void)setupForDisplay;
 {
-    self.image = [UIImage imageNamed:@"free-rooms-filter-bar-bg.png"];
+//    self.image = [UIImage imageNamed:@"free-rooms-filter-bar-bg.png"];
 
 }
 @end
@@ -30,9 +30,9 @@
         NSLocale *locale = [NSLocale systemLocale];
         titleFormatter = [[NSDateFormatter alloc] init];
         
-        [titleFormatter setDateFormat:@"星期EEEE   MM月d日"];
+        [titleFormatter setDateFormat:@"星期EEEE  MM月d日"];
         [titleFormatter setLocale:locale];
-        [titleFormatter setWeekdaySymbols:[NSArray arrayWithObjects:@"天",@"一",@"二",@"三",@"四",@"五",@"六", nil]];
+        [titleFormatter setWeekdaySymbols:[NSArray arrayWithObjects:@"日",@"一",@"二",@"三",@"四",@"五",@"六", nil]];
     }
     return titleFormatter;
 }
@@ -48,7 +48,7 @@
 
 - (void)setupForDisplay;
 {
-    self.image = [UIImage imageNamed:@"free-rooms-filter-bar-bg.png"];
+    self.image = [UIImage imageNamed:@"datebar.png"];
     NSString *stringTitle;
     
     NSInteger num = [self.delegate numWeekInDayView];

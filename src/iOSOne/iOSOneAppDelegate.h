@@ -18,7 +18,7 @@
 @class MainViewController;
 @class WelcomeViewController;
 @class AppUser;
-
+@class Course;
 
 @interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,AppUserDelegateProtocol> {
     IBOutlet UIWindow *window;
@@ -39,8 +39,8 @@
 @property (nonatomic, retain, readonly) NSString *persistentStorePath;
 @property (nonatomic, retain, readonly) UINavigationController *mvc;
 
-@property (nonatomic, retain, readonly) UINavigationController *wvc;
-@property (nonatomic, retain, readonly)AppUser *appUser;
+@property (nonatomic, retain) UINavigationController *wvc;
+@property (nonatomic, retain)AppUser *appUser;
 @property (atomic, retain) Reachability *wifiTester;
 @property (atomic, retain) Reachability *internetTester;
 @property (atomic, retain) Reachability *globalTester;
@@ -55,6 +55,7 @@
 - (BOOL)refreshAppSession;
 - (void)updateAppUserProfile;
 - (void)updateServerCourses;
+- (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dict;
 - (void)netStatusDidChanged:(Reachability *)notice;
 
 @end

@@ -8,9 +8,58 @@
 
 #import "CourseDetailsViewController.h"
 #import "UIKitAddon.h"
+#import "Assignment.h"
 @implementation CourseDetailsViewController
 @synthesize tableView;
 @synthesize course;
+@synthesize arrayAssignments;
+@synthesize delegate;
+@synthesize coord_assign;
+@synthesize arrayCourses;
+
+- (NSArray *)arrayCourses{
+    if (arrayCourses == nil) {
+        arrayCourses = [[NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]] retain];
+    }
+    return arrayCourses;
+}
+
+#pragma mark - getter override
+- (NSMutableArray *)arrayAssignments {
+    if (arrayAssignments == nil) {
+        arrayAssignments = [[NSMutableArray alloc] initWithCapacity:1];
+        for (Assignment *assign in self.delegate.appUser.assignset) {
+            if (assign.course == self.course && [assign.isDone boolValue]== NO) {
+                [arrayAssignments addObject:assign];
+            }
+        }
+    }
+    return arrayAssignments;
+}
+
+- (NSObject<AppUserDelegateProtocol> *)delegate {
+    if (delegate == nil) {
+        delegate = (NSObject<AppUserDelegateProtocol,AppCoreDataProtocol>*) [UIApplication sharedApplication].delegate;
+    }
+    return delegate;
+}
+
+#pragma mark - AssignmentEditDelegate
+- (void)didFinnishedEdit {
+    [self.delegate.managedObjectContext save:nil];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)didCancelEdit {
+    [self.delegate.managedObjectContext deleteObject:coord_assign];
+    [self.delegate.managedObjectContext save:nil];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)didDoneAssignment:(Assignment *)assignment {
+    [self.delegate.managedObjectContext save:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - TableView Delegate and DataSource
 
@@ -46,6 +95,40 @@
     return nil;    
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            if (indexPath.row == self.arrayAssignments.count) {
+                coord_assign = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.delegate.managedObjectContext];
+                
+                coord_assign.course = self.course;
+                coord_assign.Person = self.delegate.appUser;
+                
+                coord_assign.isDone = [NSNumber numberWithBool:NO];
+                
+                AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
+                evc.coord_assign = coord_assign;
+                
+                evc.delegate = self;
+                evc.controllerMode = AssignmentEditControllerModeAdd;
+                
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:evc];
+                
+                
+                [self presentModalViewController:nav animated:YES];
+                [evc release];
+                [nav release];
+            }
+            else {
+                ;
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return 87;
@@ -60,7 +143,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 2;
+//            if (self.arrayAssignments.count) {
+//                return self
+//            }
+            return self.arrayAssignments.count + 1;
             break;
         case 1:
             return 2;
@@ -126,17 +212,12 @@
     
     switch (indexPath.section) {
         case 0:
-            switch (indexPath.row) {
-                case 0:
-                    cell.textLabel.text = @"暂无作业";
-                    //cell.detailTextLabel.text = @"暂无作业";
-                    break;
-                case 1:
-                    cell.textLabel.text = @"添加作业";
-                    break;
-                    
-                default:
-                    break;
+            if (indexPath.row == self.arrayAssignments.count) {
+                cell.textLabel.text = @"添加作业";
+                break;
+            }
+            else {
+                cell.textLabel.text = [[self.arrayAssignments objectAtIndex:indexPath.row] content];
             }
             break;
         case 1:
@@ -252,6 +333,11 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
 
 - (void)viewDidLoad
 {

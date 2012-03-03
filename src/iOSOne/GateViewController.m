@@ -38,9 +38,8 @@
 - (NITableViewModel *)detailDataSource {
     if (detailDataSource == nil) {
         NSMutableArray *arraySections = [NSMutableArray arrayWithCapacity:6];
-        
+    
         [arraySections addObject:self.labelWarning.text];        
-        
         if ([self.gateStateDictionary objectForKey:_keyIPGateTimeLeft] != nil) {
             
             
@@ -132,10 +131,16 @@
         labelWarning.backgroundColor = [UIColor clearColor];
         labelWarning.textAlignment = UITextAlignmentCenter;
         labelWarning.font = [UIFont fontWithName:@"Helvetica" size:14];
-        labelWarning.text = [defaults objectForKey:@"stringUpdateStatus"];
-        if (labelStatus.text == nil) {
-            labelWarning.text = @"账户状态未知";
+        NSString *text = [defaults objectForKey:@"stringUpdateStatus"];
+        if (!text) {
+            text = @"账户状态未知";
         }
+        labelWarning.text = text;
+
+//        if (labelStatus.text == nil || [labelStatus.text isEqualToString:@"(null)"]) {
+//
+//            labelWarning.text = @"账户状态未知";
+//        }
     }
     return labelWarning;
 }
@@ -214,9 +219,8 @@
 - (void)connectFailed
 {
     if (self.connector.error == IPGateErrorOverCount) {
-        
+        self.progressHub.mode = MBProgressHUDModeIndeterminate;
         self.progressHub.labelText = @"连接数超过预定值";
-        
         if ([ModalAlert confirm:@"断开别处的连接" withMessage:@"断开别处的连接才能在此处建立连接"]){
             _hasSilentCallback = YES;
             
@@ -234,13 +238,14 @@
     }
     else {
         self.progressHub.labelText = [self.connector.dictResult objectForKey:@"REASON"];
-        
+//        self.progressHub.mode = MBProgressHUDModeIndeterminate;
+//        [self.progressHub show:YES];
         [self.progressHub hide:YES afterDelay:0.5];
         
-        NSLog(@"%@",[self.connector.dictResult objectForKey:@"REASON"]);
+        NSLog(@"Reason %@",[self.connector.dictResult objectForKey:@"REASON"]);
     }
     if (self.connector.error != IPGateErrorTimeout) {
-        [self saveAccountState];
+//        [self saveAccountState];
     }
 
 }
@@ -601,7 +606,8 @@
     [super viewDidLoad];
     self.defaults = [NSUserDefaults standardUserDefaults];
     self.Username = self.delegate.appUser.deanid;//[defaults objectForKey:@"Username"];
-    self.Password = self.delegate.appUser.password;//[defaults objectForKey:@"Password"];
+    
+    self.Password = self.delegate.appUser.password;
     self.title = @"网关";
     self.gateStateDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:_keyAccountState]];
     

@@ -23,18 +23,18 @@
 #import "School.h"
 #import "Course.h"
 
-@implementation UINavigationBar (Custom)
--(void)setBackgroundImage:(UIImage*)image{
-    if(image == NULL){
-        return;
-    }
-    UIImageView *aTabBarBackground = [[UIImageView alloc]initWithImage:image];
-    aTabBarBackground.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
-    [self addSubview:aTabBarBackground];
-    [self sendSubviewToBack:aTabBarBackground];
-    [aTabBarBackground release];
-}
-@end
+//@implementation UINavigationBar (Custom)
+//-(void)setBackgroundImage:(UIImage*)image{
+//    if(image == NULL){
+//        return;
+//    }
+//    UIImageView *aTabBarBackground = [[UIImageView alloc]initWithImage:image];
+//    aTabBarBackground.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
+//    [self addSubview:aTabBarBackground];
+//    [self sendSubviewToBack:aTabBarBackground];
+//    [aTabBarBackground release];
+//}
+//@end
 
 @implementation iOSOneAppDelegate
 
@@ -44,6 +44,8 @@
 @synthesize wifiTester,internetTester,globalTester,freeTester,localTester;
 @synthesize netStatus;
 @synthesize hasWifi;
+@synthesize appUser;
+@synthesize wvc;
 #pragma mark - UserControl Setup
 
 -(AppUser *)appUser
@@ -63,6 +65,8 @@
         fetchRequest.predicate = predicate;
         
         appUser = [(AppUser *) [[self.managedObjectContext executeFetchRequest:fetchRequest error:NULL] lastObject] retain];
+        NSLog(@"get appUser%@",appUser);
+
     }
     return appUser;
 }
@@ -72,11 +76,12 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"didLogin"];
     [NSUserDefaults resetStandardUserDefaults];
-    [persistentStoreCoordinator release];
-    persistentStoreCoordinator = nil;
-    [managedObjectContext release];
-    managedObjectContext = nil;
-
+    [self.appUser removeCourses:self.appUser.courses];
+//    [persistentStoreCoordinator release];
+//    persistentStoreCoordinator = nil;
+//    [managedObjectContext release];
+//    managedObjectContext = nil;
+    self.wvc = nil;
     [self showWithLoginView];
     
 }
@@ -102,7 +107,7 @@
         validKey = @"check";
         sessionKey = @"sid";
     }
-    NSLog(@"week%d%@,%@,%@",[SystemHelper getPkuWeeknumberNow],validKey,passwordKey,sessionKey);
+//    NSLog(@"week%d%@,%@,%@",[SystemHelper getPkuWeeknumberNow],validKey,passwordKey,sessionKey);
 
     ASIFormDataRequest *requestLogin = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: urlLogin]];
 	requestLogin.timeOutSeconds = 30;
@@ -118,15 +123,12 @@
     NSLog(@"get login response:%@",loginmessage);
     
     if ([loginmessage isEqualToString:@"0"]){
-        
         if (appUser == nil) {
             
         appUser = (AppUser *) [NSEntityDescription insertNewObjectForEntityForName:@"AppUser" inManagedObjectContext:self.managedObjectContext];
+            NSLog(@"create appUser");
         }
-        if (!appUser) {
-            NSLog(@"AddUserInCoreDataFault");
-            return NO;
-        }
+     
         [self.managedObjectContext save:NULL];
         appUser.deanid = username;
         appUser.password = password;
@@ -147,6 +149,37 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%@",[error localizedDescription]);
     }
+}
+
+- (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dictCourse {
+    for (NSString *key in [dictCourse keyEnumerator]) {
+        NSString *localKey = key;
+        if ([key isEqualToString:@"cname"]) {
+            if ([[dictCourse objectForKey:@"cname"] isEqualToString:@""]) {
+                continue;
+            }
+            localKey = @"name";
+        }
+        if ([key isEqualToString:@"name"] || [key isEqualToString:@"ename"]) {
+            continue;
+        }
+        NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",localKey];
+        id object = [dictCourse objectForKey:key];
+        if (object != [NSNull null]) {
+            @try {
+                [_course performSelector:sel_getUid([selector UTF8String]) withObject:[dictCourse objectForKey:key]];
+            }
+            @catch (NSException *exception) {
+                NSLog(@"Failed to update key %@",key);
+            }
+            @finally {
+                continue;
+                NSLog(@"%@",object);
+            }
+        }
+        
+    }
+    [self.managedObjectContext save:nil];
 }
 
 - (void)updateServerCourses{
@@ -180,21 +213,13 @@
         if (!_array.count) {
             _course = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
             
-            for (NSString *key in [dictCourse keyEnumerator]) {
-                if ([key isEqualToString:@"cname"]) {
-                    key = @"name";
-                }
-                NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",key];
-                id object = [dictCourse objectForKey:key];
-                if (object != [NSNull null]) {
-                    [_course performSelector:sel_getUid([selector UTF8String]) withObject:[dictCourse objectForKey:key]];
-                }
-                
-            }
+            [self saveCourse:_course withDict:dictCourse];
 
         }
         else {
             _course = [_array lastObject];
+            [self saveCourse:_course withDict:dictCourse];
+
         }
         if (_course) {
             [arrayCourses addObject:_course];
@@ -265,11 +290,9 @@
 - (UINavigationController *)mvc
 {
     if (mvc == nil) {
-        mvc = [[UINavigationController alloc] initWithRootViewController:nil];
+        mvc = [[UINavigationController alloc] init];
         mvc.delegate = self;
-        if ([mvc.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
-            [mvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"] forBarMetrics:UIBarMetricsDefault];
-        }
+       
 //        [mvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"]];
         //mvc.navigationBar.tintColor = navigationBgColor;
         //mvc.navigationBar
@@ -390,6 +413,26 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSFileManager *fm = [NSFileManager defaultManager];
+    
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"btn-back-normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"btn-back-pressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)] forState:UIControlEventTouchUpInside barMetrics:UIBarMetricsDefault];
+    
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"btn-normal"] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"btn-pressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)] forState:UIControlEventTouchUpInside barMetrics:UIBarMetricsDefault];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setBackgroundImage:[[UIImage imageNamed:@"btn-normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)]  forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:[[UIImage imageNamed:@"btn-pressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    
+    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"btn-segmented-divider.png"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+////    [[UIView appearance] setBackgroundColor:tableBgColor];
+////    [[UIView appearanceWhenContainedIn:[UIViewController class], nil] setBackgroundColor:tableBgColor];
+//    
     if (![fm fileExistsAtPath:pathSQLCore]) {
         NSString *defaultSQLPath = [[NSBundle mainBundle] pathForResource:@"coredata" ofType:@"sqlite"];
         if (defaultSQLPath) {

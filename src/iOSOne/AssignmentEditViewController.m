@@ -100,7 +100,6 @@
                 self.coord_assign.isDone = [NSNumber numberWithInt:1];
 
                 [self.delegate didDoneAssignment:coord_assign];
-                [self.navigationController popViewControllerAnimated:YES];
                 break;
             case 1:
                 switch (indexPath.row) {
@@ -135,7 +134,6 @@
                 break;
             case 4:
                 [self.delegate shouldDeleteAssignment:self.coord_assign];
-                [self.navigationController popViewControllerAnimated:YES];
             default:
                 break;
         }

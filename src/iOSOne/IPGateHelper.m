@@ -88,7 +88,7 @@
     }
     else {
         NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
-        
+        self.dictResult = dict;
         NSString *reason = [dict objectForKey:@"REASON"];
         
         NSLog(@"%@",reason);

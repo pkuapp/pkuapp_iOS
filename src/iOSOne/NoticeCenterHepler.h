@@ -49,7 +49,7 @@ typedef enum{
 - (NSArray *)getAllNotice;
 //getCourseNotice will defaultly return nowCourse, if not nil. So it mightly break the principle cause it 'knows' the style:)
 - (Notice *)getNoticeNextCourse;
-- (NSArray *)getCourseNoticeInWeekOffset:(NSInteger) weekOffset;
+- (void)getCourseNoticeInWeekOffset:(NSInteger) weekOffset;
 - (NSArray *)getEventNotice;
 - (NSArray *)getAssignmentNotice;
 - (NSArray *)getNews;
