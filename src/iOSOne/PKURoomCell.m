@@ -37,10 +37,11 @@
     NSAssert2([array count] == 12, @"Unhandled error %s at line %d", __FUNCTION__, __LINE__);
     for (int i = 0; i < 12 ; i++) {
          button = (UIButton *)[self viewWithTag:100 + i];
+        button.enabled = NO;
         if ([[array objectAtIndex:i] intValue]) {
-            [button setImage:  [UIImage imageNamed:@"free-rooms-occupied-regular.png"] forState:UIControlStateNormal];
+            [button setImage:  [UIImage imageNamed:@"free-rooms-occupied-regular.png"] forState:UIControlStateDisabled];
         }
-        else [button setImage:  [UIImage imageNamed:@"free-rooms-free-regular.png"] forState:UIControlStateNormal];
+        else [button setImage:  [UIImage imageNamed:@"free-rooms-free-regular.png"] forState:UIControlStateDisabled];
     }
 }
 

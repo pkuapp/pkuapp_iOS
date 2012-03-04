@@ -20,17 +20,17 @@
 
 - (void)setupForDisplay
 {
-    for (int i = 0; i < 12 ; i++) {
-    float start = [Course starthourForClass:i+1];
-    CGRect tagFrame = CGRectMake(wHourTag, heightOffset + start*hHour, wClassTag, hClassTag);
-    UILabel *tagLabel = [[UILabel alloc] initWithFrame:tagFrame];
-    tagLabel.textAlignment = UITextAlignmentCenter;
-    tagLabel.text = [NSString stringWithFormat:@"%d",i+1];
-    tagLabel.font = fontHourTag;
-    tagLabel.backgroundColor = [UIColor clearColor];
-    [tagLabel setTextColor:[UIColor whiteColor]];
-    [self addSubview:tagLabel];
-    }
+//    for (int i = 0; i < 12 ; i++) {
+//    float start = [Course starthourForClass:i+1];
+//    CGRect tagFrame = CGRectMake(wHourTag, heightOffset + start*hHour, wClassTag, hClassTag);
+//    UILabel *tagLabel = [[UILabel alloc] initWithFrame:tagFrame];
+//    tagLabel.textAlignment = UITextAlignmentCenter;
+//    tagLabel.text = [NSString stringWithFormat:@"%d",i+1];
+//    tagLabel.font = fontHourTag;
+//    tagLabel.backgroundColor = [UIColor clearColor];
+//    [tagLabel setTextColor:[UIColor whiteColor]];
+//    [self addSubview:tagLabel];
+//    }
 }
 
 -(void)drawRect:(CGRect)rect
@@ -326,7 +326,7 @@
 {
     float width = widthNormalDayView * weight;
     
-    [self setFrame:CGRectMake(wAxis + xIndent*width+1 ,heightOffset+self.startHour*hHour, width-2, hHour*(self.endHour-startHour))];
+    [self setFrame:CGRectMake(wAxis + xIndent*width ,heightOffset+self.startHour*hHour, width-2, hHour*(self.endHour-startHour))];
     
 //    self.layer.cornerRadius = 6.0;
     

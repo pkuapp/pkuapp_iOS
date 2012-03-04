@@ -37,6 +37,12 @@
 @property (nonatomic, retain) NSMutableArray* arrayCellDictsForDisplay;//数据源时初始化
 @property (nonatomic, retain) NSMutableArray* arrayCellDictsHidden;//准备数据源时初始化
 @property (nonatomic, retain) NSMutableArray* arrayDisplayControl;//显示控制cell过滤功能、准备数据源时初始化
+////////////////////////////////////////
+
+@property (retain, nonatomic) NSString *valueTargetBuilding;
+@property (retain, nonatomic) NSString *valueTargetDay;
+@property (nonatomic) NSInteger valueWeeknumber;
+@property (nonatomic, retain) NSMutableDictionary *dictCache;
 
 - (NSArray *) getArrayAttr: (NSDictionary *) dictTarget;
 - (void)viewDidDisappear:(BOOL)animated;

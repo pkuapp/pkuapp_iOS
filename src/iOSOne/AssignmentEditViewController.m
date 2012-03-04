@@ -57,6 +57,9 @@
 
 - (void)textEditorDidChange:(TTTextEditor *)textEditor {
     [self canSaveOrNot];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
 }
 
 - (void)textEditorDidBeginEditing:(TTTextEditor*)textEditor {
@@ -68,6 +71,14 @@
     self.coord_assign.endDate = _datePicker.date;
     [self canSaveOrNot];
 }
+
+- (BOOL)textEditor:(TTTextEditor *)textEditor shouldResizeBy:(CGFloat)height {
+   
+
+    return YES;
+}
+
+
 
 #pragma mark - tableVew Delegate
 
@@ -160,7 +171,7 @@
 - (NSDateFormatter *)formatter{
     if (formatter == nil) {
         formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"M月d日hh:mm";
+        formatter.dateFormat = @"M月d日h:mm";
     }
     return formatter;
 }
@@ -168,7 +179,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 2:
-            return [self tableView:self.tableView cellForRowAtIndexPath:indexPath].contentView.frame.size.height + 10;
+            return MAX(self.contentTextView.frame.size.height + 28,88);
         default:
             break;
     }
@@ -190,7 +201,7 @@
     switch (indexPath.section) {
         case 0:
             cell.textLabel.textAlignment = UITextAlignmentCenter;
-            cell.textLabel.text = @"完成之";
+            cell.textLabel.text = @"完成";
             break;
         case 1:
             
@@ -225,7 +236,7 @@
             break;
         case 3:
  
-            contentView = [[TTTextEditor alloc] initWithFrame:CGRectMake(10, 5, 280, 44)];
+            contentView = [[TTTextEditor alloc] initWithFrame:CGRectMake(0, 5, cell.frame.size.width-6, 200)];
             contentView.font = [UIFont boldSystemFontOfSize:14];
             //contentView.editable = YES;
             contentView.text = self.coord_assign.content;
@@ -235,10 +246,11 @@
             contentView.placeholder = @"又是一年春好处";
             contentView.text = coord_assign.content;
             contentView.delegate = self;
+//            contentView.maxNumberOfLines = 10;
             [cell.contentView addSubview:contentView];
             self.contentTextView = contentView;
             [contentView release];
-            cell.frame = CGRectMake(0, 0, cell.frame.size.width, 220);
+//            cell.frame = CGRectMake(0, 0, cell.frame.size.width, 220);
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         
@@ -327,8 +339,14 @@
     self.autoresizesForKeyboard = YES;
 
     if (controllerMode == AssignmentEditControllerModeAdd) {
-        NSLog(@"??");
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone  target:self action:@selector(didSelectEditDoneBtn)];
+        
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectEditDoneBtn)];
+        
+        [item setBackgroundImage:[UIImage imageNamed:@"btn-blue-normal.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        
+        [item setBackgroundImage:[UIImage imageNamed:@"btn-blue-pressed.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+        
+        self.navigationItem.rightBarButtonItem = item;
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel  target:self action:@selector(didSelectCancelBtn)];
         

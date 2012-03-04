@@ -9,6 +9,16 @@
 #import "QueryResultsController.h"
 #import "PKURoomCell.h"
 #import "SystemHelper.h"
+#import "ASIFormDataRequest.h"
+#import "Environment.h"
+#import "SBJson.h"
+#import "iOSOneAppDelegate.h"
+
+@interface QueryResultsController(Private)
+- (void)taskQuery;
+- (void)prepareData;
+- (void)clearFilter;
+@end
 
 @implementation QueryResultsController
 
@@ -21,7 +31,31 @@
 @synthesize arrayCellDicts,arrayCellDictsForDisplay,arrayCellDictsHidden,arrayDisplayControl;
 @synthesize nameLocation;
 @synthesize arrayFilterRects;
-#pragma mark - 
+@synthesize valueTargetDay,valueWeeknumber,valueTargetBuilding;
+@synthesize dictCache;
+
+- (NSArray *)arrayResult {
+    if (arrayResult == nil) {
+        arrayResult = [[NSArray alloc] init];
+    }
+    return arrayResult;
+}
+
+//- (NSMutableDictionary *)dictCache {
+//    if (dictCache == nil) {
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:pathClassroomQueryCache]) {
+//            
+//            dictCache = [[NSMutableDictionary dictionaryWithDictionary:[NSDictionary dictionaryWithContentsOfFile:pathClassroomQueryCache]] retain];
+//        }
+//        
+//    }
+//}
+
+- (void)setDictCache:(NSMutableDictionary *)dictCache {
+    
+}
+
+#pragma mark - FilterBackend
 
 -(NSArray *)arrayShouldDeleteWithDoingDelete
 {
@@ -73,40 +107,7 @@
     //NSLog(@"judgeFor%@",[dictCell objectForKey:@"name"]);
     return [[dictCell objectForKey:@"cell"] shouldDisplayWithControl:self.arrayDisplayControl];
 }
-
-- (void)_prepareCells
-{
-    static NSString *mycellIdentifier = @"PKURoomCell";
-
-    self.arrayCellDicts = [[NSMutableArray alloc] initWithCapacity:[self.arrayResult count]];
-    self.arrayCellDictsForDisplay = [[NSMutableArray alloc] initWithCapacity:[self.arrayResult count]];
-    for (int i = 0; i < [self.arrayResult count]; i++) {
-        PKURoomCell *mycell = (PKURoomCell *) [self.tableview dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"%@%d", mycellIdentifier,i]];
-        if (!mycell) {
-            mycell = [[PKURoomCell alloc] init];
-        }
-        NSDictionary *dictRoom = [self.arrayResult objectAtIndex:i];
-        //NSString *titleRoom = [dictRoom valueForKey: @"name"];
-        NSString* rawName = [dictRoom objectForKey:@"name"];
-        NSString *name = [rawName stringByReplacingOccurrencesOfString:self.nameLocation withString:@""];
-        [mycell setRoomName:name];
-
-        [mycell setRoomStatusWithArray:[self getArrayAttr:dictRoom]];
-               NSDictionary *tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:mycell,@"cell",name,@"name", nil];
-        [self.arrayCellDicts addObject:tempDict];
-        [self.arrayCellDictsForDisplay addObject:tempDict];
-        //[mycell release];
-        [tempDict release];
-
-    }
-    //≥ı ºªØœ‘ æ‘¥
-    self.arrayCellDictsHidden = [[NSMutableArray alloc] init];    //init arrayDisplayControl
-    self.arrayDisplayControl = [NSMutableArray arrayWithCapacity:[self.arraydictResult count]];
-    for (int i = 0; i < 12; i++) {
-        [self.arrayDisplayControl addObject:[NSNumber numberWithBool:NO]];
-    }
-}
-
+#pragma mark - UITableView delegate and datasource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -118,10 +119,12 @@
     return mycell;
     
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.arrayCellDictsForDisplay count];
 }
+
 - (NSArray *)getArrayAttr: (NSDictionary *)dictTarget
 {
 	NSString *key = [NSString stringWithFormat:@"day%d",self.numday];
@@ -156,6 +159,75 @@
     
 }
 
+- (void)prepareData {
+    iOSOneAppDelegate* delegate = (iOSOneAppDelegate *)[UIApplication sharedApplication].delegate;
+
+    delegate.progressHub.mode = MBProgressHUDModeIndeterminate;
+
+    delegate.progressHub.labelText = @"查询中…";
+    [delegate.progressHub showWhileExecuting:@selector(taskQuery) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)_prepareCells
+{
+    static NSString *mycellIdentifier = @"PKURoomCell";
+    
+    self.arrayCellDicts = [[NSMutableArray alloc] initWithCapacity:[self.arrayResult count]];
+    
+    self.arrayCellDictsForDisplay = [[NSMutableArray alloc] initWithCapacity:[self.arrayResult count]];
+    
+    for (int i = 0; i < [self.arrayResult count]; i++) {
+        
+        PKURoomCell *mycell = (PKURoomCell *) [self.tableview dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"%@%d", mycellIdentifier,i]];
+        
+        if (!mycell) {
+            mycell = [[PKURoomCell alloc] init];
+        }
+        NSDictionary *dictRoom = [self.arrayResult objectAtIndex:i];
+        //NSString *titleRoom = [dictRoom valueForKey: @"name"];
+        NSString* rawName = [dictRoom objectForKey:@"name"];
+        
+        NSString *name = [rawName stringByReplacingOccurrencesOfString:self.nameLocation withString:@""];
+        
+        [mycell setRoomName:name];
+        
+        [mycell setRoomStatusWithArray:[self getArrayAttr:dictRoom]];
+        
+        NSDictionary *tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:mycell,@"cell",name,@"name", nil];
+        
+        [self.arrayCellDicts addObject:tempDict];
+        [self.arrayCellDictsForDisplay addObject:tempDict];
+        //[mycell release];
+        [tempDict release];
+        
+    }
+
+    self.arrayCellDictsHidden = [[NSMutableArray alloc] init];    //init arrayDisplayControl
+    self.arrayDisplayControl = [NSMutableArray arrayWithCapacity:[self.arraydictResult count]];
+    for (int i = 0; i < 12; i++) {
+        [self.arrayDisplayControl addObject:[NSNumber numberWithBool:NO]];
+    }
+}
+
+
+
+- (void)taskQuery{
+    ASIFormDataRequest *requestQuery = [ASIFormDataRequest requestWithURL:urlClassroom];
+	//[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
+    //temporary set c as 18 for testing 
+    [requestQuery setPostValue:[NSNumber numberWithInt:self.valueWeeknumber] forKey:@"c"];
+	[requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
+	[requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
+
+
+	[requestQuery startSynchronous];
+	NSString *stringQuery = [requestQuery responseString];
+
+	NSArray *result = [stringQuery JSONValue];
+    self.arrayResult = result;
+    [self _prepareCells];
+    [self.tableview reloadData];
+}
 
 #pragma mark - life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -173,11 +245,12 @@
     [super viewDidLoad];
     self.arrayFilterRects = [NSMutableArray arrayWithCapacity:0];
     [self.barView prepareForDisplay];
+    
+    [self prepareData];
+    
     [self _prepareCells];
 	self.tableview.allowsSelection = NO;
     self.title = [NSString stringWithFormat:@"%@ 今天",self.nameLocation];
-
-	
 }
 
 
@@ -210,7 +283,6 @@
 
 
 - (void)dealloc {
-    NSLog(@"queryResultsDealloc");
    
     [_arraybit release];
     [arraydictResult release];
@@ -231,6 +303,7 @@
     for (NSDictionary *dict in array) {
         int beg = [[dict objectForKey:@"begin"] intValue];
         int width = [[dict objectForKey:@"width"] intValue];
+        
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(filterLeftMargin + beg*filterWidthUnit, 32.0, filterWidthUnit*width, self.view.bounds.size.height-32)];
         view.backgroundColor = UIColorFromRGB(0x1D62AB);
         view.alpha = 0.2;
@@ -241,9 +314,42 @@
         [self.view insertSubview:view atIndex:1];
         [self.arrayFilterRects addObject:view];
     }
+    if (array.count) {
+        if (self.navigationItem.rightBarButtonItem) {
+            return;
+        }
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"重选" style:UIBarButtonItemStyleDone target:self action:@selector(clearFilter)];
+        
+        
+        [item setBackgroundImage:[UIImage imageNamed:@"btn-blue-normal.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        
+        [self.navigationItem setRightBarButtonItem:item animated:YES];
+
+    }
+    else {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    }
 }
 
--(void)didHitButtonAtBar:(NSInteger)number withSelected:(BOOL)selected
+- (void)clearFilter {
+    [self.barView clearFilter];
+}
+
+- (void)didEndFilterWithControlArray:(NSArray *)array {
+    
+    self.arrayDisplayControl = [NSMutableArray arrayWithArray:array];; 
+    NSArray *indexesForDelete = [self arrayShouldDeleteWithDoingDelete];
+    NSArray *indexesForInsert = [self arrayShouldInsertWithDoingInsertAfterDelete];
+    
+    [self.tableview beginUpdates];
+    // NSLog(@"delete%@",indexesForDelete);
+    // NSLog(@"insert%@",indexesForInsert);
+    [self.tableview deleteRowsAtIndexPaths:indexesForDelete withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableview insertRowsAtIndexPaths:indexesForInsert withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableview endUpdates];
+}
+
+- (void)didHitButtonAtBar:(NSInteger)number withSelected:(BOOL)selected
 {
     
    

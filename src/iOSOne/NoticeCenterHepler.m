@@ -156,7 +156,7 @@
     self.latestCourse = nil;
     self.nowCourse = nil;
     NSDate *nowDate = [NSDate date];
-    NSLog(@"now %@",nowDate);
+//    NSLog(@"now %@",nowDate);
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
     
     EKEventStore *store = [[EKEventStore alloc] init];

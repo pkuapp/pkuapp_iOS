@@ -107,7 +107,9 @@
 					<int key="NSColorSpace">2</int>
 					<bytes key="NSRGB">MC45MDE5NjA4NDk4IDAuOTI5NDExODI4NSAwLjk0OTAxOTY3MDUAA</bytes>
 				</object>
-				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
+					<int key="IBUIStatusBarStyle">2</int>
+				</object>
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
 					<bool key="IBUIPrompted">NO</bool>
 				</object>

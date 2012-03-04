@@ -157,7 +157,7 @@
 									<object class="IBUIButton" id="352271686">
 										<reference key="NSNextResponder" ref="36527784"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{20, 0}, {16, 32}}</string>
+										<string key="NSFrameSize">{54, 32}</string>
 										<reference key="NSSuperview" ref="36527784"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="842594012"/>
@@ -178,9 +178,13 @@
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MC41AA</bytes>
 										</object>
-										<object class="NSCustomResource" key="IBUINormalImage" id="155470507">
+										<object class="NSCustomResource" key="IBUIHighlightedImage" id="304817663">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">arrow-left.png</string>
+											<string key="NSResourceName">datebar-arrow-left-pressed.png</string>
+										</object>
+										<object class="NSCustomResource" key="IBUINormalImage" id="338932053">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">datebar-arrow-left-normal.png</string>
 										</object>
 										<object class="IBUIFontDescription" key="IBUIFontDescription" id="497346929">
 											<string key="name">Helvetica-Bold</string>
@@ -197,7 +201,7 @@
 									<object class="IBUIButton" id="38036536">
 										<reference key="NSNextResponder" ref="36527784"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{270, 0}, {16, 32}}</string>
+										<string key="NSFrame">{{266, 0}, {54, 32}}</string>
 										<reference key="NSSuperview" ref="36527784"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="928766230"/>
@@ -212,9 +216,13 @@
 											<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 										</object>
 										<reference key="IBUINormalTitleShadowColor" ref="386602817"/>
-										<object class="NSCustomResource" key="IBUINormalImage" id="174800137">
+										<object class="NSCustomResource" key="IBUIHighlightedImage" id="226219993">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">arrow-right.png</string>
+											<string key="NSResourceName">datebar-arrow-right-pressed.png</string>
+										</object>
+										<object class="NSCustomResource" key="IBUINormalImage" id="358041770">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">datebar-arrow-right-normal.png</string>
 										</object>
 										<reference key="IBUIFontDescription" ref="497346929"/>
 										<reference key="IBUIFont" ref="741869895"/>
@@ -260,6 +268,7 @@
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<bool key="IBUIAlwaysBounceVertical">YES</bool>
+								<bool key="IBUIScrollEnabled">NO</bool>
 								<int key="IBUISeparatorStyle">1</int>
 								<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
 								<bool key="IBUIShowsSelectionImmediatelyOnTouchBegin">YES</bool>
@@ -308,7 +317,7 @@
 									<object class="IBUIButton" id="148663813">
 										<reference key="NSNextResponder" ref="465474014"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{26, 0}, {16, 32}}</string>
+										<string key="NSFrameSize">{54, 32}</string>
 										<reference key="NSSuperview" ref="465474014"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="259811221"/>
@@ -323,14 +332,15 @@
 											<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 										</object>
 										<reference key="IBUINormalTitleShadowColor" ref="386602817"/>
-										<reference key="IBUINormalImage" ref="155470507"/>
+										<reference key="IBUIHighlightedImage" ref="304817663"/>
+										<reference key="IBUINormalImage" ref="338932053"/>
 										<reference key="IBUIFontDescription" ref="497346929"/>
 										<reference key="IBUIFont" ref="741869895"/>
 									</object>
 									<object class="IBUIButton" id="381935132">
 										<reference key="NSNextResponder" ref="465474014"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{278, 0}, {16, 32}}</string>
+										<string key="NSFrame">{{266, 0}, {54, 32}}</string>
 										<reference key="NSSuperview" ref="465474014"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="955736210"/>
@@ -345,7 +355,8 @@
 											<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 										</object>
 										<reference key="IBUINormalTitleShadowColor" ref="386602817"/>
-										<reference key="IBUINormalImage" ref="174800137"/>
+										<reference key="IBUIHighlightedImage" ref="226219993"/>
+										<reference key="IBUINormalImage" ref="358041770"/>
 										<reference key="IBUIFontDescription" ref="497346929"/>
 										<reference key="IBUIFont" ref="741869895"/>
 									</object>
@@ -384,7 +395,6 @@
 								<string key="NSFrame">{{60, 8}, {198, 30}}</string>
 								<reference key="NSSuperview" ref="550724470"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBSegmentControlStyle">2</int>
@@ -552,6 +562,14 @@
 						<reference key="destination" ref="465474014"/>
 					</object>
 					<int key="connectionID">96</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">chooseDateNow:</string>
+						<reference key="source" ref="452360375"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">97</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -879,7 +897,9 @@
 					<string>54.IBPluginDependency</string>
 					<string>55.IBPluginDependency</string>
 					<string>56.IBPluginDependency</string>
+					<string>56.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>57.IBPluginDependency</string>
+					<string>57.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>65.CustomClassName</string>
 					<string>65.IBPluginDependency</string>
 					<string>67.IBPluginDependency</string>
@@ -887,7 +907,9 @@
 					<string>79.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
 					<string>80.IBPluginDependency</string>
+					<string>80.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>81.IBPluginDependency</string>
+					<string>81.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>82.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
 					<string>90.IBPluginDependency</string>
@@ -916,7 +938,9 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
 					<string>PKUCalendarWeekBar</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -924,7 +948,9 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -942,7 +968,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">96</int>
+			<int key="maxID">97</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -956,10 +982,12 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addEvent:</string>
 							<string>chooseDate:</string>
+							<string>chooseDateNow:</string>
 							<string>toAssignmentView:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -971,6 +999,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addEvent:</string>
 							<string>chooseDate:</string>
+							<string>chooseDateNow:</string>
 							<string>toAssignmentView:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -981,6 +1010,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">chooseDate:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">chooseDateNow:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -1190,13 +1223,17 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>arrow-left.png</string>
-				<string>arrow-right.png</string>
+				<string>datebar-arrow-left-normal.png</string>
+				<string>datebar-arrow-left-pressed.png</string>
+				<string>datebar-arrow-right-normal.png</string>
+				<string>datebar-arrow-right-pressed.png</string>
 			</object>
 			<object class="NSArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{16, 44}</string>
-				<string>{16, 44}</string>
+				<string>{54, 32}</string>
+				<string>{54, 32}</string>
+				<string>{54, 32}</string>
+				<string>{54, 32}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1173</string>

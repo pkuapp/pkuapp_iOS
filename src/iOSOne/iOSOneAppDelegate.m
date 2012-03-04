@@ -46,7 +46,19 @@
 @synthesize hasWifi;
 @synthesize appUser;
 @synthesize wvc;
+@synthesize progressHub;
+
 #pragma mark - UserControl Setup
+- (MBProgressHUD *)progressHub {
+    if (progressHub == nil) {
+        progressHub = [[MBProgressHUD alloc] initWithWindow:self.window];
+        progressHub.userInteractionEnabled = NO;
+        progressHub.opacity = 0.618;
+        progressHub.animationType = MBProgressHUDAnimationZoom;
+        [self.window addSubview:progressHub];
+    }
+    return progressHub;
+}
 
 -(AppUser *)appUser
 {
@@ -75,8 +87,10 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"didLogin"];
+
     [NSUserDefaults resetStandardUserDefaults];
     [self.appUser removeCourses:self.appUser.courses];
+    self.appUser = nil;
 //    [persistentStoreCoordinator release];
 //    persistentStoreCoordinator = nil;
 //    [managedObjectContext release];
@@ -416,7 +430,9 @@
     
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"btn-back-normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"btn-back-pressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)] forState:UIControlEventTouchUpInside barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"btn-back-pressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    
+//    [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"btn-blue-normal.png"] forState:UIControlStateApplication barMetrics:UIBarMetricsDefault];
     
     [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"btn-normal"] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     

@@ -188,14 +188,7 @@
     return 1;
 }
 
-#pragma mark MBProgressHUDDelegate Setup
 
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-    // Remove HUD from screen when the HUD was hidded
-    [HUD removeFromSuperview];
-    [HUD release];
-	HUD = nil;
-}
 #pragma mark ASIHttpRequestDelegate Setup
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
@@ -271,7 +264,9 @@
 }
 
 
-
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    self.delegate.progressHub = nil;
+}
 
 #pragma mark - Navigation Setup
 
@@ -281,9 +276,8 @@
 
 - (IBAction) myLogin:(id)sender{
     [self.validCode resignFirstResponder];
-    HUD = [[MBProgressHUD alloc] initWithWindow:self.delegate.window];
-    [self.delegate.window addSubview:HUD];
-    [HUD showWhileExecuting:@selector(taskLogin) onTarget:self withObject:nil animated:YES];
+//    self.delegate.progressHub.delegate = self;
+    [self.delegate.progressHub showWhileExecuting:@selector(taskLogin) onTarget:self withObject:nil animated:YES];
 	
 }
 
@@ -305,7 +299,8 @@
         
         [self.delegate.mvc dismissModalViewControllerAnimated:YES];
         
-        [self.delegate showwithMainView];
+        [NSUserDefaults resetStandardUserDefaults];
+//        [self.delegate showwithMainView];
 	}
 }
 

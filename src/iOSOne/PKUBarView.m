@@ -9,10 +9,30 @@
 #import "PKUBarView.h"
 #import "SystemHelper.h"
 #import "PKURoomCell.h"
+
+@interface PKUBarView(Private)
+- (void)dispatchRangeEvent;
+- (void)selectRange;
+- (void)toggleStateForLabel:(UILabel *)numlabel;
+- (void)selectLabel:(UILabel *)numlabel;
+@end
+
 @implementation PKUBarView
 @synthesize label,delegate,touchTrackEnabled,numLabelArray,arrayLabelSelectedLock,arrayLabelSelectFilterState;
+@synthesize startPos,endPos;
 
 #pragma mark - Touched Setup
+
+- (void)clearFilter {
+    
+    for (int i = 0; i < 12; ++i) {
+        [self.arrayLabelSelectedLock replaceObjectAtIndex:i withObject: [NSNumber numberWithBool:NO]];
+        [self.arrayLabelSelectFilterState replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+        [self setNumLabelState:NumLabelStateNormal forLabel:[self.numLabelArray objectAtIndex:i]];
+    }
+    [self RedrawFilterRects];
+    [self.delegate didEndFilterWithControlArray:[NSArray arrayWithArray:self.arrayLabelSelectedLock]];
+}
 
 - (void)RedrawFilterRects{
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
@@ -52,6 +72,7 @@
         for (UILabel *numlabel in self.numLabelArray) {
             if ([numlabel pointInside:[touch locationInView:numlabel]  withEvent:event]) {
                 self.touchTrackEnabled = YES;
+                self.startPos = [self.numLabelArray indexOfObject:numlabel];
                 [self dispatchTouchEvent:numlabel inPosition:[touch locationInView:numlabel]];
             }
         }
@@ -63,24 +84,63 @@
         for (UITouch *touch in touches) {
             for (UILabel *numlabel in self.numLabelArray) {
                 
-                [self dispatchTouchEvent:numlabel inPosition:[touch locationInView:numlabel]];            
+//                [self dispatchTouchEvent:numlabel inPosition:[touch locationInView:numlabel]];   
+                if ([numlabel pointInside:[touch locationInView:numlabel]  withEvent:event]) {
+                    self.endPos = [self.numLabelArray indexOfObject:numlabel];
+                }
+
             }
         }
+        [self dispatchRangeEvent];
     }
 }
 
-- (void)setNumLabelState:(NumLabelState)labelState forLabel:(UILabel *)numLabel
-{
-    if (labelState == NumLabelStateNormal) {
-                numLabel.shadowColor = filterNumberShadowColorNormal;
-        numLabel.textColor = [UIColor whiteColor];
-        [self removeFilterRectForLabelIndex:numLabel.tag-200];
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    //self.touchTrackEnabled = NO;
+    for (UITouch *touch in touches) {
+        for (UILabel *numlabel in self.numLabelArray) {
+//            [self dispatchEndTouchEvent:numlabel inPosition:[touch locationInView:numlabel]];
+            if ([numlabel pointInside:[touch locationInView:numlabel]  withEvent:event]) {
+                self.endPos = [self.numLabelArray indexOfObject:numlabel];
+            }
+        }
+    }
+    
+    if (self.startPos != self.endPos) {
+        for (int i = MIN(self.startPos,self.endPos); i <= MAX(self.endPos,self.startPos); ++i) {
+            
+            UILabel *numlabel = [self.numLabelArray objectAtIndex:i];
+
+            [self selectLabel:numlabel];
+        }
     }
     else {
-        
-        numLabel.textColor = UIColorFromRGB(0x236ED8);
-        numLabel.shadowColor = filterNumberShadowColorSelected;
-        [self addFilterRectForLabelIndex:numLabel.tag-200];
+        UILabel *numlabel = [self.numLabelArray objectAtIndex:self.startPos];
+        [self toggleStateForLabel:numlabel];
+    }
+    
+   
+    [self.delegate didEndFilterWithControlArray:[NSArray arrayWithArray:self.arrayLabelSelectedLock]];
+//    for (UILabel *numLabel in self.numLabelArray) {
+//        if ([[self.arrayLabelSelectedLock objectAtIndex:numLabel.tag-200] boolValue] == NO) {
+//            [self setNumLabelState:NumLabelStateNormal forLabel:numLabel];
+//        }
+//    }
+}
+
+- (void)selectRange {
+    for (int i = self.startPos; i <= self.endPos; ++i) {
+        UILabel *numLabel = [self.numLabelArray objectAtIndex:i];
+        [self setNumLabelState:NumLabelStateSelected forLabel:numLabel];
+    }
+}
+
+- (void)dispatchRangeEvent {
+    
+    for (int i = MIN(self.startPos,self.endPos); i <= MAX(self.endPos,self.startPos); ++i) {
+        UILabel *numLabel = [self.numLabelArray objectAtIndex:i];
+        [self setNumLabelState:NumLabelStateSelected forLabel:numLabel];
     }
 }
 
@@ -96,20 +156,44 @@
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)setNumLabelState:(NumLabelState)labelState forLabel:(UILabel *)numLabel
+{
+    if (labelState == NumLabelStateNormal) {
+        numLabel.shadowColor = colorShadowNormal;
+        numLabel.textColor = colorNumLabelNormal;
+        [self removeFilterRectForLabelIndex:numLabel.tag-200];
+    }
+    else {
+        
+        numLabel.textColor = colorNumLabelHighlighted;//UIColorFromRGB(0x236ED8);
+        numLabel.shadowColor = colorShadowHighlighted;//filterNumberShadowColorSelected;
+        [self addFilterRectForLabelIndex:numLabel.tag-200];
+    }
+}
 
-    //self.touchTrackEnabled = NO;
-    for (UITouch *touch in touches) {
-        for (UILabel *numlabel in self.numLabelArray) {
-            [self dispatchEndTouchEvent:numlabel inPosition:[touch locationInView:numlabel]];
-            
-        }
+- (void)selectLabel:(UILabel *)numlabel {
+    [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:YES]];
+    //        [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:YES];
+    [self addFilterMark:numlabel];
+    [self setNumLabelState:NumLabelStateSelected forLabel:numlabel];
+}
+
+- (void)toggleStateForLabel:(UILabel *)numlabel {
+    if ([[self.arrayLabelSelectedLock objectAtIndex:numlabel.tag-200] boolValue]) {
+        [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:NO]];
+//        [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:NO];
+        [self setNumLabelState:NumLabelStateNormal forLabel:numlabel];
+        [self removeFilterMark:numlabel];
+        
     }
-    for (UILabel *numLabel in self.numLabelArray) {
-        if ([[self.arrayLabelSelectedLock objectAtIndex:numLabel.tag-200] boolValue] == NO) {
-            [self setNumLabelState:NumLabelStateNormal forLabel:numLabel];
-        }
+    else{
+        [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:YES]];
+//        [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:YES];
+        [self addFilterMark:numlabel];
+        [self setNumLabelState:NumLabelStateSelected forLabel:numlabel];
+        
     }
+
 }
 
 -(void)dispatchEndTouchEvent:(UILabel *)numlabel inPosition:(CGPoint)point
@@ -117,20 +201,7 @@
     point.y = 0;
 
     if ([numlabel pointInside:point withEvent:nil]) {
-        if ([[self.arrayLabelSelectedLock objectAtIndex:numlabel.tag-200] boolValue]) {
-            [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:NO]];
-            [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:NO];
-            [self setNumLabelState:NumLabelStateNormal forLabel:numlabel];
-            [self removeFilterMark:numlabel];
-            
-        }
-        else{
-            [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:YES]];
-            [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:YES];
-            [self addFilterMark:numlabel];
-            [self setNumLabelState:NumLabelStateSelected forLabel:numlabel];
-
-        }
+        [self toggleStateForLabel:numlabel];
     }
         
 }
@@ -166,27 +237,27 @@
     }
     return self;
 }
-- (void)didSelectButton:(UIButton *)sender
-{
-     //sender.selected = !sender.selected;
-    sender.highlighted = !sender.highlighted;
-    UIImageView *view = (UIImageView *)[sender viewWithTag:301];
-    view.hidden = !view.hidden;
-    [self.delegate didHitButtonAtBar:sender.tag-200 withSelected:sender.selected];
-    /*if (sender.selected) {
-        [sender setTitleEdgeInsets:UIEdgeInsetsMake(0, -22, 0, 0)];
-    }
-    else [sender setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];*/
-
-    //NSLog(@"%f%f",sender.titleLabel.frame.origin.x,sender.imageView.frame.size.height);//!sender.imageView.hidden;
-}
+//- (void)didSelectButton:(UIButton *)sender
+//{
+//     //sender.selected = !sender.selected;
+//    sender.highlighted = !sender.highlighted;
+//    UIImageView *view = (UIImageView *)[sender viewWithTag:301];
+//    view.hidden = !view.hidden;
+//    [self.delegate didHitButtonAtBar:sender.tag-200 withSelected:sender.selected];
+//    /*if (sender.selected) {
+//        [sender setTitleEdgeInsets:UIEdgeInsetsMake(0, -22, 0, 0)];
+//    }
+//    else [sender setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];*/
+//
+//    //NSLog(@"%f%f",sender.titleLabel.frame.origin.x,sender.imageView.frame.size.height);//!sender.imageView.hidden;
+//}
 
 - (void)didTouchDownButton:(UIButton *)sender
 {
 
 }
 
--(void)prepareForDisplay
+- (void)prepareForDisplay
 {
     self.numLabelArray = [[NSMutableArray alloc] initWithCapacity:12];
 
@@ -195,7 +266,7 @@
     self.arrayLabelSelectFilterState = [[NSMutableArray alloc] initWithCapacity:12];
     
     self.label.text = @"筛选";
-    self.label.textColor = [SystemHelper colorWithHexString:@"#86939D"];
+//    self.label.textColor = [SystemHelper colorWithHexString:@"#86939D"];
 
     UILabel *numlabel;
 
@@ -206,11 +277,14 @@
         numlabel.backgroundColor = [UIColor clearColor];
         numlabel.textAlignment = UITextAlignmentCenter;
         numlabel.tag = 200 + i;
-        numlabel.textColor = [UIColor whiteColor];
+        numlabel.textColor = colorNumLabelNormal;
+        numlabel.shadowColor = colorShadowNormal;
+
         numlabel.shadowOffset = CGSizeMake(0, 1);
         numlabel.text = [NSString stringWithFormat:@"%d",i+1];
         numlabel.font = filterNumberFont;
-        numlabel.shadowColor = filterNumberShadowColorNormal;
+        
+//        numlabel.shadowColor = filterNumberShadowColorNormal;
         [self addSubview:numlabel];
         [self.numLabelArray addObject:numlabel];
         [self.arrayLabelSelectedLock addObject:[NSNumber numberWithBool:NO]];

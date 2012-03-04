@@ -11,7 +11,7 @@
 #import "AppCoreDataProtocol.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
-#import "AppWindowProtocol.h"
+#import "PABezelHUDDelegate.h"
 
 @class SwitchViewController,NSPersistentStoreCoordinator,NSManagedObjectContext;
 @class FirstViewController;
@@ -20,7 +20,7 @@
 @class AppUser;
 @class Course;
 
-@interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,AppUserDelegateProtocol> {
+@interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,AppUserDelegateProtocol,PABezelHUDDelegate> {
     IBOutlet UIWindow *window;
     NSManagedObjectContext *managedObjectContext;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -48,6 +48,7 @@
 @property (atomic, retain) Reachability *localTester;
 @property (atomic) PKUNetStatus netStatus;
 @property (nonatomic) BOOL hasWifi;
+@property (nonatomic, retain)MBProgressHUD *progressHub;
 - (void)showWithLoginView;
 - (void)showwithMainView;
 - (void)logout;

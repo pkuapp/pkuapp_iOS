@@ -22,10 +22,11 @@
 #import "MyCoursesViewController.h"
 #import "School.h"
 #import "UIKitAddon.h"
+#import "iOSOneAppDelegate.h"
 
 @interface MainViewController (Private)
 - (UILabel *)detailLabel;
-- (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course;
+- (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course inDay:(NSInteger)day;
 - (void)prepareCell:(NotificationCell *)cell WithAssignment:(Course *)assignment;
 
 @end
@@ -104,7 +105,7 @@
 #pragma mark - TTLauncherView Delegate
 
 - (void)didSelectDoneBtn {
-    self.navigationItem.rightBarButtonItem = nil;
+    [self.navigationItem setRightBarButtonItem:nil animated:YES];
     [self.launcherView endEditing];
 }
 
@@ -112,7 +113,7 @@
     [self.launcherView persistLauncherItems];
 }
 - (void)launcherViewDidBeginEditing:(TTLauncherView *)launcher {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)];
+    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)] animated:YES];
 }
 
 - (void)launcherView:(TTLauncherView*)launcher didSelectItem:(TTLauncherItem*)item {
@@ -216,8 +217,14 @@
     switch (notice.type) {
         case  PKUNoticeTypeLatestCourse:
             _course = (Course *)notice.object;
-
-            [self prepareCell:cell WithCourse:_course];
+            
+            NSInteger dayOffset = [[notice.dictInfo objectForKey:@"dayOffset"] intValue];
+            
+            NSInteger day =([SystemHelper getDayNow] + dayOffset + 6) % 7 + 1;
+            
+//            NSLog(@"ffff%d %d",dayOffset,[SystemHelper getDayNow]);
+            
+            [self prepareCell:cell WithCourse:_course inDay:day];
             cell.typeLabel.text = @"下一";
             cell.typeLabel.highlightedTextColor = [UIColor whiteColor];
             cell.typeImg.image = [UIImage imageNamed:@"notification-course.png"];
@@ -227,7 +234,7 @@
             _course = (Course *)notice.object;
             cell.typeLabel.textColor = color_current_blue;
 
-            [self prepareCell:cell WithCourse:_course];
+            [self prepareCell:cell WithCourse:_course inDay:[SystemHelper getDayNow]];
 
             cell.typeLabel.text = @"当前";
             cell.typeImg.image = [UIImage imageNamed:@"notification-current-course.png"];
@@ -260,11 +267,11 @@
 }
 
 
-- (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course {
+- (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course inDay:(NSInteger)day{
 
     cell.contentLabel.text = course.name;
-    
-    if (![course.rawplace isEqualToString:@""]) {
+    [cell.detailView removeAllSubviews];
+    if (![course.rawplace isWhitespaceAndNewlines]) {
         
         UIImageView *_locationImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location.png"] highlightedImage:[UIImage imageNamed:@"location-selected.png"]];
         _locationImg.frame = CGRectMake(0, 0, 11, 11);
@@ -278,8 +285,8 @@
         [cell.detailView addSubview:_locationLabel];
         
     }
-    
-    if (![[course stringTimeForDay:[SystemHelper getDayNow]] isEqualToString:@""]) {
+    NSString *stringTime = [course stringTimeForDay:day];
+    if (![stringTime isEqualToString:@""]) {
         
         NSInteger offset = cell.detailView.subviews.count?83:0;
         
@@ -290,7 +297,7 @@
         
         UILabel *_timeLabel = [self detailLabel];
         _timeLabel.frame = CGRectMake(12+offset, 0, 60, 11);
-        _timeLabel.text = [course stringTimeForDay:[SystemHelper getDayNow]];
+        _timeLabel.text = stringTime;
         [cell.detailView addSubview:_timeLabel];
     }
 }
@@ -473,9 +480,7 @@
          GateViewController *ivc = [[GateViewController alloc] initWithStyle:UITableViewStyleGrouped];
         
         ivc.connector = self.connector;
-        
-        ivc.delegate = self.delegate;
-        
+                
         self.connector.delegate = ivc;
         //ivc.delegate = self.delegate;
          self.gvc = ivc;
@@ -676,7 +681,7 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BarButton-bg-plain.png"] style:UIBarButtonItemStyleBordered target:nil action:nil];
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"38-house.png"]]];
     self.navigationItem.backBarButtonItem.image = [UIImage imageNamed:@"38-house.png"];
-    self.tableView.backgroundColor = tableBgColor;
+    self.tableView.backgroundColor = UIColorFromRGB(0xfafafa);
 
 }
 

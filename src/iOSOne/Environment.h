@@ -23,7 +23,7 @@
 
 #define pathLocation [NSHomeDirectory() stringByAppendingString:@"/Documents/location.plist"]
 #define pathUserPlist [NSHomeDirectory() stringByAppendingString:@"/Documents/User.plist"]
-
+#define pathClassroomQueryCache [NSHomeDirectory() stringByAppendingString:@"/Documents/ClassroomQueryCache.plist"]
 #define pathsql2 [NSHomeDirectory() stringByAppendingString:@"/Documents/coredata2.sqlite"]
 #define pathSQLCore [NSHomeDirectory() stringByAppendingString:@"/Documents/coredata.sqlite"]
 #define VersionReLogin 3

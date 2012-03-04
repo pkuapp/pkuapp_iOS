@@ -35,6 +35,13 @@
 @synthesize detailDataSource;
 @synthesize detailTVC;
 
+- (NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *)delegate {
+    if (delegate == nil) {
+        delegate = (NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *)[UIApplication sharedApplication].delegate;
+    }
+    return delegate;
+}
+
 - (NITableViewModel *)detailDataSource {
     if (detailDataSource == nil) {
         NSMutableArray *arraySections = [NSMutableArray arrayWithCapacity:6];
@@ -51,11 +58,11 @@
             }
             else {
                 [arraySections addObject:[NSArray arrayWithObject:[self.gateStateDictionary objectForKey:_keyIPGateType]]];
-                [arraySections addObject:[NSArray arrayWithObject:[self.gateStateDictionary objectForKey:_keyIPGateTimeConsumed]]];
+                [arraySections addObject:[NSArray arrayWithObject:[NSString stringWithFormat:@"%@小时",[self.gateStateDictionary objectForKey:_keyIPGateTimeConsumed]]]];
                 [arraySections addObject:[NSArray arrayWithObject:[self.gateStateDictionary objectForKey:_keyIPGateTimeLeft]]];
             }
             
-            [arraySections addObjectsFromArray:[NSArray arrayWithObjects:@"",[NSArray arrayWithObject:[self.gateStateDictionary objectForKey:_keyIPGateBalance]],nil]];
+            [arraySections addObjectsFromArray:[NSArray arrayWithObjects:@"",[NSArray arrayWithObject:[NSString stringWithFormat:@"%@元",[self.gateStateDictionary objectForKey:_keyIPGateBalance]]],nil]];
             
            
             
@@ -67,22 +74,18 @@
 
 - (MBProgressHUD *)progressHub{
     if (progressHub == nil) {
-        progressHub = [[MBProgressHUD alloc] initWithWindow:self.delegate.window];
-        progressHub.userInteractionEnabled = NO;
-        progressHub.opacity = 0.618;
-        progressHub.animationType = MBProgressHUDAnimationZoom;
-        [self.delegate.window addSubview:progressHub];
+        progressHub = self.delegate.progressHub;
     }
     return progressHub;
 }
 
 - (void)setNumStatus:(NSInteger)anumStatus{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM月d日 hh:mm";
+    formatter.dateFormat = @"M月d日h:mm";
     
     NSDate *dateUpdate = [NSDate date];
     
-    NSString *stringUpdateStatus = [NSString stringWithFormat:@"更新于%@",[formatter stringFromDate:dateUpdate]];
+    NSString *stringUpdateStatus = [NSString stringWithFormat:@"更新于：%@",[formatter stringFromDate:dateUpdate]];
     
     [self.gateStateDictionary setObject:stringUpdateStatus forKey:_keyIPGateUpdatedTime];
         
@@ -119,7 +122,7 @@
         labelStatus = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 30)];
         labelStatus.backgroundColor = [UIColor clearColor];
         labelStatus.textAlignment = UITextAlignmentCenter;
-        labelStatus.font = [UIFont fontWithName:@"Helvetica" size:14];
+        labelWarning.font = [UIFont systemFontOfSize:14];
         labelStatus.text = @"当前网络状态未知";
     }
     return labelStatus;
@@ -130,7 +133,7 @@
         labelWarning = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 30)];
         labelWarning.backgroundColor = [UIColor clearColor];
         labelWarning.textAlignment = UITextAlignmentCenter;
-        labelWarning.font = [UIFont fontWithName:@"Helvetica" size:14];
+        labelWarning.font = [UIFont systemFontOfSize:14];
         NSString *text = [defaults objectForKey:@"stringUpdateStatus"];
         if (!text) {
             text = @"账户状态未知";
@@ -169,7 +172,7 @@
     
     self.progressHub.labelText = @"已断开全部连接";
     
-    self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
+    self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]] autorelease];
     
     self.progressHub.mode = MBProgressHUDModeCustomView;
         
@@ -194,19 +197,19 @@
         
         cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         
-        cell.imageView.image = [UIImage imageNamed:@"status-2"];
+//        cell.imageView.image = [UIImage imageNamed:@"status-2"];
         
         cell.textLabel.text = @"可访问免费地址";
         
         self.numStatus = 2;
         
-        NSLog(@"%@",dictDetail);
+//        NSLog(@"%@",dictDetail);
     }
     progressHub.animationType = MBProgressHUDAnimationZoom;
     
     self.progressHub.labelText = @"已连接到免费地址";
     
-    self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
+    self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]] autorelease];
     
     self.progressHub.mode = MBProgressHUDModeCustomView;
 
@@ -240,6 +243,9 @@
         self.progressHub.labelText = [self.connector.dictResult objectForKey:@"REASON"];
 //        self.progressHub.mode = MBProgressHUDModeIndeterminate;
 //        [self.progressHub show:YES];
+        self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]] autorelease];
+        self.progressHub.mode = MBProgressHUDModeCustomView;
+
         [self.progressHub hide:YES afterDelay:0.5];
         
         NSLog(@"Reason %@",[self.connector.dictResult objectForKey:@"REASON"]);
@@ -266,18 +272,18 @@
         
         cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         
-        cell.imageView.image = [UIImage imageNamed:@"status-2"];
+//        cell.imageView.image = [UIImage imageNamed:@"status-2"];
         
         cell.textLabel.text = @"可访问收费地址";
         
         self.numStatus = 3;
-        NSLog(@"%@",dictDetail);
+//        NSLog(@"%@",dictDetail);
     }
         progressHub.animationType = MBProgressHUDAnimationZoom;
 
         self.progressHub.labelText = @"已连接到收费地址";
     
-        self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
+        self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]] autorelease];
     
         self.progressHub.mode = MBProgressHUDModeCustomView;
     
@@ -373,7 +379,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return self.labelStatus.text;
+//            return self.labelStatus.text;
             break;
         case 1:
             break;
@@ -429,7 +435,8 @@
                 
                 detailTVC.tableView.backgroundColor = tableBgColor;
                 detailTVC.tableView.delegate = self;
-                detailTVC.title = @"网关账号";
+                detailTVC.tableView.allowsSelection = NO;
+                detailTVC.title = @"网关账户";
                 [self.navigationController pushViewController:detailTVC animated:YES];
             }
             break;
@@ -444,7 +451,6 @@
 
 - (void)showProgressHubWithTitle:(NSString *)title{
     self.progressHub.mode = MBProgressHUDModeIndeterminate;
-    [self.delegate.window addSubview:self.progressHub];
     self.progressHub.delegate = self;
     self.progressHub.labelText = title;
     [self.progressHub show:YES];
@@ -482,26 +488,27 @@
     {  
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellString] autorelease]; 
     }  
+    NSInteger imageTag = 0;
 
     switch (indexPath.section) {
         case 0:
             switch (self.numStatus) {
                 case 0:
-                    cell.textLabel.text = @"当前无法访问校园网";
-                    cell.imageView.image = [UIImage imageNamed:@"status-0.png"];
+                    cell.textLabel.text = @"当前状态未知";
+//                    cell.imageView.image = [UIImage imageNamed:@".png"];
                     break;
                 case 1:
                     cell.textLabel.text = @"当前连接到校园网";
-                    cell.imageView.image = [UIImage imageNamed:@"status-1.png"];
+//                    cell.imageView.image = [UIImage imageNamed:@"status-1.png"];
                     break;
                 case 2:
                     cell.textLabel.text = @"当前连接到免费地址";
-                    cell.imageView.image = [UIImage imageNamed:@"button-2.png"];
+//                    cell.imageView.image = [UIImage imageNamed:@"button-2.png"];
 
                     break;
                 case 3:
                     cell.textLabel.text = @"当前连接到收费地址";
-                    cell.imageView.image = [UIImage imageNamed:@"button-3.png"];
+//                    cell.imageView.image = [UIImage imageNamed:@"button-3.png"];
 
                     break;
                     
@@ -514,30 +521,33 @@
         case 1:
             if ([[self.gateStateDictionary objectForKey:_keyAlwaysGlobal] boolValue] && indexPath.row == 0) {
                 cell.textLabel.text = @"连接到收费地址";
-                cell.imageView.image = [UIImage imageNamed:@"button-3.png"];
-                return cell;
+                imageTag = 3;
+
             }
             else if (indexPath.row == 0) {
+                imageTag = 2;
                 cell.textLabel.text = @"连接到免费地址";
-                cell.imageView.image = [UIImage imageNamed:@"button-2.png"];
+
             }
             else if (indexPath.row == 1){
+                imageTag = 3;
                 cell.textLabel.text = @"连接到收费地址";
-                cell.imageView.image = [UIImage imageNamed:@"button-3.png"];
+
             }
-            return cell;
+            
+            break;
         case 2:
             cell.textLabel.text = @"断开全部连接";
-            cell.imageView.image = [UIImage imageNamed:@"button-1.png"];
-            return cell;
+            imageTag = 1;
+            break;
 
         case 3:
-            cell.textLabel.text = @"网关账号";
+            cell.textLabel.text = @"网关账户";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             cell.detailTextLabel.text = [self.gateStateDictionary objectForKey:_keyIPGateTimeLeft];
 
-            return cell;
+
             break;
         case 4:
             if (indexPath.row == 0) {
@@ -563,10 +573,14 @@
                 cell.textLabel.text = @"总是连接到收费地址";
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
-            return cell;
+            break;
     }
-    return nil;
+    if (imageTag) {
+        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"btn-its-%d-normal.png",imageTag]];
+        cell.imageView.highlightedImage = [UIImage imageNamed:[NSString stringWithFormat:@"btn-its-%d-highlighted.png",imageTag]];
+    }
+
+    return cell;
 }
 
 

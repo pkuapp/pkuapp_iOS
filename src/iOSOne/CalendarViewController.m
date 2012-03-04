@@ -732,7 +732,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
     if (group.type == ClassGroupTypeEnd) {
-        return 16;
+        return 28;
     }
     return (group.endclass - group.startclass+1)*26;
 }
@@ -740,6 +740,11 @@
 #pragma mark -
 #pragma mark EKEvent Delegate
 @synthesize systemEventDayList,systemEventWeekList,eventStore,defaultCalendar,alldayList,detailViewController,dateBegInDayView;
+
+- (IBAction)chooseDateNow:(id)sender {
+    self.dateInDayView = [NSDate date];
+//    self.tableView
+}
 
 - (NSArray *)fetchEventsForWeek
 {

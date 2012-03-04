@@ -244,6 +244,7 @@
             break;
             
         case 2:// teacher, type and credits
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"老师";
@@ -264,6 +265,8 @@
             break;
             
         case 3://time and place
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"上课时间";
@@ -300,7 +303,7 @@
             switch (indexPath.row) {
                 case 0:
                     
-                    cell.textLabel.text = @"加入旁听列表";
+//                    cell.textLabel.text = @"加入旁听列表";
                     
                     break;
                     

@@ -80,6 +80,7 @@
 @property (nonatomic, assign) NSInteger dayoffset;
 @property (nonatomic, assign) NoticeCenterHepler *noticeCenter;
 
+- (IBAction)chooseDateNow:(id)sender;
 - (NSArray *) fetchEventsForWeek;
 - (NSArray *) fetchEventsForDay;
 - (IBAction) addEvent:(id)sender;

@@ -25,16 +25,22 @@
 {
     
     NSMutableDictionary *dict = [self.marrayForQuery objectAtIndex:indexPath.row];
-   
-    self.valueTargetBuilding = [dict objectForKey:@"location"];
-    self.valueTargetDay = [NSString stringWithFormat:@"%d",[SystemHelper getDayNow]];
+    QueryResultsController *qrc =[ [QueryResultsController alloc] initWithNibName:@"QueryResults" bundle:nil];
+
+    qrc.valueTargetBuilding = [dict objectForKey:@"location"];
+    qrc.valueTargetDay = [NSString stringWithFormat:@"%d",[SystemHelper getDayNow]];
     
-    self.valueWeeknumber = 1;
-    self.nameTargetName = [dict objectForKey:@"name"];
+    qrc.valueWeeknumber = [SystemHelper getPkuWeeknumberNow];;
+    qrc.nameLocation = [dict objectForKey:@"name"];
     int freq = [[dict objectForKey:@"Freq"] intValue];
     [dict setObject:[NSNumber numberWithInt:++freq] forKey:@"Freq"];
     // NSLog(@"%@%d",[self.marrayForQuery objectAtIndex:indexPath.row],freq);
-    [self performQuery];
+
+    
+	qrc.numday = [self.valueTargetDay intValue] ;
+
+	[self.navigationController pushViewController:qrc animated:YES];
+    [qrc release];
     
 }
 
@@ -81,7 +87,7 @@
 	//[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
     //temporary set c as 18 for testing 
     [requestQuery setPostValue:[NSNumber numberWithInt:1] forKey:@"c"];
-    NSLog(@"%d",[SystemHelper getPkuWeeknumberNow]);
+
 	[requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
 	[requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
 	[requestQuery startSynchronous];
@@ -121,7 +127,7 @@
 
 
 
-#pragma mark - private
+#pragma mark - View life-cycle
 - (void)sortLocation
 {
     [self.marrayForQuery sortUsingComparator:^(id obj1,id obj2){
@@ -144,9 +150,11 @@
 	[request startSynchronous];
 	
 	NSString *stringRequest = [request responseString];
-    NSLog(@"%@",stringRequest);
+    
 	NSArray *dictLocation = [stringRequest JSONValue];
+    
 	NSMutableArray *tempmarray = [NSMutableArray arrayWithCapacity:25];
+    
     for (NSDictionary *temp in dictLocation){
         NSMutableDictionary *dictQuery = [[NSMutableDictionary alloc] initWithDictionary:temp];
         [dictQuery setObject:[NSNumber numberWithInt:0] forKey:@"Freq"];
@@ -157,7 +165,7 @@
 	
 	[SystemHelper getDateBeginOnline];
 	self.marrayForQuery = tempmarray;
-    NSLog(@"%@",self.marrayForQuery);
+//    NSLog(@"%@",self.marrayForQuery);
     [self saveQueryArray];
 }
 
@@ -165,9 +173,9 @@
 {
     [[NSFileManager defaultManager] removeItemAtPath:pathLocation error:nil];
     
-	if([self.marrayForQuery writeToFile:pathLocation atomically:NO])
+	if(![self.marrayForQuery writeToFile:pathLocation atomically:NO])
 	{
-		NSLog(@"updateDataIn%@",pathLocation);
+//		NSLog(@"updateDataIn%@",pathLocation);
 		
 	}
 
@@ -175,30 +183,32 @@
 
 - (void) initLocation
 {
-	
-	BOOL needsUpdateLocation = ![[NSFileManager defaultManager] fileExistsAtPath:pathLocation]; 
+	NSFileManager *fmanager = [NSFileManager defaultManager];
+	BOOL needsUpdateLocation = ![fmanager fileExistsAtPath:pathLocation]; 
 	if (needsUpdateLocation) {
-		[self performUpdateLocation];
-		
+        NSString *pathInnerLocationPlist = [[NSBundle mainBundle] pathForResource:@"location" ofType:@"plist"];
+        
+        [fmanager copyItemAtPath:pathInnerLocationPlist toPath:pathLocation error:nil];
 	}
     self.marrayForQuery = [[NSMutableArray alloc] initWithCapacity:15];
-    //NSLog(@"%@",self.marrayForQuery);
+//    NSLog(@"---%@",self.marrayForQuery);
     NSArray *array = [[[NSArray alloc] initWithContentsOfFile:pathLocation] autorelease];
     for (NSDictionary *tempdict in array) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:tempdict];
         [self.marrayForQuery addObject:dict];
     }
-    NSLog(@"%@",self.marrayForQuery);
+    [self.tableView reloadData];
+//    NSLog(@"%@",self.marrayForQuery);
 }
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+    [self initLocation];
 
 	self.valueTargetDay = @"1";
 	self.valueTargetBuilding = @"1";
     self.nameTargetName = @"一教";
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"更新" style:UIBarButtonItemStylePlain target:self action:@selector(performUpdateLocation)] autorelease];
+//	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"更新" style:UIBarButtonItemStylePlain target:self action:@selector(performUpdateLocation)] autorelease];
     self.title = @"空闲教室";
 
 }
@@ -231,7 +241,7 @@
 
 
 - (void)dealloc {
-    NSLog(@"QueryControllerDealloc");
+
     [self saveQueryArray];
     [marrayForQuery release];
     [valueTargetBuilding release];

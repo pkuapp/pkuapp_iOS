@@ -14,9 +14,9 @@
 #import "Environment.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
-#import "AppWindowProtocol.h"
 #import "NimbusModels.h"
 #import "Three20/Three20.h"
+#import "PABezelHUDDelegate.h"
 
 @interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate,NITableViewModelDelegate> { 
     BOOL _autoDisconnect;
@@ -34,7 +34,7 @@
 @property (retain, nonatomic) UILabel *labelStatus;
 @property (retain, nonatomic) UILabel *labelWarning;
 @property (retain, nonatomic) MBProgressHUD *progressHub;
-@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,AppWindowProtocol> *delegate;
+@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *delegate;
 @property (retain, nonatomic) NITableViewModel *detailDataSource;
 @property (assign, atomic) UITableViewController *detailTVC;
 
