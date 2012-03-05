@@ -77,7 +77,7 @@
         fetchRequest.predicate = predicate;
         
         appUser = [(AppUser *) [[self.managedObjectContext executeFetchRequest:fetchRequest error:NULL] lastObject] retain];
-        NSLog(@"get appUser%@",appUser);
+//        NSLog(@"get appUser%@",appUser);
 
     }
     return appUser;
@@ -429,7 +429,7 @@
 #pragma mark application life-cycle Setup
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
-    [self generateCoreDataBase];
+//    [self generateCoreDataBase];
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSFileManager *fm = [NSFileManager defaultManager];
