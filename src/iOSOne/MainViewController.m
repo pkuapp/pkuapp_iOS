@@ -172,6 +172,7 @@
     Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
     EKEventViewController *detailViewController;
     switch (notice.type) {
+        case PKUNoticeTypeNowCourse:
         case PKUNoticeTypeLatestCourse:
             [self navToCourseDetail:(Course *)notice.object];
             break;
