@@ -91,7 +91,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.tabBarController.title = @"我的旁听";
+//    self.tabBarController.title = @"我的旁听";
 
     [super viewDidAppear:animated];
 }

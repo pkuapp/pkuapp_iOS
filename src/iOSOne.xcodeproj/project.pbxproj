@@ -21,7 +21,6 @@
 		410B418013902BA300002A46 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410B417F13902BA300002A46 /* CoreGraphics.framework */; };
 		410B418913902BA300002A46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418813902BA300002A46 /* main.m */; };
 		410B418C13902BA400002A46 /* iOSOneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418B13902BA400002A46 /* iOSOneAppDelegate.m */; };
-		410C9E2614E80C5700F04E3E /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 410C9E2514E80C5700F04E3E /* coredata.sqlite */; };
 		4114B8A6150208E600FD229C /* btn-back-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B89C150208E600FD229C /* btn-back-normal.png */; };
 		4114B8A7150208E600FD229C /* btn-back-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B89D150208E600FD229C /* btn-back-pressed.png */; };
 		4114B8AA150208E600FD229C /* btn-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B8A0150208E600FD229C /* btn-normal.png */; };
@@ -164,6 +163,7 @@
 		41942AA515042DEB0012F5BE /* datebar-arrow-right-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41942A9D15042DEB0012F5BE /* datebar-arrow-right-normal@2x.png */; };
 		41942AA615042DEB0012F5BE /* datebar-arrow-right-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 41942A9E15042DEB0012F5BE /* datebar-arrow-right-pressed.png */; };
 		41942AA715042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41942A9F15042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png */; };
+		41942AAD15043E4A0012F5BE /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 41942AAC15043E480012F5BE /* coredata.sqlite */; };
 		4195E8FA143ECE6D0015BDFD /* ChineseFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4195E8F9143ECE6D0015BDFD /* ChineseFetchedResultsController.m */; };
 		419E341C15021A2D00D7494A /* 24-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E341815021A2D00D7494A /* 24-person.png */; };
 		419E341D15021A2D00D7494A /* 24-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E341915021A2D00D7494A /* 24-person@2x.png */; };
@@ -481,7 +481,6 @@
 		410B418813902BA300002A46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		410B418A13902BA400002A46 /* iOSOneAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSOneAppDelegate.h; sourceTree = "<group>"; };
 		410B418B13902BA400002A46 /* iOSOneAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSOneAppDelegate.m; sourceTree = "<group>"; };
-		410C9E2514E80C5700F04E3E /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		4114B89C150208E600FD229C /* btn-back-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-normal.png"; sourceTree = "<group>"; };
 		4114B89D150208E600FD229C /* btn-back-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-pressed.png"; sourceTree = "<group>"; };
 		4114B8A0150208E600FD229C /* btn-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-normal.png"; sourceTree = "<group>"; };
@@ -662,6 +661,7 @@
 		41942A9D15042DEB0012F5BE /* datebar-arrow-right-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "datebar-arrow-right-normal@2x.png"; sourceTree = "<group>"; };
 		41942A9E15042DEB0012F5BE /* datebar-arrow-right-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "datebar-arrow-right-pressed.png"; sourceTree = "<group>"; };
 		41942A9F15042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "datebar-arrow-right-pressed@2x.png"; sourceTree = "<group>"; };
+		41942AAC15043E480012F5BE /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		4195E8F8143ECE6D0015BDFD /* ChineseFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseFetchedResultsController.h; sourceTree = "<group>"; };
 		4195E8F9143ECE6D0015BDFD /* ChineseFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseFetchedResultsController.m; sourceTree = "<group>"; };
 		419E341815021A2D00D7494A /* 24-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person.png"; sourceTree = "<group>"; };
@@ -1058,6 +1058,7 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				41942AAC15043E480012F5BE /* coredata.sqlite */,
 				41942A9815042DEB0012F5BE /* datebar-arrow-left-normal.png */,
 				41942A9915042DEB0012F5BE /* datebar-arrow-left-normal@2x.png */,
 				41942A9A15042DEB0012F5BE /* datebar-arrow-left-pressed.png */,
@@ -1074,7 +1075,6 @@
 				4177300B14FF7BC50024E0E8 /* calendar-list-bg.png */,
 				4177300C14FF7BC50024E0E8 /* calendar-list-bg@2x.png */,
 				4171251F14EE932D00B1C644 /* Global */,
-				410C9E2514E80C5700F04E3E /* coredata.sqlite */,
 				41E3F08914DE5C300030D74A /* 0205 */,
 				415F49B514DC138A00260A08 /* notification */,
 				417C1DBD14C5AD5900567B7B /* Calendar */,
@@ -1943,7 +1943,6 @@
 				41E3F0A114DE67140030D74A /* event-bg-additional@2x.png in Resources */,
 				41E3F0A214DE67140030D74A /* event-bg-course.png in Resources */,
 				41E3F0A314DE67140030D74A /* event-bg-course@2x.png in Resources */,
-				410C9E2614E80C5700F04E3E /* coredata.sqlite in Resources */,
 				4171251D14EE932800B1C644 /* NavigationBar-bg.png in Resources */,
 				4171251E14EE932800B1C644 /* NavigationBar-bg@2x.png in Resources */,
 				416374DF14EEA6D600F26CE6 /* BarButton-bg-plain.png in Resources */,
@@ -2012,6 +2011,7 @@
 				41942AA515042DEB0012F5BE /* datebar-arrow-right-normal@2x.png in Resources */,
 				41942AA615042DEB0012F5BE /* datebar-arrow-right-pressed.png in Resources */,
 				41942AA715042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png in Resources */,
+				41942AAD15043E4A0012F5BE /* coredata.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

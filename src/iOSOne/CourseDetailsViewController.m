@@ -137,7 +137,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -183,7 +183,7 @@
     
     switch (indexPath.section) {
         case 0:
-        case 1:
+
         case 4:
             cell = [self.tableView dequeueReusableCellWithIdentifier:identifierBtn];
             if (cell == nil) {
@@ -220,30 +220,30 @@
                 cell.textLabel.text = [[self.arrayAssignments objectAtIndex:indexPath.row] content];
             }
             break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    cell.textLabel.text = @"最新动态";
-                    break;
-                case 1:
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:identifierBtn];
-                    
-                    if (cell == nil) {
-                        
-                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CourseDetailBtn"];
-                        
-                        cell.textLabel.textAlignment = UITextAlignmentCenter;
-                    }
-                    
-                    cell.textLabel.text = @"进入讨论区";
-                    
-                    break;
-                default:
-                    break;
-            }
-            break;
-            
-        case 2:// teacher, type and credits
+//        case 1:
+//            switch (indexPath.row) {
+//                case 0:
+//                    cell.textLabel.text = @"最新动态";
+//                    break;
+//                case 1:
+//                    cell = [self.tableView dequeueReusableCellWithIdentifier:identifierBtn];
+//                    
+//                    if (cell == nil) {
+//                        
+//                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CourseDetailBtn"];
+//                        
+//                        cell.textLabel.textAlignment = UITextAlignmentCenter;
+//                    }
+//                    
+//                    cell.textLabel.text = @"进入讨论区";
+//                    
+//                    break;
+//                default:
+//                    break;
+//            }
+//            break;
+//            
+        case 1:// teacher, type and credits
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             switch (indexPath.row) {
                 case 0:
@@ -264,9 +264,8 @@
             }
             break;
             
-        case 3://time and place
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        case 2://time and place
+            
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"上课时间";

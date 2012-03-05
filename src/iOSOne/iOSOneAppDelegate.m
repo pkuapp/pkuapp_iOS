@@ -143,11 +143,16 @@
             NSLog(@"create appUser");
         }
      
-        [self.managedObjectContext save:NULL];
+
         appUser.deanid = username;
         appUser.password = password;
-        [self.managedObjectContext save:NULL];
-        return YES;
+        NSError *error;
+        if ([self.managedObjectContext save:&error]) {
+            return YES;
+        }
+        else {
+            NSLog(@"%@",error);
+        }
     }
     return NO;
 }
@@ -424,7 +429,8 @@
 #pragma mark application life-cycle Setup
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
-    
+    [self generateCoreDataBase];
+
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSFileManager *fm = [NSFileManager defaultManager];
     
@@ -500,6 +506,7 @@
     [self.localTester startNotifier];
     
     // Override point for customization after application launch.
+//    [self generateCoreDataBase];
     [self.window makeKeyAndVisible];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStatusDidChanged:) name:kReachabilityChangedNotification object:nil];
     return YES;

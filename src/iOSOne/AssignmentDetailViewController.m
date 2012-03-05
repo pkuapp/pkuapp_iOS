@@ -16,7 +16,7 @@
 - (NSDateFormatter *)formatter{
     if (formatter == nil) {
         formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"MM月dd日";
+        formatter.dateFormat = @"M月dd日";
     }
     return formatter;
 }

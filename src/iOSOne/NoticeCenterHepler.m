@@ -59,7 +59,7 @@
         [array addObject:_notice];
     }
     if (self.latestEvent!= nil) {
-        [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeLatestEvent]];
+        [array addObject:[Notice noticeWithObject:self.latestEvent Type:PKUNoticeTypeLatestEvent]];
     }
     
     for (Assignment *assign in self.arrayAssignments) {

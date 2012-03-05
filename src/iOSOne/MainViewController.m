@@ -23,6 +23,8 @@
 #import "School.h"
 #import "UIKitAddon.h"
 #import "iOSOneAppDelegate.h"
+#import <EventKit/EventKit.h>
+#import <EventKitUI/EventKitUI.h>
 
 @interface MainViewController (Private)
 - (UILabel *)detailLabel;
@@ -168,7 +170,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
-    
+    EKEventViewController *detailViewController;
     switch (notice.type) {
         case PKUNoticeTypeLatestCourse:
             [self navToCourseDetail:(Course *)notice.object];
@@ -176,6 +178,20 @@
         case PKUNoticeTypeAssignment:
             [self navToAssignment:(Assignment *)notice.object];
             break;
+        case PKUNoticeTypeLatestEvent:
+            // Upon selecting an event, create an EKEventViewController to display the event.
+            detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
+            detailViewController.event = (EKEvent *)notice.object;
+            
+            // Allow event editing.
+            detailViewController.allowsEditing = YES;
+            
+            //	Push detailViewController onto the navigation controller stack
+            //	If the underlying event gets deleted, detailViewController will remove itself from
+            //	the stack and clear its event property.
+            [self.navigationController pushViewController:detailViewController animated:YES];
+
+            
         default:
             break;
     }
@@ -242,7 +258,11 @@
             break;
 
         case PKUNoticeTypeLatestEvent:
-                
+            cell.typeLabel.text = @"下一";
+            cell.typeImg.image = [UIImage imageNamed:@"notification-calendar.png"];
+            cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-calendar.png"];
+            
+            cell.contentLabel.text = [(EKEvent*) notice.object title];
             break;
         case PKUNoticeTypeAssignment:
             [self prepareCell:cell WithAssignment:notice.object];
@@ -381,7 +401,7 @@
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     
-    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,ccc,nil];
+    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,nil];
     tbc.navigationItem.titleView = mcvc.segmentedControl;
     [self.navigationController pushViewController:tbc animated:YES];
     
@@ -625,6 +645,17 @@
     }
     return self;
 }
+
+//- (TTStyle*)launcherButton:(UIControlState)state { 
+//    return 
+//    [TTPartStyle styleWithName:@"image" 
+//                         style:TTSTYLESTATE(launcherButtonImage:, state) next: 
+//     [TTTextStyle styleWithFont:[UIFont boldSystemFontOfSize:16] 
+//                          color:RGBCOLOR(80, 80, 80) 
+//                minimumFontSize:12 shadowColor:nil 
+//                   shadowOffset:CGSizeZero next:nil]]; 
+//} 
+
 
 - (void)loadView {
     [super loadView];
