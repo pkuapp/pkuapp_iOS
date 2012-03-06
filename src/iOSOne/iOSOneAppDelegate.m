@@ -22,19 +22,12 @@
 #import "SystemHelper.h"
 #import "School.h"
 #import "Course.h"
+#import "ModalAlert.h"
+@interface iOSOneAppDelegate(Private)
+- (void)checkVersion;
+- (void)checkVersionDone;
 
-//@implementation UINavigationBar (Custom)
-//-(void)setBackgroundImage:(UIImage*)image{
-//    if(image == NULL){
-//        return;
-//    }
-//    UIImageView *aTabBarBackground = [[UIImageView alloc]initWithImage:image];
-//    aTabBarBackground.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
-//    [self addSubview:aTabBarBackground];
-//    [self sendSubviewToBack:aTabBarBackground];
-//    [aTabBarBackground release];
-//}
-//@end
+@end
 
 @implementation iOSOneAppDelegate
 
@@ -47,6 +40,28 @@
 @synthesize appUser;
 @synthesize wvc;
 @synthesize progressHub;
+
+#pragma mark Private method
+- (void)checkVersionDone:(ASIHTTPRequest *)request {
+    NSNumber *version = [[[request responseString] JSONValue] objectForKey:@"beta"];
+    
+    if ([version intValue] >= iOSVersionNum) {
+        if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
+            
+        } 
+    }
+}
+
+- (void)checkVersion {
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url_iOS_version]];
+    
+    request.delegate = self;
+    
+    request.didFinishSelector = @selector(checkVersionDone:);
+    
+    [request startAsynchronous];
+}
+
 
 #pragma mark - UserControl Setup
 - (MBProgressHUD *)progressHub {
@@ -321,28 +336,31 @@
 
 - (void)netStatusDidChanged:(NSNotification *)notice {
     Reachability *r = [notice object];
-    if ([r.key isEqualToString:@"global"]) {
-        NSLog(@"reachable%d",r.isReachable);
-        self.netStatus = r.isReachable?PKUNetStatusGlobal:self.netStatus;
-        
-    }
-    else if ([r.key isEqualToString:@"free"]){
-        if (r.isReachable) {
-            self.netStatus = self.netStatus < PKUNetStatusFree?PKUNetStatusFree:self.netStatus;
-        }
-        else self.netStatus = self.netStatus > PKUNetStatusLocal?PKUNetStatusLocal:self.netStatus;
-    }
-    else if ([r.key isEqualToString:@"local"]){
-        if (r.isReachable) {
-            self.netStatus = self.netStatus < PKUNetStatusLocal?PKUNetStatusLocal:self.netStatus;
-        }
-        else self.netStatus = PKUNetStatusNone;
-    }
-    else if ([r.key isEqualToString:@"wifi"]){
-        self.hasWifi = r.isReachable?YES:NO;
-    }
+//    if ([r.key isEqualToString:@"global"]) {
+//        NSLog(@"reachable%d",r.isReachable);
+//        self.netStatus = r.isReachable?PKUNetStatusGlobal:self.netStatus;
+//        
+//    }
+//    else if ([r.key isEqualToString:@"free"]){
+//        if (r.isReachable) {
+//            self.netStatus = self.netStatus < PKUNetStatusFree?PKUNetStatusFree:self.netStatus;
+//        }
+//        else self.netStatus = self.netStatus > PKUNetStatusLocal?PKUNetStatusLocal:self.netStatus;
+//    }
+//    else if ([r.key isEqualToString:@"local"]){
+//        if (r.isReachable) {
+//            self.netStatus = self.netStatus < PKUNetStatusLocal?PKUNetStatusLocal:self.netStatus;
+//        }
+//        else self.netStatus = PKUNetStatusNone;
+//    }
+//    else if ([r.key isEqualToString:@"wifi"]){
+//        self.hasWifi = r.isReachable?YES:NO;
+//    }
+//    if (r.isReachable) {
+//        <#statements#>
+//    }
     //[r startNotifier];
-    NSLog(@"%d",r.currentReachabilityStatus);
+//    NSLog(@"%d",r.currentReachabilityStatus);
     //NSLog(@"%d",self.netStatus);
     
 }
@@ -429,6 +447,7 @@
 #pragma mark application life-cycle Setup
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
+//    NSLog(@"%@",[[NSBundle mainBundle] bundleIdentifier] );
 //    [self generateCoreDataBase];
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -485,13 +504,13 @@
         [self showWithLoginView];
     }
     
-    self.globalTester = [Reachability reachabilityWithHostName: @"www.apple.com"];
-    self.globalTester.key = @"global";
-	[self.globalTester startNotifier];
-	
-    self.freeTester = [Reachability reachabilityWithHostName:@"renren.com"];
-    self.freeTester.key = @"free";
-    [self.freeTester startNotifier];
+//    self.globalTester = [Reachability reachabilityWithHostName: @"www.apple.com"];
+//    self.globalTester.key = @"global";
+//	[self.globalTester startNotifier];
+//	
+//    self.freeTester = [Reachability reachabilityWithHostName:@"renren.com"];
+//    self.freeTester.key = @"free";
+//    [self.freeTester startNotifier];
     
     self.internetTester = [Reachability reachabilityForInternetConnection];
     self.internetTester.key = @"internet";
@@ -500,11 +519,11 @@
     self.wifiTester = [Reachability reachabilityForLocalWiFi];
     self.wifiTester.key = @"wifi";
 	[self.wifiTester startNotifier];
-    
-    self.localTester = [Reachability reachabilityWithHostName:@"its.pku.edu.cn"];
-    self.localTester.key = @"local";
-    [self.localTester startNotifier];
-    
+//    
+//    self.localTester = [Reachability reachabilityWithHostName:@"its.pku.edu.cn"];
+//    self.localTester.key = @"local";
+//    [self.localTester startNotifier];
+//    
     // Override point for customization after application launch.
 //    [self generateCoreDataBase];
     [self.window makeKeyAndVisible];

@@ -205,7 +205,7 @@
     [super viewDidLoad];
     [self initLocation];
 
-	self.valueTargetDay = @"1";
+	self.valueTargetDay = [NSString stringWithFormat:@"%d",[SystemHelper getDayNow]];
 	self.valueTargetBuilding = @"1";
     self.nameTargetName = @"一教";
 //	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"更新" style:UIBarButtonItemStylePlain target:self action:@selector(performUpdateLocation)] autorelease];

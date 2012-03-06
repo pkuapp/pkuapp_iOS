@@ -33,6 +33,7 @@
 -(void)setRoomStatusWithArray:(NSArray *)array
 {
     self.arrayShow = array;
+//    NSLog(@"%@",array);
     UIButton *button;
     NSAssert2([array count] == 12, @"Unhandled error %s at line %d", __FUNCTION__, __LINE__);
     for (int i = 0; i < 12 ; i++) {

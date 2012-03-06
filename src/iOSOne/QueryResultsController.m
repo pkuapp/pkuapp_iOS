@@ -128,6 +128,7 @@
 - (NSArray *)getArrayAttr: (NSDictionary *)dictTarget
 {
 	NSString *key = [NSString stringWithFormat:@"day%d",self.numday];
+
 	NSInteger numState = [[[dictTarget valueForKey:@"t"] valueForKey:key] intValue];
 	NSMutableArray *arrayshow = [[NSMutableArray alloc] initWithCapacity:12];
 	for (int i = 0; i < 12; i++) {
@@ -173,7 +174,7 @@
     static NSString *mycellIdentifier = @"PKURoomCell";
     
     self.arrayCellDicts = [[NSMutableArray alloc] initWithCapacity:[self.arrayResult count]];
-    
+//    NSLog(@"%@",self.arrayResult);
     self.arrayCellDictsForDisplay = [[NSMutableArray alloc] initWithCapacity:[self.arrayResult count]];
     
     for (int i = 0; i < [self.arrayResult count]; i++) {
@@ -222,7 +223,7 @@
 
 	[requestQuery startSynchronous];
 	NSString *stringQuery = [requestQuery responseString];
-
+//    NSLog(@"%@",stringQuery);
 	NSArray *result = [stringQuery JSONValue];
     self.arrayResult = result;
     [self _prepareCells];

@@ -7,6 +7,8 @@
  *
  */
 
+#define iOSVersionNum 89
+#define url_iOS_version @"http://www.pkucada.org:8082/Server/app/iOS_version"
 
 #define urlImgDean @"http://dean.pku.edu.cn/student/yanzheng.php?act=init"
 #define urlImgEle @"http://elective.pku.edu.cn/elective2008/DrawServlet?Rand=1898"
