@@ -62,7 +62,7 @@
 - (void)checkVersionDone:(ASIHTTPRequest *)request {
     NSNumber *version = [[[request responseString] JSONValue] objectForKey:@"beta"];
     NSLog(@"checking version");
-    if ([version intValue] >= iOSVersionNum) {
+    if ([version intValue] > iOSVersionNum) {
         if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=http://pkuapp.com/download/iOS/manifest.plist"]];
         } 

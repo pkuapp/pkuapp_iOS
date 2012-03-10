@@ -160,7 +160,7 @@
         [dictQuery setObject:[NSNumber numberWithInt:0] forKey:@"Freq"];
 
 		[tempmarray addObject: dictQuery];
-		
+		[dictQuery release];
 	}
 	
 	[SystemHelper getDateBeginOnline];
@@ -192,11 +192,12 @@
 	}
     self.marrayForQuery = [[NSMutableArray alloc] initWithCapacity:15];
 //    NSLog(@"---%@",self.marrayForQuery);
-    NSArray *array = [[[NSArray alloc] initWithContentsOfFile:pathLocation] autorelease];
+    NSArray *array = [[NSArray alloc] initWithContentsOfFile:pathLocation];
     for (NSDictionary *tempdict in array) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:tempdict];
         [self.marrayForQuery addObject:dict];
     }
+    [array release];
     [self.tableView reloadData];
 //    NSLog(@"%@",self.marrayForQuery);
 }

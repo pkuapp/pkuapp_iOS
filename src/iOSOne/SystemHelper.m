@@ -60,8 +60,8 @@
     if (DateTermBegin == nil) {
         DateTermBegin = [SystemHelper getDateBeginOnline];
     }
-    NSDateComponents *begComponent = [[[NSDateComponents alloc] init] autorelease];
-    NSDateComponents *endComponent = [[[NSDateComponents alloc] init] autorelease];
+    NSDateComponents *begComponent;
+    NSDateComponents *endComponent;
     
     NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
     unsigned unitFlags = NSWeekCalendarUnit;
@@ -80,6 +80,7 @@
     NSDate *DateTermBegin = [dateFormatter dateFromString:dateString];
     NSUserDefaults* userPres = [NSUserDefaults standardUserDefaults];
     [userPres setObject:DateTermBegin forKey:@"DateTermBegin"];
+
     return DateTermBegin;
 }
 
@@ -87,7 +88,7 @@
 {
     NSDate *datenow = [NSDate date];
     NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDateComponents *component = [[[NSDateComponents alloc] init] autorelease];
+    NSDateComponents *component;
     unsigned unitFlags =  NSHourCalendarUnit |NSMinuteCalendarUnit;
     component = [calendar components:unitFlags fromDate:datenow];
     return [component hour] + [component minute] / 60.0;
@@ -116,7 +117,7 @@
 {
    
     NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDateComponents *component = [[[NSDateComponents alloc] init] autorelease];
+    NSDateComponents *component;
     unsigned unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
     component = [calendar components:unitFlags fromDate:date];
    /* [component setHour:0];
