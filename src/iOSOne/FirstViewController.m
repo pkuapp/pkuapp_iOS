@@ -220,10 +220,17 @@
 	
 	NSError *error = [request error];
 	NSLog(@"%@",error);
-	
-	firstAlertView = [[[UIAlertView alloc] initWithTitle:@"Fetch authImg failed" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] autorelease];
-    [firstAlertView show];
-    [self.activityView stopAnimating];
+	self.delegate.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
+    self.delegate.progressHub.labelText = @"获取验证码失败";
+    self.delegate.progressHub.mode = MBProgressHUDModeCustomView;
+    
+    [self.delegate.progressHub show:YES];
+    
+    [self.delegate.progressHub hide:YES afterDelay:0.5];
+
+//	firstAlertView = [[[UIAlertView alloc] initWithTitle:@"Fetch authImg failed" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] autorelease];
+//    [firstAlertView show];
+//    [self.activityView stopAnimating];
 
     
 }
@@ -264,8 +271,8 @@
 }
 
 
+#pragma mark - MBProgressHub delegate
 - (void)hudWasHidden:(MBProgressHUD *)hud {
-    self.delegate.progressHub = nil;
 }
 
 #pragma mark - Navigation Setup
@@ -276,32 +283,67 @@
 
 - (IBAction) myLogin:(id)sender{
     [self.validCode resignFirstResponder];
-//    self.delegate.progressHub.delegate = self;
-    [self.delegate.progressHub showWhileExecuting:@selector(taskLogin) onTarget:self withObject:nil animated:YES];
+    self.delegate.progressHub.delegate = self;
+    self.delegate.progressHub.mode = MBProgressHUDModeIndeterminate;
+    self.delegate.progressHub.labelText = @"登录中";
+    [self.delegate.progressHub show:YES];
+    [self performSelectorInBackground:@selector(taskLogin) withObject:nil];
 	
 }
 
+- (void)loginSucceed {
+    self.delegate.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]];
+    self.delegate.progressHub.mode = MBProgressHUDModeCustomView;
+
+    self.delegate.progressHub.labelText = @"已完成";
+    
+    [self.delegate.progressHub hide:YES afterDelay:1];
+    
+    [self.delegate.mvc dismissModalViewControllerAnimated:YES];
+}
+
+- (void)loginFailed:(NSDictionary *)dict{
+    self.delegate.progressHub.labelText = [[dict objectForKey:@"info"] description];
+    self.delegate.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
+    
+    self.delegate.progressHub.mode = MBProgressHUDModeCustomView;
+
+    [self.delegate.progressHub hide:YES afterDelay:1];
+}
 
 - (void)taskLogin {
-    if ([self.delegate authUserForAppWithUsername:self.Username.text password:self.UserPwd.text deanCode:self.validCode.text sessionid:self.sessionid]) {
+    NSString *error;
+    @try {
+        if ([self.delegate authUserForAppWithUsername:self.Username.text password:self.UserPwd.text deanCode:self.validCode.text sessionid:self.sessionid error:&error]) {
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            [defaults setObject:[NSString stringWithString:self.Username.text] forKey:@"appUser"];
+            
+            [self.delegate updateAppUserProfile];
+            
+            [self.delegate updateServerCourses];
+            
+            [defaults setInteger:VersionReLogin forKey:@"VersionReLogin"];
+            
+            [defaults setBool:YES forKey:@"didLogin"];
+            [NSUserDefaults resetStandardUserDefaults]; 
+            
+            [self performSelectorOnMainThread:@selector(loginSucceed) withObject:nil waitUntilDone:YES];
+            
+        }
+        else {
+            [self performSelectorOnMainThread:@selector(loginFailed:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:error,@"info", nil] waitUntilDone:YES];
+        }
+    }
+    @catch (NSException *exception) {
+        [self performSelectorOnMainThread:@selector(loginFailed:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:exception,@"info", nil] waitUntilDone:YES];
+        NSLog(@"%@",exception);
+    }
+    @finally {
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        [defaults setObject:[NSString stringWithString:self.Username.text] forKey:@"appUser"];
-        
-        [self.delegate updateAppUserProfile];
-        
-        [self.delegate updateServerCourses];
-        
-        [defaults setInteger:VersionReLogin forKey:@"VersionReLogin"];
-        
-        [defaults setBool:YES forKey:@"didLogin"];
-        
-        [self.delegate.mvc dismissModalViewControllerAnimated:YES];
-        
-        [NSUserDefaults resetStandardUserDefaults];
-//        [self.delegate showwithMainView];
-	}
+    }
+    
 }
 
 #pragma mark - View lifecycle

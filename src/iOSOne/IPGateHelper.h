@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
-#import "AsyncUdpSocket.h"
+//#import "AsyncUdpSocket.h"
 
 #define Max_Listen_Rounds 4
 #define PORT @"5428"
@@ -72,7 +72,7 @@ typedef enum IPGateResult{
 
 @end
 
-@interface IPGateHelper : NSObject<AsyncUdpSocketDelegate,ASIHTTPRequestDelegate> {
+@interface IPGateHelper : NSObject<ASIHTTPRequestDelegate> {
 @private
     NSObject <IPGateConnectDelegate> *delegate;
     NSString *stirngRange;

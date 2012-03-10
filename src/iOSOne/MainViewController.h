@@ -27,7 +27,7 @@
 @class GateViewController;
 @class IPGateHelper;
 
-@interface MainViewController : UIViewController <IPGateListenDelegate,IPGateConnectDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate,AssignmentEditDelegate>{
+@interface MainViewController : UIViewController <IPGateListenDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate,AssignmentEditDelegate>{
     iOSOneAppDelegate *delegate;
     NSManagedObjectContext *context;
     IPGateHelper *connector;

@@ -77,7 +77,7 @@
 @property (nonatomic, retain, readonly) NSArray *serverCourses;//return all courses user on dean
 @property (nonatomic, retain) NSMutableArray *arrayClassGroup;
 @property (nonatomic, assign) NSInteger bitListControl;
-@property (nonatomic, assign) NSInteger dayoffset;
+//@property (nonatomic, assign) NSInteger dayoffset;
 @property (nonatomic, assign) NoticeCenterHepler *noticeCenter;
 
 - (IBAction)chooseDateNow:(id)sender;

@@ -217,7 +217,6 @@ static const CGFloat kVPadding = 7.0f;
       if (_isVertical) {
         CGFloat height = imageSize.height + imageBoxStyle.margin.top + \
           imageBoxStyle.margin.bottom-3;
-          
         textFrame.origin.y += height;
         textFrame.size.height -= height;
 

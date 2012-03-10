@@ -17,7 +17,6 @@ typedef enum PKUNetStatus{
 }PKUNetStatus;
 @protocol ReachablityProtocol <NSObject>
 @required
-- (PKUNetStatus)netStatus;
 - (BOOL)hasWifi;
 
 @end

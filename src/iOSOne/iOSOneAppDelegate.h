@@ -52,10 +52,10 @@
 - (void)showWithLoginView;
 - (void)showwithMainView;
 - (void)logout;
-- (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid;
+- (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid error:(NSString **)stringError;
 - (BOOL)refreshAppSession;
-- (void)updateAppUserProfile;
-- (void)updateServerCourses;
+- (NSError *)updateAppUserProfile;
+- (NSError *)updateServerCourses;
 - (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dict;
 - (void)netStatusDidChanged:(Reachability *)notice;
 

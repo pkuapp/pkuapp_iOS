@@ -29,6 +29,14 @@
     }
     return arrayCourses;
 }
+
+- (NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *)delegate {
+    if (nil == delegate) {
+        delegate = (NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *)[UIApplication sharedApplication].delegate;
+    }
+    return delegate;
+}
+
 #pragma mark - action setup
 - (void)didFinnishedEdit {
     NSError *error;

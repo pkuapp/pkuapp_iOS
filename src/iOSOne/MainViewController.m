@@ -535,7 +535,7 @@
 	}
 	
 }
--(IBAction) performActionSheet
+-(void) performActionSheet
 {
 	UIActionSheet *menu = [[ UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"登出" otherButtonTitles:nil];
 	[menu showInView:self.view];
@@ -702,7 +702,7 @@
 //       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 	[super viewDidLoad];
     self.connector = [[IPGateHelper alloc] init];
-    self.connector.delegate = self;
+//    self.connector.delegate = self;
     self.title = @"主页";
     //[self.connector startListening];
     [self.connector addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:@"Connected"];

@@ -19,7 +19,7 @@
 @class NSManagedObjectContext;
 @interface FirstViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate,UINavigationBarDelegate>{
     UILabel *firstlabel;
-	UIAlertView *firstAlertView;
+
 	UIButton *firstImg;
     UIButton *switchbutton;
 	ASINetworkQueue *queueNet;

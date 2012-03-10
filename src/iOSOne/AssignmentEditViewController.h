@@ -54,7 +54,7 @@ typedef enum AssignmentEditControllerMode {
 - (id)initWithType:(AssignmentEditControllerMode)mode;
 - (void)didSelectEditDoneBtn;
 - (void)didSelectCancelBtn;
-- (void)didSetupCourseAndDate;
-- (void)didHitSaveCourseBtn;
+//- (void)didSetupCourseAndDate;
+//- (void)didHitSaveCourseBtn;
 - (IBAction)didTouchUpInsideBgView:(id)sender;
 @end

@@ -31,6 +31,8 @@
 
 #pragma mark - action setup 
 
+
+
 - (void)canSaveOrNot{
     if (self.coord_assign.course && self.coord_assign.endDate && TTIsStringWithAnyText(self.contentTextView.text) ) {
         self.navigationItem.rightBarButtonItem.enabled = YES;

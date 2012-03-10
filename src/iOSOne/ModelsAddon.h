@@ -49,7 +49,7 @@ typedef struct {
 - (NSArray*)arrayEventsForWeek:(NSInteger) week;
 
 - (NSDictionary*)dictEventForDay:(NSInteger)day inWeek:(NSInteger) week;
-- (ClassGroup*)classGroupForWeekDay:(NSInteger)day;
+//- (ClassGroup*)classGroupForWeekDay:(NSInteger)day;// use - dayVectorInDat instead
 - (NSInteger)dayCodeForDay:(NSInteger)day;
 
 

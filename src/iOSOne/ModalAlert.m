@@ -61,7 +61,7 @@
 
 + (BOOL) ask: (NSString *) question withMessage:(NSString *)message
 {
-	return	([ModalAlert queryWith:question withMessage:message button1: @"Yes" button2: @"No"] == 0);
+	return	([ModalAlert queryWith:question withMessage:message button1: @"No" button2: @"Yes"]);
 }
 
 + (BOOL) confirm: (NSString *) statement withMessage:(NSString *)message

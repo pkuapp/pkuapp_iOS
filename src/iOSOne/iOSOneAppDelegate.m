@@ -23,10 +23,12 @@
 #import "School.h"
 #import "Course.h"
 #import "ModalAlert.h"
+
+
 @interface iOSOneAppDelegate(Private)
 - (void)checkVersion;
 - (void)checkVersionDone;
-
+- (NSString *)parsedLoginError:(NSString *)loginmessage;
 @end
 
 @implementation iOSOneAppDelegate
@@ -42,22 +44,40 @@
 @synthesize progressHub;
 
 #pragma mark Private method
+
+- (NSString *)parsedLoginError:(NSString *)loginmessage {
+    if ([loginmessage rangeOfString:@"图形"].location != NSNotFound) {
+//        NSLog(@"%d",[loginmessage rangeOfRegex:@"图形"].location);
+        return @"图形验证码错误";
+    }
+    else if ([loginmessage rangeOfString:@"学号"].location != NSNotFound) {
+        return @"综合信息服务帐号错误";
+    }
+    else if ([loginmessage rangeOfString:@"密码"].location != NSNotFound){
+        return @"密码错误";
+    }
+    else return @"未知错误";
+}
+
 - (void)checkVersionDone:(ASIHTTPRequest *)request {
     NSNumber *version = [[[request responseString] JSONValue] objectForKey:@"beta"];
-    
+    NSLog(@"checking version");
     if ([version intValue] >= iOSVersionNum) {
         if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
-            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=http://pkuapp.com/download/iOS/manifest.plist"]];
         } 
     }
 }
 
 - (void)checkVersion {
+
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url_iOS_version]];
     
     request.delegate = self;
     
     request.didFinishSelector = @selector(checkVersionDone:);
+    
+    request.didFailSelector = @selector(checkVersionDone:);
     
     [request startAsynchronous];
 }
@@ -115,8 +135,9 @@
     
 }
 
-- (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid
+- (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid error:(NSString **)stringError
 {
+//    [NSException raise:@"ddf" format:@"d"];
     NSString *urlLogin;
     NSString *usernameKey;
     NSString *passwordKey;
@@ -148,7 +169,10 @@
 	[requestLogin startSynchronous];
 	
 	NSString *loginmessage = [requestLogin responseString]; //[[NSString alloc] initWithData:[requestLogin responseData] encoding:NSStringEncodingConversionAllowLossy];
-    
+    if (!requestLogin.isFinished) {
+        *stringError = @"连接超时";
+        return NO;
+    }
     NSLog(@"get login response:%@",loginmessage);
     
     if ([loginmessage isEqualToString:@"0"]){
@@ -166,13 +190,16 @@
             return YES;
         }
         else {
-            NSLog(@"%@",error);
+            NSString *des = [error description];
+            stringError = &des;
         }
     }
+    NSString *stringResult = [[self parsedLoginError:loginmessage] retain];
+    *stringError = stringResult;
     return NO;
 }
 
-- (void)updateAppUserProfile{
+- (NSError *)updateAppUserProfile{
     NSError *error;
     ASIHTTPRequest *requestProfile = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: urlProfile]];
     [requestProfile startSynchronous];
@@ -183,6 +210,7 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%@",[error localizedDescription]);
     }
+    return error;
 }
 
 - (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dictCourse {
@@ -214,9 +242,10 @@
         
     }
     [self.managedObjectContext save:nil];
+    
 }
 
-- (void)updateServerCourses{
+- (NSError *)updateServerCourses{
     
     NSError *error;
     ASIHTTPRequest *requestCourse = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: urlCourse]];
@@ -224,7 +253,8 @@
 	NSString *stringCourse = [requestCourse responseString];
 	NSArray *jsonCourse = [stringCourse JSONValue];
     if (jsonCourse.count == 0) {
-        return;
+//        error = [[NSError alloc] initWithDomain:@"未获得有效课程" code:0 
+        return nil;
     }
     
     NSMutableArray *arrayCourses = [NSMutableArray arrayWithCapacity:5];
@@ -259,15 +289,10 @@
             [arrayCourses addObject:_course];
         }
 
-//        [stringPredicate appendFormat:@"id == %@ OR ",[dictCourse objectForKey:@"id"]];
     }
     [self.managedObjectContext save:&error];
     
-//    dictCourse = [jsonCourse objectAtIndex:jsonCourse.count-1];
-//    
-//    [stringPredicate appendFormat:@"id == %@",[dictCourse objectForKey:@"id"]];
-//    
-   
+
     
     NSLog(@"count:%d",arrayCourses.count);
     
@@ -277,7 +302,7 @@
     [self.appUser addCourses:courseset];
     
     if (![self.managedObjectContext save:&error]) NSLog(@"SaveError: %@", [error localizedDescription]);
-    
+    return error;
 }
 
 - (BOOL)refreshAppSession
@@ -356,12 +381,12 @@
 //    else if ([r.key isEqualToString:@"wifi"]){
 //        self.hasWifi = r.isReachable?YES:NO;
 //    }
-//    if (r.isReachable) {
-//        <#statements#>
-//    }
+    if (r.isReachable) {
+        [self checkVersion];
+    }
     //[r startNotifier];
 //    NSLog(@"%d",r.currentReachabilityStatus);
-    //NSLog(@"%d",self.netStatus);
+    NSLog(@"%d",r.isReachable);
     
 }
 
@@ -528,6 +553,8 @@
 //    [self generateCoreDataBase];
     [self.window makeKeyAndVisible];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStatusDidChanged:) name:kReachabilityChangedNotification object:nil];
+    
+    [self checkVersion];
     return YES;
 }
 

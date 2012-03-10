@@ -31,7 +31,7 @@
 - (void)didSelectFinnishedBtn{
     self.delegate.coord_assign.course = [self.delegate.arrayCourses objectAtIndex:self.courseIndex];
     self.delegate.coord_assign.endDate = self.datePicker.date;
-    [self.delegate didSetupCourseAndDate];
+//    [self.delegate didSetupCourseAndDate];
     [self.navigationController popViewControllerAnimated:YES];
     
 }

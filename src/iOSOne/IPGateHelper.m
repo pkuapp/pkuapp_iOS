@@ -9,7 +9,7 @@
 #import "IPGateHelper.h"
 #import "RegexKitLite.h"
 #import "ASIHTTPRequest.h"
-#import "AsyncUdpSocket.h"
+//#import "AsyncUdpSocket.h"
 
 
 @interface IPGateHelper (Private)
@@ -43,8 +43,8 @@
 
 - (void)startListening
 {
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:IPG_HEART_BEAT_INTERVAL  target:self selector:@selector(listenHeartBeat:) userInfo:@"Timer" repeats:YES]; 
-    NSLog(@"StartListeningONTimer%@",timer);
+//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:IPG_HEART_BEAT_INTERVAL  target:self selector:@selector(listenHeartBeat:) userInfo:@"Timer" repeats:YES]; 
+//    NSLog(@"StartListeningONTimer%@",timer);
 }
 
 - (void)listenHeartBeat:(NSTimer *)timer
@@ -258,29 +258,29 @@
 //    }
 //}
 #pragma mark - AsyUDPDelegate
-
--(void)onUdpSocket:(AsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
-{
-    self.numberListenRetry = self.numberListenRetry + 1;
-    //NSLog(@"FailedSendData:%@",error);
-    
-}
-
--(void)onUdpSocket:(AsyncUdpSocket *)sock didNotReceiveDataWithTag:(long)tag dueToError:(NSError *)error
-{
-    self.numberListenRetry = self.numberListenRetry + 1;
-    //NSLog(@"FailedRound:%d",self.numberListenRetry);
-}
--(BOOL)onUdpSocket:(AsyncUdpSocket *)sock didReceiveData:(NSData *)data withTag:(long)tag fromHost:(NSString *)host port:(UInt16)port
-{
-    self.numberListenRetry = 0;
-    if (self.isConnected == NO) {
-        self.isConnected = YES;
-
-    }
-    //NSLog(@"%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    return YES;
-}
+//
+//-(void)onUdpSocket:(AsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
+//{
+//    self.numberListenRetry = self.numberListenRetry + 1;
+//    //NSLog(@"FailedSendData:%@",error);
+//    
+//}
+//
+//-(void)onUdpSocket:(AsyncUdpSocket *)sock didNotReceiveDataWithTag:(long)tag dueToError:(NSError *)error
+//{
+//    self.numberListenRetry = self.numberListenRetry + 1;
+//    //NSLog(@"FailedRound:%d",self.numberListenRetry);
+//}
+//-(BOOL)onUdpSocket:(AsyncUdpSocket *)sock didReceiveData:(NSData *)data withTag:(long)tag fromHost:(NSString *)host port:(UInt16)port
+//{
+//    self.numberListenRetry = 0;
+//    if (self.isConnected == NO) {
+//        self.isConnected = YES;
+//
+//    }
+//    //NSLog(@"%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+//    return YES;
+//}
 #pragma mark - private
 
 - (BOOL)connectAcceptAsExceptForResponse:(NSString *)stringResponse
@@ -292,17 +292,17 @@
 -(BOOL)sendHeartBeatForHost:(NSString *)host Port:(UInt16)port
 {
     
-    NSError *error;
-    AsyncUdpSocket *socket = [[AsyncUdpSocket alloc] initWithDelegate:self];
-    NSData *dataSend = [@"HeartBeatFromiOS" dataUsingEncoding:NSUTF8StringEncoding];
-    [socket connectToHost:host onPort:port error:&error];
-    
-    [socket sendData:dataSend withTimeout:2 tag:102];
-    [socket receiveWithTimeout:2 tag:103];
-    if (error) {
-        //NSLog(@"%@",error);
-        return 1;
-    }
+//    NSError *error;
+//    AsyncUdpSocket *socket = [[AsyncUdpSocket alloc] initWithDelegate:self];
+//    NSData *dataSend = [@"HeartBeatFromiOS" dataUsingEncoding:NSUTF8StringEncoding];
+//    [socket connectToHost:host onPort:port error:&error];
+//    
+//    [socket sendData:dataSend withTimeout:2 tag:102];
+//    [socket receiveWithTimeout:2 tag:103];
+//    if (error) {
+//        //NSLog(@"%@",error);
+//        return 1;
+//    }
     return 0;
 }
 

@@ -171,7 +171,6 @@
 		419E341F15021A2D00D7494A /* 38-house@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E341B15021A2D00D7494A /* 38-house@2x.png */; };
 		419E34211502315800D7494A /* notification-title.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E34201502315800D7494A /* notification-title.png */; };
 		41ACB477148B141200B00624 /* EULANavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ACB476148B141200B00624 /* EULANavController.m */; };
-		41B6962613F5A52C00ED4F18 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B6962513F5A52C00ED4F18 /* AsyncUdpSocket.m */; };
 		41B76E6114DA58FF004FE2C0 /* CourseDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */; };
 		41B76E6214DA58FF004FE2C0 /* CourseDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */; };
 		41B8617513DC7E9B00F84182 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B8617413DC7E9B00F84182 /* RegexKitLite.m */; };
@@ -672,8 +671,6 @@
 		41ACB475148B141200B00624 /* EULANavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EULANavController.h; sourceTree = "<group>"; };
 		41ACB476148B141200B00624 /* EULANavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EULANavController.m; sourceTree = "<group>"; };
 		41B1271F1396047B00B460C2 /* iOSOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41B6962413F5A52C00ED4F18 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
-		41B6962513F5A52C00ED4F18 /* AsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
 		41B76E5E14DA58FF004FE2C0 /* CourseDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailsViewController.h; sourceTree = "<group>"; };
 		41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseDetailsViewController.m; sourceTree = "<group>"; };
 		41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailsViewController.xib; sourceTree = "<group>"; };
@@ -1163,8 +1160,6 @@
 				41829F66148B1DC900788EA6 /* Nimbus Attributed Label */,
 				416523CD140807AD003E4E83 /* ModalAlert.m */,
 				416523CE140807AD003E4E83 /* ModalAlert.h */,
-				41B6962413F5A52C00ED4F18 /* AsyncUdpSocket.h */,
-				41B6962513F5A52C00ED4F18 /* AsyncUdpSocket.m */,
 				41B8617313DC7E9A00F84182 /* RegexKitLite.h */,
 				41B8617413DC7E9B00F84182 /* RegexKitLite.m */,
 				41E2A12C13D6645800E3EEF8 /* MBProgressHUD.h */,
@@ -2072,7 +2067,6 @@
 				41E2A12E13D6645900E3EEF8 /* MBProgressHUD.m in Sources */,
 				41B8617513DC7E9B00F84182 /* RegexKitLite.m in Sources */,
 				41DFD9D113E6B12F00B19E24 /* IPGateHelper.m in Sources */,
-				41B6962613F5A52C00ED4F18 /* AsyncUdpSocket.m in Sources */,
 				41C5F44C14028077000CF13B /* RoomControlButton.m in Sources */,
 				41C5F44F140280C6000CF13B /* PKURoomCell.m in Sources */,
 				415A80FD140421C1003F6EB9 /* PKUBarView.m in Sources */,
@@ -2225,7 +2219,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "14524AB5-FD20-4E95-B93D-A6C00C7EE1ED";
+				PROVISIONING_PROFILE = "664C710C-BD97-464A-9985-A717AF435109";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

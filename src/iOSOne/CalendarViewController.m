@@ -205,7 +205,7 @@
 
 - (IBAction)toAssignmentView:(id)sender {
     AssignmentsListViewController *asVC = [[AssignmentsListViewController alloc] init];
-    asVC.delegate = self.delegate;
+//    asVC.delegate = self.delegate;
     
     [self.navigationController pushViewController:asVC animated:YES];
 }
@@ -831,7 +831,19 @@
 }
 
 
-#pragma mark - IBAction
+#pragma mark - Action
+
+- (void)didSelectCourseForIndex:(NSInteger)index {
+
+}
+
+- (void)didSelectDizBtnForCourseIndex:(NSInteger)index {
+
+}
+
+- (void)didSelectAssignBtnForCourseIndex:(NSInteger)index {
+
+}
 
 - (void)chooseDate:(id)sender
 {
