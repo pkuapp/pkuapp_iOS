@@ -23,27 +23,27 @@
     return coursesArray;
 }
 
-//- (UISegmentedControl *)segmentedControl {
-//    if (segmentedControl == nil) {
-//        
-//        segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]];
-//        
-//        segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-//        
-//        segmentedControl.selectedSegmentIndex = 0;
-//        
-//        [segmentedControl addTarget:self action:@selector(segmentedValueChanged) forControlEvents:UIControlEventValueChanged];
-//    }
-//    return segmentedControl;
-//}
+- (UISegmentedControl *)segmentedControl {
+    if (segmentedControl == nil) {
+        
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]];
+        
+        segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        
+        segmentedControl.selectedSegmentIndex = 0;
+        
+        [segmentedControl addTarget:self action:@selector(segmentedValueChanged) forControlEvents:UIControlEventValueChanged];
+    }
+    return segmentedControl;
+}
 
 
 - (void)segmentedValueChanged {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
-//        self.tabBarController.navigationItem.rightBarButtonItem = nil;
+        self.tabBarController.navigationItem.rightBarButtonItem = nil;
     }
     else {
-//        self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didHitAddBtn)];
+        self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didHitAddBtn)];
     }
 }
 
@@ -130,7 +130,7 @@
     [super viewWillAppear:animated];
     self.tabBarController.title = @"我的课程";
 
-//    self.tabBarController.navigationItem.titleView = self.segmentedControl;
+    self.tabBarController.navigationItem.titleView = self.segmentedControl;
     
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 
@@ -147,7 +147,7 @@
 
     self.tabBarController.title = @"我的课程";
     
-//[[UIBarButtonItem alloc] initWithCustomView:[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]]];
+[[UIBarButtonItem alloc] initWithCustomView:[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]]];
     //self.tabBarController.title = @"我的课程";
     //NSLog(@"%@",self.navigationController);
 

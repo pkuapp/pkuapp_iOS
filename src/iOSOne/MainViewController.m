@@ -381,7 +381,7 @@
     
     csvc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"搜索" image:[UIImage imageNamed:@"180-stickynote.png"] tag:2];
     
-    /*
+    /*this view controller is deprecated
     LocalCoursesViewController *lcvc = [[LocalCoursesViewController alloc] init];
     lcvc.delegate = self.delegate;
     lcvc.title = @"我的旁听";
@@ -402,7 +402,7 @@
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     
-    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,nil];
+    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,ccc,csvc,nil];
     tbc.navigationItem.titleView = mcvc.segmentedControl;
     [self.navigationController pushViewController:tbc animated:YES];
     

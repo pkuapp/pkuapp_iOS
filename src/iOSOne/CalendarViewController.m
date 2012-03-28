@@ -99,10 +99,7 @@
 - (void)toListView {
     self.dayView.hidden = YES;
     self.weekView.hidden = YES;
-//    self.dayView.userInteractionEnabled = NO;
-//    self.weekView.userInteractionEnabled = NO;
-//    [self.dayView removeFromSuperview];
-//    [self.weekView removeFromSuperview];
+
     self.listView.hidden = NO;
 
     [self prepareListViewDataSource];
