@@ -18,6 +18,15 @@ typedef enum{
     ClassGroupTypeEnd,
 }ClassGroupType;
 
+
+typedef enum DoubleType{
+    doubleTypeSingle,
+    doubleTypeDouble,
+    doubleTypeBoth
+}DoubleType;
+
+
+
 @interface ClassGroup : NSObject {
     
 }
@@ -27,20 +36,18 @@ typedef enum{
 @property (nonatomic, assign) Course *course;
 @end
 
+
+@interface DayVector : NSObject {
+}
+@property (nonatomic, assign)  NSInteger day;
+@property (nonatomic, assign)  NSInteger startclass;
+@property (nonatomic, assign)  NSInteger endclass;
+@property (nonatomic, assign)  DoubleType doubleType;
+
+@end
+
 @interface Course (ModelsAddOn)
 
-typedef enum DoubleType{
-    doubleTypeSingle,
-    doubleTypeDouble,
-    doubleTypeBoth
-}DoubleType;
-
-typedef struct {
-    NSInteger day;
-    NSInteger startclass;
-    NSInteger endclass;
-    DoubleType doubleType;
-}DayVector;
 
 @property (nonatomic, readonly)NSString *courseSectionName;
 
@@ -59,9 +66,9 @@ typedef struct {
 
 - (NSArray *)arrayStringTime;
 
-- (DayVector)dayVectorInDay:(NSInteger)day;
+- (DayVector*)dayVectorInDay:(NSInteger)day;
 
-+ (DayVector)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day;
++ (DayVector*)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day;
 
 - (NSString *)stringTimeForDay:(NSInteger)day;
 

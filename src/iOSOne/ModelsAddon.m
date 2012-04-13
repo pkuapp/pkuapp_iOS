@@ -12,6 +12,13 @@
 
 @synthesize startclass,endclass,type,course;
 
+- (void)dealloc {
+    [super dealloc];
+}
+@end
+
+@implementation DayVector
+@synthesize day,doubleType,startclass,endclass;
 @end
 
 @implementation NSString(custom)
@@ -22,6 +29,8 @@
     return [self compare:aString options:NSCaseInsensitiveSearch range:range locale:[NSLocale currentLocale]];
 }
 @end
+
+
 
 #pragma mark - Course
 
@@ -63,9 +72,9 @@
     return code;
 }
 
-+ (DayVector)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day {
++ (DayVector *)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day {
     
-    DayVector vector;
+    DayVector *vector = [[DayVector alloc] init];
     
     vector.startclass = -1;
     
@@ -93,14 +102,14 @@
 }
 
 - (NSString *)stringTimeForDay:(NSInteger)day {
-    DayVector vector = [self dayVectorInDay:day];
+    DayVector *vector = [self dayVectorInDay:day];
     if (vector.startclass != -1) {
         return [NSString stringWithFormat:@"%d–%d 节",vector.startclass,vector.endclass];
     }
     return @"";
 }
 
-- (DayVector)dayVectorInDay:(NSInteger)day {
+- (DayVector *)dayVectorInDay:(NSInteger)day {
     return [Course dayVectorForIntCode:[self dayCodeForDay:day] inday:day];
 }
 
@@ -110,7 +119,7 @@
 {
     int singleWeek = weeknumber % 2;
     
-    DayVector vector = [Course dayVectorForIntCode:code inday:day];
+    DayVector *vector = [Course dayVectorForIntCode:code inday:day];
     
     if (vector.startclass == -1) {
         return nil;
@@ -189,7 +198,7 @@
     for (int i = 0; i < 6; i++) {
         
         
-        DayVector vector = [Course dayVectorForIntCode:[self dayCodeForDay:i+1] inday:i+1];
+        DayVector *vector = [Course dayVectorForIntCode:[self dayCodeForDay:i+1] inday:i+1];
         
         if (vector.startclass != -1) {
             

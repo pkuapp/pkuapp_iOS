@@ -62,5 +62,9 @@
         stringTitle = [self.titleFormatter stringFromDate:[self.delegate dateInDayView]];
     self.titleLabel.text = stringTitle;
 }
+- (void)dealloc {
+    [titleFormatter release];
+    [super dealloc];
+}
 
 @end

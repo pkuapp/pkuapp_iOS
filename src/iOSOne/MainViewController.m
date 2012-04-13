@@ -14,7 +14,7 @@
 #import "ClassroomQueryController.h"
 #import "GateViewController.h"
 #import "iOSOneAppDelegate.h"
-#import "CalendarViewController.h"
+#import "CalendarController.h"
 #import "IPGateHelper.h"
 #import "CoursesCategoryController.h"
 #import "CoursesSearchViewController.h"
@@ -59,7 +59,7 @@
     [self.context deleteObject:assignment];
     [self.context save:nil];
     self.arrayNotices = nil;
-    self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
+    self.noticeCenterHelper = [[[NoticeCenterHepler alloc] init] autorelease];
     [self.tableView reloadData];
 }
 
@@ -115,7 +115,7 @@
     [self.launcherView persistLauncherItems];
 }
 - (void)launcherViewDidBeginEditing:(TTLauncherView *)launcher {
-    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)] animated:YES];
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)] animated:YES];
 }
 
 - (void)launcherView:(TTLauncherView*)launcher didSelectItem:(TTLauncherItem*)item {
@@ -514,10 +514,11 @@
 
 - (IBAction) navToCanlendar
 {
-    CalendarViewController *cvc = [[CalendarViewController alloc] initWithNibName: @"CalendarView" bundle:nil];
+    CalendarController *cvc = [[CalendarController alloc] initWithNibName: @"CalendarController" bundle:nil];
     //cvc.EventResults = self.results;
     cvc.delegate = self.delegate;
-    cvc.noticeCenter = self.noticeCenterHelper;
+    cvc.noticeCenter = [[NoticeCenterHepler alloc] init];
+    [cvc.noticeCenter loadData];
     [self.navigationController pushViewController:cvc animated:YES];
     
     [cvc release];

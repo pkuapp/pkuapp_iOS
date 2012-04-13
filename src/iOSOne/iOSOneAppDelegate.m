@@ -112,6 +112,9 @@
         fetchRequest.predicate = predicate;
         
         appUser = [(AppUser *) [[self.managedObjectContext executeFetchRequest:fetchRequest error:NULL] lastObject] retain];
+        
+        [fetchRequest release];
+
 //        NSLog(@"get appUser%@",appUser);
 
     }
@@ -598,6 +601,10 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    
 }
 
 - (void)dealloc

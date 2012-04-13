@@ -23,6 +23,10 @@
     return [self.object description];
 }
 
+- (void)dealloc {
+    [dictInfo release];
+    [super dealloc];
+}
 @end
 
 @implementation NoticeCenterHepler
@@ -118,6 +122,7 @@
     NSInteger dayMinuteNow = hour*60 +minute;
     NSInteger minMinuteInterVal = 10080;
     
+    [nsCalendar release];
     
     for (NSDictionary *dict in arrayCourseDicts) {
         
@@ -137,7 +142,11 @@
         if (minuteInterval < minMinuteInterVal && minuteInterval > 0) {
             minMinuteInterVal = minuteInterval;
             self.latestCourse = [dict objectForKey:@"course"];
-            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:day],@"dayOffset",[NSNumber numberWithInt:minute],@"startMinute", nil];  
+            NSNumber *numDay = [NSNumber numberWithInt:day];
+            
+            NSNumber *numMinute = [NSNumber numberWithInt:minute];
+            
+            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:numDay,@"dayOffset",numMinute,@"startMinute", nil];  
         }
         if (day == 0 && [[dict objectForKey:@"start"] floatValue] * 60 <= dayMinuteNow && [[dict objectForKey:@"end"] floatValue]*60 > dayMinuteNow) {
             if (!nowCourse) {
@@ -170,6 +179,7 @@
     
     NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
     //fetch all courses event
+    [store release];
     
     [self getCourseNoticeInWeekOffset:0];
     if (!latestCourse) {
@@ -185,6 +195,12 @@
 }
 
 - (void)loadCourse {
+
+}
+
+- (void)dealloc {
+    [dictLatestCourse release];
+    [super dealloc];
 
 }
 

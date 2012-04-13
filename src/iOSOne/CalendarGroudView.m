@@ -265,7 +265,7 @@
     
     if (thegroundType == CalendarGroundTypeWeek) {
         CGRect  frame = CGRectMake(wHourTag + (day-1)*widthColumn ,heightOffset + start * hHour, widthColumn,hHour * (end - start));
-        self = [self initWithFrame:frame];
+        [self initWithFrame:frame];
 
     }
     self = [super init];
@@ -299,7 +299,7 @@
     
     NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
         
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil];
+    NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
         
     return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
         
@@ -313,7 +313,7 @@
 
             NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
             
-            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil];
+            NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
             
             return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
         }
@@ -346,7 +346,9 @@
            bgView.image = [[UIImage imageNamed:@"event-bg-course.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:19];
            // bgView.image =  ];
            [self addSubview:bgView];
-
+           
+           [bgView release];
+           
            UIButton *buttonDiz = [UIButton buttonWithType:UIButtonTypeCustom];
            UIButton *buttonAssign = [UIButton buttonWithType:UIButtonTypeCustom];
            [buttonDiz setImage:[UIImage imageNamed:@"discuss.png"] forState:UIControlStateNormal];
@@ -407,6 +409,8 @@
            titleLabel.shadowOffset = CGSizeMake(0, -1);
            [self addSubview:titleLabel];
            
+           [titleLabel release];
+           
            UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 26, self.bounds.size.width - 10, 16)];
            locationLabel.userInteractionEnabled = YES;
            locationLabel.textAlignment = UITextAlignmentLeft;
@@ -418,6 +422,7 @@
            //locationLabel.shadowColor = colorEventTitleShadow;
            //locationLabel.shadowOffset = CGSizeMake(0, -1);
            [self addSubview:locationLabel];
+           [locationLabel release];
            
     }
     else {
@@ -455,7 +460,7 @@
         return 24.0;
     }
     NSCalendar *calender = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDateComponents *component = [[[NSDateComponents alloc] init] autorelease];
+    NSDateComponents *component;
     unsigned unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
     component = [calender components:unitFlags fromDate:date];
     float hour = [component hour] + [component minute] / 60.0;

@@ -21,6 +21,8 @@
 		410B418013902BA300002A46 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410B417F13902BA300002A46 /* CoreGraphics.framework */; };
 		410B418913902BA300002A46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418813902BA300002A46 /* main.m */; };
 		410B418C13902BA400002A46 /* iOSOneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418B13902BA400002A46 /* iOSOneAppDelegate.m */; };
+		4112C64815242C14002B5FCC /* CalendarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4112C64515242C14002B5FCC /* CalendarController.xib */; };
+		4112C64915242C14002B5FCC /* CalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4112C64615242C14002B5FCC /* CalendarController.m */; };
 		4114B8A6150208E600FD229C /* btn-back-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B89C150208E600FD229C /* btn-back-normal.png */; };
 		4114B8A7150208E600FD229C /* btn-back-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B89D150208E600FD229C /* btn-back-pressed.png */; };
 		4114B8AA150208E600FD229C /* btn-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B8A0150208E600FD229C /* btn-normal.png */; };
@@ -306,6 +308,8 @@
 		41EC28B913A7099E00566ACE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EC28B813A7099E00566ACE /* MainWindow.xib */; };
 		41ED3913143C5E5000BBF866 /* CoursesCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ED3911143C5E5000BBF866 /* CoursesCategoryController.m */; };
 		41ED3914143C5E5000BBF866 /* CoursesCategory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41ED3912143C5E5000BBF866 /* CoursesCategory.xib */; };
+		41EE477015243111005500E5 /* CalendarContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EE476E15243111005500E5 /* CalendarContentController.m */; };
+		41EE477115243111005500E5 /* CalendarContentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EE476F15243111005500E5 /* CalendarContentController.xib */; };
 		41EF674513D172C5009A251C /* SystemHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EF674413D172C5009A251C /* SystemHelper.m */; };
 		41F2494213D0612B0019C223 /* CalendarGroudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F2494113D0612A0019C223 /* CalendarGroudView.m */; };
 		41FDB3EF14E29E07006A6451 /* NICellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FDB3E714E29E07006A6451 /* NICellFactory.m */; };
@@ -480,6 +484,9 @@
 		410B418813902BA300002A46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		410B418A13902BA400002A46 /* iOSOneAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSOneAppDelegate.h; sourceTree = "<group>"; };
 		410B418B13902BA400002A46 /* iOSOneAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSOneAppDelegate.m; sourceTree = "<group>"; };
+		4112C64515242C14002B5FCC /* CalendarController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarController.xib; sourceTree = "<group>"; };
+		4112C64615242C14002B5FCC /* CalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarController.m; sourceTree = "<group>"; };
+		4112C64715242C14002B5FCC /* CalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarController.h; sourceTree = "<group>"; };
 		4114B89C150208E600FD229C /* btn-back-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-normal.png"; sourceTree = "<group>"; };
 		4114B89D150208E600FD229C /* btn-back-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-pressed.png"; sourceTree = "<group>"; };
 		4114B8A0150208E600FD229C /* btn-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-normal.png"; sourceTree = "<group>"; };
@@ -870,6 +877,9 @@
 		41ED3910143C5E5000BBF866 /* CoursesCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoursesCategoryController.h; sourceTree = "<group>"; };
 		41ED3911143C5E5000BBF866 /* CoursesCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoursesCategoryController.m; sourceTree = "<group>"; };
 		41ED3912143C5E5000BBF866 /* CoursesCategory.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoursesCategory.xib; sourceTree = "<group>"; };
+		41EE476D15243110005500E5 /* CalendarContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarContentController.h; sourceTree = "<group>"; };
+		41EE476E15243111005500E5 /* CalendarContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarContentController.m; sourceTree = "<group>"; };
+		41EE476F15243111005500E5 /* CalendarContentController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarContentController.xib; sourceTree = "<group>"; };
 		41EF672D13D12C78009A251C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		41EF674313D172C5009A251C /* SystemHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemHelper.h; sourceTree = "<group>"; };
 		41EF674413D172C5009A251C /* SystemHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemHelper.m; sourceTree = "<group>"; };
@@ -1328,6 +1338,12 @@
 		41BCDA1413DB79B100C5CEB7 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				41EE476D15243110005500E5 /* CalendarContentController.h */,
+				41EE476E15243111005500E5 /* CalendarContentController.m */,
+				41EE476F15243111005500E5 /* CalendarContentController.xib */,
+				4112C64715242C14002B5FCC /* CalendarController.h */,
+				4112C64615242C14002B5FCC /* CalendarController.m */,
+				4112C64515242C14002B5FCC /* CalendarController.xib */,
 				41F2494013D061290019C223 /* CalendarGroudView.h */,
 				41F2494113D0612A0019C223 /* CalendarGroudView.m */,
 				41D368ED13CCA09F00789429 /* CalendarViewController.h */,
@@ -2007,6 +2023,8 @@
 				41942AA615042DEB0012F5BE /* datebar-arrow-right-pressed.png in Resources */,
 				41942AA715042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png in Resources */,
 				41942AAD15043E4A0012F5BE /* coredata.sqlite in Resources */,
+				4112C64815242C14002B5FCC /* CalendarController.xib in Resources */,
+				41EE477115243111005500E5 /* CalendarContentController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2125,6 +2143,8 @@
 				41FDB3F114E29E07006A6451 /* NITableViewModel.m in Sources */,
 				4171251814EE8EAB00B1C644 /* PAView.m in Sources */,
 				4171252214EE9D4000B1C644 /* UIKitAddon.m in Sources */,
+				4112C64915242C14002B5FCC /* CalendarController.m in Sources */,
+				41EE477015243111005500E5 /* CalendarContentController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2230,6 +2250,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSOne/iOSOne-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -2255,6 +2276,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: PKU CADA (2FQB5YJ958)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSOne/iOSOne-Prefix.pch";
@@ -2272,6 +2294,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FFD416F9-8382-4AFE-B04E-3335BF06E4A9";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
