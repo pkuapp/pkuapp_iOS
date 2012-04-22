@@ -9,11 +9,15 @@
 #import "MyCoursesViewController.h"
 #import "Course.h"
 #import "AppUser.h"
+#import "NITableViewModel.h"
+#import <CoreData/CoreData.h>
+
 
 @implementation MyCoursesViewController
 @synthesize tableView;
 @synthesize segmentedControl;
 @synthesize delegate,coursesArray;
+
 
 - (NSArray *)coursesArray
 {
@@ -41,15 +45,18 @@
 - (void)segmentedValueChanged {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         self.tabBarController.navigationItem.rightBarButtonItem = nil;
+        self.coursesArray = [[self.delegate.appUser.courses allObjects] retain];
     }
     else {
         self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didHitAddBtn)];
+        self.coursesArray = [[self.delegate.appUser.localcourses allObjects] retain];
     }
+    [self.tableView reloadData];
 }
 
 
 
-#pragma mark tableView setup
+#pragma mark - tableView setup
 - (void)navToCourseDetail:(Course *)course {
     
     CourseDetailsViewController *cdvc = [[CourseDetailsViewController alloc] init];
@@ -74,7 +81,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return [self.delegate.appUser.courses count];
+    return [self.coursesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -147,7 +154,7 @@
 
     self.tabBarController.title = @"我的课程";
     
-[[UIBarButtonItem alloc] initWithCustomView:[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]]];
+//    [[UIBarButtonItem alloc] initWithCustomView:[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]]];
     //self.tabBarController.title = @"我的课程";
     //NSLog(@"%@",self.navigationController);
 

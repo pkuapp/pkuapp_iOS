@@ -106,6 +106,9 @@
         
         [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]+weekOffset]];
     }
+    for (Course *course in self.delegate.appUser.localcourses) {
+        [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]+weekOffset]];    
+    }
     
     NSInteger PKUWeekDayNow = [SystemHelper getDayNow];
     //    NSLog(@"now it's weekday %d",PKUWeekDayNow);

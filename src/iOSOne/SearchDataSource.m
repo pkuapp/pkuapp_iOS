@@ -9,57 +9,100 @@
 #import "SearchDataSource.h"
 #import <CoreData/CoreData.h>
 #import "Course.h"
-#import "CoursesSearchViewController.h"
+#import "CoursesCategoryController.h"
+#import "CourseDetailsViewController.h"
+
+@interface SearchDataSource (Private)
+- (void) fetchResult;
+- (void) dismissDetailController;
+@end
 
 @implementation SearchDataSource
 @synthesize fetchedResultController,delegate,indexArray;
 
-#pragma mark - tableView DataSource
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
+
+- (void)fetchResult {
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.delegate.context];
+    
+    NSPredicate *predicate;
+    
+    NSSortDescriptor *sort;
+    
+    switch (self.delegate.searchBar.selectedScopeButtonIndex) {
+        case 0:
+            
+            predicate = [NSPredicate predicateWithFormat:@"name contains %@",self.delegate.searchBar.text];
+            
+            sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+           
+            break;
+        case 1:
+            
+            predicate = [NSPredicate predicateWithFormat:@"courseid contains %@ and name != NULL",self.delegate.searchBar.text];
+            
+            sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+        case 2:
+            predicate = [NSPredicate predicateWithFormat:@"teachername contains %@ and name != NULL",self.delegate.searchBar.text];
+            sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+
+        default:
+            break;
+    }
+    
     
     request.entity = entity;
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains %@",self.delegate.searchBar.text];
-    
     request.predicate = predicate;
     
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     request.sortDescriptors = [NSArray arrayWithObject:sort];
     
+     self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.context sectionNameKeyPath:@"courseSectionName" cacheName:nil];
     
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.context sectionNameKeyPath:@"courseSectionName" cacheName:nil];
-
     [self.fetchedResultController performFetch:NULL];
+}
+
+#pragma mark - searchDisplayDelegate
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+
+}
+
+#pragma mark - TableView Delegate 
+
+- (void)dismissDetailController{
+    [self.delegate dismissModalViewController];
+    UITableView *tb = self.delegate.searchDisplayController.searchResultsTableView;
+    [tb deselectRowAtIndexPath:[tb indexPathForSelectedRow] animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Course *course = [self.fetchedResultController objectAtIndexPath:indexPath];
+    CourseDetailsViewController *cvc = [[CourseDetailsViewController alloc] init];
+    cvc.course = course;
+    
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:cvc];
+    cvc.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissDetailController)];
+    [self.delegate presentModalViewController:nvc animated:YES];
+}
+
+#pragma mark - tableView DataSource
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self fetchResult];
     return YES;
 
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.delegate.context];
-    
-    request.entity = entity;
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains %@",self.delegate.searchBar.text];
-
-    request.predicate = predicate;
-    
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    request.sortDescriptors = [NSArray arrayWithObject:sort];
-    
-    
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.context sectionNameKeyPath:@"courseSectionName" cacheName:nil];
-    [self.fetchedResultController performFetch:NULL];
+    [self fetchResult];
     
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -69,6 +112,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:section];
+    
     return [sectionInfo numberOfObjects];
 }
 
@@ -92,13 +136,7 @@
     return [sectionInfo name];
 }
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    self.indexArray = [NSMutableArray arrayWithCapacity:312];
-    for (int i = 0; i < [self numberOfSectionsInTableView:tableView]; i++) {
-        [self.indexArray addObject:[self tableView:tableView titleForHeaderInSection:i]];
-    }
-    return self.indexArray;
-}
+    
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     return [self.indexArray indexOfObject:title];

@@ -9,6 +9,12 @@
 #import "CourseDetailsViewController.h"
 #import "UIKitAddon.h"
 #import "Assignment.h"
+#import "ModelsAddon.h"
+
+@interface CourseDetailsViewController(Private)
+
+@end
+
 @implementation CourseDetailsViewController
 @synthesize tableView;
 @synthesize course;
@@ -123,7 +129,31 @@
                 ;
             }
             break;
+        case 3:
+
+
+            if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusDefault) {
+                [self.delegate.appUser addLocalcoursesObject:self.course];
+            }
+            else {
+                [self.delegate.appUser removeLocalcoursesObject:self.course];
+            }
             
+            [self.delegate.managedObjectContext save:nil];
+            [self.tableView reloadData];
+            
+            NSInvocation *ivc = [NSInvocation invocationWithMethodSignature:[self.tableView methodSignatureForSelector:@selector(deselectRowAtIndexPath:animated:)]];
+            ivc.target = self.tableView;
+            [ivc setSelector:@selector(deselectRowAtIndexPath:animated:)];
+            NSIndexPath *index = [self.tableView indexPathForSelectedRow];
+            [ivc setArgument:&index atIndex:2];
+            BOOL yes = YES;
+            [ivc setArgument:&yes atIndex:3];
+            
+            [ivc performSelector:@selector(invoke) withObject:nil afterDelay:0.3];
+
+            
+            break;
         default:
             break;
     }
@@ -137,7 +167,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    
+    if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusServer) {
+        return 3;
+    }
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -156,7 +190,7 @@
             break;
        
         case 3:
-            return 3;
+            return 1;
             break;
         case 4:
             return 1;
@@ -170,7 +204,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self tableView:self.tableView cellForRowAtIndexPath:indexPath].frame.size.height;
+    if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:2]] == NSOrderedSame) {
+        NSArray *array = [self.course arrayStringTime];
+
+        return 44 + ([[array objectAtIndex:0] intValue]-1)*19;
+    }
+    return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -184,7 +223,7 @@
     switch (indexPath.section) {
         case 0:
 
-        case 4:
+        case 3:
             cell = [self.tableView dequeueReusableCellWithIdentifier:identifierBtn];
             if (cell == nil) {
                 
@@ -196,7 +235,7 @@
             
         default:
             
-            cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
+            cell = [self.tableView dequeueReusableCellWithIdentifier:nil];
             
             if (cell == nil) {
                 
@@ -206,10 +245,6 @@
             
             break;
     }
-    
-     
-    
-    
     switch (indexPath.section) {
         case 0:
             if (indexPath.row == self.arrayAssignments.count) {
@@ -276,7 +311,7 @@
                     
                     cell.detailTextLabel.text = [array objectAtIndex:1];
                     
-                    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height + ([[array objectAtIndex:0] intValue]-1)*19);
+//                    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, 44 + ([[array objectAtIndex:0] intValue]-1)*19);
                     
                     break;
                 case 1:
@@ -298,17 +333,21 @@
             }
             break;
             
-        case 4://share and audit courses
+        case 3://share and audit courses
             switch (indexPath.row) {
                 case 0:
-                    
-//                    cell.textLabel.text = @"加入旁听列表";
-                    
+                    if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusDefault) {
+                        cell.textLabel.text = @"加入旁听列表";
+                    }
+                    else {
+                        cell.textLabel.text = @"取消旁听";
+                    }
                     break;
                     
                 default:
                     break;
             }
+            break;
         default:
             break;
     }

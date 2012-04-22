@@ -90,7 +90,7 @@
     if (self.didInitScrollView) {
         
         int page = floor((scrollView.contentOffset.x - self.currentCenterOffset - pageWidth / 2) / pageWidth) + 1;
-        NSLog(@"%d",page);
+
         switch (page){
             case -1: 
                 

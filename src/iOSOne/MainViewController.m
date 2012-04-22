@@ -402,7 +402,7 @@
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     
-    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,ccc,csvc,nil];
+    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,ccc,nil];
     tbc.navigationItem.titleView = mcvc.segmentedControl;
     [self.navigationController pushViewController:tbc animated:YES];
     

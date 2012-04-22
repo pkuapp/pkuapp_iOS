@@ -233,6 +233,17 @@
     return arrayResult;
 }
 
+
+- (CourseStatus)currentCourseStatusForUser:(AppUser *)user {
+    if ([self.serverUser containsObject:user]) {
+        return CourseStatusServer;
+    }
+    if ([self.localUser containsObject:user]) {
+        return CourseStatusLocal;
+    }
+    return CourseStatusDefault;
+}
+
 @end
 
 

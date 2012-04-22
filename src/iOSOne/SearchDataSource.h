@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-@class NSFetchedResultsController,NSManagedObjectContext,CoursesSearchViewController;
+@class NSFetchedResultsController,NSManagedObjectContext,CoursesCategoryController;
 
-@interface SearchDataSource : NSObject<UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate>
+@interface SearchDataSource : NSObject<UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate,UITableViewDelegate>
 
 @property (nonatomic, retain)NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, assign)IBOutlet CoursesSearchViewController *delegate;
+@property (nonatomic, assign)IBOutlet CoursesCategoryController *delegate;
 @property (nonatomic, retain)NSMutableArray *indexArray;
 @end

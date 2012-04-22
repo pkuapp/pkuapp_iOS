@@ -20,7 +20,7 @@
 
 @property (retain, nonatomic) Course *course;
 @property (retain, nonatomic) NSMutableArray *arrayAssignments;
-@property (retain, nonatomic) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+@property (retain, nonatomic, readonly) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
 @property (assign, nonatomic) Assignment *coord_assign;
 @property (retain, nonatomic) NSArray *arrayCourses;
 @end

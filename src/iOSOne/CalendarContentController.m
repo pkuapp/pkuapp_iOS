@@ -50,6 +50,8 @@
 @property (nonatomic, retain) IBOutlet UIView *listView;
 
 @property (nonatomic, retain) NSArray *serverCourses;//return all courses user on dean
+@property (nonatomic, retain) NSArray *localCourses;
+@property (nonatomic, retain) NSArray *allCourses;
 @property (nonatomic, retain) NSMutableArray *arrayClassGroup;
 @property (nonatomic, assign) NSInteger bitListControl;
 //@property (nonatomic, assign) NSInteger dayoffset;
@@ -63,7 +65,7 @@
 - (void)displayCoursesInDayView;
 - (void)prepareListViewDataSource;
 - (void)viewDidAppear:(BOOL)animated;
-- (void)didSelectCalSegementControl;
+
 //- (void)numDisplayDayDidChanged;
 //- (void)numDisplayWeekDidChanged;
 - (void)prepareEventViewsForDayDisplay:(NSArray *)arrayEventViews;
@@ -107,6 +109,8 @@
 @synthesize noticeCenter;
 @synthesize serverCourses;
 @synthesize arrayEventDict;
+@synthesize localCourses;
+@synthesize allCourses;
 #pragma mark - getter method setup
 
 - (NSMutableArray *)systemEventDayList {
@@ -150,6 +154,24 @@
         serverCourses = [[self.delegate.appUser.courses allObjects] retain];
     }
     return serverCourses;
+}
+
+- (NSArray *)localCourses {
+    if (nil == localCourses) {
+        localCourses = [[self.delegate.appUser.localcourses allObjects] retain];
+    }
+    return localCourses;
+}
+
+- (NSArray *)allCourses {
+    if (allCourses == nil) {
+        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:self.serverCourses];
+        for (Course *course  in self.localCourses) {
+            [array addObject:course];
+        }
+        allCourses = (NSArray *)array;
+    }
+    return allCourses;
 }
 
 - (NSInteger)numDayInDayView
@@ -274,12 +296,13 @@
         
         NSMutableArray *tempmarray = [[NSMutableArray alloc] initWithCapacity:0];
         
-        for (int i = 0; i < [self.serverCourses count]; i++) {
+        for (int i = 0; i < [self.allCourses count]; i++) {
             
-            Course *tempcourse = [self.serverCourses objectAtIndex:i];
+            Course *tempcourse = [self.allCourses objectAtIndex:i];
             
             [tempmarray addObjectsFromArray:[tempcourse arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]]];
         }
+       
         arrayEventDict = tempmarray;
     }
     
@@ -321,7 +344,11 @@
     NSInteger startMinuteNextCourse = [[_notice.dictInfo objectForKey:@"startMinute"] intValue];
     BOOL foundCoursePresent = NO;
     
-    for (Course *course in self.delegate.appUser.courses) {
+    NSMutableSet *courseSet = [NSMutableSet setWithSet:self.delegate.appUser.courses];
+    for (Course *course in self.delegate.appUser.localcourses) {
+        [courseSet addObject:course];
+    }
+    for (Course *course in courseSet) {
         DayVector *_v = [course dayVectorInDay:[SystemHelper getDayForDate:self.dateInDayView]];
         
         if (_v.startclass != -1) {
@@ -459,8 +486,8 @@
     
     NSMutableArray *arrayEvent = [[NSMutableArray alloc] initWithCapacity:0];
     
-    for (int i = 0; i < [self.serverCourses count]; i++) {
-        Course *course = [self.serverCourses objectAtIndex:i];
+    for (int i = 0; i < [self.allCourses count]; i++) {
+        Course *course = [self.allCourses objectAtIndex:i];
         
         NSDictionary *tempdict = [course dictEventForDay:self.numDayInDayView inWeek:self.numWeekInDayView];
         

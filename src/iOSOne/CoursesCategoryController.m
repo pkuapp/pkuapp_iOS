@@ -14,11 +14,29 @@
 #import "Course.h"
 #import "School.h"
 #import "AppCoreDataProtocol.h"
+#import "CourseDetailsViewController.h"
 
+@interface CoursesCategoryController (Private)
+- (void) loadDataSourceForType:(NSString *)courseType;
+@end
 
 @implementation CoursesCategoryController
-@synthesize tableView;
+@synthesize tableView = _tableView;
 @synthesize categorySegmented,delegate;
+@synthesize subDataSource;
+@synthesize request;
+@synthesize fetchResultController;
+@synthesize searchDC;
+@synthesize searchDS;
+@synthesize searchBar;
+@synthesize context;
+
+- (NSManagedObjectContext *)context {
+    if (context == nil) {
+        context = self.delegate.managedObjectContext;
+    }
+    return context;
+}
 
 - (NSArray *)arrayCategories
 {
@@ -44,44 +62,113 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+#pragma mark - private method
 
-#pragma mark - View lifecycle
-- (void)viewDidAppear:(BOOL)animated
-{
-    self.tabBarController.title = @"寻找旁听课程";
+- (void)loadDataSourceForType:(NSString *)courseType {
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.delegate.managedObjectContext];
     
-    [super viewDidAppear:animated];
+    self.request = [[NSFetchRequest alloc] init];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"Coursetype contains %@",courseType];
+    
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+    
+    request.entity = entity;
+    
+    request.predicate = predicate;
+    
+    request.sortDescriptors = [NSArray arrayWithObject:sort];
+    
+    self.fetchResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.managedObjectContext sectionNameKeyPath:@"courseSectionName" cacheName:nil];
+    
+    [self.fetchResultController performFetch:NULL];
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+#pragma mark - View lifecycle
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    [super viewDidAppear:animated];
+    self.tabBarController.title = @"寻找旁听课程";
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == self.tableView) {
+        [self loadDataSourceForType:[self.arrayCategories objectAtIndex:indexPath.row]];
+        
+        UITableViewController *tbc = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+        
+        tbc.tableView.delegate = self;
+        tbc.tableView.dataSource = self;
+        
+        [self.tabBarController.navigationController pushViewController:tbc animated:YES];
+        return;
+    }
+    
+    CourseDetailsViewController *cvc = [[CourseDetailsViewController alloc] init];
+    cvc.course = [self.fetchResultController objectAtIndexPath:indexPath];
+    [self.tabBarController.navigationController pushViewController:cvc animated:YES];
     
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if (tableView == self.tableView) {
+        return 1;
+    }
+    return self.fetchResultController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return self.arrayCategories.count;
+    if (tableView == self.tableView) {
+        return self.arrayCategories.count;
+    }
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchResultController sections] objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *identifier = @"Category";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
+    if (self.tableView == tableView) {
     
-    cell.textLabel.text = [self.arrayCategories objectAtIndex:indexPath.row];
+        static NSString *identifier = @"Category";
+        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        
+        cell.textLabel.text = [self.arrayCategories objectAtIndex:indexPath.row];
 
-    return cell;
+        return cell;
+    }
+    else {
+        static NSString *identifier = @"CourseResultCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell){
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        }
+        Course *course = [self.fetchResultController objectAtIndexPath:indexPath];
+        
+        cell.textLabel.text = course.name;
+        cell.detailTextLabel.text = course.teachername;
+        
+        return cell;        
+    }
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 64.0;
+    if (tableView == self.tableView) {
+        return 64.0;
+    }
+    return 44.0;
 }
 
 
@@ -108,7 +195,7 @@
 }
 
 - (void)dealloc {
-    [tableView release];
+    [_tableView release];
     [categorySegmented release];
     [super dealloc];
 }

@@ -21,10 +21,11 @@
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UISearchDisplayController *searchDC;
+@property (nonatomic, retain) IBOutlet SearchDataSource *searchDS;
+
 @property (nonatomic, retain) NSManagedObjectContext *context;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, retain) NSFetchedResultsController *searchRC;
-@property (nonatomic, retain) IBOutlet SearchDataSource *searchDS;
 
 @property (nonatomic, retain) NSMutableArray *indexArray;
 

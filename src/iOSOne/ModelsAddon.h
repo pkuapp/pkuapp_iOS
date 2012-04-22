@@ -8,6 +8,13 @@
 
 #import "Course.h"
 #import "AppUser.h"
+
+typedef enum {
+    CourseStatusServer,
+    CourseStatusLocal,
+    CourseStatusDefault
+}CourseStatus;
+
 typedef enum{
     ClassgroupTypeEmpty,
     ClassGroupTypeCourse,
@@ -71,7 +78,7 @@ typedef enum DoubleType{
 + (DayVector*)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day;
 
 - (NSString *)stringTimeForDay:(NSInteger)day;
-
+- (CourseStatus)currentCourseStatusForUser:(AppUser *)user;
 @end
 
 @interface NSString(ModelsAddOn)

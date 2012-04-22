@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "Course.h"
 #import "ModelsAddon.h"
-
+#import "CourseDetailsViewController.h"
 
 
 @implementation CoursesSearchViewController
@@ -36,11 +36,12 @@
     return fetchedResultController;
 }
 
-#pragma mark - tableView DataSource
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
+
+#pragma mark - tableView DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

@@ -1563,18 +1563,10 @@
 		41ED390F143C5DE400BBF866 /* CoursesView */ = {
 			isa = PBXGroup;
 			children = (
+				41EF7229154428CB005AE891 /* Assignment */,
 				41B76E5E14DA58FF004FE2C0 /* CourseDetailsViewController.h */,
 				41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */,
 				41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */,
-				412D608314A3650400E0B7B5 /* AssignmentEditViewController.h */,
-				412D608414A3650400E0B7B5 /* AssignmentEditViewController.m */,
-				412D608514A3650500E0B7B5 /* AssignmentEditViewController.xib */,
-				411588E714A3783300FBFA59 /* AssignDatePickViewController.h */,
-				411588E814A3783300FBFA59 /* AssignDatePickViewController.m */,
-				411588E914A3783300FBFA59 /* AssignDatePickViewController.xib */,
-				411588EC14A3785400FBFA59 /* AssignPickViewController.h */,
-				411588ED14A3785400FBFA59 /* AssignPickViewController.m */,
-				411588EE14A3785400FBFA59 /* AssignPickViewController.xib */,
 				413E8FDF143DF6D40042BE88 /* LocalCoursesViewController.h */,
 				413E8FE0143DF6D40042BE88 /* LocalCoursesViewController.m */,
 				413E8FE1143DF6D40042BE88 /* LocalCoursesViewController.xib */,
@@ -1591,12 +1583,6 @@
 				413E8FD6143DE7A20042BE88 /* SearchDataSource.h */,
 				413E8FD7143DE7A30042BE88 /* SearchDataSource.m */,
 				413E8FA1143D4F320042BE88 /* CoursesSearchView.xib */,
-				412D607914A3570A00E0B7B5 /* AssignmentsListViewController.h */,
-				412D607A14A3570A00E0B7B5 /* AssignmentsListViewController.m */,
-				412D607B14A3570B00E0B7B5 /* AssignmentsListViewController.xib */,
-				412D607E14A35AA100E0B7B5 /* AssignmentDetailViewController.h */,
-				412D607F14A35AA100E0B7B5 /* AssignmentDetailViewController.m */,
-				412D608014A35AA100E0B7B5 /* AssignmentDetailViewController.xib */,
 			);
 			name = CoursesView;
 			sourceTree = "<group>";
@@ -1623,6 +1609,28 @@
 				413E8FC0143D8D7A0042BE88 /* ModelsAddon.m */,
 			);
 			name = CoreDataModels;
+			sourceTree = "<group>";
+		};
+		41EF7229154428CB005AE891 /* Assignment */ = {
+			isa = PBXGroup;
+			children = (
+				412D608314A3650400E0B7B5 /* AssignmentEditViewController.h */,
+				412D608414A3650400E0B7B5 /* AssignmentEditViewController.m */,
+				412D608514A3650500E0B7B5 /* AssignmentEditViewController.xib */,
+				411588E714A3783300FBFA59 /* AssignDatePickViewController.h */,
+				411588E814A3783300FBFA59 /* AssignDatePickViewController.m */,
+				411588E914A3783300FBFA59 /* AssignDatePickViewController.xib */,
+				411588EC14A3785400FBFA59 /* AssignPickViewController.h */,
+				411588ED14A3785400FBFA59 /* AssignPickViewController.m */,
+				411588EE14A3785400FBFA59 /* AssignPickViewController.xib */,
+				412D607914A3570A00E0B7B5 /* AssignmentsListViewController.h */,
+				412D607A14A3570A00E0B7B5 /* AssignmentsListViewController.m */,
+				412D607B14A3570B00E0B7B5 /* AssignmentsListViewController.xib */,
+				412D607E14A35AA100E0B7B5 /* AssignmentDetailViewController.h */,
+				412D607F14A35AA100E0B7B5 /* AssignmentDetailViewController.m */,
+				412D608014A35AA100E0B7B5 /* AssignmentDetailViewController.xib */,
+			);
+			name = Assignment;
 			sourceTree = "<group>";
 		};
 		41FDB3E514E29DDB006A6451 /* Nimbus Module */ = {
@@ -2276,7 +2284,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: PKU CADA (2FQB5YJ958)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHANG Ta";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSOne/iOSOne-Prefix.pch";
@@ -2294,7 +2302,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FFD416F9-8382-4AFE-B04E-3335BF06E4A9";
+				PROVISIONING_PROFILE = "664C710C-BD97-464A-9985-A717AF435109";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
