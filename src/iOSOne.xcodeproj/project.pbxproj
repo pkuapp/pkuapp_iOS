@@ -145,7 +145,6 @@
 		4171251E14EE932800B1C644 /* NavigationBar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4171251C14EE932800B1C644 /* NavigationBar-bg@2x.png */; };
 		4171252214EE9D4000B1C644 /* UIKitAddon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4171252114EE9D4000B1C644 /* UIKitAddon.m */; };
 		417286B71545154400B7A12D /* THPinYin.c in Sources */ = {isa = PBXBuildFile; fileRef = 417286B61545154400B7A12D /* THPinYin.c */; };
-		417286BF15451DDC00B7A12D /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 417286BE15451DDC00B7A12D /* coredata.sqlite */; };
 		4177300D14FF7BC50024E0E8 /* calendar-list-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4177300B14FF7BC50024E0E8 /* calendar-list-bg.png */; };
 		4177300E14FF7BC50024E0E8 /* calendar-list-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4177300C14FF7BC50024E0E8 /* calendar-list-bg@2x.png */; };
 		417793061478E9B700890739 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417793041478E9B600890739 /* WelcomeViewController.m */; };
@@ -190,6 +189,7 @@
 		41BF88E213AD2C680098959D /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF88D513AD2C680098959D /* SBJsonUTF8Stream.m */; };
 		41BF88E313AD2C680098959D /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF88D713AD2C680098959D /* SBJsonWriter.m */; };
 		41C3C5621545656500C3E59B /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C5611545656500C3E59B /* Course.m */; };
+		41C3C5641545816E00C3E59B /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 41C3C5631545816E00C3E59B /* coredata.sqlite */; };
 		41C5F4401402738C000CF13B /* QueryResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C5F4411402738C000CF13B /* QueryResultsController.m */; };
 		41C5F44C14028077000CF13B /* RoomControlButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C5F44B14028077000CF13B /* RoomControlButton.m */; };
 		41C5F44F140280C6000CF13B /* PKURoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C5F44E140280C5000CF13B /* PKURoomCell.m */; };
@@ -639,7 +639,6 @@
 		4171252114EE9D4000B1C644 /* UIKitAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIKitAddon.m; sourceTree = "<group>"; };
 		417286B51545154400B7A12D /* THPinYin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THPinYin.h; sourceTree = "<group>"; };
 		417286B61545154400B7A12D /* THPinYin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = THPinYin.c; sourceTree = "<group>"; };
-		417286BE15451DDC00B7A12D /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		4174449414DD89E1001E95DF /* ReachablityProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachablityProtocol.h; sourceTree = "<group>"; };
 		4177300B14FF7BC50024E0E8 /* calendar-list-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-list-bg.png"; sourceTree = "<group>"; };
 		4177300C14FF7BC50024E0E8 /* calendar-list-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-list-bg@2x.png"; sourceTree = "<group>"; };
@@ -713,6 +712,7 @@
 		41BF88D713AD2C680098959D /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		41C3C5601545656500C3E59B /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		41C3C5611545656500C3E59B /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
+		41C3C5631545816E00C3E59B /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		41C5F4411402738C000CF13B /* QueryResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryResultsController.m; sourceTree = "<group>"; };
 		41C5F44A14028077000CF13B /* RoomControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomControlButton.h; sourceTree = "<group>"; };
 		41C5F44B14028077000CF13B /* RoomControlButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomControlButton.m; sourceTree = "<group>"; };
@@ -1068,7 +1068,7 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				417286BE15451DDC00B7A12D /* coredata.sqlite */,
+				41C3C5631545816E00C3E59B /* coredata.sqlite */,
 				41942A9815042DEB0012F5BE /* datebar-arrow-left-normal.png */,
 				41942A9915042DEB0012F5BE /* datebar-arrow-left-normal@2x.png */,
 				41942A9A15042DEB0012F5BE /* datebar-arrow-left-pressed.png */,
@@ -2037,7 +2037,7 @@
 				41942AA715042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png in Resources */,
 				4112C64815242C14002B5FCC /* CalendarController.xib in Resources */,
 				41EE477115243111005500E5 /* CalendarContentController.xib in Resources */,
-				417286BF15451DDC00B7A12D /* coredata.sqlite in Resources */,
+				41C3C5641545816E00C3E59B /* coredata.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

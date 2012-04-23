@@ -438,6 +438,10 @@
     
     NSArray *array = [responseString JSONValue];
     for (NSDictionary *dict in array) {
+        if ([[dict objectForKey:@"name"] isEmptyOrWhitespace]) {
+            continue;
+        }
+        
         Course *ccourse = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:context];
         for (NSString *key in [dict keyEnumerator]) {
             id object = [dict objectForKey:key];
@@ -476,7 +480,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
 //    NSLog(@"%@",[[NSBundle mainBundle] bundleIdentifier] );
-//    [self generateCoreDataBase];
+    [self generateCoreDataBase];
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSFileManager *fm = [NSFileManager defaultManager];
