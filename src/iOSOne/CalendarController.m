@@ -237,6 +237,8 @@
     
     self.dayViewBar.delegate = [self.switchableViewControllers objectAtIndex:2];
     [self.dayViewBar setupForDisplay];
+    
+    self.title = @"课程表";
 }
 
 - (void)didReceiveMemoryWarning {

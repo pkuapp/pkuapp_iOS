@@ -13,15 +13,23 @@
 #import <CoreData/CoreData.h>
 #import "SearchDataSource.h"
 
+typedef enum {
+    subCategoryTypeTX,
+    subCategoryTypeDefault
+}subCategoryType;
+
+
+
 @interface CoursesCategoryController : UIViewController <UITableViewDelegate,UITableViewDataSource> {
     
-
+    subCategoryType subType;
     UISegmentedControl *categorySegmented;
     NSArray *arrayCategories;
+    UITableViewController *subCategoryTVC;
 
 }
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *categorySegmented;
+
 @property (nonatomic, retain) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
 @property (nonatomic, retain, readonly) NSArray *arrayCategories;
 @property (nonatomic, retain) NITableViewModel* subDataSource;
@@ -31,6 +39,6 @@
 @property (nonatomic, retain) IBOutlet UISearchDisplayController *searchDC;
 @property (nonatomic, retain) IBOutlet SearchDataSource *searchDS;
 @property (nonatomic, retain) NSManagedObjectContext *context;
-
+@property (nonatomic, retain) UISegmentedControl* txCategorySegmentedControl;
 
 @end

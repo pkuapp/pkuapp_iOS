@@ -31,12 +31,24 @@
     
     NSSortDescriptor *sort;
     
+//    NSDictionary * entityProperties = [entity propertiesByName];
+//    
+//    NSPropertyDescription * nameInitialProperty = [entityProperties objectForKey:@"nameInitial"];
+//    
+//    NSArray * tempPropertyArray = [NSArray arrayWithObject:nameInitialProperty];
+//    
+//
+//    [request setPropertiesToFetch:tempPropertyArray];
+//    
+//  
+//    [request setReturnsDistinctResults:YES];
+    
     switch (self.delegate.searchBar.selectedScopeButtonIndex) {
         case 0:
             
             predicate = [NSPredicate predicateWithFormat:@"name contains %@",self.delegate.searchBar.text];
             
-            sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+            sort = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
            
             break;
         case 1:
@@ -44,6 +56,7 @@
             predicate = [NSPredicate predicateWithFormat:@"courseid contains %@ and name != NULL",self.delegate.searchBar.text];
             
             sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+            break;
         case 2:
             predicate = [NSPredicate predicateWithFormat:@"teachername contains %@ and name != NULL",self.delegate.searchBar.text];
             sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];

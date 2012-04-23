@@ -8,7 +8,6 @@
 
 #import "Course.h"
 #import "AppUser.h"
-
 typedef enum {
     CourseStatusServer,
     CourseStatusLocal,

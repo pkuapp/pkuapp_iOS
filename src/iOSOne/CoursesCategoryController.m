@@ -16,13 +16,15 @@
 #import "AppCoreDataProtocol.h"
 #import "CourseDetailsViewController.h"
 
+
 @interface CoursesCategoryController (Private)
 - (void) loadDataSourceForType:(NSString *)courseType;
+- (void) txCategoryDidChanged:(UISegmentedControl *)segmentedControl;
 @end
 
 @implementation CoursesCategoryController
 @synthesize tableView = _tableView;
-@synthesize categorySegmented,delegate;
+@synthesize delegate;
 @synthesize subDataSource;
 @synthesize request;
 @synthesize fetchResultController;
@@ -30,7 +32,26 @@
 @synthesize searchDS;
 @synthesize searchBar;
 @synthesize context;
+@synthesize txCategorySegmentedControl;
 
+- (UISegmentedControl *)txCategorySegmentedControl {
+    
+    if (txCategorySegmentedControl == nil) {
+        txCategorySegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"全部",@"A",@"B",@"C",@"D",@"E",@"F", nil]];
+        
+        txCategorySegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        
+        txCategorySegmentedControl.selectedSegmentIndex = 0;
+        
+        [txCategorySegmentedControl addTarget:self action:@selector(txCategoryDidChanged:) forControlEvents:UIControlEventValueChanged];
+        txCategorySegmentedControl.apportionsSegmentWidthsByContent = YES;
+        
+        txCategorySegmentedControl.frame = CGRectMake(40, 5, 240, 30);
+        
+    }
+    
+    return txCategorySegmentedControl;
+}
 - (NSManagedObjectContext *)context {
     if (context == nil) {
         context = self.delegate.managedObjectContext;
@@ -65,6 +86,14 @@
 #pragma mark - private method
 
 - (void)loadDataSourceForType:(NSString *)courseType {
+    
+    if ([courseType isEqualToString:@"通选课"]) {
+        subType = subCategoryTypeTX;
+    }
+    else {
+        subType = subCategoryTypeDefault;
+    }
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.delegate.managedObjectContext];
     
     self.request = [[NSFetchRequest alloc] init];
@@ -79,9 +108,24 @@
     
     request.sortDescriptors = [NSArray arrayWithObject:sort];
     
-    self.fetchResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.managedObjectContext sectionNameKeyPath:@"courseSectionName" cacheName:nil];
+    self.fetchResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
     [self.fetchResultController performFetch:NULL];
+}
+
+- (void)txCategoryDidChanged:(UISegmentedControl *)segmentedControl {
+    
+    if (segmentedControl.selectedSegmentIndex == 0) {
+        [self loadDataSourceForType:@"通选课"];
+        [subCategoryTVC.tableView reloadData];
+        return;
+    }
+    
+    self.request.predicate = [NSPredicate predicateWithFormat:@"txType contains %@",[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex]];
+    
+    [self.fetchResultController performFetch:nil];
+    
+    [subCategoryTVC.tableView reloadData];
 }
 
 #pragma mark - View lifecycle
@@ -104,13 +148,17 @@
         
         tbc.tableView.delegate = self;
         tbc.tableView.dataSource = self;
-        
+        subCategoryTVC = tbc;
         [self.tabBarController.navigationController pushViewController:tbc animated:YES];
         return;
     }
     
+    indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1];
+    
     CourseDetailsViewController *cvc = [[CourseDetailsViewController alloc] init];
+    
     cvc.course = [self.fetchResultController objectAtIndexPath:indexPath];
+    
     [self.tabBarController.navigationController pushViewController:cvc animated:YES];
     
 }
@@ -120,7 +168,12 @@
     if (tableView == self.tableView) {
         return 1;
     }
-    return self.fetchResultController.sections.count;
+    int count = self.fetchResultController.sections.count;
+    
+    if (subCategoryTypeTX == subType) {
+        count++;
+    }
+    return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -129,7 +182,18 @@
         return self.arrayCategories.count;
     }
     
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchResultController sections] objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo;
+    
+    if (subType == subCategoryTypeTX) {
+        if (section == 0) {
+            return 1;
+        }
+        else {
+            sectionInfo = [[self.fetchResultController sections] objectAtIndex:section-1];
+        }
+    }
+    
+    else sectionInfo = [[self.fetchResultController sections] objectAtIndex:section];
     
     return [sectionInfo numberOfObjects];
 }
@@ -148,8 +212,51 @@
 
         return cell;
     }
-    else {
+    else if (subType == subCategoryTypeTX) {
+        UITableViewCell *cell;
+        if (indexPath.section == 0) {
+            
+            static NSString *txidentifier = @"TXCategoryControl";
+            cell = [self.tableView dequeueReusableCellWithIdentifier:txidentifier];
+            
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:txidentifier];
+                
+//                UISegmentedControl *categorySegControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"A",@"B",@"C",@"D",@"E",@"F", nil]];
+                
+//                categorySegControl.segmentedControlStyle = UISegmentedControlStyleBar;
+//                
+//                [categorySegControl addTarget:self action:@selector(txCategoryDidChanged:) forControlEvents:UIControlEventValueChanged];
+
+                [cell.contentView addSubview:self.txCategorySegmentedControl];
+                
+            }
+        }
+        else {
+            indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section-1];
+            
+            static NSString *identifier = @"CourseResultCell";
+            
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            
+            if (!cell){
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+            }
+            
+            Course *course = [self.fetchResultController objectAtIndexPath:indexPath];
+            
+            cell.textLabel.text = course.name;
+            cell.detailTextLabel.text = course.teachername;
+
+        }
+        
+        return cell;
+    }
+    else{
+        
+        
         static NSString *identifier = @"CourseResultCell";
+        
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell){
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
@@ -181,7 +288,7 @@
 - (void)viewDidUnload
 {
     [self setTableView:nil];
-    [self setCategorySegmented:nil];
+    [self setTxCategorySegmentedControl:nil];
     [super viewDidUnload];
     
     // Release any retained subviews of the main view.

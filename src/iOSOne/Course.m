@@ -2,8 +2,8 @@
 //  Course.m
 //  iOSOne
 //
-//  Created by  on 11-10-6.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Created by 昊天 吴 on 12-4-23.
+//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
 #import "Course.h"
@@ -14,6 +14,7 @@
 
 
 @implementation Course
+
 @dynamic place;
 @dynamic day4;
 @dynamic time;
@@ -21,8 +22,8 @@
 @dynamic day2;
 @dynamic day7;
 @dynamic txType;
-@dynamic time_test;
 @dynamic name;
+@dynamic time_test;
 @dynamic day5;
 @dynamic teachername;
 @dynamic id;
@@ -35,9 +36,9 @@
 @dynamic Coursetype;
 @dynamic classnum;
 @dynamic serverUser;
+@dynamic localUser;
 @dynamic school;
 @dynamic localAssignment;
-@dynamic localUser;
 @dynamic commentset;
 
 @end
