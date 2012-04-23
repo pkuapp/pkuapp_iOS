@@ -16,7 +16,7 @@
 {
     NSArray *coursesArray;
 }
-@property (nonatomic, retain)NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+@property (nonatomic, assign)NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
 @property (nonatomic, retain)NSArray *coursesArray;
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;

@@ -165,7 +165,6 @@
 		41942AA515042DEB0012F5BE /* datebar-arrow-right-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41942A9D15042DEB0012F5BE /* datebar-arrow-right-normal@2x.png */; };
 		41942AA615042DEB0012F5BE /* datebar-arrow-right-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 41942A9E15042DEB0012F5BE /* datebar-arrow-right-pressed.png */; };
 		41942AA715042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41942A9F15042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png */; };
-		4195E8FA143ECE6D0015BDFD /* ChineseFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4195E8F9143ECE6D0015BDFD /* ChineseFetchedResultsController.m */; };
 		419E341C15021A2D00D7494A /* 24-person.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E341815021A2D00D7494A /* 24-person.png */; };
 		419E341D15021A2D00D7494A /* 24-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E341915021A2D00D7494A /* 24-person@2x.png */; };
 		419E341E15021A2D00D7494A /* 38-house.png in Resources */ = {isa = PBXBuildFile; fileRef = 419E341A15021A2D00D7494A /* 38-house.png */; };
@@ -668,8 +667,6 @@
 		41942A9D15042DEB0012F5BE /* datebar-arrow-right-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "datebar-arrow-right-normal@2x.png"; sourceTree = "<group>"; };
 		41942A9E15042DEB0012F5BE /* datebar-arrow-right-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "datebar-arrow-right-pressed.png"; sourceTree = "<group>"; };
 		41942A9F15042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "datebar-arrow-right-pressed@2x.png"; sourceTree = "<group>"; };
-		4195E8F8143ECE6D0015BDFD /* ChineseFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseFetchedResultsController.h; sourceTree = "<group>"; };
-		4195E8F9143ECE6D0015BDFD /* ChineseFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseFetchedResultsController.m; sourceTree = "<group>"; };
 		419E341815021A2D00D7494A /* 24-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person.png"; sourceTree = "<group>"; };
 		419E341915021A2D00D7494A /* 24-person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-person@2x.png"; sourceTree = "<group>"; };
 		419E341A15021A2D00D7494A /* 38-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "38-house.png"; sourceTree = "<group>"; };
@@ -1583,8 +1580,6 @@
 				41ED3912143C5E5000BBF866 /* CoursesCategory.xib */,
 				413E8F9F143D4F320042BE88 /* CoursesSearchViewController.h */,
 				413E8FA0143D4F320042BE88 /* CoursesSearchViewController.m */,
-				4195E8F8143ECE6D0015BDFD /* ChineseFetchedResultsController.h */,
-				4195E8F9143ECE6D0015BDFD /* ChineseFetchedResultsController.m */,
 				413E8FD6143DE7A20042BE88 /* SearchDataSource.h */,
 				413E8FD7143DE7A30042BE88 /* SearchDataSource.m */,
 				413E8FA1143D4F320042BE88 /* CoursesSearchView.xib */,
@@ -2114,7 +2109,6 @@
 				413E8FD8143DE7A30042BE88 /* SearchDataSource.m in Sources */,
 				413E8FDD143DF6A90042BE88 /* MyCoursesViewController.m in Sources */,
 				413E8FE2143DF6D50042BE88 /* LocalCoursesViewController.m in Sources */,
-				4195E8FA143ECE6D0015BDFD /* ChineseFetchedResultsController.m in Sources */,
 				415E6FFB14767DFC002C9A4C /* EULAViewController.m in Sources */,
 				417793061478E9B700890739 /* WelcomeViewController.m in Sources */,
 				41ACB477148B141200B00624 /* EULANavController.m in Sources */,

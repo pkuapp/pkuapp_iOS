@@ -22,7 +22,14 @@
 - (NSArray *)coursesArray
 {
     if (coursesArray == nil) {
-        coursesArray = [[self.delegate.appUser.courses allObjects] retain];
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+
+            coursesArray = [[self.delegate.appUser.courses allObjects] retain];
+        }
+        else {
+        
+            coursesArray = [[self.delegate.appUser.localcourses allObjects] retain];
+        }
     }
     return coursesArray;
 }
@@ -43,14 +50,8 @@
 
 
 - (void)segmentedValueChanged {
-    if (self.segmentedControl.selectedSegmentIndex == 0) {
-        self.tabBarController.navigationItem.rightBarButtonItem = nil;
-        self.coursesArray = [[self.delegate.appUser.courses allObjects] retain];
-    }
-    else {
-        self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didHitAddBtn)];
-        self.coursesArray = [[self.delegate.appUser.localcourses allObjects] retain];
-    }
+    self.coursesArray = nil;
+    //the Overrided getter method will auto reload server/local course depend on selected segment
     [self.tableView reloadData];
 }
 
@@ -99,7 +100,7 @@
 }
 
 - (void)didHitAddBtn {
-    
+
 }
 
 
@@ -135,17 +136,25 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    
     self.tabBarController.title = @"我的课程";
 
     self.tabBarController.navigationItem.titleView = self.segmentedControl;
     
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    self.coursesArray = nil;
+    
+    [self.tableView reloadData];
+
+//    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES]; //reload data make all cells unhighlighted
 
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    
     [super viewWillDisappear:animated];
+    
     self.tabBarController.navigationItem.titleView = nil;
+    
 }
 
 - (void)viewDidLoad
@@ -153,18 +162,15 @@
     [super viewDidLoad];
 
     self.tabBarController.title = @"我的课程";
-    
-//    [[UIBarButtonItem alloc] initWithCustomView:[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]]];
-    //self.tabBarController.title = @"我的课程";
-    //NSLog(@"%@",self.navigationController);
 
-
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
     [self setTableView:nil];
+    self.segmentedControl = nil;
+    self.coursesArray = nil;
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -179,6 +185,8 @@
 - (void)dealloc {
     [segmentedControl release];
     [tableView release];
+    [coursesArray release];
+    
     [super dealloc];
 }
 @end

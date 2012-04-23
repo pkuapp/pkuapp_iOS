@@ -39,7 +39,7 @@
     if (txCategorySegmentedControl == nil) {
         txCategorySegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"全部",@"A",@"B",@"C",@"D",@"E",@"F", nil]];
         
-        txCategorySegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        txCategorySegmentedControl.segmentedControlStyle = UISegmentedControlStyleBezeled;
         
         txCategorySegmentedControl.selectedSegmentIndex = 0;
         
