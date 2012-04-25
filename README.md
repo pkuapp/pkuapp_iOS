@@ -19,6 +19,12 @@
  9. `Three20` 一整套的第三方支持开发库，目前只用到了它的 `launcherView`，为了自定义外观而调整了部分代码。由于直接打包了项目目录和 `Three20` 的目录，所以项目文件直接可用。
  10. 未来会添加 Google Analytics 的 SDK。
  
+ 建议研究加入的库:
+ 1. RestKit
+ 2. QuickDialog
+ 3. CMPopTipView
+ 4. iCarousel
+
  对以上第三方库的作者表示膜拜与感谢。
  
 ### 三、工程文件说明
