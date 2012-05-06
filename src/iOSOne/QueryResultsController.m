@@ -13,6 +13,7 @@
 #import "Environment.h"
 #import "SBJson.h"
 #import "iOSOneAppDelegate.h"
+#import "AppUser.h"
 
 @interface QueryResultsController(Private)
 - (void)taskQuery;
@@ -213,16 +214,28 @@
 
 
 - (void)taskQuery{
-    ASIFormDataRequest *requestQuery = [ASIFormDataRequest requestWithURL:urlClassroom];
-	//[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
-    //temporary set c as 18 for testing 
-    [requestQuery setPostValue:[NSNumber numberWithInt:self.valueWeeknumber] forKey:@"c"];
-	[requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
-	[requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
 
-
-	[requestQuery startSynchronous];
-	NSString *stringQuery = [requestQuery responseString];
+    iOSOneAppDelegate *appDelegate = (iOSOneAppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSString *stringQuery;
+    
+    if ([appDelegate.appUser.deanid isEqualToString:test_username]) {
+        stringQuery = [appDelegate.test_data valueForKeyPath:@"classroom.json"];
+        self.numday = 4;
+    }
+    else {
+        ASIFormDataRequest *requestQuery = [ASIFormDataRequest requestWithURL:urlClassroom];
+        //[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
+        //temporary set c as 18 for testing 
+        [requestQuery setPostValue:[NSNumber numberWithInt:self.valueWeeknumber] forKey:@"c"];
+        [requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
+        [requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
+        
+        
+        [requestQuery startSynchronous];
+        stringQuery = [requestQuery responseString];
+    }
+    
 //    NSLog(@"%@",stringQuery);
 	NSArray *result = [stringQuery JSONValue];
     self.arrayResult = result;

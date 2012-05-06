@@ -268,6 +268,7 @@
 		41D101C91556628700566E65 /* EULACell8.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C31556628700566E65 /* EULACell8.html */; };
 		41D101CA1556628700566E65 /* EULACell9.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C41556628700566E65 /* EULACell9.html */; };
 		41D101CB1556628700566E65 /* EULACell10.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C51556628700566E65 /* EULACell10.html */; };
+		41D101CD15566BB500566E65 /* test_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41D101CC15566BB500566E65 /* test_data.plist */; };
 		41D1068213AFCD85006E2D10 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D1068113AFCD85006E2D10 /* CoreData.framework */; };
 		41D368F013CCA0A000789429 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D368EE13CCA09F00789429 /* CalendarViewController.m */; };
 		41D368F113CCA0A000789429 /* CalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D368EF13CCA09F00789429 /* CalendarView.xib */; };
@@ -836,6 +837,7 @@
 		41D101C31556628700566E65 /* EULACell8.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell8.html; sourceTree = "<group>"; };
 		41D101C41556628700566E65 /* EULACell9.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell9.html; sourceTree = "<group>"; };
 		41D101C51556628700566E65 /* EULACell10.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell10.html; sourceTree = "<group>"; };
+		41D101CC15566BB500566E65 /* test_data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = test_data.plist; sourceTree = "<group>"; };
 		41D1068113AFCD85006E2D10 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41D368ED13CCA09F00789429 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		41D368EE13CCA09F00789429 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
@@ -1077,6 +1079,7 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				41D101CC15566BB500566E65 /* test_data.plist */,
 				41C3C5631545816E00C3E59B /* coredata.sqlite */,
 				41942A9815042DEB0012F5BE /* datebar-arrow-left-normal.png */,
 				41942A9915042DEB0012F5BE /* datebar-arrow-left-normal@2x.png */,
@@ -2057,6 +2060,7 @@
 				41D101C91556628700566E65 /* EULACell8.html in Resources */,
 				41D101CA1556628700566E65 /* EULACell9.html in Resources */,
 				41D101CB1556628700566E65 /* EULACell10.html in Resources */,
+				41D101CD15566BB500566E65 /* test_data.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

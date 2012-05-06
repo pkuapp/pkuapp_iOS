@@ -49,6 +49,9 @@
 @property (atomic) PKUNetStatus netStatus;
 @property (nonatomic) BOOL hasWifi;
 @property (nonatomic, retain)MBProgressHUD *progressHub;
+
+@property (nonatomic, retain, readonly) NSDictionary *test_data;
+
 - (void)showWithLoginView;
 - (void)showwithMainView;
 - (void)logout;

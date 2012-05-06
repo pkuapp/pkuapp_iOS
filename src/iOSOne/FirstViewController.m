@@ -21,7 +21,7 @@
 
 @implementation FirstViewController
 @synthesize tableView;
-@synthesize navigationBar;
+
 @synthesize Username = _Username;
 @synthesize UserPwd = _UserPwd;
 @synthesize validCode = _validCode;
@@ -281,7 +281,7 @@
     [self myLogin:nil];
 }
 
-- (IBAction) myLogin:(id)sender{
+- (void) myLogin:(id)sender{
     [self.validCode resignFirstResponder];
     self.delegate.progressHub.delegate = self;
     self.delegate.progressHub.mode = MBProgressHUDModeIndeterminate;
@@ -408,7 +408,7 @@
     firstImg = nil;
     sessionid = nil;
     HUD = nil;
-    [self setNavigationBar:nil];
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -33,7 +33,6 @@
     UITextField *validCode;
     UINavigationBar *navigationBar;
 }
-@property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 
 @property (nonatomic, retain) UITextField *Username;
 @property (nonatomic, retain) UITextField *UserPwd;
@@ -49,7 +48,7 @@
 @property (nonatomic, assign) BOOL didInputUsername;
 @property (nonatomic, retain) UIActivityIndicatorView *activityView;
 
-- (IBAction) myLogin:(id)sender;
+- (void) myLogin:(id)sender;
 - (IBAction) editDoneTapBackground:(id)sender;
 - (BOOL) refreshImg;
 

@@ -35,3 +35,7 @@
 
 #define tableBgColor [[UIColor alloc] initWithRed:239/255.0 green:234/255.0 blue:222/255.0 alpha:1.0]
 #define navBarBgColor [[UIColor alloc] initWithRed:77/255.0 green:77/255.0 blue:77/255.0 alpha:1.0]
+
+
+///////////////////////////////
+#define test_username @"pkttus#42$"

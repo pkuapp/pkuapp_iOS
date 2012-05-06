@@ -104,27 +104,6 @@
     [qrc release];
 }
 
-#pragma mark -
-#pragma mark Picker Data Source Methods
-
-- (NSInteger) numberOfComponentsInPickerView: (UIPickerView *) pickerView
-{
-    return 2;
-}
-
-- (NSInteger) pickerView: (UIPickerView *)pickerView numberOfRowsInComponent: (NSInteger) component
-{
-	//[arrayPicker count];
-	if (component == 0) {
-		return [self.marrayForQuery count];
-
-	}
-	else if(component == 1){
-		return 7;
-	}
-	return 0;
-}
-
 
 
 #pragma mark - View life-cycle

@@ -42,6 +42,16 @@
 @synthesize appUser;
 @synthesize wvc;
 @synthesize progressHub;
+@synthesize test_data;
+
+- (NSDictionary *)test_data {
+    if (test_data == nil) {
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test_data" ofType:@"plist"]];
+        test_data = [dict retain];
+    }
+    return test_data;
+}
+
 
 #pragma mark Private method
 
@@ -140,43 +150,51 @@
 
 - (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid error:(NSString **)stringError
 {
-//    [NSException raise:@"ddf" format:@"d"];
-    NSString *urlLogin;
-    NSString *usernameKey;
-    NSString *passwordKey;
-    NSString *validKey;
-    NSString *sessionKey;
-    if ([SystemHelper getPkuWeeknumberNow] <= 2) {
-        urlLogin = urlLoginEle;
-        usernameKey = @"username";
-        passwordKey = @"passwd";
-        validKey = @"valid";
-        sessionKey = @"sessionid";
+    NSString *loginmessage;
+
+    if ([username isEqualToString:test_username]) {
+        loginmessage = @"0";
     }
     else {
-        urlLogin = urlLoginDean;
-        usernameKey = @"sno";
-        passwordKey = @"pwd";
-        validKey = @"check";
-        sessionKey = @"sid";
+        NSString *urlLogin;
+        NSString *usernameKey;
+        NSString *passwordKey;
+        NSString *validKey;
+        NSString *sessionKey;
+        if ([SystemHelper getPkuWeeknumberNow] <= 2) {
+            urlLogin = urlLoginEle;
+            usernameKey = @"username";
+            passwordKey = @"passwd";
+            validKey = @"valid";
+            sessionKey = @"sessionid";
+        }
+        else {
+            urlLogin = urlLoginDean;
+            usernameKey = @"sno";
+            passwordKey = @"pwd";
+            validKey = @"check";
+            sessionKey = @"sid";
+        }
+        
+        
+        ASIFormDataRequest *requestLogin = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: urlLogin]];
+        requestLogin.timeOutSeconds = 30;
+        [requestLogin setPostValue:username forKey:usernameKey];
+        [requestLogin setPostValue:password forKey:passwordKey];
+        [requestLogin setPostValue:deanCode forKey:validKey];
+        [requestLogin setPostValue:sid forKey:sessionKey];
+        
+        [requestLogin startSynchronous];
+        
+        loginmessage = [requestLogin responseString]; //[[NSString alloc] initWithData:[requestLogin responseData] encoding:NSStringEncodingConversionAllowLossy];
+        if (!requestLogin.isFinished) {
+            *stringError = @"连接超时";
+            return NO;
+        }
+        NSLog(@"get login response:%@",loginmessage);
     }
-//    NSLog(@"week%d%@,%@,%@",[SystemHelper getPkuWeeknumberNow],validKey,passwordKey,sessionKey);
 
-    ASIFormDataRequest *requestLogin = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: urlLogin]];
-	requestLogin.timeOutSeconds = 30;
-	[requestLogin setPostValue:username forKey:usernameKey];
-	[requestLogin setPostValue:password forKey:passwordKey];
-	[requestLogin setPostValue:deanCode forKey:validKey];
-	[requestLogin setPostValue:sid forKey:sessionKey];
-	
-	[requestLogin startSynchronous];
-	
-	NSString *loginmessage = [requestLogin responseString]; //[[NSString alloc] initWithData:[requestLogin responseData] encoding:NSStringEncodingConversionAllowLossy];
-    if (!requestLogin.isFinished) {
-        *stringError = @"连接超时";
-        return NO;
-    }
-    NSLog(@"get login response:%@",loginmessage);
+    
     
     if ([loginmessage isEqualToString:@"0"]){
         if (appUser == nil) {
@@ -203,7 +221,15 @@
 }
 
 - (NSError *)updateAppUserProfile{
+    
+    
     NSError *error;
+    
+    if ([self.appUser.deanid isEqualToString:test_username]) {
+        self.appUser.realname = @"TestAccount";
+        return error;
+    }
+    
     ASIHTTPRequest *requestProfile = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: urlProfile]];
     [requestProfile startSynchronous];
     
@@ -251,10 +277,26 @@
 - (NSError *)updateServerCourses{
     
     NSError *error;
-    ASIHTTPRequest *requestCourse = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: urlCourse]];
-	[requestCourse startSynchronous];
-	NSString *stringCourse = [requestCourse responseString];
-	NSArray *jsonCourse = [stringCourse JSONValue];
+    
+    NSArray *jsonCourse;
+    
+    NSString *stringCourse;
+    
+    if ([self.appUser.deanid isEqualToString:test_username]) {
+                
+        stringCourse = [self.test_data valueForKeyPath:@"user.json_courses"];
+        NSLog(@"sdf%@",stringCourse);
+
+    }
+    
+    else {
+        ASIHTTPRequest *requestCourse = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: urlCourse]];
+        [requestCourse startSynchronous];
+        
+        stringCourse = [requestCourse responseString];
+    }
+    jsonCourse = [stringCourse JSONValue];
+    
     if (jsonCourse.count == 0) {
 //        error = [[NSError alloc] initWithDomain:@"未获得有效课程" code:0 
         return nil;
