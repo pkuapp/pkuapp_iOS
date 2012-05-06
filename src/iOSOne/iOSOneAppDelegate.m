@@ -621,7 +621,8 @@
     [super dealloc];
 }
 
-#pragma mark Core Data Setup
+#pragma mark - Core Data Setup
+
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (persistentStoreCoordinator == nil) {
         NSURL *storeUrl = [NSURL fileURLWithPath:self.persistentStorePath];
