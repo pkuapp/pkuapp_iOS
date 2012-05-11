@@ -1,3 +1,3 @@
-[submodule "Resources"]
+[submodule "resources"]
 	path = resources
 	url = git@github.com:pkuapp/pkuapp_iOS_UI.git
