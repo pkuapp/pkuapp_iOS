@@ -22,13 +22,13 @@
 
 @interface CalendarContentController ()
 
-@property (nonatomic, retain) EKEventStore *eventStore;
-@property (nonatomic, retain) EKCalendar *defaultCalendar;
+//@property (nonatomic, retain) EKEventStore *eventStore;
+//@property (nonatomic, retain) EKCalendar *defaultCalendar;
 @property (nonatomic, retain) NSMutableArray *systemEventDayList;
 @property (nonatomic, retain) NSMutableArray *alldayList;
 @property (nonatomic, retain) NSMutableArray *arrayEventGroups;
 
-@property (nonatomic, retain) EKEventViewController *detailViewController;
+//@property (nonatomic, retain) EKEventViewController *detailViewController;
 @property (nonatomic, retain) NSMutableArray *systemEventWeekList;
 
 @property (nonatomic, retain) NSArray *arrayEventDict;
@@ -113,33 +113,33 @@
 @synthesize allCourses;
 #pragma mark - getter method setup
 
-- (NSMutableArray *)systemEventDayList {
-    if (nil == systemEventDayList) {
-        systemEventDayList = [[NSMutableArray alloc] initWithArray:0];
-    }
-    return systemEventDayList;
-}
-
-- (NSMutableArray *)systemEventWeekList {
-    if (nil == systemEventWeekList) {
-        systemEventWeekList = [[NSMutableArray alloc] initWithArray:0];
-    }
-    return systemEventWeekList;
-}
-
-- (NSMutableArray *)arrayEventGroups {
-    if (nil == arrayEventGroups) {
-        arrayEventGroups = [[NSMutableArray alloc] initWithArray:0];
-    }
-    return arrayEventGroups;
-}
-
-- (NSMutableArray *)alldayList {
-    if (nil == alldayList) {
-        alldayList = [[NSMutableArray alloc] initWithArray:0];
-    }
-    return alldayList;
-}
+//- (NSMutableArray *)systemEventDayList {
+//    if (nil == systemEventDayList) {
+//        systemEventDayList = [[NSMutableArray alloc] initWithArray:0];
+//    }
+//    return systemEventDayList;
+//}
+//
+//- (NSMutableArray *)systemEventWeekList {
+//    if (nil == systemEventWeekList) {
+//        systemEventWeekList = [[NSMutableArray alloc] initWithArray:0];
+//    }
+//    return systemEventWeekList;
+//}
+//
+//- (NSMutableArray *)arrayEventGroups {
+//    if (nil == arrayEventGroups) {
+//        arrayEventGroups = [[NSMutableArray alloc] initWithArray:0];
+//    }
+//    return arrayEventGroups;
+//}
+//
+//- (NSMutableArray *)alldayList {
+//    if (nil == alldayList) {
+//        alldayList = [[NSMutableArray alloc] initWithArray:0];
+//    }
+//    return alldayList;
+//}
 
 - (NSMutableArray *)arrayClassGroup {
     if (nil == arrayClassGroup) {
@@ -206,16 +206,16 @@
 - (void)didSelectEKEventForIndex:(NSInteger)index
 {
     // Upon selecting an event, create an EKEventViewController to display the event.
-	self.detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
-	detailViewController.event = [self.systemEventDayList objectAtIndex:index];
-	
-	// Allow event editing.
-	detailViewController.allowsEditing = YES;
+//	self.detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
+//	detailViewController.event = [self.systemEventDayList objectAtIndex:index];
+//	
+//	// Allow event editing.
+//	detailViewController.allowsEditing = YES;
 	
 	//	Push detailViewController onto the navigation controller stack
 	//	If the underlying event gets deleted, detailViewController will remove itself from
 	//	the stack and clear its event property.
-	[self.fatherController.navigationController pushViewController:detailViewController animated:YES];
+//	[self.fatherController.navigationController pushViewController:detailViewController animated:YES];
 }
 
 
@@ -608,20 +608,20 @@
         
         [tempEvent release];
     }
-    for (EKEvent *event in self.systemEventWeekList) {
-        
-        if (event.allDay) {
-            [self.alldayList addObject:event];
-        }
-        else {
-            
-            EventView *tempEvent = [[EventView alloc] initWithEKEvent:event ForGroudType:CalendarGroundTypeWeek inDate:nil];
-            
-            if (tempEvent) {
-                [arrayEvent addObject:tempEvent];
-            }
-        }
-    }
+//    for (EKEvent *event in self.systemEventWeekList) {
+//        
+//        if (event.allDay) {
+//            [self.alldayList addObject:event];
+//        }
+//        else {
+//            
+//            EventView *tempEvent = [[EventView alloc] initWithEKEvent:event ForGroudType:CalendarGroundTypeWeek inDate:nil];
+//            
+//            if (tempEvent) {
+//                [arrayEvent addObject:tempEvent];
+//            }
+//        }
+//    }
     
     [self prepareEventViewsForWeekDisplay:arrayEvent];
     
@@ -861,25 +861,32 @@
 
 #pragma mark -
 #pragma mark EKEvent Delegate
-@synthesize systemEventDayList,systemEventWeekList,eventStore,defaultCalendar,alldayList,detailViewController,dateBegInDayView;
-
-- (NSArray *)fetchEventsForWeek
-{
-	
-	// endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
-	NSDate *endDate = [NSDate dateWithTimeInterval:86400*7 sinceDate:self.dateBegInDayView];
-	
-	// Create the predicate. Pass it the default calendar.
-	NSArray *calendarArray = [NSArray arrayWithObject:defaultCalendar];
-	NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:self.dateBegInDayView endDate:endDate 
-                                                                    calendars:calendarArray]; 
-	
-	// Fetch all events that match the predicate.
-	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
-    
-	return events;
-    
-}
+//@synthesize systemEventDayList,systemEventWeekList,eventStore,defaultCalendar,alldayList,detailViewController,dateBegInDayView;
+//
+//- (EKCalendar *)defaultCalendar {
+//    if (!defaultCalendar) {
+//        defaultCalendar = [self.eventStore defaultCalendarForNewEvents];
+//    }
+//    return defaultCalendar;
+//}
+//
+//- (NSArray *)fetchEventsForWeek
+//{
+//	
+//	// endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
+//	NSDate *endDate = [NSDate dateWithTimeInterval:86400*7 sinceDate:self.dateBegInDayView];
+//	
+//	// Create the predicate. Pass it the default calendar.
+//	NSArray *calendarArray = [NSArray arrayWithObject:[self.eventStore calendars]];
+//	NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:self.dateBegInDayView endDate:endDate 
+//                                                                    calendars:calendarArray]; 
+//	
+//	// Fetch all events that match the predicate.
+//	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
+//    
+//	return events;
+//    
+//}
 
 
 - (NSArray *)fetchEventsForDay{
@@ -889,63 +896,75 @@
 	NSDate *endDate = [NSDate dateWithTimeInterval:86400 sinceDate:self.dateBegInDayView];
 	
 	// Create the predicate. Pass it the default calendar.
-	NSArray *calendarArray = [NSArray arrayWithObject:defaultCalendar];
-	NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:self.dateBegInDayView endDate:endDate 
-                                                                    calendars:calendarArray]; 
-	
-	// Fetch all events that match the predicate.
-	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
+
+//	NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:self.dateBegInDayView endDate:endDate 
+//                                                                    calendars:[self.eventStore calendars]];
+//	
+//	// Fetch all events that match the predicate.
+//	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
     
-	return events;
+//	return events;
+    return [NSArray array];
 }
 
 // Overriding EKEventEditViewDelegate method to update event store according to user actions.
-- (void)eventEditViewController:(EKEventEditViewController *)controller 
-          didCompleteWithAction:(EKEventEditViewAction)action {
-	
-	NSError *error = nil;
-	EKEvent *thisEvent = controller.event;
-	
-	switch (action) {
-		case EKEventEditViewActionCanceled:
-			// Edit action canceled, do nothing. 
-			break;
-			
-		case EKEventEditViewActionSaved:
-			// When user hit "Done" button, save the newly created event to the event store, 
-			// and reload table view.
-			// If the new event is being added to the default calendar, then update its 
-			// systemEventDayList.
-			if (self.defaultCalendar ==  thisEvent.calendar) {
-				[self.systemEventDayList addObject:thisEvent];
-			}
-			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
-			break;
-			
-		case EKEventEditViewActionDeleted:
-			// When deleting an event, remove the event from the event store, 
-			// and reload table view.
-			// If deleting an event from the currenly default calendar, then update its 
-			// systemEventDayList.
-			if (self.defaultCalendar ==  thisEvent.calendar) {
-				[self.systemEventDayList removeObject:thisEvent];
-			}
-			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
-			break;
-		default:
-			break;
-	}
-	// Dismiss the modal view controller
-	[controller dismissModalViewControllerAnimated:YES];
-	
-}
-
-
-// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
-- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller {
-	EKCalendar *calendarForEdit = self.defaultCalendar;
-	return calendarForEdit;
-}
+//- (void)eventEditViewController:(EKEventEditViewController *)controller 
+//          didCompleteWithAction:(EKEventEditViewAction)action {
+//	
+//	NSError *error = nil;
+//	EKEvent *thisEvent = controller.event;
+//	
+//	switch (action) {
+//		case EKEventEditViewActionCanceled:
+//			// Edit action canceled, do nothing. 
+//			break;
+//			
+//		case EKEventEditViewActionSaved:
+//			// When user hit "Done" button, save the newly created event to the event store, 
+//			// and reload table view.
+//			// If the new event is being added to the default calendar, then update its 
+//			// systemEventDayList.
+////			if (self.defaultCalendar ==  thisEvent.calendar) {
+//				[self.systemEventDayList addObject:thisEvent];
+////			}
+//			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
+//			break;
+//			
+//		case EKEventEditViewActionDeleted:
+//			// When deleting an event, remove the event from the event store, 
+//			// and reload table view.
+//			// If deleting an event from the currenly default calendar, then update its 
+//			// systemEventDayList.
+////			if (self.defaultCalendar ==  thisEvent.calendar) {
+//				[self.systemEventDayList removeObject:thisEvent];
+////			}
+//			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
+//			break;
+//		default:
+//			break;
+//	}
+//	// Dismiss the modal view controller
+//	[controller dismissModalViewControllerAnimated:YES];
+//	
+//}
+//
+//
+//// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
+//- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller {
+//	EKCalendar *calendarForEdit = self.defaultCalendar;
+//    if (!calendarForEdit) {
+//        @try {
+//            calendarForEdit = [[self.eventStore calendars] objectAtIndex:0];
+//        }
+//        @catch (NSException *exception) {
+//            return nil;
+//        }
+//        @finally {
+//            NSLog(@"use first found calendar");
+//        }
+//    }
+//	return calendarForEdit;
+//}
 
 
 #pragma mark - Action
@@ -968,13 +987,13 @@
 }
 
 - (void)addEvent:(id)sender {
-	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
-	
-	addController.eventStore = self.eventStore;
-    [self presentModalViewController:addController animated:YES];
-	
-	addController.editViewDelegate = self;
-	[addController release];
+//	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
+//	
+//	addController.eventStore = self.eventStore;
+//    [self presentModalViewController:addController animated:YES];
+//	
+//	addController.editViewDelegate = self;
+//	[addController release];
 }
 
 #pragma mark - appearance
@@ -1035,17 +1054,17 @@
     [scrollWeekView release];
     [dayView release];
 
-    [alldayList release];
-    [systemEventDayList release];
-    [systemEventWeekList release];
+//    [alldayList release];
+//    [systemEventDayList release];
+//    [systemEventWeekList release];
     [arrayEventGroups release];
     [listView release];
 
-    [eventStore release];
-    [defaultCalendar release];
-    [detailViewController release];
-    [arrayEventDict release];    
-    [dateBegInDayView release];
+//    [eventStore release];
+//    [defaultCalendar release];
+//    [detailViewController release];
+    [arrayEventDict release];
+//    [dateBegInDayView release];
     [dateInWeekView release];
     [dateInDayView release];
 
@@ -1096,9 +1115,7 @@
     [self addObserver:self forKeyPath:@"dateInDayView" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"dateInWeekView" options:NSKeyValueObservingOptionNew context:nil];
 
-    self.eventStore = [[EKEventStore alloc] init];
-
-	self.defaultCalendar = [self.eventStore defaultCalendarForNewEvents];
+//    self.eventStore = [[EKEventStore alloc] init];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"calendar-list-bg.png"]];
     self.dayView.frame = CGRectMake(0, -32, 320, 340);
@@ -1119,9 +1136,9 @@
     [self setArrayEventGroups:nil];
     [self setListView:nil];
 
-    self.eventStore = nil;
-    self.defaultCalendar = nil;
-    self.detailViewController = nil;
+//    self.eventStore = nil;
+//    self.defaultCalendar = nil;
+//    self.detailViewController = nil;
     self.arrayEventDict = nil;
     self.dateBegInDayView = nil;
     self.dateInDayView = nil;

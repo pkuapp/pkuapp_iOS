@@ -153,7 +153,10 @@
         return;
     }
     
-    indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1];
+    if (subType ==subCategoryTypeTX) {
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1];
+
+    }
     
     CourseDetailsViewController *cvc = [[CourseDetailsViewController alloc] init];
     

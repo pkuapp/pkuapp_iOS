@@ -10,12 +10,12 @@
 #import <CoreData/CoreData.h>
 #import "NoticeCenterHepler.h"
 #import "AppUserDelegateProtocol.h"
-#import <EventKit/EventKit.h>
-#import <EventKitUI/EventKitUI.h>
+//#import <EventKit/EventKit.h>
+//#import <EventKitUI/EventKitUI.h>
 #import "CalendarGroudView.h"
 
 @class CalendarController;
-@interface CalendarContentController : UIViewController<EventViewDelegate,EKEventEditViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface CalendarContentController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     NSManagedObjectContext *managedObjectContext;
     NSFetchedResultsController *eventResults;

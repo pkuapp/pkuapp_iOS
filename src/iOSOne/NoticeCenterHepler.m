@@ -7,7 +7,7 @@
 //
 
 #import "NoticeCenterHepler.h"
-#import <EventKit/EventKit.h>
+//#import <EventKit/EventKit.h>
 
 
 @implementation Notice
@@ -32,7 +32,7 @@
 @implementation NoticeCenterHepler
 @synthesize delegate;
 @synthesize arrayAssignments;
-@synthesize latestEvent,latestCourse,latestAssignment;
+@synthesize latestCourse,latestAssignment;
 @synthesize nowCourse;
 @synthesize dictLatestCourse;
 
@@ -62,9 +62,9 @@
         _notice.dictInfo = self.dictLatestCourse;
         [array addObject:_notice];
     }
-    if (self.latestEvent!= nil) {
-        [array addObject:[Notice noticeWithObject:self.latestEvent Type:PKUNoticeTypeLatestEvent]];
-    }
+//    if (self.latestEvent!= nil) {
+//        [array addObject:[Notice noticeWithObject:self.latestEvent Type:PKUNoticeTypeLatestEvent]];
+//    }
     
     for (Assignment *assign in self.arrayAssignments) {
         [array addObject:[Notice noticeWithObject:assign Type:PKUNoticeTypeAssignment]];
@@ -87,9 +87,9 @@
 
 - (NSArray *)getEventNotice {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];
-    if (self.latestEvent!= nil) {
-        [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeLatestEvent]];
-    }
+//    if (self.latestEvent!= nil) {
+//        [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeLatestEvent]];
+//    }
     return array;
 }
 
@@ -171,18 +171,25 @@
 //    NSLog(@"now %@",nowDate);
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
     
-    EKEventStore *store = [[EKEventStore alloc] init];
+//    EKEventStore *store = [[EKEventStore alloc] init];
     
-    EKCalendar *calendar = [store defaultCalendarForNewEvents];
+
+    
+
+
+
+//        
+//        NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[store calendars]];
+//        
+//        NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
+//        if ([arrayEvents count] != 0) {
+//            self.latestEvent = [arrayEvents objectAtIndex:0];
+//        }
+// NSLog(@"No Default Calendar Found");
     
     
-    NSArray *calendarArray = [NSArray arrayWithObject:calendar];
-    
-    NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:calendarArray];
-    
-    NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
     //fetch all courses event
-    [store release];
+//    [store release];
     
     [self getCourseNoticeInWeekOffset:0];
     if (!latestCourse) {
@@ -190,9 +197,7 @@
     }
     
     //setup latest event in code below
-    if ([arrayEvents count] != 0) {
-        self.latestEvent = [arrayEvents objectAtIndex:0];
-    }
+    
     
     self.arrayAssignments = [self.delegate.appUser sortedAssignmentNotDone];
 }

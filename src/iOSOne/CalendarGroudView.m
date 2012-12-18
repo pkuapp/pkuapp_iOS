@@ -11,7 +11,7 @@
 #import "CalendarGroudView.h"
 #import "QuartzCore/CALayer.h"
 #import "SystemHelper.h"
-#import <EventKit/EventKit.h>
+//#import <EventKit/EventKit.h>
 #import "SystemHelper.h"
 #import "Course.h"
 #import "ModelsAddon.h"
@@ -287,37 +287,37 @@
 
 - (id)initWithEKEvent:(EKEvent *)event ForGroudType:(CalendarGroundType)thegroundType inDate:(NSDate *)date
 {
-    NSString *name = event.title;
-    
-    NSString *location = event.location;
-    
-    if (thegroundType == CalendarGroundTypeDay) {
-    
-    float start = [self floatHourForDate:event.startDate inDate:date];
-        
-    float end = [self floatHourForDate:event.endDate inDate:date];
-    
-    NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
-        
-    NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
-        
-    return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
-        
-    }
-    else if (thegroundType == CalendarGroundTypeWeek){
-        if ([event.endDate timeIntervalSinceDate:event.startDate] < 86400) {
-            
-            float start = [self floatHourForDate:event.startDate inDate:date];
-            
-            float end = [self floatHourForDate:event.endDate inDate:date];
-
-            NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
-            
-            NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
-            
-            return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
-        }
-    }
+//    NSString *name = event.title;
+//    
+//    NSString *location = event.location;
+//    
+//    if (thegroundType == CalendarGroundTypeDay) {
+//    
+//    float start = [self floatHourForDate:event.startDate inDate:date];
+//        
+//    float end = [self floatHourForDate:event.endDate inDate:date];
+//    
+//    NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+//        
+//    NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
+//        
+//    return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
+//        
+//    }
+//    else if (thegroundType == CalendarGroundTypeWeek){
+//        if ([event.endDate timeIntervalSinceDate:event.startDate] < 86400) {
+//            
+//            float start = [self floatHourForDate:event.startDate inDate:date];
+//            
+//            float end = [self floatHourForDate:event.endDate inDate:date];
+//
+//            NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+//            
+//            NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
+//            
+//            return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
+//        }
+//    }
     return nil;
     
 }

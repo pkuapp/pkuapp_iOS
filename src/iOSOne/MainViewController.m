@@ -23,8 +23,8 @@
 #import "School.h"
 #import "UIKitAddon.h"
 #import "iOSOneAppDelegate.h"
-#import <EventKit/EventKit.h>
-#import <EventKitUI/EventKitUI.h>
+//#import <EventKit/EventKit.h>
+//#import <EventKitUI/EventKitUI.h>
 
 @interface MainViewController (Private)
 - (UILabel *)detailLabel;
@@ -170,7 +170,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
-    EKEventViewController *detailViewController;
+//    EKEventViewController *detailViewController;
     switch (notice.type) {
         case PKUNoticeTypeNowCourse:
         case PKUNoticeTypeLatestCourse:
@@ -181,16 +181,16 @@
             break;
         case PKUNoticeTypeLatestEvent:
             // Upon selecting an event, create an EKEventViewController to display the event.
-            detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
-            detailViewController.event = (EKEvent *)notice.object;
+//            detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
+//            detailViewController.event = (EKEvent *)notice.object;
             
             // Allow event editing.
-            detailViewController.allowsEditing = YES;
+//            detailViewController.allowsEditing = YES;
             
             //	Push detailViewController onto the navigation controller stack
             //	If the underlying event gets deleted, detailViewController will remove itself from
             //	the stack and clear its event property.
-            [self.navigationController pushViewController:detailViewController animated:YES];
+//            [self.navigationController pushViewController:detailViewController animated:YES];
 
             
         default:
@@ -258,13 +258,13 @@
             cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-course.png"];
             break;
 
-        case PKUNoticeTypeLatestEvent:
-            cell.typeLabel.text = @"下一";
-            cell.typeImg.image = [UIImage imageNamed:@"notification-calendar.png"];
-            cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-calendar.png"];
-            
-            cell.contentLabel.text = [(EKEvent*) notice.object title];
-            break;
+//        case PKUNoticeTypeLatestEvent:
+//            cell.typeLabel.text = @"下一";
+//            cell.typeImg.image = [UIImage imageNamed:@"notification-calendar.png"];
+//            cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-calendar.png"];
+//            
+//            cell.contentLabel.text = [(EKEvent*) notice.object title];
+//            break;
         case PKUNoticeTypeAssignment:
             [self prepareCell:cell WithAssignment:notice.object];
             break;
@@ -414,7 +414,9 @@
 
 
 - (void)testTableView:(id)sender
-{/*
+{/*    
+
+
         UITableViewController *tvc = [[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     tvc.tableView.dataSource = self;
     
@@ -463,10 +465,11 @@
     for (NSDictionary *dict in array) {
         Course *ccourse = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:context];
         for (NSString *key in [dict keyEnumerator]) {
+            NSString *localkey = [key copy];
             if ([key isEqualToString:@"cname"]) {
-                key = @"name";
+                localkey = @"name";
             }
-            NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",key];
+            NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",localkey];
             id object = [dict objectForKey:key];
             if (object != [NSNull null]) {
                 [ccourse performSelector:sel_getUid([selector UTF8String]) withObject:[dict objectForKey:key]];
@@ -481,8 +484,7 @@
     
 
     [self.navigationController pushViewController:tvc animated:YES];
-    
-*/
+  */
 }
 
 -(IBAction) navToClassroom

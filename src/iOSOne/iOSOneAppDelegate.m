@@ -32,7 +32,7 @@
 @end
 
 @implementation iOSOneAppDelegate
-
+static UIFont *font;
 
 @synthesize window = _window;
 @synthesize operationQueue;
@@ -105,7 +105,7 @@
     return progressHub;
 }
 
--(AppUser *)appUser
+- (AppUser *)appUser
 {
     if (nil == appUser) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -243,35 +243,46 @@
 }
 
 - (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dictCourse {
+    NSError *error;
+ 
+    BOOL needRawName = NO;
     for (NSString *key in [dictCourse keyEnumerator]) {
         NSString *localKey = key;
+    
         if ([key isEqualToString:@"cname"]) {
-            if ([[dictCourse objectForKey:@"cname"] isEqualToString:@""]) {
+            if ([[dictCourse objectForKey:@"cname"] isKindOfClass:[NSNull class]] || [[dictCourse objectForKey:@"cname"] isEqualToString:@""]) {
+                needRawName = YES;
                 continue;
             }
             localKey = @"name";
         }
-        if ([key isEqualToString:@"name"] || [key isEqualToString:@"ename"]) {
+        if ([key isEqualToString:@"ename"]) {
             continue;
         }
-        NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",localKey];
+        if (!needRawName && [key isEqualToString:@"name"]) {
+            continue;
+            needRawName = NO;
+        }
         id object = [dictCourse objectForKey:key];
-        if (object != [NSNull null]) {
+        if (![object isKindOfClass: [NSNull class]]) {
+
+
             @try {
-                [_course performSelector:sel_getUid([selector UTF8String]) withObject:[dictCourse objectForKey:key]];
+                [_course setPrimitiveValue:[dictCourse objectForKey:key] forKey:localKey];
+
             }
             @catch (NSException *exception) {
                 NSLog(@"Failed to update key %@",key);
             }
             @finally {
-                continue;
-                NSLog(@"%@",object);
+
             }
         }
         
     }
-    [self.managedObjectContext save:nil];
-    
+    [self.managedObjectContext save:&error];
+
+//    NSLog(@"%@", error);
 }
 
 - (NSError *)updateServerCourses{
@@ -296,7 +307,7 @@
         stringCourse = [requestCourse responseString];
     }
     jsonCourse = [stringCourse JSONValue];
-    
+
     if (jsonCourse.count == 0) {
 //        error = [[NSError alloc] initWithDomain:@"未获得有效课程" code:0 
         return nil;
@@ -522,6 +533,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
 //    NSLog(@"%@",[[NSBundle mainBundle] bundleIdentifier] );
+    font = [UIFont fontWithName:@"Avenir-Black" size:14.0];
     [self generateCoreDataBase];
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -575,8 +587,9 @@
         
 	}
     else {
-        [self showWithLoginView];
+        [self showwithMainView];
     }
+#warning showmain
     
 //    self.globalTester = [Reachability reachabilityWithHostName: @"www.apple.com"];
 //    self.globalTester.key = @"global";

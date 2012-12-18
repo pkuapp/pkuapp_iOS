@@ -136,11 +136,11 @@
     float endHour = [Course starthourForClass:vector.endclass] + 5.0 / 6.0;
     
     // NSLog(@"%d--%d:%f--%d:%f",code,startclass,startHour,endclass,endHour);
-//    NSLog(@"%@",self.name);
+
     [tempDict setObject:[NSNumber numberWithFloat:startHour] forKey:@"start"];
     [tempDict setObject:[NSNumber numberWithFloat:endHour] forKey:@"end"];
     [tempDict setObject:[NSNumber numberWithInt:day] forKey:@"day"];
-    [tempDict setObject:self.name forKey:@"name"];
+    [tempDict setObject:[NSString stringWithFormat:@"%@", self.name] forKey:@"name"];
     [tempDict setObject:self forKey:@"course"];
     
     if (self.rawplace != nil) {

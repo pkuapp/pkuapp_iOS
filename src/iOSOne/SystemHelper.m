@@ -57,9 +57,9 @@
 {
     NSUserDefaults* userPres = [NSUserDefaults standardUserDefaults];
     NSDate *DateTermBegin = [userPres objectForKey:@"DateTermBegin"];
-    if (DateTermBegin == nil) {
+//    if (DateTermBegin == nil) {
         DateTermBegin = [SystemHelper getDateBeginOnline];
-    }
+//    }
     NSDateComponents *begComponent;
     NSDateComponents *endComponent;
     
@@ -76,7 +76,7 @@
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd/hh:mm"];
-    NSString *dateString = @"2012/2/13/00:00";
+    NSString *dateString = @"2012/9/10/00:00";
     NSDate *DateTermBegin = [dateFormatter dateFromString:dateString];
     NSUserDefaults* userPres = [NSUserDefaults standardUserDefaults];
     [userPres setObject:DateTermBegin forKey:@"DateTermBegin"];
