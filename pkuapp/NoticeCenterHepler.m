@@ -13,7 +13,7 @@
 @implementation Notice
 @synthesize object,type,dictInfo;
 + (Notice *)noticeWithObject:(id) object Type:(PKUNoticeType)atype{
-    Notice *notice = [[[self alloc] init] autorelease];
+    Notice *notice = [[self alloc] init];
     notice.object = object;
     notice.type = atype;
     return notice;
@@ -23,10 +23,6 @@
     return [self.object description];
 }
 
-- (void)dealloc {
-    [dictInfo release];
-    [super dealloc];
-}
 @end
 
 @implementation NoticeCenterHepler
@@ -125,7 +121,6 @@
     NSInteger dayMinuteNow = hour*60 +minute;
     NSInteger minMinuteInterVal = 10080;
     
-    [nsCalendar release];
     
     for (NSDictionary *dict in arrayCourseDicts) {
         
@@ -206,10 +201,5 @@
 
 }
 
-- (void)dealloc {
-    [dictLatestCourse release];
-    [super dealloc];
-
-}
 
 @end

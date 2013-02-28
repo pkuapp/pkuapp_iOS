@@ -10,8 +10,8 @@
 
 @interface NotificationCell : UITableViewCell
 
-@property (retain, nonatomic) IBOutlet UILabel *typeLabel;
-@property (retain, nonatomic) IBOutlet UIImageView *typeImg;
-@property (retain, nonatomic) IBOutlet UILabel *contentLabel;
-@property (retain, nonatomic) IBOutlet UIView *detailView;
+@property (strong, nonatomic) IBOutlet UILabel *typeLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *typeImg;
+@property (strong, nonatomic) IBOutlet UILabel *contentLabel;
+@property (strong, nonatomic) IBOutlet UIView *detailView;
 @end

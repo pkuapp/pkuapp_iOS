@@ -7,7 +7,7 @@
 //
 
 #import "SystemHelper.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 
 @implementation SystemHelper
 
@@ -63,7 +63,7 @@
     NSDateComponents *begComponent;
     NSDateComponents *endComponent;
     
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     unsigned unitFlags = NSWeekCalendarUnit;
     begComponent = [calendar components:unitFlags fromDate:DateTermBegin];
     endComponent = [calendar components:unitFlags fromDate:date];
@@ -87,7 +87,7 @@
 + (float)getHourFloatNow
 {
     NSDate *datenow = [NSDate date];
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *component;
     unsigned unitFlags =  NSHourCalendarUnit |NSMinuteCalendarUnit;
     component = [calendar components:unitFlags fromDate:datenow];
@@ -102,8 +102,8 @@
 
 + (NSInteger)getDayForDate:(NSDate *)date
 {
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDateComponents *component = [[[NSDateComponents alloc] init] autorelease];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *component = [[NSDateComponents alloc] init];
     unsigned unitFlags =  NSWeekdayCalendarUnit;
     component = [calendar components:unitFlags fromDate:date];
     int day = [component weekday];
@@ -116,7 +116,7 @@
 + (NSDate *)dateBeginForDate:(NSDate *)date
 {
    
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *component;
     unsigned unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
     component = [calendar components:unitFlags fromDate:date];
@@ -137,7 +137,7 @@
 + (NSString *) Utf8stringFromGB18030:(NSString *)string
 {
 	NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *result = [[[NSString alloc] initWithData:[string dataUsingEncoding:-2147481083] encoding:enc] autorelease];
+    NSString *result = [[NSString alloc] initWithData:[string dataUsingEncoding:-2147481083] encoding:enc];
     return result;
 }
 @end

@@ -11,6 +11,6 @@
 
 @interface LocalCoursesViewController : UITableViewController
 
-@property (nonatomic, retain)NSObject<AppUserDelegateProtocol> *delegate;
+@property (nonatomic, strong)NSObject<AppUserDelegateProtocol> *delegate;
 
 @end

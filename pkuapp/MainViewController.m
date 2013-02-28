@@ -8,12 +8,12 @@
 
 #import "MainViewController.h"
 #import "SBJson.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 #import "Environment.h"
 #import "Course.h"
 #import "ClassroomQueryController.h"
 #import "GateViewController.h"
-#import "iOSOneAppDelegate.h"
+#import "AppDelegate.h"
 #import "CalendarController.h"
 #import "IPGateHelper.h"
 #import "CoursesCategoryController.h"
@@ -22,7 +22,6 @@
 #import "MyCoursesViewController.h"
 #import "School.h"
 #import "UIKitAddon.h"
-#import "iOSOneAppDelegate.h"
 //#import <EventKit/EventKit.h>
 //#import <EventKitUI/EventKitUI.h>
 
@@ -59,14 +58,14 @@
     [self.context deleteObject:assignment];
     [self.context save:nil];
     self.arrayNotices = nil;
-    self.noticeCenterHelper = [[[NoticeCenterHepler alloc] init] autorelease];
+    self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
     [self.tableView reloadData];
 }
 
 #pragma mark - accessor setup
 - (NSArray *)arrayCourses{
     if (arrayCourses == nil) {
-        arrayCourses = [[NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]] retain];
+        arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
     }
     return arrayCourses;
 }
@@ -89,7 +88,7 @@
 
 - (NSArray *)arrayNotices{
     if (arrayNotices == nil) {
-        arrayNotices = [self.noticeCenterHelper.getAllNotice retain]; 
+        arrayNotices = self.noticeCenterHelper.getAllNotice; 
     }
 //    NSLog(@"notices %@",self.noticeCenterHelper.getAllNotice);
     return arrayNotices;
@@ -105,28 +104,28 @@
 }
 
 #pragma mark - TTLauncherView Delegate
-
-- (void)didSelectDoneBtn {
-    [self.navigationItem setRightBarButtonItem:nil animated:YES];
-    [self.launcherView endEditing];
-}
-
-- (void)launcherViewDidEndEditing:(TTLauncherView *)launcher {
-    [self.launcherView persistLauncherItems];
-}
-- (void)launcherViewDidBeginEditing:(TTLauncherView *)launcher {
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)] animated:YES];
-}
-
-- (void)launcherView:(TTLauncherView*)launcher didSelectItem:(TTLauncherItem*)item {
-    if ([item.URL isEqualToString:@"main/its"]) {
-        [self navToGateView];
-    }
-    else if ([item.URL isEqualToString:@"main/rooms"]) [self navToClassroom];
-    else if ([item.URL isEqualToString:@"main/calendar"]) [self navToCanlendar];
-    else if ([item.URL isEqualToString:@"main/courses"]) [self navToCoursesView];
-    else if ([item.URL isEqualToString:@"main/feedback"]) [self testTableView:nil];
-}
+//
+//- (void)didSelectDoneBtn {
+//    [self.navigationItem setRightBarButtonItem:nil animated:YES];
+//    [self.launcherView endEditing];
+//}
+//
+//- (void)launcherViewDidEndEditing:(TTLauncherView *)launcher {
+//    [self.launcherView persistLauncherItems];
+//}
+//- (void)launcherViewDidBeginEditing:(TTLauncherView *)launcher {
+//    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)] animated:YES];
+//}
+//
+//- (void)launcherView:(TTLauncherView*)launcher didSelectItem:(TTLauncherItem*)item {
+//    if ([item.URL isEqualToString:@"main/its"]) {
+//        [self navToGateView];
+//    }
+//    else if ([item.URL isEqualToString:@"main/rooms"]) [self navToClassroom];
+//    else if ([item.URL isEqualToString:@"main/calendar"]) [self navToCanlendar];
+//    else if ([item.URL isEqualToString:@"main/courses"]) [self navToCoursesView];
+//    else if ([item.URL isEqualToString:@"main/feedback"]) [self testTableView:nil];
+//}
 
 #pragma mark - //define for TTStyledTextLabel
 
@@ -211,7 +210,7 @@
             break;
     }
     cell.opaque = NO;
-    cell.layer.opaque = NO;
+//    cell.layer.opaque = NO;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -230,7 +229,8 @@
     Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
     Course *_course;
     //remove all subviews of details view for Notification cell to avoid reuse issue
-    [cell.detailView removeAllSubviews];
+#warning should remove subviews
+//    [cell.detailView removeAllSubviews];
     switch (notice.type) {
         case  PKUNoticeTypeLatestCourse:
             _course = (Course *)notice.object;
@@ -291,8 +291,8 @@
 - (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course inDay:(NSInteger)day{
 
     cell.contentLabel.text = course.name;
-    [cell.detailView removeAllSubviews];
-    if (![course.rawplace isWhitespaceAndNewlines]) {
+//    [cell.detailView removeAllSubviews];
+    if (![course.rawplace isEqualToString:@""]) {
         
         UIImageView *_locationImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location.png"] highlightedImage:[UIImage imageNamed:@"location-selected.png"]];
         _locationImg.frame = CGRectMake(0, 0, 11, 11);
@@ -334,7 +334,7 @@
     label.font = [UIFont systemFontOfSize:11];
     label.highlightedTextColor = [UIColor whiteColor];
     label.backgroundColor = [UIColor clearColor];
-    return [label autorelease];    
+    return label;    
 }
 #pragma mark - IBAcion Setup
 
@@ -357,7 +357,6 @@
     
     [self.navigationController pushViewController:cdvc animated:YES];
     
-    [cdvc release];
 }
 
 
@@ -406,10 +405,6 @@
     tbc.navigationItem.titleView = mcvc.segmentedControl;
     [self.navigationController pushViewController:tbc animated:YES];
     
-    [tbc release];
-    [ccc release];
-    [csvc release];
-    [mcvc release];
 }
 
 
@@ -493,7 +488,6 @@
 	[self.navigationController pushViewController:cqc animated:YES ];
 	[self.navigationController setNavigationBarHidden:NO];
 
-    [cqc release];
 	
 }
 
@@ -508,7 +502,6 @@
         //ivc.delegate = self.delegate;
          self.gvc = ivc;
         
-        [ivc release];
     }
 	[self.navigationController pushViewController:self.gvc animated:YES]; 
    
@@ -523,7 +516,6 @@
     [cvc.noticeCenter loadData];
     [self.navigationController pushViewController:cvc animated:YES];
     
-    [cvc release];
 }
 
 #pragma mark - ActionSheetDelegate Setup
@@ -531,7 +523,6 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [actionSheet release];
     
 	if (0 == buttonIndex) {
         [self.delegate logout];
@@ -572,8 +563,6 @@
 	if (![self.results performFetch:&error])
         NSLog(@"FetchError: %@", [error localizedDescription]);
     
-	[fetchRequest release];
-	[sortDescriptor release];
 //    NSLog(@"%d",[self.results.fetchedObjects count] );
 }
 
@@ -665,22 +654,22 @@
     [super loadView];
 //    [[UITableView appearance] setBackgroundColor:tableBgColor];
 
-    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 206)];
-    self.launcherView.backgroundColor = UIColorFromRGB(0xefeade);
-    self.launcherView.persistenceMode = TTLauncherPersistenceModeAll;
-    self.launcherView.delegate = self;
-    if ([self.launcherView restoreLauncherItems])
-        NSLog(@"did restore launcher");
-    else {
-        self.launcherView.columnCount = 3;
-        self.launcherView.pages = [NSArray arrayWithObjects:
-                                   [NSArray arrayWithObjects:
-                                    [[TTLauncherItem alloc] initWithTitle:@"网关" image:@"bundle://its.png" URL:@"main/its"],
-                                    [[TTLauncherItem alloc] initWithTitle:@"空闲教室" image:@"bundle://rooms.png" URL:@"main/rooms"],
-                                    [[TTLauncherItem alloc] initWithTitle:@"日程" image:@"bundle://calendar.png" URL:@"main/calendar"],[[TTLauncherItem alloc] initWithTitle:@"课程" image:@"bundle://courses.png" URL:@"main/courses"], nil]
-                                   , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
-    }
-    
+//    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 206)];
+//    self.launcherView.backgroundColor = UIColorFromRGB(0xefeade);
+//    self.launcherView.persistenceMode = TTLauncherPersistenceModeAll;
+//    self.launcherView.delegate = self;
+//    if ([self.launcherView restoreLauncherItems])
+//        NSLog(@"did restore launcher");
+//    else {
+//        self.launcherView.columnCount = 3;
+//        self.launcherView.pages = [NSArray arrayWithObjects:
+//                                   [NSArray arrayWithObjects:
+//                                    [[TTLauncherItem alloc] initWithTitle:@"网关" image:@"bundle://its.png" URL:@"main/its"],
+//                                    [[TTLauncherItem alloc] initWithTitle:@"空闲教室" image:@"bundle://rooms.png" URL:@"main/rooms"],
+//                                    [[TTLauncherItem alloc] initWithTitle:@"日程" image:@"bundle://calendar.png" URL:@"main/calendar"],[[TTLauncherItem alloc] initWithTitle:@"课程" image:@"bundle://courses.png" URL:@"main/courses"], nil]
+//                                   , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
+//    }
+//    
     [self.view insertSubview:self.launcherView belowSubview:self.tableView];
 //       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
@@ -751,17 +740,6 @@
 }
 
 
-- (void)dealloc {
-    [buttonIPGate release];
-    [ButtonQuery release];
-    [_tableView release];
-    [scrollView release];
-    [btnCourses release];
-    [noticeCenterHelper release];
-    [launcherView release];
-    [noticeLabel release];
-    [super dealloc];
-}
 
 
 @end

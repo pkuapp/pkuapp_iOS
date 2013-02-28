@@ -68,9 +68,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [tableView release];
-    [datePicker release];
-    [super dealloc];
-}
 @end

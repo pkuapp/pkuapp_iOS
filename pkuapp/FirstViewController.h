@@ -34,19 +34,19 @@
     UINavigationBar *navigationBar;
 }
 
-@property (nonatomic, retain) UITextField *Username;
-@property (nonatomic, retain) UITextField *UserPwd;
-@property (nonatomic, retain) UITextField *validCode;
-@property (nonatomic, retain) UIButton *firstImg;
-@property (nonatomic, retain) NSString *sessionid;
-@property (nonatomic, readonly) NSManagedObjectContext* context;
-@property (nonatomic, retain) ASIHTTPRequest *requestImg;
-@property (nonatomic, retain) MBProgressHUD *HUD;
-@property (nonatomic, readonly) iOSOneAppDelegate *delegate;
-@property (nonatomic, retain,readonly) AppUser *appUser;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UITextField *Username;
+@property (nonatomic, strong) UITextField *UserPwd;
+@property (nonatomic, strong) UITextField *validCode;
+@property (nonatomic, strong) UIButton *firstImg;
+@property (nonatomic, strong) NSString *sessionid;
+@property (weak, nonatomic, readonly) NSManagedObjectContext* context;
+@property (nonatomic, strong) ASIHTTPRequest *requestImg;
+@property (nonatomic, strong) MBProgressHUD *HUD;
+@property (weak, nonatomic, readonly) iOSOneAppDelegate *delegate;
+@property (nonatomic, strong,readonly) AppUser *appUser;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, assign) BOOL didInputUsername;
-@property (nonatomic, retain) UIActivityIndicatorView *activityView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
 - (void) myLogin:(id)sender;
 - (IBAction) editDoneTapBackground:(id)sender;

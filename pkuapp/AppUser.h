@@ -14,12 +14,12 @@
 @interface AppUser : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * deanid;
-@property (nonatomic, retain) NSString * realname;
-@property (nonatomic, retain) NSString * password;
-@property (nonatomic, retain) NSSet *assignset;
-@property (nonatomic, retain) NSSet *courses;
-@property (nonatomic, retain) NSSet *localcourses;
+@property (nonatomic, strong) NSString * deanid;
+@property (nonatomic, strong) NSString * realname;
+@property (nonatomic, strong) NSString * password;
+@property (nonatomic, strong) NSSet *assignset;
+@property (nonatomic, strong) NSSet *courses;
+@property (nonatomic, strong) NSSet *localcourses;
 @end
 
 @interface AppUser (CoreDataGeneratedAccessors)

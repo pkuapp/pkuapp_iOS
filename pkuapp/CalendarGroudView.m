@@ -265,7 +265,7 @@
     
     if (thegroundType == CalendarGroundTypeWeek) {
         CGRect  frame = CGRectMake(wHourTag + (day-1)*widthColumn ,heightOffset + start * hHour, widthColumn,hHour * (end - start));
-        [self initWithFrame:frame];
+        if (!(self = [self initWithFrame:frame])) return nil;
 
     }
     self = [super init];
@@ -347,7 +347,6 @@
            // bgView.image =  ];
            [self addSubview:bgView];
            
-           [bgView release];
            
            UIButton *buttonDiz = [UIButton buttonWithType:UIButtonTypeCustom];
            UIButton *buttonAssign = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -409,7 +408,6 @@
            titleLabel.shadowOffset = CGSizeMake(0, -1);
            [self addSubview:titleLabel];
            
-           [titleLabel release];
            
            UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 26, self.bounds.size.width - 10, 16)];
            locationLabel.userInteractionEnabled = YES;
@@ -422,7 +420,6 @@
            //locationLabel.shadowColor = colorEventTitleShadow;
            //locationLabel.shadowOffset = CGSizeMake(0, -1);
            [self addSubview:locationLabel];
-           [locationLabel release];
            
     }
     else {
@@ -459,7 +456,7 @@
     {
         return 24.0;
     }
-    NSCalendar *calender = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *component;
     unsigned unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
     component = [calender components:unitFlags fromDate:date];

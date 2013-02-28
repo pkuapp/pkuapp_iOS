@@ -30,11 +30,4 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-    [typeLabel release];
-    [typeImg release];
-    [contentLabel release];
-    [detailView release];
-    [super dealloc];
-}
 @end

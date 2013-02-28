@@ -13,10 +13,10 @@
 
 @interface Assignment : NSManagedObject
 
-@property (nonatomic, retain) NSString * content;
-@property (nonatomic, retain) NSDate * endDate;
-@property (nonatomic, retain) NSNumber * isDone;
-@property (nonatomic, retain) AppUser *Person;
-@property (nonatomic, retain) Course *course;
+@property (nonatomic, strong) NSString * content;
+@property (nonatomic, strong) NSDate * endDate;
+@property (nonatomic, strong) NSNumber * isDone;
+@property (nonatomic, strong) AppUser *Person;
+@property (nonatomic, strong) Course *course;
 
 @end

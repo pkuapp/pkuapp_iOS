@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 //#import "AsyncUdpSocket.h"
 
 #define Max_Listen_Rounds 4
@@ -74,21 +74,21 @@ typedef enum IPGateResult{
 
 @interface IPGateHelper : NSObject<ASIHTTPRequestDelegate> {
 @private
-    NSObject <IPGateConnectDelegate> *delegate;
+    NSObject <IPGateConnectDelegate> *__weak delegate;
     NSString *stirngRange;
     BOOL isConnected;
     
 }
-@property (assign) NSString *stringRange;
-@property (assign) id<IPGateConnectDelegate> delegate;
-@property (retain, nonatomic)ASIHTTPRequest* request;
+@property (weak) NSString *stringRange;
+@property (weak) id<IPGateConnectDelegate> delegate;
+@property (strong, nonatomic)ASIHTTPRequest* request;
 @property BOOL isConnected;
 @property NSInteger numberListenRetry;
 @property (assign, atomic) IPGateConnectError error;
 @property (assign, atomic) IPGateConnectingStatus connectingStatus;
 @property (assign, atomic) IPGateResult connectionResult;
-@property (retain, atomic) NSDictionary *dictResult;
-@property (retain, atomic) NSDictionary *dictDetail;
+@property (strong, atomic) NSDictionary *dictResult;
+@property (strong, atomic) NSDictionary *dictDetail;
 
 
 - (void)connectFree;

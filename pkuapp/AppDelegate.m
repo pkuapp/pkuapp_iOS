@@ -9,11 +9,11 @@
 
 #import "Environment.h"
 #import <CoreData/CoreData.h>
-#import "iOSOneAppDelegate.h"
+#import "AppDelegate.h"
 #import "Environment.h"
 #import "MainViewController.h"
 #import "FirstViewController.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "AppUser.h"
 #import "SBJson.h"
@@ -47,7 +47,7 @@ static UIFont *font;
 - (NSDictionary *)test_data {
     if (test_data == nil) {
         NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test_data" ofType:@"plist"]];
-        test_data = [dict retain];
+        test_data = dict;
     }
     return test_data;
 }
@@ -121,9 +121,8 @@ static UIFont *font;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deanid == %@",username];
         fetchRequest.predicate = predicate;
         
-        appUser = [(AppUser *) [[self.managedObjectContext executeFetchRequest:fetchRequest error:NULL] lastObject] retain];
+        appUser = (AppUser *) [[self.managedObjectContext executeFetchRequest:fetchRequest error:NULL] lastObject];
         
-        [fetchRequest release];
 
 //        NSLog(@"get appUser%@",appUser);
 
@@ -212,10 +211,10 @@ static UIFont *font;
         }
         else {
             NSString *des = [error description];
-            stringError = &des;
+//            stringError = des;
         }
     }
-    NSString *stringResult = [[self parsedLoginError:loginmessage] retain];
+    NSString *stringResult = [self parsedLoginError:loginmessage];
     *stringError = stringResult;
     return NO;
 }
@@ -389,7 +388,6 @@ static UIFont *font;
         WelcomeViewController *wv = [[WelcomeViewController alloc] initWithNibName:nil bundle:nil];
         wvc = [[UINavigationController alloc] initWithRootViewController:wv];
 //        [wvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"]];
-        [wv release];
     
     }
     return wvc;
@@ -491,12 +489,12 @@ static UIFont *font;
     
     NSArray *array = [responseString JSONValue];
     for (NSDictionary *dict in array) {
-        if ([[dict objectForKey:@"name"] isEmptyOrWhitespace]) {
+        if ([[dict objectForKey:@"name"] isEmpty] || [dict[@"name"] isEqualToString:@""]) {
             continue;
         }
         
         Course *ccourse = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:context];
-        for (NSString *key in [dict keyEnumerator]) {
+        for (__strong NSString *key in [dict keyEnumerator]) {
             id object = [dict objectForKey:key];
             if ([key isEqualToString:@"cname"]) {
                 key = @"name";
@@ -600,11 +598,11 @@ static UIFont *font;
 //    [self.freeTester startNotifier];
     
     self.internetTester = [Reachability reachabilityForInternetConnection];
-    self.internetTester.key = @"internet";
+//    self.internetTester.key = @"internet";
 	[self.internetTester startNotifier];
     
     self.wifiTester = [Reachability reachabilityForLocalWiFi];
-    self.wifiTester.key = @"wifi";
+//    self.wifiTester.key = @"wifi";
 	[self.wifiTester startNotifier];
 //    
 //    self.localTester = [Reachability reachabilityWithHostName:@"its.pku.edu.cn"];
@@ -666,15 +664,6 @@ static UIFont *font;
     
 }
 
-- (void)dealloc
-{
-    [operationQueue release];
-    [persistentStorePath release];
-    [persistentStoreCoordinator release];
-    [managedObjectContext release];
-    [_window release];
-    [super dealloc];
-}
 
 #pragma mark - Core Data Setup
 
@@ -703,7 +692,7 @@ static UIFont *font;
 
 - (NSString *)persistentStorePath {
     if (persistentStorePath == nil) {
-        persistentStorePath = [pathSQLCore retain];
+        persistentStorePath = pathSQLCore;
     }
     return persistentStorePath;
 }

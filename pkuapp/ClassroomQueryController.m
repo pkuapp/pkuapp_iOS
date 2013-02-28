@@ -40,7 +40,6 @@
 	qrc.numday = [self.valueTargetDay intValue] ;
 
 	[self.navigationController pushViewController:qrc animated:YES];
-    [qrc release];
     
 }
 
@@ -101,7 +100,6 @@
 	qrc.numday = [self.valueTargetDay intValue] ;
     qrc.nameLocation = self.nameTargetName;
 	[self.navigationController pushViewController:qrc animated:YES];
-    [qrc release];
 }
 
 
@@ -139,7 +137,6 @@
         [dictQuery setObject:[NSNumber numberWithInt:0] forKey:@"Freq"];
 
 		[tempmarray addObject: dictQuery];
-		[dictQuery release];
 	}
 	
 	[SystemHelper getDateBeginOnline];
@@ -176,7 +173,6 @@
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:tempdict];
         [self.marrayForQuery addObject:dict];
     }
-    [array release];
     [self.tableView reloadData];
 //    NSLog(@"%@",self.marrayForQuery);
 }
@@ -223,10 +219,6 @@
 - (void)dealloc {
 
     [self saveQueryArray];
-    [marrayForQuery release];
-    [valueTargetBuilding release];
-    [valueTargetDay release];
-    [super dealloc];
 }
 
 

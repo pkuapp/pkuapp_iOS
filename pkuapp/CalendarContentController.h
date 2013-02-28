@@ -20,11 +20,11 @@
     NSManagedObjectContext *managedObjectContext;
     NSFetchedResultsController *eventResults;
 }
-@property (atomic, assign) NoticeCenterHepler *noticeCenter;
-@property (nonatomic, assign) id<AppUserDelegateProtocol> delegate;
-@property (nonatomic, assign) CalendarController* fatherController;
-@property (nonatomic, retain)NSDate *dateInDayView;
-@property (nonatomic, retain)NSDate *dateInWeekView;
+@property (atomic, weak) NoticeCenterHepler *noticeCenter;
+@property (nonatomic, weak) id<AppUserDelegateProtocol> delegate;
+@property (nonatomic, weak) CalendarController* fatherController;
+@property (nonatomic, strong)NSDate *dateInDayView;
+@property (nonatomic, strong)NSDate *dateInWeekView;
 - (void)toDayView;
 - (void)toWeekView;
 - (void)toListView;

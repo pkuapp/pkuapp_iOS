@@ -7,7 +7,7 @@
 //
 
 #import "CoursesCategoryController.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 #import "Environment.h"
 #import "SBJson.h"
 #import <CoreData/CoreData.h>
@@ -62,7 +62,7 @@
 - (NSArray *)arrayCategories
 {
     if (arrayCategories == nil) {
-        arrayCategories = [[NSArray arrayWithObjects:@"通选课",@"双学位",@"辅修",@"全校任选",@"全校必修", nil] retain];
+        arrayCategories = [NSArray arrayWithObjects:@"通选课",@"双学位",@"辅修",@"全校任选",@"全校必修", nil];
     }
     return arrayCategories;
 }
@@ -304,9 +304,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [_tableView release];
-    [categorySegmented release];
-    [super dealloc];
-}
 @end

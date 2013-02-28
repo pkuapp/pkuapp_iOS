@@ -13,11 +13,11 @@
 
 }
 
-@property (retain, nonatomic) NSMutableArray *marrayForQuery;
-@property (retain, nonatomic) NSString *valueTargetBuilding;
-@property (retain, nonatomic) NSString *valueTargetDay;
+@property (strong, nonatomic) NSMutableArray *marrayForQuery;
+@property (strong, nonatomic) NSString *valueTargetBuilding;
+@property (strong, nonatomic) NSString *valueTargetDay;
 @property (nonatomic) NSInteger valueWeeknumber;
-@property (nonatomic, retain) NSString *nameTargetName;
+@property (nonatomic, strong) NSString *nameTargetName;
 
 - (void) initLocation;
 - (void) sortLocation;

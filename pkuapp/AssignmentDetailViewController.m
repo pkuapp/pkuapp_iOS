@@ -76,7 +76,6 @@
                     contentView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 250, 200)];
                     contentView.text = self.coord_assign.content;
                     [cell.contentView addSubview:contentView];
-                    [contentView release];
                     cell.frame = CGRectMake(0, 0, cell.frame.size.width, 200);
                     break;
                 case 1:
@@ -127,8 +126,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [tableView release];
-    [super dealloc];
-}
 @end

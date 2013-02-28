@@ -6,8 +6,8 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 
 #import "GateViewController.h"
-#import "iOSOneAppDelegate.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "AppDelegate.h"
+#import "ASIHTTPRequest.h"
 #import "SystemHelper.h"
 #import "RegexKitLite.h"
 #import "IPGateHelper.h"
@@ -172,7 +172,7 @@
     
     self.progressHub.labelText = @"已断开全部连接";
     
-    self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]] autorelease];
+    self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]];
     
     self.progressHub.mode = MBProgressHUDModeCustomView;
         
@@ -209,7 +209,7 @@
     
     self.progressHub.labelText = @"已连接到免费地址";
     
-    self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]] autorelease];
+    self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]];
     
     self.progressHub.mode = MBProgressHUDModeCustomView;
 
@@ -243,7 +243,7 @@
         self.progressHub.labelText = [self.connector.dictResult objectForKey:@"REASON"];
 //        self.progressHub.mode = MBProgressHUDModeIndeterminate;
 //        [self.progressHub show:YES];
-        self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]] autorelease];
+        self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
         self.progressHub.mode = MBProgressHUDModeCustomView;
 
         [self.progressHub hide:YES afterDelay:0.5];
@@ -283,7 +283,7 @@
 
         self.progressHub.labelText = @"已连接到收费地址";
     
-        self.progressHub.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]] autorelease];
+        self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-yes.png"]];
     
         self.progressHub.mode = MBProgressHUDModeCustomView;
     
@@ -486,7 +486,7 @@
     cell = [tableView dequeueReusableCellWithIdentifier:cellString];  
     if (cell == nil)  
     {  
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellString] autorelease]; 
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellString]; 
     }  
     NSInteger imageTag = 0;
 
@@ -551,7 +551,7 @@
             break;
         case 4:
             if (indexPath.row == 0) {
-                self.swAutoDisconnect = [[[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+                self.swAutoDisconnect = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
                 if ([[self.gateStateDictionary objectForKey:_keyAutoDisconnect] boolValue] == YES) {
                     [self.swAutoDisconnect setOn:YES];
                 }
@@ -562,7 +562,7 @@
                 cell.textLabel.text = @"自动断开别处连接";
             }
             else if (indexPath.row == 1){
-                self.swAlwaysGlobal = [[[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+                self.swAlwaysGlobal = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
                 if ([[self.gateStateDictionary objectForKey:_keyAlwaysGlobal] boolValue] == YES) {
                     [self.swAlwaysGlobal setOn:YES];
                 }
@@ -594,15 +594,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [Username release];
-    [Password release];
-    [swAutoDisconnect release];
-    [swAlwaysGlobal release];
-    [gateStateDictionary release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {

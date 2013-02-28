@@ -13,9 +13,7 @@
 @synthesize filePath;
 
 - (void)setFilePath:(NSString *)afilePath {
-    [filePath release];
     filePath = afilePath;
-    [afilePath retain];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:afilePath]]];
 }
 
@@ -61,8 +59,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [webView release];
-    [super dealloc];
-}
 @end

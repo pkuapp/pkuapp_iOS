@@ -14,8 +14,8 @@
 @interface School : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * code;
-@property (nonatomic, retain) Course *courses;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSString * code;
+@property (nonatomic, strong) Course *courses;
 
 @end

@@ -16,11 +16,11 @@
 
 @interface CourseDetailsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AssignmentEditDelegate>
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
-@property (retain, nonatomic) Course *course;
-@property (retain, nonatomic) NSMutableArray *arrayAssignments;
-@property (retain, nonatomic, readonly) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
-@property (assign, nonatomic) Assignment *coord_assign;
-@property (retain, nonatomic) NSArray *arrayCourses;
+@property (strong, nonatomic) Course *course;
+@property (strong, nonatomic) NSMutableArray *arrayAssignments;
+@property (strong, nonatomic, readonly) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+@property (weak, nonatomic) Assignment *coord_assign;
+@property (strong, nonatomic) NSArray *arrayCourses;
 @end

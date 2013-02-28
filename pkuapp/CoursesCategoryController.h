@@ -28,17 +28,17 @@ typedef enum {
     UITableViewController *subCategoryTVC;
 
 }
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 
-@property (nonatomic, retain) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
-@property (nonatomic, retain, readonly) NSArray *arrayCategories;
-@property (nonatomic, retain) NITableViewModel* subDataSource;
-@property (retain, nonatomic) NSFetchedResultsController *fetchResultController;
-@property (retain, nonatomic) NSFetchRequest *request;
-@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, retain) IBOutlet UISearchDisplayController *searchDC;
-@property (nonatomic, retain) IBOutlet SearchDataSource *searchDS;
-@property (nonatomic, retain) NSManagedObjectContext *context;
-@property (nonatomic, retain) UISegmentedControl* txCategorySegmentedControl;
+@property (nonatomic, strong) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
+@property (nonatomic, strong, readonly) NSArray *arrayCategories;
+@property (nonatomic, strong) NITableViewModel* subDataSource;
+@property (strong, nonatomic) NSFetchedResultsController *fetchResultController;
+@property (strong, nonatomic) NSFetchRequest *request;
+@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) IBOutlet UISearchDisplayController *searchDC;
+@property (nonatomic, strong) IBOutlet SearchDataSource *searchDS;
+@property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, strong) UISegmentedControl* txCategorySegmentedControl;
 
 @end

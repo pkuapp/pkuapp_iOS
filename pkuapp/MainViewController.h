@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "Three20/Three20.h"
+
 #import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "NoticeCenterHepler.h"
@@ -27,7 +27,7 @@
 @class GateViewController;
 @class IPGateHelper;
 
-@interface MainViewController : UIViewController <IPGateListenDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,TTLauncherViewDelegate,AssignmentEditDelegate>{
+@interface MainViewController : UIViewController <IPGateListenDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,AssignmentEditDelegate>{
     iOSOneAppDelegate *delegate;
     NSManagedObjectContext *context;
     IPGateHelper *connector;
@@ -36,21 +36,21 @@
     UIButton *btnCourses;
     NSArray *arrayNotices;
 }
-@property (retain, nonatomic) IBOutlet TTLauncherView *launcherView;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
-@property (retain, nonatomic) IBOutlet UIButton *ButtonQuery;
-@property (retain, nonatomic) IBOutlet UIButton *buttonIPGate;
-@property (nonatomic, retain) IBOutlet UIButton *btnCourses;
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain, readonly) NSManagedObjectContext *context;
-@property (nonatomic, retain) NSFetchedResultsController *results;
-@property (nonatomic, readonly) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol> *delegate;
-@property (retain, nonatomic) GateViewController *gvc;
-@property (assign) IPGateHelper *connector;
-@property (retain, nonatomic) NoticeCenterHepler *noticeCenterHelper;
-@property (retain, nonatomic) NSArray *arrayNotices;
-@property (retain, nonatomic) IBOutlet UILabel *noticeLabel;
-@property (retain, nonatomic) NSArray *arrayCourses;
+@property (strong, nonatomic) IBOutlet UIView *launcherView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIButton *ButtonQuery;
+@property (strong, nonatomic) IBOutlet UIButton *buttonIPGate;
+@property (nonatomic, strong) IBOutlet UIButton *btnCourses;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *context;
+@property (nonatomic, strong) NSFetchedResultsController *results;
+@property (weak, nonatomic, readonly) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol> *delegate;
+@property (strong, nonatomic) GateViewController *gvc;
+@property (strong, nonatomic) IPGateHelper *connector;
+@property (strong, nonatomic) NoticeCenterHepler *noticeCenterHelper;
+@property (strong, nonatomic) NSArray *arrayNotices;
+@property (strong, nonatomic) IBOutlet UILabel *noticeLabel;
+@property (strong, nonatomic) NSArray *arrayCourses;
 
 - (void)navToAssignment:(Assignment*)assignment;
 - (IBAction) navToClassroom;

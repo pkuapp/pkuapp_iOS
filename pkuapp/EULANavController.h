@@ -10,6 +10,6 @@
 
 @interface EULANavController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UINavigationController *secondNavigationController;
+@property (strong, nonatomic) IBOutlet UINavigationController *secondNavigationController;
 - (void)didSelectBackBtn;
 @end

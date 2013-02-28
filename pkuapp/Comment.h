@@ -14,14 +14,14 @@
 @interface Comment : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * content;
-@property (nonatomic, retain) NSString * FromPerson;
-@property (nonatomic, retain) NSNumber * user_id;
-@property (nonatomic, retain) NSNumber * place_id;
-@property (nonatomic, retain) NSDate * timestamp;
-@property (nonatomic, retain) NSNumber * course_id;
-@property (nonatomic, retain) Course *course;
-@property (nonatomic, retain) NSSet *replyset;
+@property (nonatomic, strong) NSString * content;
+@property (nonatomic, strong) NSString * FromPerson;
+@property (nonatomic, strong) NSNumber * user_id;
+@property (nonatomic, strong) NSNumber * place_id;
+@property (nonatomic, strong) NSDate * timestamp;
+@property (nonatomic, strong) NSNumber * course_id;
+@property (nonatomic, strong) Course *course;
+@property (nonatomic, strong) NSSet *replyset;
 @end
 
 @interface Comment (CoreDataGeneratedAccessors)

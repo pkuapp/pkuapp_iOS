@@ -25,7 +25,7 @@
 
 - (NSArray *)arrayCourses{
     if (arrayCourses == nil) {
-        arrayCourses = [[NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]] retain];
+        arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
     }
     return arrayCourses;
 }
@@ -104,6 +104,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
+        {
             if (indexPath.row == self.arrayAssignments.count) {
                 coord_assign = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.delegate.managedObjectContext];
                 
@@ -122,15 +123,14 @@
                 
                 
                 [self presentModalViewController:nav animated:YES];
-                [evc release];
-                [nav release];
             }
             else {
                 ;
             }
+        }
             break;
         case 3:
-
+        {
 
             if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusDefault) {
                 [self.delegate.appUser addLocalcoursesObject:self.course];
@@ -142,20 +142,20 @@
             [self.delegate.managedObjectContext save:nil];
             [self.tableView reloadData];
             
-            NSInvocation *ivc = [NSInvocation invocationWithMethodSignature:[self.tableView methodSignatureForSelector:@selector(deselectRowAtIndexPath:animated:)]];
-            ivc.target = self.tableView;
-            [ivc setSelector:@selector(deselectRowAtIndexPath:animated:)];
-            NSIndexPath *index = [self.tableView indexPathForSelectedRow];
-            [ivc setArgument:&index atIndex:2];
-            BOOL yes = YES;
-            [ivc setArgument:&yes atIndex:3];
-            
-            [ivc performSelector:@selector(invoke) withObject:nil afterDelay:0.3];
+//            NSInvocation *ivc = [NSInvocation invocationWithMethodSignature:[self.tableView methodSignatureForSelector:@selector(deselectRowAtIndexPath:animated:)]];
+//            ivc.target = self.tableView;
+//            [ivc setSelector:@selector(deselectRowAtIndexPath:animated:)];
+//            NSIndexPath *index = [self.tableView indexPathForSelectedRow];
+//            [ivc setArgument:&index atIndex:2];
+//            BOOL yes = YES;
+//            [ivc setArgument:&yes atIndex:3];
+//            
+//            [ivc performSelector:@selector(invoke) withObject:nil afterDelay:0.3];
 
-            
+        }
             break;
         default:
-            break;
+        {}break;
     }
 }
 
@@ -303,6 +303,7 @@
             
             switch (indexPath.row) {
                 case 0:
+                {
                     cell.textLabel.text = @"上课时间";
                     
                     NSArray *array = [self.course arrayStringTime];
@@ -312,23 +313,27 @@
                     cell.detailTextLabel.text = [array objectAtIndex:1];
                     
 //                    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, 44 + ([[array objectAtIndex:0] intValue]-1)*19);
-                    
+                }
                     break;
                 case 1:
+                {
                     cell.textLabel.text = @"上课地点";
                                         
                     if ([self.course.rawplace isEqualToString:@""]) {
                         cell.detailTextLabel.text = @"无";
                     }
                     else cell.detailTextLabel.text = self.course.rawplace;
-                    
+                }
                     break;
                 case 2:
+                    {
                     cell.textLabel.text = @"考试时间";
                     cell.detailTextLabel.text = self.course.time_test;
+                    }
                     break;
                     
                 default:
+                {}
                     break;
             }
             break;
@@ -405,9 +410,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [tableView release];
-    [course release];
-    [super dealloc];
-}
 @end

@@ -12,12 +12,12 @@
 
 @interface CalendarController ()
 
-@property (retain, nonatomic) NSMutableArray *switchableViewControllers;
+@property (strong, nonatomic) NSMutableArray *switchableViewControllers;
 @property (assign, nonatomic) BOOL didInitScrollView;
-@property (retain, nonatomic) NSDate *dateForDisplay;
+@property (strong, nonatomic) NSDate *dateForDisplay;
 @property (assign, nonatomic) float currentCenterOffset;
 @property (assign, nonatomic) float currentLength;
-@property (assign, atomic) CalendarContentController *reuseController;
+@property (weak, atomic) CalendarContentController *reuseController;
 - (void)configurePages;
 - (void)reuseControllerForLowerTime;
 - (void)reuseControllerForHigherTime;
@@ -230,7 +230,6 @@
         
         c.dateInDayView = [NSDate dateWithTimeInterval:(i)*84600 sinceDate:self.dateForDisplay];
 
-        [c release];
     }
     [self configurePages];
     self.scrollViewPages.contentOffset = CGPointMake(self.currentCenterOffset,0);
@@ -289,15 +288,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [scrollViewPages release];
-    [segmentedSwtich release];
-    [btnResetTime release];
-    [didHitAssignBtn release];
-    [switchableViewControllers release];
-    [dateForDisplay release];
-
-
-    [super dealloc];
-}
 @end

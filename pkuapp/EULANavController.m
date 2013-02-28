@@ -65,9 +65,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [secondNavigationController release];
-    [secondNavigationController release];
-    [super dealloc];
-}
 @end

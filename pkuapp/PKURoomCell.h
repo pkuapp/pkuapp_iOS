@@ -29,8 +29,8 @@
     
     UILabel *roomLabel;
 }
-@property (nonatomic, retain) IBOutlet UILabel *roomLabel;
-@property (nonatomic, retain) NSArray *arrayShow;
+@property (nonatomic, strong) IBOutlet UILabel *roomLabel;
+@property (nonatomic, strong) NSArray *arrayShow;
 - (void)_initButton;
 - (void)setRoomStatusWithArray:(NSArray *)array;
 - (void)setRoomName:(NSString *)name;

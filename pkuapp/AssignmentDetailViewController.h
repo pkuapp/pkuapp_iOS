@@ -11,9 +11,9 @@
 #import "Course.h"
 @interface AssignmentDetailViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) Assignment *coord_assign;
-@property (retain, nonatomic) NSDateFormatter *formatter;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) Assignment *coord_assign;
+@property (strong, nonatomic) NSDateFormatter *formatter;
 
 - (void) didSelectEditBtn;
 @end

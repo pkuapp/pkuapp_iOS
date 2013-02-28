@@ -8,7 +8,7 @@
 
 #import "WelcomeViewController.h"
 #import "EULAViewController.h"
-#import "iOSOneAppDelegate.h"
+#import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation WelcomeViewController
@@ -85,9 +85,6 @@
 }
 
 */
-- (void)dealloc {
-    [super dealloc];
-}
 - (IBAction)didSelectNeXTBtn:(id)sender {
     
     

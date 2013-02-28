@@ -70,10 +70,5 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [roomLabel release];
-    [super dealloc];
-}
 
 @end

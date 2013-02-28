@@ -135,9 +135,9 @@ typedef enum {
     
 }
 
-@property (nonatomic, assign) NSObject<EventViewDelegate> *delegate;
-@property (nonatomic, retain)NSString *EventName;
-@property (nonatomic, retain)NSString *stringLocation;
+@property (nonatomic, weak) NSObject<EventViewDelegate> *delegate;
+@property (nonatomic, strong)NSString *EventName;
+@property (nonatomic, strong)NSString *stringLocation;
 @property (nonatomic)NSInteger objIndex;
 @property (nonatomic) float startHour;
 @property (nonatomic) float endHour;

@@ -28,22 +28,22 @@ typedef enum{
 
 @interface Notice : NSObject {
 }
-@property (assign, nonatomic) id object;
+@property (weak, nonatomic) id object;
 @property (assign, nonatomic) PKUNoticeType type;
-@property (nonatomic, retain) NSDictionary *dictInfo;
+@property (nonatomic, strong) NSDictionary *dictInfo;
 
 + (Notice *)noticeWithObject:(id) object Type:(PKUNoticeType)atype;
 
 @end
 
 @interface NoticeCenterHepler: NSObject 
-@property (assign, nonatomic) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
-@property (retain, nonatomic) NSArray* arrayAssignments;
-@property (retain, nonatomic) Course* latestCourse;
+@property (weak, nonatomic) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
+@property (strong, nonatomic) NSArray* arrayAssignments;
+@property (strong, nonatomic) Course* latestCourse;
 //@property (retain, nonatomic) EKEvent* latestEvent;
-@property (retain, nonatomic) Course* nowCourse;
-@property (retain, nonatomic) Assignment* latestAssignment;
-@property (nonatomic, retain) NSDictionary *dictLatestCourse;
+@property (strong, nonatomic) Course* nowCourse;
+@property (strong, nonatomic) Assignment* latestAssignment;
+@property (nonatomic, strong) NSDictionary *dictLatestCourse;
 
 //i was thinking whether ot not break notices into four parts so that it could be use in different part in this app.
 - (NSArray *)getAllNotice;

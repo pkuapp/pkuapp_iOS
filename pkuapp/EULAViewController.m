@@ -253,11 +253,7 @@
        
         [self.navigationController pushViewController:edvc animated:YES];
         edvc.filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"EULACell%d",indexPath.row] ofType:@"html"];
-        [edvc release];
     }
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
 @end

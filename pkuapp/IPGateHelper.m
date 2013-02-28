@@ -8,7 +8,7 @@
 
 #import "IPGateHelper.h"
 #import "RegexKitLite.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 //#import "AsyncUdpSocket.h"
 
 
@@ -234,7 +234,6 @@
 {
     [self removeObserver:self forKeyPath:@"numberListenRetry"];
     [self removeObserver:self forKeyPath:@"isConnected"];
-    [super dealloc];
 }
 
 #pragma mark - KVO
@@ -333,7 +332,7 @@
         result = [[responseArray objectAtIndex:1] dictionaryByMatchingRegex:patternDisconnectSuccess withKeysAndCaptures:@"SUCCESS",1,@"IP",2,@"连接数",3, nil];
     }
     else {
-        result = [[[NSDictionary alloc] initWithObjectsAndKeys:@"NO",@"SUCCESS", nil] autorelease];
+        result = [[NSDictionary alloc] initWithObjectsAndKeys:@"NO",@"SUCCESS", nil];
     }
     return result;
 }

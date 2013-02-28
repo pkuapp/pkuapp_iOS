@@ -12,9 +12,6 @@
 
 @synthesize startclass,endclass,type,course;
 
-- (void)dealloc {
-    [super dealloc];
-}
 @end
 
 @implementation DayVector
@@ -56,7 +53,7 @@
             
         }
     }
-    return [temparray autorelease];
+    return temparray;
 }
 
 - (NSDictionary *)dictEventForDay:(NSInteger)day inWeek:(NSInteger)week
@@ -130,7 +127,7 @@
     }
     else if (!singleWeek && vector.doubleType == doubleTypeSingle) return nil;
         
-    NSMutableDictionary* tempDict = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc] init];
     
     float startHour = [Course starthourForClass:vector.startclass];
     float endHour = [Course starthourForClass:vector.endclass] + 5.0 / 6.0;

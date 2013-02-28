@@ -32,22 +32,22 @@ typedef enum AssignmentEditControllerMode {
     AssignmentEditControllerModeEdit
 }AssignmentEditControllerMode;
 
-@interface AssignmentEditViewController : TTBaseViewController<UITableViewDataSource,UITableViewDelegate,NITableViewModelDelegate>{
+@interface AssignmentEditViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NITableViewModelDelegate>{
     UITextField *_dateField;
     UIDatePicker *_datePicker;
 }
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) Assignment *coord_assign;
-@property (retain, nonatomic) UIPickerView *coursePicker;
-@property (retain, nonatomic) UIDatePicker *datePicker;
-@property (retain, nonatomic) NSDateFormatter *formatter;
-@property (retain, nonatomic) NSArray *arrayCourses;
-@property (assign, nonatomic) NSObject<AssignmentEditDelegate> *delegate;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) Assignment *coord_assign;
+@property (strong, nonatomic) UIPickerView *coursePicker;
+@property (strong, nonatomic) UIDatePicker *datePicker;
+@property (strong, nonatomic) NSDateFormatter *formatter;
+@property (strong, nonatomic) NSArray *arrayCourses;
+@property (weak, nonatomic) NSObject<AssignmentEditDelegate> *delegate;
 @property (assign, nonatomic) BOOL courseAndDateSetup;
 //@property (retain, nonatomic) TTTextEditor *contentTextView;
-@property (retain, nonatomic) NITableViewModel* tableModel;
-@property (assign, nonatomic) UITableViewController *courseTVC;
-@property (retain, nonatomic) UILabel *_courseLabel;
+@property (strong, nonatomic) NITableViewModel* tableModel;
+@property (strong, nonatomic) UITableViewController *courseTVC;
+@property (strong, nonatomic) UILabel *_courseLabel;
 @property (assign, nonatomic) AssignmentEditControllerMode controllerMode;
 
 - (id)initWithType:(AssignmentEditControllerMode)mode;

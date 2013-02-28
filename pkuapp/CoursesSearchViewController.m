@@ -130,7 +130,7 @@
         request.sortDescriptors = [NSArray arrayWithObject:sortD];
         
         [request setFetchBatchSize:2000];
-        resultArray = [[self.context executeFetchRequest:request error:NULL] retain];
+        resultArray = [self.context executeFetchRequest:request error:NULL];
 
     }
     return resultArray;
@@ -153,11 +153,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [searchBar release];
-    [tableView release];
-    [searchDC release];
-    [searchDS release];
-    [super dealloc];
-}
 @end

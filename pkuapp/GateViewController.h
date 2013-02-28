@@ -15,7 +15,7 @@
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
 #import "NimbusModels.h"
-#import "Three20/Three20.h"
+
 #import "PABezelHUDDelegate.h"
 
 @interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate,NITableViewModelDelegate> { 
@@ -23,20 +23,20 @@
     BOOL _alwaysGlobal;
     BOOL _hasSilentCallback;
 }
-@property (retain, nonatomic) NSString* Username;
-@property (retain, nonatomic) NSString* Password;
-@property (retain, nonatomic) NSMutableDictionary* gateStateDictionary;
-@property (assign) IPGateHelper* connector;
-@property (retain,nonatomic) UISwitch *swAutoDisconnect;
-@property (retain,nonatomic) UISwitch *swAlwaysGlobal;
-@property (retain, nonatomic) NSUserDefaults *defaults;
+@property (strong, nonatomic) NSString* Username;
+@property (strong, nonatomic) NSString* Password;
+@property (strong, nonatomic) NSMutableDictionary* gateStateDictionary;
+@property (weak) IPGateHelper* connector;
+@property (strong,nonatomic) UISwitch *swAutoDisconnect;
+@property (strong,nonatomic) UISwitch *swAlwaysGlobal;
+@property (strong, nonatomic) NSUserDefaults *defaults;
 @property (assign, nonatomic) NSInteger numStatus;
-@property (retain, nonatomic) UILabel *labelStatus;
-@property (retain, nonatomic) UILabel *labelWarning;
-@property (retain, nonatomic) MBProgressHUD *progressHub;
-@property (nonatomic, assign) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *delegate;
-@property (retain, nonatomic) NITableViewModel *detailDataSource;
-@property (assign, atomic) UITableViewController *detailTVC;
+@property (strong, nonatomic) UILabel *labelStatus;
+@property (strong, nonatomic) UILabel *labelWarning;
+@property (strong, nonatomic) MBProgressHUD *progressHub;
+@property (nonatomic, weak) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *delegate;
+@property (strong, nonatomic) NITableViewModel *detailDataSource;
+@property (strong, atomic) UITableViewController *detailTVC;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section;

@@ -12,7 +12,7 @@
 #import "ASIFormDataRequest.h"
 #import "Environment.h"
 #import "SBJson.h"
-#import "iOSOneAppDelegate.h"
+#import "AppDelegate.h"
 #import "AppUser.h"
 
 @interface QueryResultsController(Private)
@@ -157,7 +157,6 @@
 		[tempbit addObject: [NSNumber numberWithInt:con << i]];
 	}
 	self._arraybit = tempbit;
-    [tempbit release];
     
 }
 
@@ -200,7 +199,6 @@
         [self.arrayCellDicts addObject:tempDict];
         [self.arrayCellDictsForDisplay addObject:tempDict];
         //[mycell release];
-        [tempDict release];
         
     }
 
@@ -298,13 +296,7 @@
 
 - (void)dealloc {
    
-    [_arraybit release];
-    [arraydictResult release];
-    [arrayResult release];
     [super viewDidUnload];
-    [imageBar release];
-    [barView release];
-    [super dealloc];
 }
 #pragma mark - PKUBarViewDelegate
 

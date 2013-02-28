@@ -39,7 +39,7 @@ typedef enum DoubleType{
 @property (nonatomic, assign) ClassGroupType type;
 @property (nonatomic, assign) NSInteger startclass;
 @property (nonatomic, assign) NSInteger endclass;
-@property (nonatomic, assign) Course *course;
+@property (nonatomic, weak) Course *course;
 @end
 
 

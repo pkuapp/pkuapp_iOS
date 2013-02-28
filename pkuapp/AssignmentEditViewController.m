@@ -18,7 +18,7 @@
 @synthesize arrayCourses;
 @synthesize delegate;
 @synthesize courseAndDateSetup;
-@synthesize contentTextView;
+//@synthesize contentTextView;
 @synthesize tableModel;
 @synthesize courseTVC;
 @synthesize _courseLabel;
@@ -33,52 +33,52 @@
 
 
 
-- (void)canSaveOrNot{
-    if (self.coord_assign.course && self.coord_assign.endDate && TTIsStringWithAnyText(self.contentTextView.text) ) {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }
-    else self.navigationItem.rightBarButtonItem.enabled = NO;
-}
-
-- (IBAction)didTouchUpInsideBgView:(id)sender {
-    [self.contentTextView resignFirstResponder];
-}
-
-- (void)didSelectCancelBtn {
-    [self.delegate didCancelEdit];
-}
-
-- (void)didSelectEditDoneBtn{
-    self.coord_assign.content = self.contentTextView.text;
-        
-    [self.delegate didFinnishedEdit];
-}
+//- (void)canSaveOrNot{
+//    if (self.coord_assign.course && self.coord_assign.endDate && self.contentTextView.text ) {
+//        self.navigationItem.rightBarButtonItem.enabled = YES;
+//    }
+//    else self.navigationItem.rightBarButtonItem.enabled = NO;
+//}
+//
+//- (IBAction)didTouchUpInsideBgView:(id)sender {
+//    [self.contentTextView resignFirstResponder];
+//}
+//
+//- (void)didSelectCancelBtn {
+//    [self.delegate didCancelEdit];
+//}
+//
+//- (void)didSelectEditDoneBtn{
+//    self.coord_assign.content = self.contentTextView.text;
+//        
+//    [self.delegate didFinnishedEdit];
+//}
 
 
 #pragma mark - UITextField Delegate
-
-- (void)textEditorDidChange:(TTTextEditor *)textEditor {
-    [self canSaveOrNot];
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
-    
-}
-
-- (void)textEditorDidBeginEditing:(TTTextEditor*)textEditor {
-    [self canSaveOrNot];
-}
-
-- (void)dateDidChanged {
-    _dateField.text = [self.formatter stringFromDate: _datePicker.date];
-    self.coord_assign.endDate = _datePicker.date;
-    [self canSaveOrNot];
-}
-
-- (BOOL)textEditor:(TTTextEditor *)textEditor shouldResizeBy:(CGFloat)height {
-   
-
-    return YES;
-}
+//
+//- (void)textEditorDidChange:(TTTextEditor *)textEditor {
+//    [self canSaveOrNot];
+//    [self.tableView beginUpdates];
+//    [self.tableView endUpdates];
+//    
+//}
+//
+//- (void)textEditorDidBeginEditing:(TTTextEditor*)textEditor {
+//    [self canSaveOrNot];
+//}
+//
+//- (void)dateDidChanged {
+//    _dateField.text = [self.formatter stringFromDate: _datePicker.date];
+//    self.coord_assign.endDate = _datePicker.date;
+//    [self canSaveOrNot];
+//}
+//
+//- (BOOL)textEditor:(TTTextEditor *)textEditor shouldResizeBy:(CGFloat)height {
+//   
+//
+//    return YES;
+//}
 
 
 
@@ -90,9 +90,8 @@
     UITableViewCell* cell = [_tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (nil == cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault
-                                       reuseIdentifier: identifier]
-                autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault
+                                       reuseIdentifier: identifier];
     }
     
     cell.textLabel.text = [[object objectForKey:@"course"] name];
@@ -117,7 +116,7 @@
             case 1:
                 switch (indexPath.row) {
                     case 0:
-                        [self.contentTextView resignFirstResponder];
+//                        [self.contentTextView resignFirstResponder];
                         
                         self.courseTVC = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
                         
@@ -161,7 +160,7 @@
         
         self._courseLabel.text = _course.name;
         self.coord_assign.course = _course;
-        [self canSaveOrNot];
+//        [self canSaveOrNot];
 
         //self.courseTVC.navigationItem.rightBarButtonItem.enabled = YES;
     }
@@ -179,13 +178,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 2:
-            return MAX(self.contentTextView.frame.size.height + 28,88);
-        default:
-            break;
-    }
-    return 44;
+//    switch (indexPath.section) {
+//        case 2:
+//            return MAX(self.contentTextView.frame.size.height + 28,88);
+//        default:
+//            break;
+//    }
+//    return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -194,7 +193,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    TTTextEditor *contentView; 
+//    TTTextEditor *contentView; 
     
     if (controllerMode == AssignmentEditControllerModeAdd) {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section+1];
@@ -238,20 +237,20 @@
             break;
         case 3:
  
-            contentView = [[TTTextEditor alloc] initWithFrame:CGRectMake(0, 5, cell.frame.size.width-6, 200)];
-            contentView.font = [UIFont boldSystemFontOfSize:14];
+//            contentView = [[TTTextEditor alloc] initWithFrame:CGRectMake(0, 5, cell.frame.size.width-6, 200)];
+//            contentView.font = [UIFont boldSystemFontOfSize:14];
             //contentView.editable = YES;
-            contentView.text = self.coord_assign.content;
-            contentView.autoresizesToText = YES;
-            contentView.backgroundColor = [UIColor clearColor];
-                        
-            contentView.placeholder = @"又是一年春好处";
-            contentView.text = coord_assign.content;
-            contentView.delegate = self;
+//            contentView.text = self.coord_assign.content;
+//            contentView.autoresizesToText = YES;
+//            contentView.backgroundColor = [UIColor clearColor];
+            
+//            contentView.placeholder = @"又是一年春好处";
+//            contentView.text = coord_assign.content;
+//            contentView.delegate = self;
 //            contentView.maxNumberOfLines = 10;
-            [cell.contentView addSubview:contentView];
-            self.contentTextView = contentView;
-            [contentView release];
+//            [cell.contentView addSubview:contentView];
+//            self.contentTextView = contentView;
+//            [contentView release];
 //            cell.frame = CGRectMake(0, 0, cell.frame.size.width, 220);
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
@@ -293,7 +292,7 @@
 
 - (void)keyboardWillAppear:(BOOL)animated withBounds:(CGRect)bounds {
     self.view.frame = CGRectMake(0, 0, 320, 416 - bounds.size.height);
-    [self.tableView scrollFirstResponderIntoView];
+//    [self.tableView scrollFirstResponderIntoView];
 }
 
 - (void)keyboardWillDisappear:(BOOL)animated withBounds:(CGRect)bounds {
@@ -338,7 +337,7 @@
 {
 
     [super viewDidLoad];
-    self.autoresizesForKeyboard = YES;
+//    self.autoresizesForKeyboard = YES;
 
     if (controllerMode == AssignmentEditControllerModeAdd) {
         
@@ -384,8 +383,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    //[tableView release];
-    [super dealloc];
-}
 @end

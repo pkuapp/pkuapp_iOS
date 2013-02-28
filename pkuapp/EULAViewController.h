@@ -17,12 +17,12 @@
 
     UINavigationBar *navigationBar;
 }
-@property (assign, nonatomic)IBOutlet UINavigationController *secondNavController;
-@property (assign ,nonatomic)FirstViewController *delegate;
-@property (retain, nonatomic)NSArray *arrayCells;
-@property (retain, nonatomic)IBOutlet UIToolbar *toolBar;
-@property (retain, nonatomic)IBOutlet UITableView *tableView;
-@property (assign, nonatomic)IBOutlet EULANavController *navdelegate;
+@property (weak, nonatomic)IBOutlet UINavigationController *secondNavController;
+@property (weak ,nonatomic)FirstViewController *delegate;
+@property (strong, nonatomic)NSArray *arrayCells;
+@property (strong, nonatomic)IBOutlet UIToolbar *toolBar;
+@property (strong, nonatomic)IBOutlet UITableView *tableView;
+@property (weak, nonatomic)IBOutlet EULANavController *navdelegate;
 - (void)loadInfoContent:(NSString *)contentDocName forWebView:(UIWebView *)webView;
 - (IBAction)didSelectDisagreeBtn:(id)sender;
 - (IBAction)didSelectAgreeBtn:(id)sender;

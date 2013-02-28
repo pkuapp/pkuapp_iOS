@@ -6,9 +6,9 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 #import "FirstViewController.h"
-#import "iOSOneAppDelegate.h"
+#import "AppDelegate.h"
 #import "IpGateViewController.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 #import "Environment.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
@@ -364,17 +364,10 @@
 {
     NSFileManager *imgManager = [NSFileManager defaultManager];
     [imgManager removeItemAtPath:pathImg error:nil];
-    [self.Username release];
-    [self.UserPwd release];
-    [self.validCode release];
-    [firstImg release];
-    [sessionid release];
+    self.Username;
+    self.UserPwd;
+    self.validCode;
     [_requestImg clearDelegatesAndCancel];
-    [_requestImg release];
-    [HUD release];
-    [tableView release];
-    [navigationBar release];
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning

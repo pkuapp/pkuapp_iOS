@@ -17,7 +17,7 @@
 
 - (NSMutableArray *)arrayAssigns{
     if (arrayAssigns == nil) {
-        arrayAssigns =  [[[NSMutableArray alloc] initWithArray:[self.delegate.appUser.assignset allObjects]] retain];
+        arrayAssigns =  [[NSMutableArray alloc] initWithArray:[self.delegate.appUser.assignset allObjects]];
         [arrayAssigns filterUsingPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
     }
     return arrayAssigns;
@@ -25,7 +25,7 @@
 
 - (NSArray *)arrayCourses{
     if (arrayCourses == nil) {
-        arrayCourses = [[NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]] retain];
+        arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
     }
     return arrayCourses;
 }
@@ -71,8 +71,6 @@
     
 
     [self presentModalViewController:nav animated:YES];
-    [evc release];
-    [nav release];
 }
 
 #pragma mark - TableView Delegate
@@ -158,8 +156,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [tableView release];
-    [super dealloc];
-}
 @end

@@ -24,25 +24,25 @@
     PKUBarView *barView;
 }
 
-@property (nonatomic, retain) IBOutlet PKUBarView *barView;
-@property (nonatomic, retain)IBOutlet UITableView *tableview;
-@property (retain, nonatomic) NSArray *arrayResult;
+@property (nonatomic, strong) IBOutlet PKUBarView *barView;
+@property (nonatomic, strong)IBOutlet UITableView *tableview;
+@property (strong, nonatomic) NSArray *arrayResult;
 @property (nonatomic) NSInteger numday;
-@property (retain, nonatomic) NSArray* _arraybit;//用于与教室的位码取与的12个操作数
-@property (retain, nonatomic) NSArray *arraydictResult;//原始的结果串
-@property (retain, nonatomic) NSString* nameLocation;
-@property (nonatomic, retain) NSMutableArray* arrayFilterRects;
+@property (strong, nonatomic) NSArray* _arraybit;//用于与教室的位码取与的12个操作数
+@property (strong, nonatomic) NSArray *arraydictResult;//原始的结果串
+@property (strong, nonatomic) NSString* nameLocation;
+@property (nonatomic, strong) NSMutableArray* arrayFilterRects;
 
-@property (nonatomic, retain) NSMutableArray* arrayCellDicts;
-@property (nonatomic, retain) NSMutableArray* arrayCellDictsForDisplay;//数据源时初始化
-@property (nonatomic, retain) NSMutableArray* arrayCellDictsHidden;//准备数据源时初始化
-@property (nonatomic, retain) NSMutableArray* arrayDisplayControl;//显示控制cell过滤功能、准备数据源时初始化
+@property (nonatomic, strong) NSMutableArray* arrayCellDicts;
+@property (nonatomic, strong) NSMutableArray* arrayCellDictsForDisplay;//数据源时初始化
+@property (nonatomic, strong) NSMutableArray* arrayCellDictsHidden;//准备数据源时初始化
+@property (nonatomic, strong) NSMutableArray* arrayDisplayControl;//显示控制cell过滤功能、准备数据源时初始化
 ////////////////////////////////////////
 
-@property (retain, nonatomic) NSString *valueTargetBuilding;
-@property (retain, nonatomic) NSString *valueTargetDay;
+@property (strong, nonatomic) NSString *valueTargetBuilding;
+@property (strong, nonatomic) NSString *valueTargetDay;
 @property (nonatomic) NSInteger valueWeeknumber;
-@property (nonatomic, retain) NSMutableDictionary *dictCache;
+@property (nonatomic, strong) NSMutableDictionary *dictCache;
 
 - (NSArray *) getArrayAttr: (NSDictionary *) dictTarget;
 - (void)viewDidDisappear:(BOOL)animated;

@@ -29,12 +29,12 @@
     
 }
 
-@property (nonatomic, retain) IBOutlet UILabel *label;
+@property (nonatomic, strong) IBOutlet UILabel *label;
 @property (nonatomic, assign) BOOL touchTrackEnabled;
-@property (nonatomic, retain) NSMutableArray *numLabelArray;
-@property (nonatomic, assign) IBOutlet id delegate;
-@property (nonatomic, retain) NSMutableArray *arrayLabelSelectedLock;
-@property (nonatomic, retain) NSMutableArray *arrayLabelSelectFilterState;
+@property (nonatomic, strong) NSMutableArray *numLabelArray;
+@property (nonatomic, weak) IBOutlet id delegate;
+@property (nonatomic, strong) NSMutableArray *arrayLabelSelectedLock;
+@property (nonatomic, strong) NSMutableArray *arrayLabelSelectFilterState;
 @property (nonatomic, assign) NSInteger startPos;
 @property (nonatomic, assign) NSInteger endPos;
 

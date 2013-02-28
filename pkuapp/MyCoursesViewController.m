@@ -24,11 +24,11 @@
     if (coursesArray == nil) {
         if (self.segmentedControl.selectedSegmentIndex == 0) {
 
-            coursesArray = [[self.delegate.appUser.courses allObjects] retain];
+            coursesArray = [self.delegate.appUser.courses allObjects];
         }
         else {
         
-            coursesArray = [[self.delegate.appUser.localcourses allObjects] retain];
+            coursesArray = [self.delegate.appUser.localcourses allObjects];
         }
     }
     return coursesArray;
@@ -66,7 +66,6 @@
     
     [self.navigationController pushViewController:cdvc animated:YES];
     
-    [cdvc release];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -182,11 +181,4 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [segmentedControl release];
-    [tableView release];
-    [coursesArray release];
-    
-    [super dealloc];
-}
 @end

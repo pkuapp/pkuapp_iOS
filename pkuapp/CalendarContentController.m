@@ -11,7 +11,7 @@
 #import "PKUCalendarBarView.h"
 #import "AssignmentsListViewController.h"
 
-#import "iOSOneAppDelegate.h"
+#import "AppDelegate.h"
 #import "CalendarGroudView.h"
 #import "ModelsAddon.h"
 #import "SystemHelper.h"
@@ -24,16 +24,16 @@
 
 //@property (nonatomic, retain) EKEventStore *eventStore;
 //@property (nonatomic, retain) EKCalendar *defaultCalendar;
-@property (nonatomic, retain) NSMutableArray *systemEventDayList;
-@property (nonatomic, retain) NSMutableArray *alldayList;
-@property (nonatomic, retain) NSMutableArray *arrayEventGroups;
+@property (nonatomic, strong) NSMutableArray *systemEventDayList;
+@property (nonatomic, strong) NSMutableArray *alldayList;
+@property (nonatomic, strong) NSMutableArray *arrayEventGroups;
 
 //@property (nonatomic, retain) EKEventViewController *detailViewController;
-@property (nonatomic, retain) NSMutableArray *systemEventWeekList;
+@property (nonatomic, strong) NSMutableArray *systemEventWeekList;
 
-@property (nonatomic, retain) NSArray *arrayEventDict;
+@property (nonatomic, strong) NSArray *arrayEventDict;
 @property (nonatomic) BOOL didInitDayView;
-@property (nonatomic, retain)NSDate *dateBegInDayView;
+@property (nonatomic, strong)NSDate *dateBegInDayView;
 
 @property (nonatomic) BOOL didInitWeekView;
 @property (nonatomic, readonly) NSInteger numWeekInWeekView;
@@ -41,18 +41,18 @@
 @property (nonatomic, readonly) NSInteger numDayInDayView;
 @property (nonatomic, readonly) NSInteger numWeekInDayView;
 
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollDayView;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollWeekView;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollDayView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollWeekView;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 
 
-@property (nonatomic, retain) IBOutlet UIView *dayView;
-@property (nonatomic, retain) IBOutlet UIView *listView;
+@property (nonatomic, strong) IBOutlet UIView *dayView;
+@property (nonatomic, strong) IBOutlet UIView *listView;
 
-@property (nonatomic, retain) NSArray *serverCourses;//return all courses user on dean
-@property (nonatomic, retain) NSArray *localCourses;
-@property (nonatomic, retain) NSArray *allCourses;
-@property (nonatomic, retain) NSMutableArray *arrayClassGroup;
+@property (nonatomic, strong) NSArray *serverCourses;//return all courses user on dean
+@property (nonatomic, strong) NSArray *localCourses;
+@property (nonatomic, strong) NSArray *allCourses;
+@property (nonatomic, strong) NSMutableArray *arrayClassGroup;
 @property (nonatomic, assign) NSInteger bitListControl;
 //@property (nonatomic, assign) NSInteger dayoffset;
 
@@ -83,7 +83,7 @@
 }
 @property (nonatomic,assign) float startHour;
 @property (nonatomic,assign) float endHour;
-@property (nonatomic,retain) NSMutableArray *array;
+@property (nonatomic,strong) NSMutableArray *array;
 
 - (eventGroup *)initWithEvent:(EventView *) event;
 - (BOOL)mergeWithGroup:(eventGroup *) group;
@@ -151,14 +151,14 @@
 - (NSArray *)serverCourses
 {
     if (nil == serverCourses) {
-        serverCourses = [[self.delegate.appUser.courses allObjects] retain];
+        serverCourses = [self.delegate.appUser.courses allObjects];
     }
     return serverCourses;
 }
 
 - (NSArray *)localCourses {
     if (nil == localCourses) {
-        localCourses = [[self.delegate.appUser.localcourses allObjects] retain];
+        localCourses = [self.delegate.appUser.localcourses allObjects];
     }
     return localCourses;
 }
@@ -330,7 +330,6 @@
     
     NSInteger dayMinuteNow = hour*60 +minute;
     
-    [nsCalendar release];
     
     _bitListControl = 0;
     _bitListControl |= 1 << 13;
@@ -375,13 +374,11 @@
             if ((weekNow%2 ==0 && _v.doubleType == doubleTypeSingle) || (weekNow%2==1 &&_v.doubleType == doubleTypeDouble)) {
                 group.type = ClassGroupTypeDisable;
                 [waitSet addObject:group];
-                [group release];
                 continue;
             }
             
             [self.arrayClassGroup addObject:group];
             
-            [group release];
             
             for (int i = _v.startclass; i <= _v.endclass; i++) {
                 _bitListControl |= 1<<i;
@@ -423,7 +420,6 @@
                 group.endclass = i;
                 group.type = ClassgroupTypeEmpty;
                 [self.arrayClassGroup addObject:group];
-                [group release];
             }
         }
         else if (_bitClass != 0){
@@ -432,7 +428,6 @@
             group.endclass = i - 1;
             group.type = ClassgroupTypeEmpty;
             [self.arrayClassGroup addObject:group];
-            [group release];
             _bitClass = 0;
             
         }
@@ -443,7 +438,6 @@
                 group.endclass = i - 1;
                 group.type = ClassgroupTypeEmpty;
                 [self.arrayClassGroup addObject:group];
-                [group release];
                 _bitClass = 0;
             }
         }
@@ -453,7 +447,6 @@
             group.endclass = i;
             group.type = ClassgroupTypeEmpty;
             [self.arrayClassGroup addObject:group];
-            [group release];
             _bitClass = 0;
         }
     }
@@ -469,7 +462,6 @@
     ClassGroup *group = [[ClassGroup alloc] init];
     group.type = ClassGroupTypeEnd;
     [self.arrayClassGroup addObject:group];
-    [group release];
     
 }
 
@@ -478,7 +470,8 @@
 
 - (void)displayCoursesInDayView
 {
-    [self.scrollDayView removeAllSubviews];
+#warning rewrite
+//    [self.scrollDayView removeAllSubviews];
     [self.systemEventDayList removeAllObjects];
     [self.systemEventDayList addObjectsFromArray:[self fetchEventsForDay]];
     
@@ -531,7 +524,6 @@
     
     [groundView setupForDisplay];
     
-    [groundView release];
     
   
     
@@ -539,7 +531,6 @@
     
     
     
-    [arrayEvent release];
 }
 - (void)prepareEventViewsForDayDisplay:(NSArray *)arrayEventViews
 {
@@ -555,7 +546,6 @@
         
         [self.arrayEventGroups addObject:group];
         
-        [group release];
         
     }
     BOOL needReGroup = YES;
@@ -606,7 +596,6 @@
         
         [arrayEvent addObject:tempEvent];    
         
-        [tempEvent release];
     }
 //    for (EKEvent *event in self.systemEventWeekList) {
 //        
@@ -635,7 +624,6 @@
     
     [groundView setupForDisplay];
     
-    [groundView release];
     
     self.didInitWeekView = YES;
     
@@ -668,7 +656,6 @@
             
             eventGroup *group = [[eventGroup alloc] initWithEvent:event];
             [self.arrayEventGroups addObject:group];
-            [group release];
             
         }
         BOOL needReGroup = YES;
@@ -709,7 +696,6 @@
         CourseDetailsViewController *cdv = [[CourseDetailsViewController alloc] init];
         cdv.course = group.course;
         [self.fatherController.navigationController pushViewController:cdv animated:YES];
-        [cdv release];
     }
 }
 
@@ -728,8 +714,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
     }
-
-    [cell.contentView removeAllSubviews];
+#warning rewrite
+//    [cell.contentView removeAllSubviews];
     
     ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
     [self setupDefaultCell:cell withClassGroup:group];
@@ -741,7 +727,6 @@
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:nameLabel];
-        [nameLabel release];
         
         UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
@@ -750,7 +735,6 @@
         placeLabel.backgroundColor = [UIColor clearColor];
         placeLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:placeLabel];
-        [placeLabel release];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -766,7 +750,6 @@
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:nameLabel];
-        [nameLabel release];
         
         UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
@@ -775,7 +758,6 @@
         placeLabel.backgroundColor = [UIColor clearColor];
         placeLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:placeLabel];
-        [placeLabel release];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         
@@ -813,7 +795,6 @@
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:nameLabel];
-        [nameLabel release];
         
         UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
@@ -823,7 +804,6 @@
         placeLabel.backgroundColor = [UIColor clearColor];
         placeLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:placeLabel];
-        [placeLabel release];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         
@@ -1009,7 +989,6 @@
         numLabel.highlightedTextColor = [UIColor whiteColor];
         numLabel.text = [NSString stringWithFormat:@"%d",i];
         [cell.contentView addSubview:numLabel];
-        [numLabel release];
     }
 }
 
@@ -1049,28 +1028,17 @@
     [self removeObserver:self forKeyPath:@"dateInDayView"];
     [self removeObserver:self forKeyPath:@"dateInWeekView"];
     
-    [scrollDayView release];
 
-    [scrollWeekView release];
-    [dayView release];
 
 //    [alldayList release];
 //    [systemEventDayList release];
 //    [systemEventWeekList release];
-    [arrayEventGroups release];
-    [listView release];
 
 //    [eventStore release];
 //    [defaultCalendar release];
 //    [detailViewController release];
-    [arrayEventDict release];
 //    [dateBegInDayView release];
-    [dateInWeekView release];
-    [dateInDayView release];
 
-    [serverCourses release];
-    [arrayClassGroup release];
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -1171,7 +1139,7 @@
     if (self) {
         self.startHour = event.startHour;
         self.endHour = event.endHour;
-        self.array = [[[NSMutableArray alloc] initWithObjects:event, nil] autorelease];
+        self.array = [[NSMutableArray alloc] initWithObjects:event, nil];
     }
     return self;
 }
@@ -1209,9 +1177,5 @@
     }
 }
 
-- (void)dealloc {
-    [array release];
-    [super dealloc];
-}
 
 @end

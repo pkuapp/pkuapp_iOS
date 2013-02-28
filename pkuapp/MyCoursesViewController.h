@@ -16,11 +16,11 @@
 {
     NSArray *coursesArray;
 }
-@property (nonatomic, assign)NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
-@property (nonatomic, retain)NSArray *coursesArray;
+@property (nonatomic, weak)NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+@property (nonatomic, strong)NSArray *coursesArray;
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UISegmentedControl *segmentedControl;
 
 - (void)navToCourseDetail:(Course *)course;
 - (void)segmentedValueChanged;

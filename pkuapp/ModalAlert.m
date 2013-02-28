@@ -54,8 +54,6 @@
 	
 	// Retrieve answer
 	NSUInteger answer = madelegate.index;
-	[alertView release];
-	[madelegate release];
 	return answer;
 }
 

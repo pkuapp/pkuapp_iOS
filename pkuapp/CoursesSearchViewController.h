@@ -18,18 +18,18 @@
     SearchDataSource *searchDS;
     NSArray *resultArray;
 }
-@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UISearchDisplayController *searchDC;
-@property (nonatomic, retain) IBOutlet SearchDataSource *searchDS;
+@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UISearchDisplayController *searchDC;
+@property (nonatomic, strong) IBOutlet SearchDataSource *searchDS;
 
-@property (nonatomic, retain) NSManagedObjectContext *context;
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, retain) NSFetchedResultsController *searchRC;
+@property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, strong) NSFetchedResultsController *searchRC;
 
-@property (nonatomic, retain) NSMutableArray *indexArray;
+@property (nonatomic, strong) NSMutableArray *indexArray;
 
-@property (nonatomic, retain) NSArray *resultArray;
+@property (nonatomic, strong) NSArray *resultArray;
 @end
 
 

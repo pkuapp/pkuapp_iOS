@@ -32,11 +32,11 @@
 @private
     NSDateFormatter *titleFormatter;
 }
-@property (nonatomic, retain) IBOutlet UIButton *backwardButton;
-@property (nonatomic, retain) IBOutlet UIButton *forwardButton;
-@property (nonatomic, retain) IBOutlet UILabel *titleLabel;
-@property (nonatomic, retain, readonly)NSDateFormatter *titleFormatter;
-@property (nonatomic, assign) IBOutlet NSObject<PKUCalendarBarDelegate> *delegate;
+@property (nonatomic, strong) IBOutlet UIButton *backwardButton;
+@property (nonatomic, strong) IBOutlet UIButton *forwardButton;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong, readonly)NSDateFormatter *titleFormatter;
+@property (nonatomic, weak) IBOutlet NSObject<PKUCalendarBarDelegate> *delegate;
 - (IBAction)didHitBackwardButton:(id)sender;
 - (IBAction)didHitForwardButton:(id)sender;
 - (void)setupForDisplay;

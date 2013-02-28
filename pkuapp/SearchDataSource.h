@@ -11,7 +11,7 @@
 
 @interface SearchDataSource : NSObject<UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate,UITableViewDelegate>
 
-@property (nonatomic, retain)NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, assign)IBOutlet CoursesCategoryController *delegate;
-@property (nonatomic, retain)NSMutableArray *indexArray;
+@property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, weak)IBOutlet CoursesCategoryController *delegate;
+@property (nonatomic, strong)NSMutableArray *indexArray;
 @end

@@ -10,6 +10,6 @@
 
 @interface AssignDatePickViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @end

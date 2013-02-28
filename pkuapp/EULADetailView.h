@@ -11,6 +11,6 @@
 @interface EULADetailView : UIViewController
 
 
-@property (retain, nonatomic) IBOutlet UIWebView *webView;
-@property (retain, nonatomic) NSString *filePath;
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) NSString *filePath;
 @end

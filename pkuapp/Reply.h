@@ -14,7 +14,7 @@
 @interface Reply : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * content;
-@property (nonatomic, retain) Comment *comment;
+@property (nonatomic, strong) NSString * content;
+@property (nonatomic, strong) Comment *comment;
 
 @end

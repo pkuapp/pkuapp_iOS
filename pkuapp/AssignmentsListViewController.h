@@ -16,10 +16,10 @@
 @interface AssignmentsListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,AssignmentEditDelegate> {
     NSMutableArray *arrayAssigns;
 }
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (assign, nonatomic) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
-@property (retain, nonatomic) NSMutableArray *arrayAssigns;
-@property (retain, nonatomic) NSArray *arrayCourses;
-@property (assign, nonatomic) Assignment *coord_assign;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+@property (strong, nonatomic) NSMutableArray *arrayAssigns;
+@property (strong, nonatomic) NSArray *arrayCourses;
+@property (weak, nonatomic) Assignment *coord_assign;
 - (void)didSelectAddBtn;
 @end

@@ -11,12 +11,12 @@
 
 @interface AssignPickViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource,UITableViewDelegate,UITableViewDataSource>
 
-@property (retain, nonatomic) IBOutlet UIPickerView *coursePicker;
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (retain, nonatomic) AssignmentEditViewController *delegate;
-@property (assign, nonatomic) UILabel *courseLabel;
-@property (assign, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UIPickerView *coursePicker;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) AssignmentEditViewController *delegate;
+@property (weak, nonatomic) UILabel *courseLabel;
+@property (weak, nonatomic) UILabel *timeLabel;
 @property (assign, nonatomic) BOOL courseSetUp;
 @property (assign, nonatomic) BOOL dateSetup;
 @property (assign, nonatomic) NSInteger courseIndex;

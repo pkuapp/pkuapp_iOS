@@ -332,10 +332,5 @@
 }
 */
 
-- (void)dealloc
-{
-    [super dealloc];
-    [label release];
-}
 
 @end
