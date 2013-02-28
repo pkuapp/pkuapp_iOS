@@ -1,0 +1,105 @@
+
+PODS:
+- AFNetworking (1.1.0)
+- ASIHTTPRequest (1.8.1):
+  - ASIHTTPRequest/ASIWebPageRequest (= 1.8.1)
+  - ASIHTTPRequest/CloudFiles (= 1.8.1)
+  - ASIHTTPRequest/S3 (= 1.8.1)
+  - Reachability
+- ASIHTTPRequest/ASIWebPageRequest (1.8.1):
+  - Reachability
+- ASIHTTPRequest/CloudFiles (1.8.1):
+  - Reachability
+- ASIHTTPRequest/S3 (1.8.1):
+  - Reachability
+- JSONKit (1.5pre)
+- MBProgressHUD (0.5)
+- Nimbus (1.0.0):
+  - Nimbus/AttributedLabel (= 1.0.0)
+  - Nimbus/Badge (= 1.0.0)
+  - Nimbus/CSS (= 1.0.0)
+  - Nimbus/Core (= 1.0.0)
+  - Nimbus/Interapp (= 1.0.0)
+  - Nimbus/Launcher (= 1.0.0)
+  - Nimbus/Models (= 1.0.0)
+  - Nimbus/NetworkControllers (= 1.0.0)
+  - Nimbus/NetworkImage (= 1.0.0)
+  - Nimbus/Operations (= 1.0.0)
+  - Nimbus/Overview (= 1.0.0)
+  - Nimbus/PagingScrollView (= 1.0.0)
+  - Nimbus/Photos (= 1.0.0)
+  - Nimbus/WebController (= 1.0.0)
+- Nimbus/AttributedLabel (1.0.0):
+  - Nimbus/Core
+- Nimbus/Badge (1.0.0):
+  - Nimbus/Core
+- Nimbus/CSS (1.0.0):
+  - AFNetworking
+  - Nimbus/Core
+- Nimbus/Core (1.0.0)
+- Nimbus/Interapp (1.0.0):
+  - Nimbus/Core
+- Nimbus/Launcher (1.0.0):
+  - Nimbus/Core
+- Nimbus/Models (1.0.0):
+  - Nimbus/Core
+- Nimbus/NetworkControllers (1.0.0):
+  - Nimbus/Core
+- Nimbus/NetworkImage (1.0.0):
+  - Nimbus/Core
+- Nimbus/Operations (1.0.0):
+  - Nimbus/Core
+  - Nimbus/Operations/JSON (= 1.0.0)
+- Nimbus/Operations/JSON (1.0.0):
+  - JSONKit
+  - Nimbus/Core
+- Nimbus/Overview (1.0.0):
+  - Nimbus/Core
+- Nimbus/PagingScrollView (1.0.0):
+  - Nimbus/Core
+- Nimbus/Photos (1.0.0):
+  - Nimbus/Core
+  - Nimbus/PagingScrollView
+- Nimbus/WebController (1.0.0):
+  - Nimbus/Core
+- Reachability (3.1.0)
+- RegexKitLite (4.0)
+- SBJson (3.2)
+
+DEPENDENCIES:
+- ASIHTTPRequest (~> 1.8.1)
+- MBProgressHUD (~> 0.5)
+- Nimbus (~> 1.0.0)
+- Reachability (~> 3.1.0)
+- RegexKitLite (~> 4.0)
+- SBJson (~> 3.2)
+
+SPEC CHECKSUMS:
+  AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
+  ASIHTTPRequest: e606d2df58b0aace6c1cf1d39a08d3484f91324a
+  ASIHTTPRequest/ASIWebPageRequest: e606d2df58b0aace6c1cf1d39a08d3484f91324a
+  ASIHTTPRequest/CloudFiles: e606d2df58b0aace6c1cf1d39a08d3484f91324a
+  ASIHTTPRequest/S3: e606d2df58b0aace6c1cf1d39a08d3484f91324a
+  JSONKit: 3d4708953ea7ae399a49777372d8b060a43ddd27
+  MBProgressHUD: b23ee11c42253d6d804e8e0bfabdc334e8b2571f
+  Nimbus: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/AttributedLabel: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Badge: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/CSS: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Core: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Interapp: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Launcher: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Models: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/NetworkControllers: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/NetworkImage: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Operations: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Operations/JSON: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Overview: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/PagingScrollView: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/Photos: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Nimbus/WebController: 196175ecaddf4e88925c9e0441aa58e4e40a2b89
+  Reachability: 1c8584c5f26fa776695efef95caaa50402c94cfb
+  RegexKitLite: 293ff6f3cf8f34277989a37802162c6961a2b35a
+  SBJson: 4971016670e7b3fa04a36d4e72ab0fb1ad3a9f69
+
+COCOAPODS: 0.16.4
