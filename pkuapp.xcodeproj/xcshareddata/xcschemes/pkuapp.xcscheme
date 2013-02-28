@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0450"
-   version = "1.8">
+   LastUpgradeVersion = "0460"
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -15,45 +15,33 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "410B417613902BA300002A46"
-               BuildableName = "iOSOne.app"
-               BlueprintName = "iOSOne"
-               ReferencedContainer = "container:iOSOne.xcodeproj">
+               BuildableName = "pkuapp.app"
+               BlueprintName = "pkuapp"
+               ReferencedContainer = "container:pkuapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "410B419413902BA400002A46"
-               BuildableName = "iOSOneTests.octest"
-               BlueprintName = "iOSOneTests"
-               ReferencedContainer = "container:iOSOne.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "410B417613902BA300002A46"
-            BuildableName = "iOSOne.app"
-            BlueprintName = "iOSOne"
-            ReferencedContainer = "container:iOSOne.xcodeproj">
+            BuildableName = "pkuapp.app"
+            BlueprintName = "pkuapp"
+            ReferencedContainer = "container:pkuapp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
-      displayScaleIsEnabled = "NO"
-      displayScale = "1.00"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
@@ -64,17 +52,15 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "410B417613902BA300002A46"
-            BuildableName = "iOSOne.app"
-            BlueprintName = "iOSOne"
-            ReferencedContainer = "container:iOSOne.xcodeproj">
+            BuildableName = "pkuapp.app"
+            BlueprintName = "pkuapp"
+            ReferencedContainer = "container:pkuapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
-      displayScaleIsEnabled = "NO"
-      displayScale = "1.00"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -84,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "410B417613902BA300002A46"
-            BuildableName = "iOSOne.app"
-            BlueprintName = "iOSOne"
-            ReferencedContainer = "container:iOSOne.xcodeproj">
+            BuildableName = "pkuapp.app"
+            BlueprintName = "pkuapp"
+            ReferencedContainer = "container:pkuapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

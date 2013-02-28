@@ -8,7 +8,7 @@
 
 #import "ClassroomQueryController.h"
 #import "Environment.h"
-#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
+#import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import "QueryResultsController.h"

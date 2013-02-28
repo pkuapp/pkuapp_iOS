@@ -13,7 +13,7 @@
 		410B417E13902BA300002A46 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410B417D13902BA300002A46 /* Foundation.framework */; };
 		410B418013902BA300002A46 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410B417F13902BA300002A46 /* CoreGraphics.framework */; };
 		410B418913902BA300002A46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418813902BA300002A46 /* main.m */; };
-		410B418C13902BA400002A46 /* iOSOneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418B13902BA400002A46 /* iOSOneAppDelegate.m */; };
+		410B418C13902BA400002A46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B418B13902BA400002A46 /* AppDelegate.m */; };
 		4112C64815242C14002B5FCC /* CalendarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4112C64515242C14002B5FCC /* CalendarController.xib */; };
 		4112C64915242C14002B5FCC /* CalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4112C64615242C14002B5FCC /* CalendarController.m */; };
 		4114B8A6150208E600FD229C /* btn-back-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4114B89C150208E600FD229C /* btn-back-normal.png */; };
@@ -313,10 +313,10 @@
 		410B417B13902BA300002A46 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		410B417D13902BA300002A46 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		410B417F13902BA300002A46 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		410B418713902BA300002A46 /* iOSOne-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSOne-Prefix.pch"; sourceTree = "<group>"; };
+		410B418713902BA300002A46 /* pkuapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pkuapp-Prefix.pch"; sourceTree = "<group>"; };
 		410B418813902BA300002A46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		410B418A13902BA400002A46 /* iOSOneAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSOneAppDelegate.h; sourceTree = "<group>"; };
-		410B418B13902BA400002A46 /* iOSOneAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSOneAppDelegate.m; sourceTree = "<group>"; };
+		410B418A13902BA400002A46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		410B418B13902BA400002A46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4112C64515242C14002B5FCC /* CalendarController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarController.xib; sourceTree = "<group>"; };
 		4112C64615242C14002B5FCC /* CalendarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarController.m; sourceTree = "<group>"; };
 		4112C64715242C14002B5FCC /* CalendarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarController.h; sourceTree = "<group>"; };
@@ -399,7 +399,7 @@
 		414AEA6B14765864007292B2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		414AEA6C14765864007292B2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		414AEA6D14765864007292B2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		414AEA6E14765864007292B2 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		414AEA6E14765864007292B2 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = text; path = iTunesArtwork; sourceTree = "<group>"; };
 		414AEA7714765C4C007292B2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		414AEA7914765C51007292B2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		414BB8411481E35700CC8A4B /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
@@ -479,7 +479,7 @@
 		417793041478E9B600890739 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		417793051478E9B700890739 /* WelcomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
 		417AC5E613F6F9F6003BD79B /* ClassroomQueryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassroomQueryController.m; sourceTree = "<group>"; };
-		418258DE147A84A200124AA3 /* iOSOne-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOSOne-Info.plist"; sourceTree = "<group>"; };
+		418258DE147A84A200124AA3 /* pkuapp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pkuapp-Info.plist"; sourceTree = "<group>"; };
 		41829F5B148B174600788EA6 /* EULACell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EULACell.xib; sourceTree = "<group>"; };
 		41829F5D148B1B5500788EA6 /* EULADetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EULADetailView.h; sourceTree = "<group>"; };
 		41829F5E148B1B5500788EA6 /* EULADetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EULADetailView.m; sourceTree = "<group>"; };
@@ -510,7 +510,7 @@
 		419E34201502315800D7494A /* notification-title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification-title.png"; sourceTree = "<group>"; };
 		41ACB475148B141200B00624 /* EULANavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EULANavController.h; sourceTree = "<group>"; };
 		41ACB476148B141200B00624 /* EULANavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EULANavController.m; sourceTree = "<group>"; };
-		41B1271F1396047B00B460C2 /* iOSOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41B1271F1396047B00B460C2 /* pkuapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pkuapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B76E5E14DA58FF004FE2C0 /* CourseDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailsViewController.h; sourceTree = "<group>"; };
 		41B76E5F14DA58FF004FE2C0 /* CourseDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseDetailsViewController.m; sourceTree = "<group>"; };
 		41B76E6014DA58FF004FE2C0 /* CourseDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailsViewController.xib; sourceTree = "<group>"; };
@@ -741,7 +741,7 @@
 		410B416C13902BA300002A46 = {
 			isa = PBXGroup;
 			children = (
-				410B418113902BA300002A46 /* iOSOne */,
+				410B418113902BA300002A46 /* pkuapp */,
 				410B417A13902BA300002A46 /* Frameworks */,
 				410B417813902BA300002A46 /* Products */,
 			);
@@ -750,7 +750,7 @@
 		410B417813902BA300002A46 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				41B1271F1396047B00B460C2 /* iOSOne.app */,
+				41B1271F1396047B00B460C2 /* pkuapp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -775,7 +775,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		410B418113902BA300002A46 /* iOSOne */ = {
+		410B418113902BA300002A46 /* pkuapp */ = {
 			isa = PBXGroup;
 			children = (
 				41CD398613A7B69C00CA3D3A /* Environment.h */,
@@ -791,13 +791,13 @@
 				41DAB33E13951D430017F7C7 /* GateView */,
 				413E8FC4143DB44F0042BE88 /* AppUserDelegateProtocol.h */,
 				413E8FD9143DF1220042BE88 /* AppCoreDataProtocol.h */,
-				410B418A13902BA400002A46 /* iOSOneAppDelegate.h */,
-				410B418B13902BA400002A46 /* iOSOneAppDelegate.m */,
+				410B418A13902BA400002A46 /* AppDelegate.h */,
+				410B418B13902BA400002A46 /* AppDelegate.m */,
 				4174449414DD89E1001E95DF /* ReachablityProtocol.h */,
 				410B418213902BA300002A46 /* Supporting Files */,
 				41EC28B813A7099E00566ACE /* MainWindow.xib */,
 			);
-			path = iOSOne;
+			path = pkuapp;
 			sourceTree = "<group>";
 		};
 		410B418213902BA300002A46 /* Supporting Files */ = {
@@ -861,8 +861,8 @@
 				412E0BF014106B95009E0EBB /* free-rooms-occupied-small@2x.png */,
 				412E0BEB14106B82009E0EBB /* free-rooms-free-regular@2x.png */,
 				41E2A12F13D66A7200E3EEF8 /* 37x-Checkmark.png */,
-				418258DE147A84A200124AA3 /* iOSOne-Info.plist */,
-				410B418713902BA300002A46 /* iOSOne-Prefix.pch */,
+				418258DE147A84A200124AA3 /* pkuapp-Info.plist */,
+				410B418713902BA300002A46 /* pkuapp-Prefix.pch */,
 				410B418813902BA300002A46 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -1370,9 +1370,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		410B417613902BA300002A46 /* iOSOne */ = {
+		410B417613902BA300002A46 /* pkuapp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 410B41A813902BA400002A46 /* Build configuration list for PBXNativeTarget "iOSOne" */;
+			buildConfigurationList = 410B41A813902BA400002A46 /* Build configuration list for PBXNativeTarget "pkuapp" */;
 			buildPhases = (
 				410B417313902BA300002A46 /* Sources */,
 				410B417413902BA300002A46 /* Frameworks */,
@@ -1383,9 +1383,9 @@
 			);
 			dependencies = (
 			);
-			name = iOSOne;
-			productName = iOSOne;
-			productReference = 41B1271F1396047B00B460C2 /* iOSOne.app */;
+			name = pkuapp;
+			productName = pkuapp;
+			productReference = 41B1271F1396047B00B460C2 /* pkuapp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1396,7 +1396,7 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = 410B417113902BA300002A46 /* Build configuration list for PBXProject "iOSOne" */;
+			buildConfigurationList = 410B417113902BA300002A46 /* Build configuration list for PBXProject "pkuapp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1409,7 +1409,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				410B417613902BA300002A46 /* iOSOne */,
+				410B417613902BA300002A46 /* pkuapp */,
 			);
 		};
 /* End PBXProject section */
@@ -1646,7 +1646,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				410B418913902BA300002A46 /* main.m in Sources */,
-				410B418C13902BA400002A46 /* iOSOneAppDelegate.m in Sources */,
+				410B418C13902BA400002A46 /* AppDelegate.m in Sources */,
 				41D3DA7313946C5F00D7066F /* FirstViewController.m in Sources */,
 				41429C991397BBE800A62D9C /* GateViewController.m in Sources */,
 				41CD391C13A7A69200CA3D3A /* MainViewController.m in Sources */,
@@ -1749,12 +1749,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../three20/src/**",
-					"$(BUILT_PRODUCTS_DIR)/../three20",
-					"$(BUILT_PRODUCTS_DIR)/../../three20",
-					../three20/Build/Products/three20,
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -1771,12 +1766,6 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../three20/src/**",
-					"$(BUILT_PRODUCTS_DIR)/../three20",
-					"$(BUILT_PRODUCTS_DIR)/../../three20",
-					../three20/Build/Products/three20,
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1793,7 +1782,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iOSOne/iOSOne-Prefix.pch";
+				GCC_PREFIX_HEADER = "pkuapp/pkuapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -1802,7 +1791,7 @@
 					../three20/Build/Products/three20,
 					"/tmp/JSON.dst/usr/local/include/**",
 				);
-				INFOPLIST_FILE = "iOSOne/iOSOne-Info.plist";
+				INFOPLIST_FILE = "pkuapp/pkuapp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1821,7 +1810,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iOSOne/iOSOne-Prefix.pch";
+				GCC_PREFIX_HEADER = "pkuapp/pkuapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -1830,7 +1819,7 @@
 					../three20/Build/Products/three20,
 					"/tmp/JSON.dst/usr/local/include/**",
 				);
-				INFOPLIST_FILE = "iOSOne/iOSOne-Info.plist";
+				INFOPLIST_FILE = "pkuapp/pkuapp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1847,7 +1836,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		410B417113902BA300002A46 /* Build configuration list for PBXProject "iOSOne" */ = {
+		410B417113902BA300002A46 /* Build configuration list for PBXProject "pkuapp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				410B41A613902BA400002A46 /* Debug */,
@@ -1856,7 +1845,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		410B41A813902BA400002A46 /* Build configuration list for PBXNativeTarget "iOSOne" */ = {
+		410B41A813902BA400002A46 /* Build configuration list for PBXNativeTarget "pkuapp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				410B41A913902BA400002A46 /* Debug */,

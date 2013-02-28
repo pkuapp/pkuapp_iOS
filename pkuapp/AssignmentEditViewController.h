@@ -12,7 +12,6 @@
 #import "Assignment.h"
 #import "AppUserDelegateProtocol.h"
 #import "AssignPickViewController.h"
-#import "Three20/Three20+Additions.h"
 #import "NimbusModels.h"
 
 @protocol AssignmentEditDelegate <NSObject>
@@ -33,7 +32,7 @@ typedef enum AssignmentEditControllerMode {
     AssignmentEditControllerModeEdit
 }AssignmentEditControllerMode;
 
-@interface AssignmentEditViewController : TTBaseViewController<UITableViewDataSource,UITableViewDelegate,NITableViewModelDelegate,TTTextEditorDelegate>{
+@interface AssignmentEditViewController : TTBaseViewController<UITableViewDataSource,UITableViewDelegate,NITableViewModelDelegate>{
     UITextField *_dateField;
     UIDatePicker *_datePicker;
 }
@@ -45,7 +44,7 @@ typedef enum AssignmentEditControllerMode {
 @property (retain, nonatomic) NSArray *arrayCourses;
 @property (assign, nonatomic) NSObject<AssignmentEditDelegate> *delegate;
 @property (assign, nonatomic) BOOL courseAndDateSetup;
-@property (retain, nonatomic) TTTextEditor *contentTextView;
+//@property (retain, nonatomic) TTTextEditor *contentTextView;
 @property (retain, nonatomic) NITableViewModel* tableModel;
 @property (assign, nonatomic) UITableViewController *courseTVC;
 @property (retain, nonatomic) UILabel *_courseLabel;
