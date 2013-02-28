@@ -16,7 +16,7 @@
 {
     BOOL con = YES;
     for (int i = 0 ; i < 12; i++) {
-        if ([[arrayControl objectAtIndex:i] boolValue] && [[self.arrayShow objectAtIndex:i] intValue]) {
+        if ([arrayControl[i] boolValue] && [(self.arrayShow)[i] intValue]) {
             //NSLog(@"foundFilter%d",i);
             con = NO;
             break;
@@ -39,7 +39,7 @@
     for (int i = 0; i < 12 ; i++) {
          button = (UIButton *)[self viewWithTag:100 + i];
         button.enabled = NO;
-        if ([[array objectAtIndex:i] intValue]) {
+        if ([array[i] intValue]) {
             [button setImage:  [UIImage imageNamed:@"free-rooms-occupied-regular.png"] forState:UIControlStateDisabled];
         }
         else [button setImage:  [UIImage imageNamed:@"free-rooms-free-regular.png"] forState:UIControlStateDisabled];
@@ -65,7 +65,7 @@
 - (id)init
 {
     NSArray *objectArray = [[NSBundle mainBundle] loadNibNamed:@"PKURoomCellXIB" owner:self options:nil];
-    self = [objectArray objectAtIndex:0];
+    self = objectArray[0];
     [self _initButton];
     return self;
 }

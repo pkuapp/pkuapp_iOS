@@ -111,7 +111,7 @@
                 coord_assign.course = self.course;
                 coord_assign.Person = self.delegate.appUser;
                 
-                coord_assign.isDone = [NSNumber numberWithBool:NO];
+                coord_assign.isDone = @NO;
                 
                 AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
                 evc.coord_assign = coord_assign;
@@ -207,7 +207,7 @@
     if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:2]] == NSOrderedSame) {
         NSArray *array = [self.course arrayStringTime];
 
-        return 44 + ([[array objectAtIndex:0] intValue]-1)*19;
+        return 44 + ([array[0] intValue]-1)*19;
     }
     return 44;
 }
@@ -252,7 +252,7 @@
                 break;
             }
             else {
-                cell.textLabel.text = [[self.arrayAssignments objectAtIndex:indexPath.row] content];
+                cell.textLabel.text = [(self.arrayAssignments)[indexPath.row] content];
             }
             break;
 //        case 1:
@@ -308,9 +308,9 @@
                     
                     NSArray *array = [self.course arrayStringTime];
                     
-                    cell.detailTextLabel.numberOfLines = [[array objectAtIndex:0] intValue];
+                    cell.detailTextLabel.numberOfLines = [array[0] intValue];
                     
-                    cell.detailTextLabel.text = [array objectAtIndex:1];
+                    cell.detailTextLabel.text = array[1];
                     
 //                    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, 44 + ([[array objectAtIndex:0] intValue]-1)*19);
                 }

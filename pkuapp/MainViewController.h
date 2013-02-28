@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-
 #import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "NoticeCenterHepler.h"
@@ -26,6 +25,7 @@
 @class iOSOneAppDelegate;
 @class GateViewController;
 @class IPGateHelper;
+@class NILauncherView;
 
 @interface MainViewController : UIViewController <IPGateListenDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,AssignmentEditDelegate>{
     iOSOneAppDelegate *delegate;
@@ -36,7 +36,7 @@
     UIButton *btnCourses;
     NSArray *arrayNotices;
 }
-@property (strong, nonatomic) IBOutlet UIView *launcherView;
+@property (strong, nonatomic) NILauncherView *launcherView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIButton *ButtonQuery;
 @property (strong, nonatomic) IBOutlet UIButton *buttonIPGate;

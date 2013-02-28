@@ -298,7 +298,7 @@
         
         for (int i = 0; i < [self.allCourses count]; i++) {
             
-            Course *tempcourse = [self.allCourses objectAtIndex:i];
+            Course *tempcourse = (self.allCourses)[i];
             
             [tempmarray addObjectsFromArray:[tempcourse arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]]];
         }
@@ -339,8 +339,8 @@
     NSInteger weekNow = [SystemHelper getPkuWeeknumberForDate:self.dateInDayView];
     NSMutableSet *waitSet = [NSMutableSet setWithCapacity:0];
     Notice *_notice = [self.noticeCenter getNoticeNextCourse];
-    NSInteger dayOffset = [[_notice.dictInfo objectForKey:@"dayOffset"] intValue];
-    NSInteger startMinuteNextCourse = [[_notice.dictInfo objectForKey:@"startMinute"] intValue];
+    NSInteger dayOffset = [(_notice.dictInfo)[@"dayOffset"] intValue];
+    NSInteger startMinuteNextCourse = [(_notice.dictInfo)[@"startMinute"] intValue];
     BOOL foundCoursePresent = NO;
     
     NSMutableSet *courseSet = [NSMutableSet setWithSet:self.delegate.appUser.courses];
@@ -480,7 +480,7 @@
     NSMutableArray *arrayEvent = [[NSMutableArray alloc] initWithCapacity:0];
     
     for (int i = 0; i < [self.allCourses count]; i++) {
-        Course *course = [self.allCourses objectAtIndex:i];
+        Course *course = (self.allCourses)[i];
         
         NSDictionary *tempdict = [course dictEventForDay:self.numDayInDayView inWeek:self.numWeekInDayView];
         
@@ -497,7 +497,7 @@
     }
     
     for (int i = 0; i < [self.systemEventDayList count]; i++) {
-        EKEvent *event = [self.systemEventDayList objectAtIndex:i];
+        EKEvent *event = (self.systemEventDayList)[i];
         
         EventView *tempEvent = [[EventView alloc] initWithEKEvent:event ForGroudType:CalendarGroundTypeDay inDate:self.dateBegInDayView];
         
@@ -556,11 +556,11 @@
         
         for (int i = 0 ; i < [self.arrayEventGroups count]; i++) {
             
-            eventGroup *group = [self.arrayEventGroups objectAtIndex:i];
+            eventGroup *group = (self.arrayEventGroups)[i];
             
             for (int j = i+1; j < [self.arrayEventGroups count]; j++) {
                 
-                if ([group mergeWithGroup:[self.arrayEventGroups objectAtIndex:j]]){
+                if ([group mergeWithGroup:(self.arrayEventGroups)[j]]){
                     
                     [self.arrayEventGroups removeObjectAtIndex:j];
                     
@@ -590,7 +590,7 @@
     
     for (int i = 0; i < [self.arrayEventDict count];i++) {
         
-        NSDictionary *tempdict = [self.arrayEventDict objectAtIndex:i];
+        NSDictionary *tempdict = (self.arrayEventDict)[i];
         
         EventView *tempEvent = [[EventView alloc] initWithDict:tempdict ForGroundType:CalendarGroundTypeWeek ViewType:EventViewCourse];
         
@@ -666,11 +666,11 @@
             
             for (int i = 0 ; i < [self.arrayEventGroups count]; i++) {
                 
-                eventGroup *group = [self.arrayEventGroups objectAtIndex:i];
+                eventGroup *group = (self.arrayEventGroups)[i];
                 
                 for (int j = i+1; j < [self.arrayEventGroups count]; j++) {
                     
-                    if ([group mergeWithGroup:[self.arrayEventGroups objectAtIndex:j]]) {
+                    if ([group mergeWithGroup:(self.arrayEventGroups)[j]]) {
                         [self.arrayEventGroups removeObjectAtIndex:j];
                         j -= 1;
                         needReGroup =YES;
@@ -690,7 +690,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
+    ClassGroup *group = (self.arrayClassGroup)[indexPath.row];
     
     if (group.type == ClassGroupTypeCourse || group.type == ClassGroupTypeNext || group.type == ClassGroupTypeNow) {
         CourseDetailsViewController *cdv = [[CourseDetailsViewController alloc] init];
@@ -717,7 +717,7 @@
 #warning rewrite
 //    [cell.contentView removeAllSubviews];
     
-    ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
+    ClassGroup *group = (self.arrayClassGroup)[indexPath.row];
     [self setupDefaultCell:cell withClassGroup:group];
     //    cell.textLabel.text = group.course.name;
     if (group.type == ClassGroupTypeCourse ) {
@@ -821,7 +821,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
+    ClassGroup *group = (self.arrayClassGroup)[indexPath.row];
     
     if (group.type == ClassGroupTypeCourse || group.type == ClassGroupTypeNow || group.type == ClassGroupTypeNext) {
         cell.backgroundColor = [UIColor colorWithWhite:1 alpha:0.85];
@@ -832,7 +832,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
+    ClassGroup *group = (self.arrayClassGroup)[indexPath.row];
     if (group.type == ClassGroupTypeEnd) {
         return 28;
     }
@@ -884,7 +884,7 @@
 //	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
     
 //	return events;
-    return [NSArray array];
+    return @[];
 }
 
 // Overriding EKEventEditViewDelegate method to update event store according to user actions.
@@ -1160,7 +1160,7 @@
 - (void)setupEventsForDayDisplay
 {
     for (int i = 0; i < [self.array count];  i++) {
-        EventView *event = [self.array objectAtIndex:i];
+        EventView *event = (self.array)[i];
         event.weight =1.0 / [self.array count];
         event.xIndent = i;
         [event setupForDayDisplay];
@@ -1170,7 +1170,7 @@
 - (void)setupEventsForWeekDisplay
 {
     for (int i = 0; i < [self.array count];  i++) {
-        EventView *event = [self.array objectAtIndex:i];
+        EventView *event = (self.array)[i];
         event.weight =1.0 / [self.array count];
         event.xIndent = i;
         [event setupForWeekDisplay];

@@ -63,9 +63,9 @@
     NSMutableArray *marrayDelete = [[NSMutableArray alloc] initWithCapacity:1];
     for (int i = 0 ; i < [self.arrayCellDictsForDisplay count] ; i++) {
         //NSLog(@"%d",i);
-        if (![self shouldDisplayCell:[self.arrayCellDictsForDisplay objectAtIndex:i]]) {
+        if (![self shouldDisplayCell:(self.arrayCellDictsForDisplay)[i]]) {
             //NSLog(@"delete%@at%d",[[self.arrayCellDictsForDisplay objectAtIndex:i] objectForKey:@"name"],i);
-            [self.arrayCellDictsHidden addObject:[self.arrayCellDictsForDisplay objectAtIndex:i]];
+            [self.arrayCellDictsHidden addObject:(self.arrayCellDictsForDisplay)[i]];
             //[self.arrayCellDictsForDisplay removeObjectAtIndex:i];
             [marrayDelete addObject:[NSIndexPath indexPathForRow:i inSection:0]]; 
         }
@@ -78,7 +78,7 @@
 {
     NSMutableArray *marrayInsert = [[NSMutableArray alloc] initWithCapacity:1];
     for (int i = 0; i < [self.arrayCellDicts count]; i++) {
-        NSDictionary *cellDict = [self.arrayCellDicts objectAtIndex:i];
+        NSDictionary *cellDict = (self.arrayCellDicts)[i];
         
         if (![self.arrayCellDictsForDisplay containsObject:cellDict] && [self shouldDisplayCell:cellDict]) {
             NSInteger index = [self indexPathForInsertCellDict:cellDict];
@@ -93,10 +93,10 @@
 
 - (NSInteger)indexPathForInsertCellDict:(NSDictionary *)dict
 {
-    NSString *name = [dict objectForKey:@"name"];
+    NSString *name = dict[@"name"];
     NSInteger i = 0;
     for (i = 0 ; i < [self.arrayCellDictsForDisplay count]; i++) {
-        if ([name compare:[[self.arrayCellDictsForDisplay objectAtIndex:i] objectForKey:@"name"]] == NSOrderedAscending) {
+        if ([name compare:(self.arrayCellDictsForDisplay)[i][@"name"]] == NSOrderedAscending) {
             //NSLog(@"indexPathForInsert%@  after%@at%d",name,[[self.arrayCellDictsForDisplay objectAtIndex:i] objectForKey:@"name"],i);
             break;
         }
@@ -106,7 +106,7 @@
 - (BOOL)shouldDisplayCell:(NSDictionary *)dictCell
 {
     //NSLog(@"judgeFor%@",[dictCell objectForKey:@"name"]);
-    return [[dictCell objectForKey:@"cell"] shouldDisplayWithControl:self.arrayDisplayControl];
+    return [dictCell[@"cell"] shouldDisplayWithControl:self.arrayDisplayControl];
 }
 #pragma mark - UITableView delegate and datasource
 
@@ -115,7 +115,7 @@
     static NSString *mycellIdentifier = @"PKURoomCell";
     PKURoomCell *mycell = (PKURoomCell *) [self.tableview dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"%@%d", mycellIdentifier,indexPath.row]];
     if (mycell == nil) {
-        mycell = [[self.arrayCellDictsForDisplay objectAtIndex:indexPath.row] objectForKey:@"cell"];
+        mycell = (self.arrayCellDictsForDisplay)[indexPath.row][@"cell"];
     }
     return mycell;
     
@@ -133,13 +133,13 @@
 	NSInteger numState = [[[dictTarget valueForKey:@"t"] valueForKey:key] intValue];
 	NSMutableArray *arrayshow = [[NSMutableArray alloc] initWithCapacity:12];
 	for (int i = 0; i < 12; i++) {
-		if (numState & [[_arraybit objectAtIndex:i] intValue]) 
+		if (numState & [_arraybit[i] intValue]) 
 		{
-            [arrayshow addObject:[NSNumber numberWithInt:1]];
+            [arrayshow addObject:@1];
 			//[arrayshow addObject: [UIColor colorWithRed:1.0 green:0.8 blue:0.8 alpha:1.0]];//[UIImage imageWithContentsOfFile: pathImgRed]];
 		}
 		else {
-            [arrayshow addObject:[NSNumber numberWithInt:0]];
+            [arrayshow addObject:@0];
 			//[arrayshow addObject: [UIColor colorWithRed:0.8 green:1.0 blue:0.8 alpha:1.0]];//[UIImage imageWithContentsOfFile: pathImgGreen]];
 		}
         
@@ -154,7 +154,7 @@
 {
     NSMutableArray *tempbit = [[NSMutableArray alloc] initWithCapacity:12];
 	for (int i = 0 ,con =1; i < 12 ; i++) {
-		[tempbit addObject: [NSNumber numberWithInt:con << i]];
+		[tempbit addObject: @(con << i)];
 	}
 	self._arraybit = tempbit;
     
@@ -184,9 +184,9 @@
         if (!mycell) {
             mycell = [[PKURoomCell alloc] init];
         }
-        NSDictionary *dictRoom = [self.arrayResult objectAtIndex:i];
+        NSDictionary *dictRoom = (self.arrayResult)[i];
         //NSString *titleRoom = [dictRoom valueForKey: @"name"];
-        NSString* rawName = [dictRoom objectForKey:@"name"];
+        NSString* rawName = dictRoom[@"name"];
         
         NSString *name = [rawName stringByReplacingOccurrencesOfString:self.nameLocation withString:@""];
         
@@ -194,7 +194,7 @@
         
         [mycell setRoomStatusWithArray:[self getArrayAttr:dictRoom]];
         
-        NSDictionary *tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:mycell,@"cell",name,@"name", nil];
+        NSDictionary *tempDict = @{@"cell": mycell,@"name": name};
         
         [self.arrayCellDicts addObject:tempDict];
         [self.arrayCellDictsForDisplay addObject:tempDict];
@@ -205,7 +205,7 @@
     self.arrayCellDictsHidden = [[NSMutableArray alloc] init];    //init arrayDisplayControl
     self.arrayDisplayControl = [NSMutableArray arrayWithCapacity:[self.arraydictResult count]];
     for (int i = 0; i < 12; i++) {
-        [self.arrayDisplayControl addObject:[NSNumber numberWithBool:NO]];
+        [self.arrayDisplayControl addObject:@NO];
     }
 }
 
@@ -225,7 +225,7 @@
         ASIFormDataRequest *requestQuery = [ASIFormDataRequest requestWithURL:urlClassroom];
         //[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
         //temporary set c as 18 for testing 
-        [requestQuery setPostValue:[NSNumber numberWithInt:self.valueWeeknumber] forKey:@"c"];
+        [requestQuery setPostValue:@(self.valueWeeknumber) forKey:@"c"];
         [requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
         [requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
         
@@ -307,8 +307,8 @@
     }
     [self.arrayFilterRects removeAllObjects];
     for (NSDictionary *dict in array) {
-        int beg = [[dict objectForKey:@"begin"] intValue];
-        int width = [[dict objectForKey:@"width"] intValue];
+        int beg = [dict[@"begin"] intValue];
+        int width = [dict[@"width"] intValue];
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(filterLeftMargin + beg*filterWidthUnit, 32.0, filterWidthUnit*width, self.view.bounds.size.height-32)];
         view.backgroundColor = UIColorFromRGB(0x1D62AB);
@@ -359,7 +359,7 @@
 {
     
    
-    [self.arrayDisplayControl replaceObjectAtIndex:number withObject:[NSNumber numberWithBool:selected]];
+    (self.arrayDisplayControl)[number] = @(selected);
 
     NSArray *indexesForDelete = [self arrayShouldDeleteWithDoingDelete];
     NSArray *indexesForInsert = [self arrayShouldInsertWithDoingInsertAfterDelete];

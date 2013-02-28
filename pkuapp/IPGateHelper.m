@@ -65,22 +65,22 @@
         
         NSMutableDictionary *dictDetail =[NSMutableDictionary dictionaryWithDictionary:[stringResponse dictionaryByMatchingRegex:patternAccountDetail withKeysAndCaptures:@"Type",1,@"Time",2,@"Balance",3, nil]];
         
-        if (![[dictDetail objectForKey:@"Type"] isEqualToString:@"未包月"]) {
+        if (![dictDetail[@"Type"] isEqualToString:@"未包月"]) {
             
-            NSArray *array = [[dictDetail objectForKey:@"Type"] captureComponentsMatchedByRegex:pTime];
+            NSArray *array = [dictDetail[@"Type"] captureComponentsMatchedByRegex:pTime];
             
             if (array != nil) {
                 
-                float timeAll = [[array objectAtIndex:1] floatValue];
+                float timeAll = [array[1] floatValue];
                 
-                float timeLeft = timeAll - [[dictDetail objectForKey:@"Time"] floatValue];
-                [dictDetail setObject:[NSString stringWithFormat:@"包月剩余%1.2f小时",timeLeft] forKey:@"timeLeft"];
+                float timeLeft = timeAll - [dictDetail[@"Time"] floatValue];
+                dictDetail[@"timeLeft"] = [NSString stringWithFormat:@"包月剩余%1.2f小时",timeLeft];
             }
             else
-                [dictDetail setObject:@"不限时" forKey:@"timeLeft"];
+                dictDetail[@"timeLeft"] = @"不限时";
             
         }
-        else [dictDetail setObject:@"NO" forKey:@"Type"];
+        else dictDetail[@"Type"] = @"NO";
         
         self.dictDetail = dictDetail;
         
@@ -89,7 +89,7 @@
     else {
         NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
         self.dictResult = dict;
-        NSString *reason = [dict objectForKey:@"REASON"];
+        NSString *reason = dict[@"REASON"];
         
         NSLog(@"%@",reason);
         
@@ -285,7 +285,7 @@
 - (BOOL)connectAcceptAsExceptForResponse:(NSString *)stringResponse
 {
     NSArray *array = [stringResponse captureComponentsMatchedByRegex:patternResponse];
-    return [[array objectAtIndex:2] isEqualToString:@"YES"];
+    return [array[2] isEqualToString:@"YES"];
 }
 
 -(BOOL)sendHeartBeatForHost:(NSString *)host Port:(UInt16)port
@@ -327,12 +327,12 @@
 {
     NSDictionary *result;
     NSArray* responseArray = [Target captureComponentsMatchedByRegex:patternResponse];
-    NSString* success = [responseArray objectAtIndex:2];
+    NSString* success = responseArray[2];
     if ([success isEqualToString:@"YES"]) {
-        result = [[responseArray objectAtIndex:1] dictionaryByMatchingRegex:patternDisconnectSuccess withKeysAndCaptures:@"SUCCESS",1,@"IP",2,@"连接数",3, nil];
+        result = [responseArray[1] dictionaryByMatchingRegex:patternDisconnectSuccess withKeysAndCaptures:@"SUCCESS",1,@"IP",2,@"连接数",3, nil];
     }
     else {
-        result = [[NSDictionary alloc] initWithObjectsAndKeys:@"NO",@"SUCCESS", nil];
+        result = @{@"SUCCESS": @"NO"};
     }
     return result;
 }
@@ -360,7 +360,7 @@
     _request.delegate = self.delegate;
     [_request setDidFinishSelector:@selector(disConnectFinished:)];
     [_request startSynchronous];
-    return [[[self dictDisconnectResponse:[_request responseString]] objectForKey:@"SUCCESS"] isEqualToString:@"YES"];
+    return [[self dictDisconnectResponse:[_request responseString]][@"SUCCESS"] isEqualToString:@"YES"];
 
 }
 @end

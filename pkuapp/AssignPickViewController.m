@@ -29,7 +29,7 @@
     
 }
 - (void)didSelectFinnishedBtn{
-    self.delegate.coord_assign.course = [self.delegate.arrayCourses objectAtIndex:self.courseIndex];
+    self.delegate.coord_assign.course = (self.delegate.arrayCourses)[self.courseIndex];
     self.delegate.coord_assign.endDate = self.datePicker.date;
 //    [self.delegate didSetupCourseAndDate];
     [self.navigationController popViewControllerAnimated:YES];
@@ -38,7 +38,7 @@
 
 #pragma mark - Picker delegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.courseLabel.text = [[self.delegate.arrayCourses objectAtIndex:row] name];
+    self.courseLabel.text = [(self.delegate.arrayCourses)[row] name];
     self.courseSetUp = YES;
     self.courseIndex = row;
     self.navigationItem.rightBarButtonItem.enabled = self.courseSetUp && self.dateSetup;
@@ -53,7 +53,7 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [[self.delegate.arrayCourses objectAtIndex:row] name];
+    return [(self.delegate.arrayCourses)[row] name];
 }
 
 #pragma mark - TableView

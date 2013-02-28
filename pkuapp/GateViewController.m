@@ -47,22 +47,22 @@
         NSMutableArray *arraySections = [NSMutableArray arrayWithCapacity:6];
     
         [arraySections addObject:self.labelWarning.text];        
-        if ([self.gateStateDictionary objectForKey:_keyIPGateTimeLeft] != nil) {
+        if ((self.gateStateDictionary)[_keyIPGateTimeLeft] != nil) {
             
             
-            if ([self.gateStateDictionary objectForKey:_keyIPGateType] == @"NO") {
-                [arraySections addObject:[NSArray arrayWithObject:@"10元国内地址任意游"]];
+            if ((self.gateStateDictionary)[_keyIPGateType] == @"NO") {
+                [arraySections addObject:@[@"10元国内地址任意游"]];
             }
-            else if ([[self.gateStateDictionary objectForKey:_keyIPGateTimeLeft] isEqualToString:@"不限时"]){
-                [arraySections addObject: [NSArray arrayWithObject:@"90元不限时"]];
+            else if ([(self.gateStateDictionary)[_keyIPGateTimeLeft] isEqualToString:@"不限时"]){
+                [arraySections addObject: @[@"90元不限时"]];
             }
             else {
-                [arraySections addObject:[NSArray arrayWithObject:[self.gateStateDictionary objectForKey:_keyIPGateType]]];
-                [arraySections addObject:[NSArray arrayWithObject:[NSString stringWithFormat:@"%@小时",[self.gateStateDictionary objectForKey:_keyIPGateTimeConsumed]]]];
-                [arraySections addObject:[NSArray arrayWithObject:[self.gateStateDictionary objectForKey:_keyIPGateTimeLeft]]];
+                [arraySections addObject:@[(self.gateStateDictionary)[_keyIPGateType]]];
+                [arraySections addObject:@[[NSString stringWithFormat:@"%@小时",(self.gateStateDictionary)[_keyIPGateTimeConsumed]]]];
+                [arraySections addObject:@[(self.gateStateDictionary)[_keyIPGateTimeLeft]]];
             }
             
-            [arraySections addObjectsFromArray:[NSArray arrayWithObjects:@"",[NSArray arrayWithObject:[NSString stringWithFormat:@"%@元",[self.gateStateDictionary objectForKey:_keyIPGateBalance]]],nil]];
+            [arraySections addObjectsFromArray:@[@"",@[[NSString stringWithFormat:@"%@元",(self.gateStateDictionary)[_keyIPGateBalance]]]]];
             
            
             
@@ -87,7 +87,7 @@
     
     NSString *stringUpdateStatus = [NSString stringWithFormat:@"更新于：%@",[formatter stringFromDate:dateUpdate]];
     
-    [self.gateStateDictionary setObject:stringUpdateStatus forKey:_keyIPGateUpdatedTime];
+    (self.gateStateDictionary)[_keyIPGateUpdatedTime] = stringUpdateStatus;
         
     self.labelWarning.text = stringUpdateStatus;
     
@@ -187,11 +187,11 @@
         
     NSDictionary *dictDetail = self.connector.dictDetail;
     
-    if (![[dictDetail objectForKey:@"Type"] isEqualToString:@"NO"]) {
+    if (![dictDetail[@"Type"] isEqualToString:@"NO"]) {
         
         cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
         
-        NSString *accountTimeLeftString = [NSString stringWithFormat:@"包月剩余%@小时",[dictDetail objectForKey:@"timeLeft"]];
+        NSString *accountTimeLeftString = [NSString stringWithFormat:@"包月剩余%@小时",dictDetail[@"timeLeft"]];
         
         cell.detailTextLabel.text = accountTimeLeftString;
         
@@ -240,7 +240,7 @@
         
     }
     else {
-        self.progressHub.labelText = [self.connector.dictResult objectForKey:@"REASON"];
+        self.progressHub.labelText = (self.connector.dictResult)[@"REASON"];
 //        self.progressHub.mode = MBProgressHUDModeIndeterminate;
 //        [self.progressHub show:YES];
         self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
@@ -248,7 +248,7 @@
 
         [self.progressHub hide:YES afterDelay:0.5];
         
-        NSLog(@"Reason %@",[self.connector.dictResult objectForKey:@"REASON"]);
+        NSLog(@"Reason %@",(self.connector.dictResult)[@"REASON"]);
     }
     if (self.connector.error != IPGateErrorTimeout) {
 //        [self saveAccountState];
@@ -262,11 +262,11 @@
     
     NSDictionary *dictDetail = self.connector.dictDetail;
     
-    if (![[dictDetail objectForKey:_keyIPGateType] isEqualToString:@"NO"]) {
+    if (![dictDetail[_keyIPGateType] isEqualToString:@"NO"]) {
         
         cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
         
-        NSString *accountTimeLeftString = [dictDetail objectForKey:@"timeLeft"];
+        NSString *accountTimeLeftString = dictDetail[@"timeLeft"];
         
         cell.detailTextLabel.text = accountTimeLeftString;
         
@@ -308,13 +308,13 @@
 
 - (void)configAutoDisconnectDidChanged:(UISwitch *)sender
 {
-    [gateStateDictionary setObject:[NSNumber numberWithBool:sender.on] forKey:_keyAutoDisconnect];
+    gateStateDictionary[_keyAutoDisconnect] = @(sender.on);
     
     [defaults setObject:gateStateDictionary forKey:_keyAccountState];
 }
 -(void)configAlwaysGlobalDidChanged:(UISwitch *)sender
 {
-    [gateStateDictionary setObject:[NSNumber numberWithBool:sender.on] forKey:_keyAlwaysGlobal];
+    gateStateDictionary[_keyAlwaysGlobal] = @(sender.on);
     
     [defaults setObject:gateStateDictionary forKey:_keyAccountState];
     
@@ -322,13 +322,13 @@
     
     if (sender.on) {
         
-        NSArray *deleteArray = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]];
+        NSArray *deleteArray = @[[NSIndexPath indexPathForRow:0 inSection:1]];
         
         [self.tableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationFade];
     }
     else {
         
-        NSArray *insertArray = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]];
+        NSArray *insertArray = @[[NSIndexPath indexPathForRow:0 inSection:1]];
         
         [self.tableView insertRowsAtIndexPaths:insertArray withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -349,7 +349,7 @@
     }
     
     
-    cell.detailTextLabel.text = [object objectAtIndex:0];
+    cell.detailTextLabel.text = object[0];
     
     switch (indexPath.section) {
         case 0:
@@ -402,12 +402,12 @@
     switch (indexPath.section) {
         case 0:return;
         case 1:
-            if ([[self.gateStateDictionary objectForKey:_keyAutoDisconnect] boolValue]) {
+            if ([(self.gateStateDictionary)[_keyAutoDisconnect] boolValue]) {
                 [self.connector disConnect];
                 _hasSilentCallback = YES;
             }
             
-            if ([[self.gateStateDictionary objectForKey:@"AlwaysGlobal"] boolValue] && indexPath.row == 0) {
+            if ([(self.gateStateDictionary)[@"AlwaysGlobal"] boolValue] && indexPath.row == 0) {
                 [self.connector connectGlobal];
                 
                 [self showProgressHubWithTitle:@"正连接到收费地址"];
@@ -468,7 +468,7 @@
         case 2:
         case 3: return 1;
             break;
-        case 1: if ([[self.gateStateDictionary objectForKey:_keyAlwaysGlobal] boolValue])
+        case 1: if ([(self.gateStateDictionary)[_keyAlwaysGlobal] boolValue])
                     return 1;
                 else return 2;
         case 4: return 2;
@@ -519,7 +519,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         case 1:
-            if ([[self.gateStateDictionary objectForKey:_keyAlwaysGlobal] boolValue] && indexPath.row == 0) {
+            if ([(self.gateStateDictionary)[_keyAlwaysGlobal] boolValue] && indexPath.row == 0) {
                 cell.textLabel.text = @"连接到收费地址";
                 imageTag = 3;
 
@@ -545,14 +545,14 @@
             cell.textLabel.text = @"网关账户";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
-            cell.detailTextLabel.text = [self.gateStateDictionary objectForKey:_keyIPGateTimeLeft];
+            cell.detailTextLabel.text = (self.gateStateDictionary)[_keyIPGateTimeLeft];
 
 
             break;
         case 4:
             if (indexPath.row == 0) {
                 self.swAutoDisconnect = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-                if ([[self.gateStateDictionary objectForKey:_keyAutoDisconnect] boolValue] == YES) {
+                if ([(self.gateStateDictionary)[_keyAutoDisconnect] boolValue] == YES) {
                     [self.swAutoDisconnect setOn:YES];
                 }
                 
@@ -563,7 +563,7 @@
             }
             else if (indexPath.row == 1){
                 self.swAlwaysGlobal = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-                if ([[self.gateStateDictionary objectForKey:_keyAlwaysGlobal] boolValue] == YES) {
+                if ([(self.gateStateDictionary)[_keyAlwaysGlobal] boolValue] == YES) {
                     [self.swAlwaysGlobal setOn:YES];
                 }
                 

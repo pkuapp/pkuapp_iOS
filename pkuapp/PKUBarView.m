@@ -26,9 +26,9 @@
 - (void)clearFilter {
     
     for (int i = 0; i < 12; ++i) {
-        [self.arrayLabelSelectedLock replaceObjectAtIndex:i withObject: [NSNumber numberWithBool:NO]];
-        [self.arrayLabelSelectFilterState replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
-        [self setNumLabelState:NumLabelStateNormal forLabel:[self.numLabelArray objectAtIndex:i]];
+        (self.arrayLabelSelectedLock)[i] = @NO;
+        (self.arrayLabelSelectFilterState)[i] = @NO;
+        [self setNumLabelState:NumLabelStateNormal forLabel:(self.numLabelArray)[i]];
     }
     [self RedrawFilterRects];
     [self.delegate didEndFilterWithControlArray:[NSArray arrayWithArray:self.arrayLabelSelectedLock]];
@@ -37,14 +37,14 @@
 - (void)RedrawFilterRects{
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
     for (int i =0 ;i < 12; i++) {
-        if ([[self.arrayLabelSelectFilterState objectAtIndex:i] boolValue]) {
+        if ([(self.arrayLabelSelectFilterState)[i] boolValue]) {
             int beg = i;
             
-            while (i <12 && [[self.arrayLabelSelectFilterState objectAtIndex:i] boolValue]) {
+            while (i <12 && [(self.arrayLabelSelectFilterState)[i] boolValue]) {
                 i++;
             }
             int width = i - beg;
-            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:beg],@"begin",[NSNumber numberWithInt:width],@"width", nil];
+            NSDictionary *dict = @{@"begin": @(beg),@"width": @(width)};
             [array addObject:dict];
         }
     }
@@ -53,14 +53,14 @@
 
 - (void)addFilterRectForLabelIndex:(NSInteger)index
 {
-    [self.arrayLabelSelectFilterState replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
+    (self.arrayLabelSelectFilterState)[index] = @YES;
     [self RedrawFilterRects];
     
 }
 
 -(void)removeFilterRectForLabelIndex:(NSInteger)index
 {
-    [self.arrayLabelSelectFilterState replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:NO]];
+    (self.arrayLabelSelectFilterState)[index] = @NO;
     [self RedrawFilterRects];
 }
 
@@ -110,13 +110,13 @@
     if (self.startPos != self.endPos) {
         for (int i = MIN(self.startPos,self.endPos); i <= MAX(self.endPos,self.startPos); ++i) {
             
-            UILabel *numlabel = [self.numLabelArray objectAtIndex:i];
+            UILabel *numlabel = (self.numLabelArray)[i];
 
             [self selectLabel:numlabel];
         }
     }
     else {
-        UILabel *numlabel = [self.numLabelArray objectAtIndex:self.startPos];
+        UILabel *numlabel = (self.numLabelArray)[self.startPos];
         [self toggleStateForLabel:numlabel];
     }
     
@@ -131,7 +131,7 @@
 
 - (void)selectRange {
     for (int i = self.startPos; i <= self.endPos; ++i) {
-        UILabel *numLabel = [self.numLabelArray objectAtIndex:i];
+        UILabel *numLabel = (self.numLabelArray)[i];
         [self setNumLabelState:NumLabelStateSelected forLabel:numLabel];
     }
 }
@@ -139,7 +139,7 @@
 - (void)dispatchRangeEvent {
     
     for (int i = MIN(self.startPos,self.endPos); i <= MAX(self.endPos,self.startPos); ++i) {
-        UILabel *numLabel = [self.numLabelArray objectAtIndex:i];
+        UILabel *numLabel = (self.numLabelArray)[i];
         [self setNumLabelState:NumLabelStateSelected forLabel:numLabel];
     }
 }
@@ -150,7 +150,7 @@
     if ([numlabel pointInside:point withEvent:nil]) {
         [self setNumLabelState:NumLabelStateSelected forLabel:numlabel];
     }
-    else if([[self.arrayLabelSelectedLock objectAtIndex:numlabel.tag-200] boolValue] == NO)
+    else if([(self.arrayLabelSelectedLock)[numlabel.tag-200] boolValue] == NO)
     {
         [self setNumLabelState:NumLabelStateNormal forLabel:numlabel];
     }
@@ -172,22 +172,22 @@
 }
 
 - (void)selectLabel:(UILabel *)numlabel {
-    [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:YES]];
+    (self.arrayLabelSelectedLock)[numlabel.tag-200] = @YES;
     //        [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:YES];
     [self addFilterMark:numlabel];
     [self setNumLabelState:NumLabelStateSelected forLabel:numlabel];
 }
 
 - (void)toggleStateForLabel:(UILabel *)numlabel {
-    if ([[self.arrayLabelSelectedLock objectAtIndex:numlabel.tag-200] boolValue]) {
-        [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:NO]];
+    if ([(self.arrayLabelSelectedLock)[numlabel.tag-200] boolValue]) {
+        (self.arrayLabelSelectedLock)[numlabel.tag-200] = @NO;
 //        [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:NO];
         [self setNumLabelState:NumLabelStateNormal forLabel:numlabel];
         [self removeFilterMark:numlabel];
         
     }
     else{
-        [self.arrayLabelSelectedLock replaceObjectAtIndex:numlabel.tag-200 withObject:[NSNumber numberWithBool:YES]];
+        (self.arrayLabelSelectedLock)[numlabel.tag-200] = @YES;
 //        [self.delegate didHitButtonAtBar:numlabel.tag-200 withSelected:YES];
         [self addFilterMark:numlabel];
         [self setNumLabelState:NumLabelStateSelected forLabel:numlabel];
@@ -287,8 +287,8 @@
 //        numlabel.shadowColor = filterNumberShadowColorNormal;
         [self addSubview:numlabel];
         [self.numLabelArray addObject:numlabel];
-        [self.arrayLabelSelectedLock addObject:[NSNumber numberWithBool:NO]];
-        [self.arrayLabelSelectFilterState addObject:[NSNumber numberWithBool:NO]];
+        [self.arrayLabelSelectedLock addObject:@NO];
+        [self.arrayLabelSelectFilterState addObject:@NO];
         //label.textColor = UIColorFromRGB()
     /*
         button = [UIButton buttonWithType:UIButtonTypeCustom];

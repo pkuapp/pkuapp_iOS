@@ -134,19 +134,19 @@
     
     // NSLog(@"%d--%d:%f--%d:%f",code,startclass,startHour,endclass,endHour);
 
-    [tempDict setObject:[NSNumber numberWithFloat:startHour] forKey:@"start"];
-    [tempDict setObject:[NSNumber numberWithFloat:endHour] forKey:@"end"];
-    [tempDict setObject:[NSNumber numberWithInt:day] forKey:@"day"];
-    [tempDict setObject:[NSString stringWithFormat:@"%@", self.name] forKey:@"name"];
-    [tempDict setObject:self forKey:@"course"];
+    tempDict[@"start"] = @(startHour);
+    tempDict[@"end"] = @(endHour);
+    tempDict[@"day"] = @(day);
+    tempDict[@"name"] = [NSString stringWithFormat:@"%@", self.name];
+    tempDict[@"course"] = self;
     
     if (self.rawplace != nil) {
-        [tempDict setObject:self.rawplace forKey:@"place"];
+        tempDict[@"place"] = self.rawplace;
     }
     else
-        [tempDict setObject:@"" forKey:@"place"];
+        tempDict[@"place"] = @"";
     
-    [tempDict setObject:self.id forKey:@"identifier"];
+    tempDict[@"identifier"] = self.id;
     
     return tempDict;
     
@@ -184,7 +184,7 @@
 - (NSArray *)arrayStringTime {
     
     
-    NSArray *array = [NSArray arrayWithObjects:@"一",@"二",@"三",@"四", @"五",@"六",@"日",nil];
+    NSArray *array = @[@"一",@"二",@"三",@"四", @"五",@"六",@"日"];
     
     NSMutableArray *arrayResult = [NSMutableArray arrayWithCapacity:2];
     
@@ -211,7 +211,7 @@
             else if (vector.doubleType == doubleTypeDouble) [string appendFormat:@"双周"];
                  
                 
-            [string appendFormat:@"周%@ %d–%d 节",[array objectAtIndex:i],vector.startclass,vector.endclass];
+            [string appendFormat:@"周%@ %d–%d 节",array[i],vector.startclass,vector.endclass];
             
             
         }
@@ -222,7 +222,7 @@
     }
     count++;
     
-    [arrayResult addObject:[NSNumber numberWithInt:count]];
+    [arrayResult addObject:@(count)];
     
     [arrayResult addObject:string];
     
@@ -249,7 +249,7 @@
 
 - (NSArray *)sortedAssignmentNotDone{
     
-    NSArray *arrayDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"endDate" ascending:YES]];
+    NSArray *arrayDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"endDate" ascending:YES]];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isDone == NO"];
     NSArray *array = [[[self.assignset allObjects] filteredArrayUsingPredicate: predicate] sortedArrayUsingDescriptors:arrayDescriptors];

@@ -256,12 +256,12 @@
 
 - (id)initWithDict:(NSDictionary *)dict ForGroundType:(CalendarGroundType)thegroundType ViewType:(EventViewType)theViewType
 {
-    float start  = [[dict objectForKey:@"start"] floatValue];
-    float end  = [[dict objectForKey:@"end"] floatValue];
-    int day = [[dict objectForKey:@"day"] intValue];
+    float start  = [dict[@"start"] floatValue];
+    float end  = [dict[@"end"] floatValue];
+    int day = [dict[@"day"] intValue];
     
-    NSString *name = [dict objectForKey:@"name"];
-    NSString *location = [dict objectForKey:@"place"];
+    NSString *name = dict[@"name"];
+    NSString *location = dict[@"place"];
     
     if (thegroundType == CalendarGroundTypeWeek) {
         CGRect  frame = CGRectMake(wHourTag + (day-1)*widthColumn ,heightOffset + start * hHour, widthColumn,hHour * (end - start));
@@ -278,7 +278,7 @@
         self.groundType = thegroundType;
         self.viewType = theViewType;
         self.stringLocation = location;
-        self.identifier = [[dict objectForKey:@"identifier"] intValue];
+        self.identifier = [dict[@"identifier"] intValue];
         self.numDay = day;
     }
     return self;

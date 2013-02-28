@@ -160,7 +160,7 @@
     }
     switch (indexPath.row) {
         case 0:
-            cell = [self.arrayCells objectAtIndex:0];
+            cell = (self.arrayCells)[0];
             
             cell.accessoryType = UITableViewCellAccessoryNone;
             break;

@@ -32,7 +32,7 @@
         
         [titleFormatter setDateFormat:@"星期EEEE  MM月d日"];
         [titleFormatter setLocale:locale];
-        [titleFormatter setWeekdaySymbols:[NSArray arrayWithObjects:@"日",@"一",@"二",@"三",@"四",@"五",@"六", nil]];
+        [titleFormatter setWeekdaySymbols:@[@"日",@"一",@"二",@"三",@"四",@"五",@"六"]];
     }
     return titleFormatter;
 }

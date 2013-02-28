@@ -124,13 +124,13 @@
     
     for (NSDictionary *dict in arrayCourseDicts) {
         
-        NSInteger day = [[dict objectForKey:@"day"] intValue] - PKUWeekDayNow + 7*weekOffset;
+        NSInteger day = [dict[@"day"] intValue] - PKUWeekDayNow + 7*weekOffset;
         
         if (day < 0) {
             continue;
         }
         //NSLog(@"course %@ is in day %d",[dict objectForKey:@"name"],day);
-        float start = [[dict objectForKey:@"start"] floatValue];
+        float start = [dict[@"start"] floatValue];
         NSInteger minute = start * 60;
         
         NSInteger minuteInterval = day *24 * 60 + minute - dayMinuteNow;
@@ -139,16 +139,16 @@
         
         if (minuteInterval < minMinuteInterVal && minuteInterval > 0) {
             minMinuteInterVal = minuteInterval;
-            self.latestCourse = [dict objectForKey:@"course"];
-            NSNumber *numDay = [NSNumber numberWithInt:day];
+            self.latestCourse = dict[@"course"];
+            NSNumber *numDay = @(day);
             
-            NSNumber *numMinute = [NSNumber numberWithInt:minute];
+            NSNumber *numMinute = @(minute);
             
-            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:numDay,@"dayOffset",numMinute,@"startMinute", nil];  
+            self.dictLatestCourse = @{@"dayOffset": numDay,@"startMinute": numMinute};  
         }
-        if (day == 0 && [[dict objectForKey:@"start"] floatValue] * 60 <= dayMinuteNow && [[dict objectForKey:@"end"] floatValue]*60 > dayMinuteNow) {
+        if (day == 0 && [dict[@"start"] floatValue] * 60 <= dayMinuteNow && [dict[@"end"] floatValue]*60 > dayMinuteNow) {
             if (!nowCourse) {
-                self.nowCourse = [dict objectForKey:@"course"];
+                self.nowCourse = dict[@"course"];
             }
             //            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:day+PKUWeekDayNow],@"weekDay",NSNumber numberWithInt:(),nil];
         }

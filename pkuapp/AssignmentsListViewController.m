@@ -60,7 +60,7 @@
     
     coord_assign.Person = self.delegate.appUser;
     
-    coord_assign.isDone = [NSNumber numberWithBool:NO];
+    coord_assign.isDone = @NO;
     
     AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
     evc.coord_assign = coord_assign;
@@ -91,7 +91,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.textLabel.text = [[self.arrayAssigns objectAtIndex:indexPath.row] content];
+    cell.textLabel.text = [(self.arrayAssigns)[indexPath.row] content];
     
     return cell;
 }

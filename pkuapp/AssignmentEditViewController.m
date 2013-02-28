@@ -94,7 +94,7 @@
                                        reuseIdentifier: identifier];
     }
     
-    cell.textLabel.text = [[object objectForKey:@"course"] name];
+    cell.textLabel.text = [object[@"course"] name];
     
     return cell;
 }
@@ -109,7 +109,7 @@
         
         switch (indexPath.section) {
             case 0:
-                self.coord_assign.isDone = [NSNumber numberWithInt:1];
+                self.coord_assign.isDone = @1;
 
                 [self.delegate didDoneAssignment:coord_assign];
                 break;
@@ -152,7 +152,7 @@
 
     }
     else {
-        Course *_course = [[self.tableModel objectAtIndexPath:indexPath] objectForKey:@"course"];
+        Course *_course = [self.tableModel objectAtIndexPath:indexPath][@"course"];
         self.coord_assign.course = _course;
         
         [self.courseTVC.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
@@ -358,7 +358,7 @@
     
     NSMutableArray *_array = [NSMutableArray arrayWithCapacity:self.delegate.arrayCourses.count];
     for (Course *_course in self.delegate.arrayCourses) {
-        [_array addObject:[NSDictionary dictionaryWithObject:_course forKey:@"course"]];
+        [_array addObject:@{@"course": _course}];
     }
     
     self.tableModel = [[NITableViewModel alloc] initWithListArray:_array delegate:self];

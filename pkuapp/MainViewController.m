@@ -33,17 +33,6 @@
 @end
 
 @implementation MainViewController
-@synthesize noticeCenterHelper;
-@synthesize launcherView;
-@synthesize scrollView;
-@synthesize ButtonQuery,buttonIPGate;
-@synthesize btnCourses;
-@synthesize tableView = _tableView;
-@synthesize results;
-@synthesize gvc,connector;
-@synthesize arrayNotices;
-@synthesize noticeLabel;
-@synthesize arrayCourses;
 #pragma mark - AssignmentDelegate
 - (void)didDoneAssignment:(Assignment *)assignment {
     [self.navigationController popViewControllerAnimated:YES];
@@ -64,10 +53,10 @@
 
 #pragma mark - accessor setup
 - (NSArray *)arrayCourses{
-    if (arrayCourses == nil) {
-        arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
+    if (_arrayCourses == nil) {
+        _arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
     }
-    return arrayCourses;
+    return _arrayCourses;
 }
 
 -(NSManagedObjectContext *)context
@@ -95,12 +84,12 @@
 }
 
 - (NoticeCenterHepler *)noticeCenterHelper {
-    if (noticeCenterHelper == nil) {
-        noticeCenterHelper = [[NoticeCenterHepler alloc] init];
-        noticeCenterHelper.delegate = self.delegate;
-        [noticeCenterHelper loadData];
+    if (_noticeCenterHelper == nil) {
+        _noticeCenterHelper = [[NoticeCenterHepler alloc] init];
+        _noticeCenterHelper.delegate = self.delegate;
+        [_noticeCenterHelper loadData];
     }
-    return noticeCenterHelper;
+    return _noticeCenterHelper;
 }
 
 #pragma mark - TTLauncherView Delegate
@@ -168,7 +157,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
+    Notice *notice = (self.arrayNotices)[indexPath.row];
 //    EKEventViewController *detailViewController;
     switch (notice.type) {
         case PKUNoticeTypeNowCourse:
@@ -198,7 +187,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
+    Notice *notice = (self.arrayNotices)[indexPath.row];
     
     switch (notice.type) {
         case PKUNoticeTypeNowCourse:
@@ -223,10 +212,10 @@
         
         //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"NotificationCell" owner:self options:nil];
-        cell = [array objectAtIndex:0];
+        cell = array[0];
 
     }
-    Notice *notice = [self.arrayNotices objectAtIndex:indexPath.row];
+    Notice *notice = (self.arrayNotices)[indexPath.row];
     Course *_course;
     //remove all subviews of details view for Notification cell to avoid reuse issue
 #warning should remove subviews
@@ -235,7 +224,7 @@
         case  PKUNoticeTypeLatestCourse:
             _course = (Course *)notice.object;
             
-            NSInteger dayOffset = [[notice.dictInfo objectForKey:@"dayOffset"] intValue];
+            NSInteger dayOffset = [(notice.dictInfo)[@"dayOffset"] intValue];
             
             NSInteger day =([SystemHelper getDayNow] + dayOffset + 6) % 7 + 1;
             
@@ -401,7 +390,7 @@
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     
-    tbc.viewControllers = [NSArray arrayWithObjects:mcvc,asvs,ccc,nil];
+    tbc.viewControllers = @[mcvc,asvs,ccc];
     tbc.navigationItem.titleView = mcvc.segmentedControl;
     [self.navigationController pushViewController:tbc animated:YES];
     
@@ -550,7 +539,7 @@
     
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:nil];
     
-	NSArray *descriptors = [NSArray arrayWithObject:sortDescriptor];
+	NSArray *descriptors = @[sortDescriptor];
 	[fetchRequest setSortDescriptors:descriptors];
 	
 
@@ -652,6 +641,7 @@
 
 - (void)loadView {
     [super loadView];
+    
 //    [[UITableView appearance] setBackgroundColor:tableBgColor];
 
 //    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 206)];
@@ -676,7 +666,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-title.png"]];
+    _noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-title.png"]];
 
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
@@ -706,6 +696,7 @@
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"38-house.png"]]];
     self.navigationItem.backBarButtonItem.image = [UIImage imageNamed:@"38-house.png"];
     self.tableView.backgroundColor = UIColorFromRGB(0xfafafa);
+    
 
 }
 
@@ -725,9 +716,9 @@
 }
 
 - (void)viewDidUnload {
-    ButtonQuery = nil;
+    _ButtonQuery = nil;
     _tableView = nil;
-    buttonIPGate = nil;
+    _buttonIPGate = nil;
     [self setScrollView:nil];
     [self setBtnCourses:nil];
     [self setNoticeCenterHelper:nil];

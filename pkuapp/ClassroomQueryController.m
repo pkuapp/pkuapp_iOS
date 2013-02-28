@@ -24,16 +24,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSMutableDictionary *dict = [self.marrayForQuery objectAtIndex:indexPath.row];
+    NSMutableDictionary *dict = (self.marrayForQuery)[indexPath.row];
     QueryResultsController *qrc =[ [QueryResultsController alloc] initWithNibName:@"QueryResults" bundle:nil];
 
-    qrc.valueTargetBuilding = [dict objectForKey:@"location"];
+    qrc.valueTargetBuilding = dict[@"location"];
     qrc.valueTargetDay = [NSString stringWithFormat:@"%d",[SystemHelper getDayNow]];
     
     qrc.valueWeeknumber = [SystemHelper getPkuWeeknumberNow];;
-    qrc.nameLocation = [dict objectForKey:@"name"];
-    int freq = [[dict objectForKey:@"Freq"] intValue];
-    [dict setObject:[NSNumber numberWithInt:++freq] forKey:@"Freq"];
+    qrc.nameLocation = dict[@"name"];
+    int freq = [dict[@"Freq"] intValue];
+    dict[@"Freq"] = @(++freq);
     // NSLog(@"%@%d",[self.marrayForQuery objectAtIndex:indexPath.row],freq);
 
     
@@ -56,8 +56,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        NSDictionary *dict = [self.marrayForQuery objectAtIndex:indexPath.row];
-        cell.textLabel.text = [dict objectForKey:@"name"];
+        NSDictionary *dict = (self.marrayForQuery)[indexPath.row];
+        cell.textLabel.text = dict[@"name"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
     }
@@ -85,7 +85,7 @@
 	ASIFormDataRequest *requestQuery = [ASIFormDataRequest requestWithURL:urlClassroom];
 	//[requestQuery setPostValue:[NSNumber numberWithInt:[SystemHelper getPkuWeeknumberNow]] forKey:@"c"];
     //temporary set c as 18 for testing 
-    [requestQuery setPostValue:[NSNumber numberWithInt:1] forKey:@"c"];
+    [requestQuery setPostValue:@1 forKey:@"c"];
 
 	[requestQuery setPostValue:self.valueTargetBuilding forKey:@"building"];
 	[requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
@@ -108,11 +108,11 @@
 - (void)sortLocation
 {
     [self.marrayForQuery sortUsingComparator:^(id obj1,id obj2){
-        if ([[obj1 objectForKey:@"Freq"] intValue] < [[obj2 objectForKey:@"Freq"] intValue]) {
+        if ([obj1[@"Freq"] intValue] < [obj2[@"Freq"] intValue]) {
             return (NSComparisonResult)NSOrderedDescending;
         }
         
-        if ([[obj1 objectForKey:@"Freq"] intValue] > [[obj2 objectForKey:@"Freq"] intValue]) {
+        if ([obj1[@"Freq"] intValue] > [obj2[@"Freq"] intValue]) {
             return (NSComparisonResult)NSOrderedAscending;
         }
         return (NSComparisonResult)NSOrderedSame;
@@ -134,7 +134,7 @@
     
     for (NSDictionary *temp in dictLocation){
         NSMutableDictionary *dictQuery = [[NSMutableDictionary alloc] initWithDictionary:temp];
-        [dictQuery setObject:[NSNumber numberWithInt:0] forKey:@"Freq"];
+        dictQuery[@"Freq"] = @0;
 
 		[tempmarray addObject: dictQuery];
 	}

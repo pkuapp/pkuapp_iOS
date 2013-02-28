@@ -67,7 +67,7 @@
             break;
     }
     for (int i = 0; i < 5; ++i) {
-        [[self.switchableViewControllers objectAtIndex:i] performSelector:switchView withObject:nil];
+        [(self.switchableViewControllers)[i] performSelector:switchView withObject:nil];
     }
 }
 
@@ -97,7 +97,7 @@
                 self.dateForDisplay = [NSDate dateWithTimeInterval:-86400 sinceDate:self.dateForDisplay];
 
                 
-                reuseController = [self.switchableViewControllers objectAtIndex:4];
+                reuseController = (self.switchableViewControllers)[4];
                 
                 [self.switchableViewControllers removeObject:reuseController];
                 
@@ -111,7 +111,7 @@
                 self.currentCenterOffset = self.currentCenterOffset - 330;
                 
                 self.reuseController.view.frame = CGRectMake(self.currentCenterOffset - 660 + 5, 0, 320, 372);
-                self.dayViewBar.delegate = [self.switchableViewControllers objectAtIndex:2];
+                self.dayViewBar.delegate = (self.switchableViewControllers)[2];
                 [self.dayViewBar setupForDisplay];
 
                 break;
@@ -120,7 +120,7 @@
                 
                 self.dateForDisplay = [NSDate dateWithTimeInterval:86400 sinceDate:self.dateForDisplay];
                 
-                reuseController = [self.switchableViewControllers objectAtIndex:0];
+                reuseController = (self.switchableViewControllers)[0];
                 
                 [self.switchableViewControllers removeObject:reuseController];
                 [self.switchableViewControllers addObject:reuseController];
@@ -134,7 +134,7 @@
                 reuseController.view.frame = CGRectMake(self.currentCenterOffset + 660 + 5, 0, 320, 372);
                 
                 [self performSelectorInBackground:@selector(reuseControllerForHigherTime) withObject:nil];
-                self.dayViewBar.delegate = [self.switchableViewControllers objectAtIndex:2];
+                self.dayViewBar.delegate = (self.switchableViewControllers)[2];
                 [self.dayViewBar setupForDisplay];
 
                 break;
@@ -151,7 +151,7 @@
     
     for (int i = 0; i < 5; ++i) {
         
-        CalendarContentController *c = [self.switchableViewControllers objectAtIndex:i];
+        CalendarContentController *c = (self.switchableViewControllers)[i];
         
 //        NSLog(@"%@",c.dateInDayView);
         c.view.frame = CGRectMake(self.currentCenterOffset + (i-2)*330+5, 0, 320, 372);
@@ -196,12 +196,12 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [[self.switchableViewControllers objectAtIndex:2] viewDidAppear:animated];
+    [(self.switchableViewControllers)[2] viewDidAppear:animated];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[self.switchableViewControllers objectAtIndex:2] viewWillAppear:animated];
+    [(self.switchableViewControllers)[2] viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
@@ -234,7 +234,7 @@
     [self configurePages];
     self.scrollViewPages.contentOffset = CGPointMake(self.currentCenterOffset,0);
     
-    self.dayViewBar.delegate = [self.switchableViewControllers objectAtIndex:2];
+    self.dayViewBar.delegate = (self.switchableViewControllers)[2];
     [self.dayViewBar setupForDisplay];
     
     self.title = @"课程表";

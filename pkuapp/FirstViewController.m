@@ -37,7 +37,7 @@
     if (self.didInputUsername == NO && didInputUsername == YES) {
         _didInputUsername = didInputUsername;
         [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView endUpdates];
     }
     
@@ -199,7 +199,7 @@
     
     NSLog(@"%@",cookies);
     
-    NSString *tempString = [[cookies objectAtIndex:0] valueForKey:@"value"];// cStringUsingEncoding:-2147481083];
+    NSString *tempString = [cookies[0] valueForKey:@"value"];// cStringUsingEncoding:-2147481083];
     if ([SystemHelper getPkuWeeknumberNow] > 2) {
         self.sessionid = [SystemHelper Utf8stringFromGB18030:tempString];
     }
@@ -303,7 +303,7 @@
 }
 
 - (void)loginFailed:(NSDictionary *)dict{
-    self.delegate.progressHub.labelText = [[dict objectForKey:@"info"] description];
+    self.delegate.progressHub.labelText = [dict[@"info"] description];
     self.delegate.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
     
     self.delegate.progressHub.mode = MBProgressHUDModeCustomView;
@@ -333,11 +333,11 @@
             
         }
         else {
-            [self performSelectorOnMainThread:@selector(loginFailed:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:error,@"info", nil] waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(loginFailed:) withObject:@{@"info": error} waitUntilDone:YES];
         }
     }
     @catch (NSException *exception) {
-        [self performSelectorOnMainThread:@selector(loginFailed:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:exception,@"info", nil] waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(loginFailed:) withObject:@{@"info": exception} waitUntilDone:YES];
         NSLog(@"%@",exception);
     }
     @finally {

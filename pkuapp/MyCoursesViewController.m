@@ -37,7 +37,7 @@
 - (UISegmentedControl *)segmentedControl {
     if (segmentedControl == nil) {
         
-        segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"已选课程",@"旁听课程", nil]];
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"已选课程",@"旁听课程"]];
         
         segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
         
@@ -70,7 +70,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self navToCourseDetail:[self.coursesArray objectAtIndex:indexPath.row]];
+    [self navToCourseDetail:(self.coursesArray)[indexPath.row]];
     
 }
 
@@ -91,7 +91,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
-    Course *course = [self.coursesArray objectAtIndex:indexPath.row];
+    Course *course = (self.coursesArray)[indexPath.row];
     
     cell.textLabel.text = course.name;
     

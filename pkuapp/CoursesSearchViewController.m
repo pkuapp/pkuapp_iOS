@@ -28,7 +28,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.context];
         NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCompare:)];
         request.entity = entity;
-        request.sortDescriptors = [NSArray arrayWithObject:sortD];
+        request.sortDescriptors = @[sortD];
         
         [request setFetchBatchSize:2000];
         fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:@"courseSectionName" cacheName:@"nameFilter"];
@@ -50,7 +50,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultController sections][section];
     return [sectionInfo numberOfObjects];
 }
 
@@ -70,7 +70,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { 
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultController sections][section];
     return [sectionInfo name];
 }
 
@@ -127,7 +127,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.context];
         NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCompare:)];
         request.entity = entity;
-        request.sortDescriptors = [NSArray arrayWithObject:sortD];
+        request.sortDescriptors = @[sortD];
         
         [request setFetchBatchSize:2000];
         resultArray = [self.context executeFetchRequest:request error:NULL];

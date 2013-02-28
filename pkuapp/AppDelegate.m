@@ -70,7 +70,7 @@ static UIFont *font;
 }
 
 - (void)checkVersionDone:(ASIHTTPRequest *)request {
-    NSNumber *version = [[[request responseString] JSONValue] objectForKey:@"beta"];
+    NSNumber *version = [[request responseString] JSONValue][@"beta"];
     NSLog(@"checking version");
     if ([version intValue] > iOSVersionNum) {
         if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
@@ -234,7 +234,7 @@ static UIFont *font;
     
     NSString *stringProfile = [requestProfile responseString];
     NSDictionary *dictProfile = [stringProfile JSONValue];
-    self.appUser.realname = [dictProfile objectForKey:@"realname"];
+    self.appUser.realname = dictProfile[@"realname"];
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%@",[error localizedDescription]);
     }
@@ -249,7 +249,7 @@ static UIFont *font;
         NSString *localKey = key;
     
         if ([key isEqualToString:@"cname"]) {
-            if ([[dictCourse objectForKey:@"cname"] isKindOfClass:[NSNull class]] || [[dictCourse objectForKey:@"cname"] isEqualToString:@""]) {
+            if ([dictCourse[@"cname"] isKindOfClass:[NSNull class]] || [dictCourse[@"cname"] isEqualToString:@""]) {
                 needRawName = YES;
                 continue;
             }
@@ -262,12 +262,12 @@ static UIFont *font;
             continue;
             needRawName = NO;
         }
-        id object = [dictCourse objectForKey:key];
+        id object = dictCourse[key];
         if (![object isKindOfClass: [NSNull class]]) {
 
 
             @try {
-                [_course setPrimitiveValue:[dictCourse objectForKey:key] forKey:localKey];
+                [_course setPrimitiveValue:dictCourse[key] forKey:localKey];
 
             }
             @catch (NSException *exception) {
@@ -319,8 +319,8 @@ static UIFont *font;
     NSString *stringPredicate;// = [NSMutableString stringWithCapacity:0];
     
 	for (int i = 0 ;i < jsonCourse.count; i++){
-        dictCourse = [jsonCourse objectAtIndex:i];
-        stringPredicate = [NSString stringWithFormat:@"id == %@",[dictCourse objectForKey:@"id"]];
+        dictCourse = jsonCourse[i];
+        stringPredicate = [NSString stringWithFormat:@"id == %@",dictCourse[@"id"]];
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
@@ -374,7 +374,7 @@ static UIFont *font;
     
     [self.window addSubview:self.mvc.view];
     [self.mvc dismissModalViewControllerAnimated:YES];
-    [self.mvc setViewControllers:[NSArray arrayWithObject:self.mv]];
+    [self.mvc setViewControllers:@[self.mv]];
 }
 
 - (void)reloadMainView {
@@ -460,21 +460,21 @@ static UIFont *font;
     [schoolrq startSynchronous];
     NSString *responseString = [schoolrq responseString];
     NSArray *tempArray = [responseString JSONValue];
-    tempArray = [tempArray objectAtIndex:5];
+    tempArray = tempArray[5];
     NSMutableDictionary *schoolDict = [[NSMutableDictionary alloc] initWithCapacity:0];
     for (NSDictionary *dict in tempArray) {
         School *school = [NSEntityDescription insertNewObjectForEntityForName:@"School" inManagedObjectContext:context];
-        school.name = [dict objectForKey:@"name"];
-        school.code = [dict objectForKey:@"code"];
+        school.name = dict[@"name"];
+        school.code = dict[@"code"];
         if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);
-        [schoolDict setObject:school forKey:school.code];
+        schoolDict[school.code] = school;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"School" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
     //NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"school"];
     //[frc performFetch:&error];
@@ -489,16 +489,16 @@ static UIFont *font;
     
     NSArray *array = [responseString JSONValue];
     for (NSDictionary *dict in array) {
-        if ([[dict objectForKey:@"name"] isEmpty] || [dict[@"name"] isEqualToString:@""]) {
+        if ([dict[@"name"] isEmpty] || [dict[@"name"] isEqualToString:@""]) {
             continue;
         }
         
         Course *ccourse = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:context];
         for (__strong NSString *key in [dict keyEnumerator]) {
-            id object = [dict objectForKey:key];
+            id object = dict[key];
             if ([key isEqualToString:@"cname"]) {
                 key = @"name";
-                object = [dict objectForKey:@"cname"];
+                object = dict[@"cname"];
             }
             NSString *selector = [NSString stringWithFormat:@"setPrimitive%@:",key];
             if (object != [NSNull null]) {
@@ -507,7 +507,7 @@ static UIFont *font;
             
         }
         //NSLog(@"%@",ccourse.name);
-        ccourse.school = [schoolDict objectForKey:ccourse.SchoolCode];
+        ccourse.school = schoolDict[ccourse.SchoolCode];
         
     }
     if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);/**/

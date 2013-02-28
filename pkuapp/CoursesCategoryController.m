@@ -37,7 +37,7 @@
 - (UISegmentedControl *)txCategorySegmentedControl {
     
     if (txCategorySegmentedControl == nil) {
-        txCategorySegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"全部",@"A",@"B",@"C",@"D",@"E",@"F", nil]];
+        txCategorySegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"全部",@"A",@"B",@"C",@"D",@"E",@"F"]];
         
         txCategorySegmentedControl.segmentedControlStyle = UISegmentedControlStyleBezeled;
         
@@ -62,7 +62,7 @@
 - (NSArray *)arrayCategories
 {
     if (arrayCategories == nil) {
-        arrayCategories = [NSArray arrayWithObjects:@"通选课",@"双学位",@"辅修",@"全校任选",@"全校必修", nil];
+        arrayCategories = @[@"通选课",@"双学位",@"辅修",@"全校任选",@"全校必修"];
     }
     return arrayCategories;
 }
@@ -106,7 +106,7 @@
     
     request.predicate = predicate;
     
-    request.sortDescriptors = [NSArray arrayWithObject:sort];
+    request.sortDescriptors = @[sort];
     
     self.fetchResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
@@ -142,7 +142,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == self.tableView) {
-        [self loadDataSourceForType:[self.arrayCategories objectAtIndex:indexPath.row]];
+        [self loadDataSourceForType:(self.arrayCategories)[indexPath.row]];
         
         UITableViewController *tbc = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
         
@@ -192,11 +192,11 @@
             return 1;
         }
         else {
-            sectionInfo = [[self.fetchResultController sections] objectAtIndex:section-1];
+            sectionInfo = [self.fetchResultController sections][section-1];
         }
     }
     
-    else sectionInfo = [[self.fetchResultController sections] objectAtIndex:section];
+    else sectionInfo = [self.fetchResultController sections][section];
     
     return [sectionInfo numberOfObjects];
 }
@@ -211,7 +211,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
         
-        cell.textLabel.text = [self.arrayCategories objectAtIndex:indexPath.row];
+        cell.textLabel.text = (self.arrayCategories)[indexPath.row];
 
         return cell;
     }

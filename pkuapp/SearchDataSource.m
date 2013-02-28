@@ -70,7 +70,7 @@
     
     request.predicate = predicate;
     
-    request.sortDescriptors = [NSArray arrayWithObject:sort];
+    request.sortDescriptors = @[sort];
     
      self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.context sectionNameKeyPath:@"courseSectionName" cacheName:nil];
     
@@ -125,7 +125,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultController sections][section];
     
     return [sectionInfo numberOfObjects];
 }
@@ -146,7 +146,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { 
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultController sections][section];
     return [sectionInfo name];
 }
 
