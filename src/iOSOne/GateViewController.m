@@ -7,7 +7,7 @@
 
 #import "GateViewController.h"
 #import "iOSOneAppDelegate.h"
-#import "ASIHTTPRequest.h"
+#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
 #import "SystemHelper.h"
 #import "RegexKitLite.h"
 #import "IPGateHelper.h"

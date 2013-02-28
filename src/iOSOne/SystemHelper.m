@@ -7,7 +7,7 @@
 //
 
 #import "SystemHelper.h"
-#import "ASIHTTPRequest.h"
+#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
 
 @implementation SystemHelper
 

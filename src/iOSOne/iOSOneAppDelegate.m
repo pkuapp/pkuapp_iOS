@@ -13,7 +13,7 @@
 #import "Environment.h"
 #import "MainViewController.h"
 #import "FirstViewController.h"
-#import "ASIHTTPRequest.h"
+#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "AppUser.h"
 #import "SBJson.h"

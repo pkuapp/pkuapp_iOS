@@ -8,7 +8,7 @@
 #import "FirstViewController.h"
 #import "iOSOneAppDelegate.h"
 #import "IpGateViewController.h"
-#import "ASIHTTPRequest.h"
+#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
 #import "Environment.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"

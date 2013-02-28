@@ -7,7 +7,7 @@
 //
 
 #import "CoursesCategoryController.h"
-#import "ASIHTTPRequest.h"
+#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
 #import "Environment.h"
 #import "SBJson.h"
 #import <CoreData/CoreData.h>

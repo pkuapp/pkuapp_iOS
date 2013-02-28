@@ -8,7 +8,7 @@
 
 #import "IPGateHelper.h"
 #import "RegexKitLite.h"
-#import "ASIHTTPRequest.h"
+#import "AFHTTPRequestOperation+ASIHTTPRequest.h"
 //#import "AsyncUdpSocket.h"
 
 
