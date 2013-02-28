@@ -445,7 +445,7 @@ static UIFont *font;
 }
 
 - (void)generateCoreDataBase {
-    /**/
+    /*
     NSFileManager *fmanager = [NSFileManager defaultManager];
     [fmanager removeItemAtPath:pathsql2 error:nil];
     
@@ -510,7 +510,8 @@ static UIFont *font;
         ccourse.school = schoolDict[ccourse.SchoolCode];
         
     }
-    if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);/**/
+    if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);
+    */
 }
 
 #pragma mark UINavigation...Delegate Setup

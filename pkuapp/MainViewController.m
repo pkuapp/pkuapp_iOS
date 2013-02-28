@@ -22,10 +22,16 @@
 #import "MyCoursesViewController.h"
 #import "School.h"
 #import "UIKitAddon.h"
+#import "NimbusLauncher.h"
+
 //#import <EventKit/EventKit.h>
 //#import <EventKitUI/EventKitUI.h>
 
-@interface MainViewController (Private)
+@interface MainViewController ()
+@property (strong, nonatomic) NILauncherViewModel *launchModel;
+@property (strong, nonatomic) IBOutlet NILauncherView *launcherView;
+@property (strong, nonatomic) NILauncherViewController *lvc;
+
 - (UILabel *)detailLabel;
 - (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course inDay:(NSInteger)day;
 - (void)prepareCell:(NotificationCell *)cell WithAssignment:(Course *)assignment;
@@ -76,11 +82,11 @@
 }
 
 - (NSArray *)arrayNotices{
-    if (arrayNotices == nil) {
-        arrayNotices = self.noticeCenterHelper.getAllNotice; 
+    if (_arrayNotices == nil) {
+        _arrayNotices = self.noticeCenterHelper.getAllNotice;
     }
 //    NSLog(@"notices %@",self.noticeCenterHelper.getAllNotice);
-    return arrayNotices;
+    return _arrayNotices;
 }
 
 - (NoticeCenterHepler *)noticeCenterHelper {
@@ -616,14 +622,23 @@
     if (self) {
         
         self.navigationController.navigationBar.topItem.title = @"Home"; 
-//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:nil];
-//        item.tintColor = UIColorFromRGB(0x4d4d4d);
-//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"24-person.png"] style:UIBarButtonItemStyleDone target:self action:@selector(performActionSheet)];
-        //[[UIBarButtonItem alloc] initWithTitle:@"账号" style:UIBarButtonItemStylePlain target:self action:@selector(performActionSheet)];
+        self.lvc = [[NILauncherViewController alloc] init];
+
         
+        NSArray* contents =
+        @[
+         @[
+          [NILauncherViewObject objectWithTitle:@"网关" image:[UIImage imageNamed:@"its"]],
+          [NILauncherViewObject objectWithTitle:@"日程" image:[UIImage imageNamed:@"calendar"]],
+          [NILauncherViewObject objectWithTitle:@"空闲教室" image:[UIImage imageNamed:@"rooms"]],
+          [NILauncherViewObject objectWithTitle:@"课程" image:[UIImage imageNamed:@"courses"]]
+          ],
+         @[[NILauncherViewObject objectWithTitle:@"反馈" image:[UIImage imageNamed:@"feedback"]]],
+         ];
         
-        //[self.gvc.swGlobal addObserver:self forKeyPath:@"on" options:NSKeyValueObservingOptionNew context:@"Global"];
+        self.launchModel = [[NILauncherViewModel alloc] initWithArrayOfPages:contents delegate:self];
+        
     }
     return self;
 }
@@ -660,7 +675,7 @@
 //                                   , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
 //    }
 //    
-    [self.view insertSubview:self.launcherView belowSubview:self.tableView];
+//    [self.view insertSubview:self.launcherView belowSubview:self.tableView];
 //       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
@@ -696,41 +711,66 @@
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"38-house.png"]]];
     self.navigationItem.backBarButtonItem.image = [UIImage imageNamed:@"38-house.png"];
     self.tableView.backgroundColor = UIColorFromRGB(0xfafafa);
-    
+    self.launcherView.backgroundColor = [UIColor clearColor];
+
+    [self.launcherView addSubview:self.lvc.view];
+
+    self.lvc.launcherView.dataSource = self.launchModel;
+    self.lvc.launcherView.backgroundColor = [UIColor clearColor];
+    self.lvc.launcherView.delegate = self;
+    [self.lvc.launcherView reloadData];
 
 }
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc. that aren't in use.
 }
 
 - (void)viewDidUnload {
     _ButtonQuery = nil;
     _tableView = nil;
     _buttonIPGate = nil;
-    [self setScrollView:nil];
     [self setBtnCourses:nil];
     [self setNoticeCenterHelper:nil];
     [self setLauncherView:nil];
     [self setNoticeLabel:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    
 }
 
 
+#pragma mark - NILaunchView
 
+- (void)launcherView:(NILauncherView *)launcherView didSelectItemOnPage:(NSInteger)page atIndex:(NSInteger)index
+{
+    switch (page) {
+        case 0:
+            switch (index) {
+                case 0:
+                    [self navToGateView];
+                    break;
+                case 1:
+                    [self navToCanlendar];
+                    break;
+                case 2:
+                    [self navToClassroom];
+                    break;
+                case 3:
+                    [self navToCoursesView];
+                    break;
+                default:
+                    break;
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
 
+- (void)launcherViewModel:(NILauncherViewModel *)launcherViewModel configureButtonView:(UIView<NILauncherButtonView> *)buttonView forLauncherView:(NILauncherView *)launcherView pageIndex:(NSInteger)pageIndex buttonIndex:(NSInteger)buttonIndex object:(id<NILauncherViewObject>)object
+{
+    NILauncherButtonView *bv = (NILauncherButtonView *)buttonView;
+    bv.label.font = [UIFont boldSystemFontOfSize:13];
+    bv.label.textColor = [UIColor blackColor];
+}
 @end

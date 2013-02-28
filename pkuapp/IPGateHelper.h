@@ -13,7 +13,7 @@
 #define Max_Listen_Rounds 4
 #define PORT @"5428"
 #define HOST @"https://its.pku.edu.cn"
-#define page @"/ipgatewayofpku"
+#define ippage @"/ipgatewayofpku"
 #define rangeFree @"2"
 #define rangeGlobal @"1"
 #define IPG_HEART_BEAT_INTERVAL 3

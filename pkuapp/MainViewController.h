@@ -20,6 +20,7 @@
 #import "IPGateHelper.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
+#import "NimbusLauncher.h"
 
 #define color_current_blue UIColorFromRGB(0x0074e6)
 @class iOSOneAppDelegate;
@@ -27,17 +28,10 @@
 @class IPGateHelper;
 @class NILauncherView;
 
-@interface MainViewController : UIViewController <IPGateListenDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,AssignmentEditDelegate>{
+@interface MainViewController:UIViewController <IPGateListenDelegate, NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,AssignmentEditDelegate, NILauncherDelegate, NILauncherViewModelDelegate>{
     iOSOneAppDelegate *delegate;
     NSManagedObjectContext *context;
-    IPGateHelper *connector;
-
-    UIScrollView *scrollView;
-    UIButton *btnCourses;
-    NSArray *arrayNotices;
 }
-@property (strong, nonatomic) NILauncherView *launcherView;
-@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIButton *ButtonQuery;
 @property (strong, nonatomic) IBOutlet UIButton *buttonIPGate;
 @property (nonatomic, strong) IBOutlet UIButton *btnCourses;

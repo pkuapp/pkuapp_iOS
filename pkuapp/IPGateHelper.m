@@ -348,7 +348,7 @@
 }
 - (NSURL* )urlWithOperation:(NSString* )arg
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@%@?uid=%@&password=%@&timeout=2&range=%@&operation=%@",HOST,PORT,page,[self.delegate Username],[self.delegate Password],stringRange,arg]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@%@?uid=%@&password=%@&timeout=2&range=%@&operation=%@",HOST,PORT,ippage,[self.delegate Username],[self.delegate Password],stringRange,arg]];
     return url;
  
 }
