@@ -52,23 +52,26 @@
 
 - (void)didSelectCalSegementControl
 {
-    SEL switchView;
+    NSString *switchView;
     switch (self.calSwithSegment.selectedSegmentIndex) {
         case 0:
-            switchView = @selector(toListView);
+            switchView = @"toListView";
             break;
         case 1:
-            switchView = @selector(toDayView);
+            switchView = @"toDayView";
             break;
         case 2:
-            switchView = @selector(toWeekView);
+            switchView = @"toWeekView";
             break;
         default:
             break;
     }
     for (int i = 0; i < 5; ++i) {
-        [(self.switchableViewControllers)[i] performSelector:switchView withObject:nil];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [(self.switchableViewControllers)[i] performSelector:NSSelectorFromString(switchView) withObject:nil];
     }
+#pragma clang diagnostic pop
 }
 
 

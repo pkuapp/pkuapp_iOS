@@ -364,9 +364,6 @@
 {
     NSFileManager *imgManager = [NSFileManager defaultManager];
     [imgManager removeItemAtPath:pathImg error:nil];
-    self.Username;
-    self.UserPwd;
-    self.validCode;
     [_requestImg clearDelegatesAndCancel];
 }
 

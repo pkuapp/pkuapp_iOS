@@ -235,7 +235,7 @@
     }
     
 //    NSLog(@"%@",stringQuery);
-	NSArray *result = [stringQuery JSONValue];
+	NSArray *result = [[[SBJsonParser alloc] init] objectWithString:stringQuery];
     self.arrayResult = result;
     [self _prepareCells];
     [self.tableview reloadData];

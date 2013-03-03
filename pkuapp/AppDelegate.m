@@ -70,7 +70,7 @@ static UIFont *font;
 }
 
 - (void)checkVersionDone:(ASIHTTPRequest *)request {
-    NSNumber *version = [[request responseString] JSONValue][@"beta"];
+    NSNumber *version = [[[SBJsonParser alloc] init] objectWithString:[request responseString]][@"beta"];
     NSLog(@"checking version");
     if ([version intValue] > iOSVersionNum) {
         if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
@@ -210,8 +210,7 @@ static UIFont *font;
             return YES;
         }
         else {
-            NSString *des = [error description];
-//            stringError = des;
+            NSLog(@"save data error:%@", error);
         }
     }
     NSString *stringResult = [self parsedLoginError:loginmessage];
@@ -233,7 +232,7 @@ static UIFont *font;
     [requestProfile startSynchronous];
     
     NSString *stringProfile = [requestProfile responseString];
-    NSDictionary *dictProfile = [stringProfile JSONValue];
+    NSDictionary *dictProfile = [[[SBJsonParser alloc] init] objectWithString:stringProfile];
     self.appUser.realname = dictProfile[@"realname"];
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%@",[error localizedDescription]);
@@ -305,7 +304,7 @@ static UIFont *font;
         
         stringCourse = [requestCourse responseString];
     }
-    jsonCourse = [stringCourse JSONValue];
+    jsonCourse = [[[SBJsonParser alloc] init] objectWithString:stringCourse];
 
     if (jsonCourse.count == 0) {
 //        error = [[NSError alloc] initWithDomain:@"未获得有效课程" code:0 
@@ -556,9 +555,7 @@ static UIFont *font;
     [[UISegmentedControl appearance] setBackgroundImage:[[UIImage imageNamed:@"btn-pressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
     [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"btn-segmented-divider.png"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-////    [[UIView appearance] setBackgroundColor:tableBgColor];
-////    [[UIView appearanceWhenContainedIn:[UIViewController class], nil] setBackgroundColor:tableBgColor];
-//    
+
     if (![fm fileExistsAtPath:pathSQLCore]) {
         NSString *defaultSQLPath = [[NSBundle mainBundle] pathForResource:@"coredata" ofType:@"sqlite"];
         if (defaultSQLPath) {
@@ -570,7 +567,7 @@ static UIFont *font;
 	if ([userDefaults boolForKey:@"didLogin"]){
         
         if ([userDefaults integerForKey:@"VersionReLogin"] == VersionReLogin) {
-            //[self showWithLoginView];
+            [self showWithLoginView];
 
         }
         else{
@@ -586,83 +583,29 @@ static UIFont *font;
         
 	}
     else {
-        [self showwithMainView];
+        [self showWithLoginView];
     }
-#warning showmain
     
-//    self.globalTester = [Reachability reachabilityWithHostName: @"www.apple.com"];
-//    self.globalTester.key = @"global";
-//	[self.globalTester startNotifier];
-//	
-//    self.freeTester = [Reachability reachabilityWithHostName:@"renren.com"];
-//    self.freeTester.key = @"free";
-//    [self.freeTester startNotifier];
     
-    self.internetTester = [Reachability reachabilityForInternetConnection];
-//    self.internetTester.key = @"internet";
-	[self.internetTester startNotifier];
-    
-    self.wifiTester = [Reachability reachabilityForLocalWiFi];
-//    self.wifiTester.key = @"wifi";
-	[self.wifiTester startNotifier];
+//    self.internetTester = [Reachability reachabilityForInternetConnection];
+//
+//	[self.internetTester startNotifier];
 //    
+//    self.wifiTester = [Reachability reachabilityForLocalWiFi];
+//
+//	[self.wifiTester startNotifier];
+//
 //    self.localTester = [Reachability reachabilityWithHostName:@"its.pku.edu.cn"];
 //    self.localTester.key = @"local";
 //    [self.localTester startNotifier];
 //    
-    // Override point for customization after application launch.
+
 //    [self generateCoreDataBase];
     [self.window makeKeyAndVisible];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStatusDidChanged:) name:kReachabilityChangedNotification object:nil];
     
     [self checkVersion];
     return YES;
-}
-
-
-
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    /*
-     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-     */
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    /*
-     Called when the application is about to terminate.
-     Save data if appropriate.
-     See also applicationDidEnterBackground:.
-     */
-}
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    
 }
 
 

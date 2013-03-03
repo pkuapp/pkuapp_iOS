@@ -50,7 +50,7 @@
         if ((self.gateStateDictionary)[_keyIPGateTimeLeft] != nil) {
             
             
-            if ((self.gateStateDictionary)[_keyIPGateType] == @"NO") {
+            if ([(self.gateStateDictionary)[_keyIPGateType] isEqualToString: @"NO"]) {
                 [arraySections addObject:@[@"10元国内地址任意游"]];
             }
             else if ([(self.gateStateDictionary)[_keyIPGateTimeLeft] isEqualToString:@"不限时"]){
@@ -607,12 +607,12 @@
 
 - (void)viewDidLoad
 {
-#warning customized
+
     [super viewDidLoad];
     self.defaults = [NSUserDefaults standardUserDefaults];
-    self.Username = @"00904084";//[defaults objectForKey:@"Username"];
+    self.Username = [defaults objectForKey:@"Username"];
     
-    self.Password = @"4924857888";
+    self.Password = [defaults objectForKey:@"Password"];
     self.title = @"网关";
     self.gateStateDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:_keyAccountState]];
     

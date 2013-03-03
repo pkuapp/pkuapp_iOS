@@ -14,7 +14,7 @@
 #import "AppUserDelegateProtocol.h"
 #import "Course.h"
 #import "Assignment.h"
-//#import <EventKit/EventKit.h>
+#import <EventKit/EventKit.h>
 #import "AppUser.h"
 #import "SystemHelper.h"
 #import "PKUNoticeCenterProtocols.h"
@@ -40,7 +40,7 @@ typedef enum{
 @property (weak, nonatomic) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
 @property (strong, nonatomic) NSArray* arrayAssignments;
 @property (strong, nonatomic) Course* latestCourse;
-//@property (retain, nonatomic) EKEvent* latestEvent;
+@property (retain, nonatomic) EKEvent* latestEvent;
 @property (strong, nonatomic) Course* nowCourse;
 @property (strong, nonatomic) Assignment* latestAssignment;
 @property (nonatomic, strong) NSDictionary *dictLatestCourse;

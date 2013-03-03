@@ -33,26 +33,26 @@
 
 
 
-//- (void)canSaveOrNot{
+- (void)canSaveOrNot{
 //    if (self.coord_assign.course && self.coord_assign.endDate && self.contentTextView.text ) {
 //        self.navigationItem.rightBarButtonItem.enabled = YES;
 //    }
 //    else self.navigationItem.rightBarButtonItem.enabled = NO;
-//}
-//
-//- (IBAction)didTouchUpInsideBgView:(id)sender {
+}
+
+- (IBAction)didTouchUpInsideBgView:(id)sender {
 //    [self.contentTextView resignFirstResponder];
-//}
-//
-//- (void)didSelectCancelBtn {
-//    [self.delegate didCancelEdit];
-//}
-//
-//- (void)didSelectEditDoneBtn{
+}
+
+- (void)didSelectCancelBtn {
+    [self.delegate didCancelEdit];
+}
+
+- (void)didSelectEditDoneBtn{
 //    self.coord_assign.content = self.contentTextView.text;
-//        
-//    [self.delegate didFinnishedEdit];
-//}
+    
+    [self.delegate didFinnishedEdit];
+}
 
 
 #pragma mark - UITextField Delegate
@@ -184,7 +184,7 @@
 //        default:
 //            break;
 //    }
-//    return 44;
+    return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

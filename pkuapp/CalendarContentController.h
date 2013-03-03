@@ -10,8 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "NoticeCenterHepler.h"
 #import "AppUserDelegateProtocol.h"
-//#import <EventKit/EventKit.h>
-//#import <EventKitUI/EventKitUI.h>
+#import <EventKit/EventKit.h>
+#import <EventKitUI/EventKitUI.h>
 #import "CalendarGroudView.h"
 
 @class CalendarController;
@@ -28,5 +28,4 @@
 - (void)toDayView;
 - (void)toWeekView;
 - (void)toListView;
-//@property (retain, nonatomic) CalendarController *delegate;
 @end

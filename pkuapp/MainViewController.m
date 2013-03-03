@@ -98,30 +98,6 @@
     return _noticeCenterHelper;
 }
 
-#pragma mark - TTLauncherView Delegate
-//
-//- (void)didSelectDoneBtn {
-//    [self.navigationItem setRightBarButtonItem:nil animated:YES];
-//    [self.launcherView endEditing];
-//}
-//
-//- (void)launcherViewDidEndEditing:(TTLauncherView *)launcher {
-//    [self.launcherView persistLauncherItems];
-//}
-//- (void)launcherViewDidBeginEditing:(TTLauncherView *)launcher {
-//    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didSelectDoneBtn)] animated:YES];
-//}
-//
-//- (void)launcherView:(TTLauncherView*)launcher didSelectItem:(TTLauncherItem*)item {
-//    if ([item.URL isEqualToString:@"main/its"]) {
-//        [self navToGateView];
-//    }
-//    else if ([item.URL isEqualToString:@"main/rooms"]) [self navToClassroom];
-//    else if ([item.URL isEqualToString:@"main/calendar"]) [self navToCanlendar];
-//    else if ([item.URL isEqualToString:@"main/courses"]) [self navToCoursesView];
-//    else if ([item.URL isEqualToString:@"main/feedback"]) [self testTableView:nil];
-//}
-
 #pragma mark - //define for TTStyledTextLabel
 
 
@@ -224,8 +200,8 @@
     Notice *notice = (self.arrayNotices)[indexPath.row];
     Course *_course;
     //remove all subviews of details view for Notification cell to avoid reuse issue
-#warning should remove subviews
-//    [cell.detailView removeAllSubviews];
+
+    [[cell.detailView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     switch (notice.type) {
         case  PKUNoticeTypeLatestCourse:
             _course = (Course *)notice.object;
@@ -643,40 +619,9 @@
     return self;
 }
 
-//- (TTStyle*)launcherButton:(UIControlState)state { 
-//    return 
-//    [TTPartStyle styleWithName:@"image" 
-//                         style:TTSTYLESTATE(launcherButtonImage:, state) next: 
-//     [TTTextStyle styleWithFont:[UIFont boldSystemFontOfSize:16] 
-//                          color:RGBCOLOR(80, 80, 80) 
-//                minimumFontSize:12 shadowColor:nil 
-//                   shadowOffset:CGSizeZero next:nil]]; 
-//} 
-
 
 - (void)loadView {
     [super loadView];
-    
-//    [[UITableView appearance] setBackgroundColor:tableBgColor];
-
-//    self.launcherView = [[TTLauncherView alloc] initWithFrame:CGRectMake(0, 0, 320, 206)];
-//    self.launcherView.backgroundColor = UIColorFromRGB(0xefeade);
-//    self.launcherView.persistenceMode = TTLauncherPersistenceModeAll;
-//    self.launcherView.delegate = self;
-//    if ([self.launcherView restoreLauncherItems])
-//        NSLog(@"did restore launcher");
-//    else {
-//        self.launcherView.columnCount = 3;
-//        self.launcherView.pages = [NSArray arrayWithObjects:
-//                                   [NSArray arrayWithObjects:
-//                                    [[TTLauncherItem alloc] initWithTitle:@"网关" image:@"bundle://its.png" URL:@"main/its"],
-//                                    [[TTLauncherItem alloc] initWithTitle:@"空闲教室" image:@"bundle://rooms.png" URL:@"main/rooms"],
-//                                    [[TTLauncherItem alloc] initWithTitle:@"日程" image:@"bundle://calendar.png" URL:@"main/calendar"],[[TTLauncherItem alloc] initWithTitle:@"课程" image:@"bundle://courses.png" URL:@"main/courses"], nil]
-//                                   , [NSArray arrayWithObjects:[[TTLauncherItem alloc] initWithTitle:@"反馈" image:@"bundle://feedback.png" URL:@"main/feedback"], nil],nil];
-//    }
-//    
-//    [self.view insertSubview:self.launcherView belowSubview:self.tableView];
-//       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -693,7 +638,7 @@
     [self.tableView reloadData];
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+
 - (void)viewDidLoad {
     
 //       self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"页" style:UIBarButtonItemStylePlain target:nil action:nil];

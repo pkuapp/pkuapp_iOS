@@ -225,6 +225,8 @@
 		41D368F113CCA0A000789429 /* CalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D368EF13CCA09F00789429 /* CalendarView.xib */; };
 		41D3DA7313946C5F00D7066F /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D3DA7113946C5F00D7066F /* FirstViewController.m */; };
 		41DFD9D113E6B12F00B19E24 /* IPGateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DFD9D013E6B12F00B19E24 /* IPGateHelper.m */; };
+		41E1A1FA16E31646004D1A4A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E1A1F916E31646004D1A4A /* EventKit.framework */; };
+		41E1A1FC16E3164C004D1A4A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E1A1FB16E3164C004D1A4A /* EventKitUI.framework */; };
 		41E244371503B4F6004A46F3 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E244351503B4F6004A46F3 /* navbar.png */; };
 		41E244381503B4F6004A46F3 /* navbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E244361503B4F6004A46F3 /* navbar@2x.png */; };
 		41E2445C1503BDAD004A46F3 /* btn-back-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E244511503BDAD004A46F3 /* btn-back-normal@2x.png */; };
@@ -539,6 +541,8 @@
 		41D3DA7113946C5F00D7066F /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		41DFD9CF13E6B12F00B19E24 /* IPGateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPGateHelper.h; sourceTree = "<group>"; };
 		41DFD9D013E6B12F00B19E24 /* IPGateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPGateHelper.m; sourceTree = "<group>"; };
+		41E1A1F916E31646004D1A4A /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		41E1A1FB16E3164C004D1A4A /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		41E244351503B4F6004A46F3 /* navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar.png; sourceTree = "<group>"; };
 		41E244361503B4F6004A46F3 /* navbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar@2x.png"; sourceTree = "<group>"; };
 		41E244511503BDAD004A46F3 /* btn-back-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-normal@2x.png"; sourceTree = "<group>"; };
@@ -597,6 +601,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41E1A1FC16E3164C004D1A4A /* EventKitUI.framework in Frameworks */,
+				41E1A1FA16E31646004D1A4A /* EventKit.framework in Frameworks */,
 				418EF7E1167B7F54002DD06E /* MobileCoreServices.framework in Frameworks */,
 				418EF7E0167B7F3F002DD06E /* libz.dylib in Frameworks */,
 				418EF7DE167B7F2D002DD06E /* libxml2.dylib in Frameworks */,
@@ -941,6 +947,8 @@
 		41BCDA1413DB79B100C5CEB7 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				41E1A1FB16E3164C004D1A4A /* EventKitUI.framework */,
+				41E1A1F916E31646004D1A4A /* EventKit.framework */,
 				41EE476D15243110005500E5 /* CalendarContentController.h */,
 				41EE476E15243111005500E5 /* CalendarContentController.m */,
 				41EE476F15243111005500E5 /* CalendarContentController.xib */,

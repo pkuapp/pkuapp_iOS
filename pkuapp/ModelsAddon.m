@@ -65,8 +65,11 @@
 - (NSInteger)dayCodeForDay:(NSInteger)day
 {
     const char* dayx = [[NSString stringWithFormat:@"day%d",day] UTF8String];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     NSInteger code = [[self performSelector:sel_getUid(dayx)] intValue];
     return code;
+#pragma clang diagnostic pop
 }
 
 + (DayVector *)dayVectorForIntCode:(NSInteger)code inday:(NSInteger)day {

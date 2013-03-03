@@ -86,8 +86,8 @@
 #pragma mark - TableView Delegate 
 
 - (void)dismissDetailController{
-#warning should dismiss
-//    [self.delegate dismissModalViewController];
+
+    [self.delegate dismissModalViewControllerAnimated:YES];
     UITableView *tb = self.delegate.searchDisplayController.searchResultsTableView;
     [tb deselectRowAtIndexPath:[tb indexPathForSelectedRow] animated:YES];
 }

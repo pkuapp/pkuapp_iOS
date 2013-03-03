@@ -91,7 +91,7 @@
 	[requestQuery setPostValue:self.valueTargetDay forKey:@"day"];
 	[requestQuery startSynchronous];
 	NSString *stringQuery = [requestQuery responseString];
-	NSArray *arrayResult = [stringQuery JSONValue];
+	NSArray *arrayResult = [[[SBJsonParser alloc] init] objectWithString:stringQuery];
   
 	
 	QueryResultsController *qrc =[ [QueryResultsController alloc] initWithNibName:@"QueryResults" bundle:nil];
@@ -128,7 +128,7 @@
 	
 	NSString *stringRequest = [request responseString];
     
-	NSArray *dictLocation = [stringRequest JSONValue];
+	NSArray *dictLocation = [[[SBJsonParser alloc] init] objectWithString:stringRequest];
     
 	NSMutableArray *tempmarray = [NSMutableArray arrayWithCapacity:25];
     

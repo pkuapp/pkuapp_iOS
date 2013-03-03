@@ -58,9 +58,9 @@
         _notice.dictInfo = self.dictLatestCourse;
         [array addObject:_notice];
     }
-//    if (self.latestEvent!= nil) {
-//        [array addObject:[Notice noticeWithObject:self.latestEvent Type:PKUNoticeTypeLatestEvent]];
-//    }
+    if (self.latestEvent!= nil) {
+        [array addObject:[Notice noticeWithObject:self.latestEvent Type:PKUNoticeTypeLatestEvent]];
+    }
     
     for (Assignment *assign in self.arrayAssignments) {
         [array addObject:[Notice noticeWithObject:assign Type:PKUNoticeTypeAssignment]];
@@ -83,9 +83,9 @@
 
 - (NSArray *)getEventNotice {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];
-//    if (self.latestEvent!= nil) {
-//        [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeLatestEvent]];
-//    }
+    if (self.latestEvent!= nil) {
+        [array addObject:[Notice noticeWithObject:self.nowCourse Type:PKUNoticeTypeLatestEvent]];
+    }
     return array;
 }
 
@@ -150,7 +150,7 @@
             if (!nowCourse) {
                 self.nowCourse = dict[@"course"];
             }
-            //            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:day+PKUWeekDayNow],@"weekDay",NSNumber numberWithInt:(),nil];
+//            self.dictLatestCourse = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:day+PKUWeekDayNow],@"weekDay", NSNumber numberWithInt:(),nil];
         }
     }
     
@@ -163,28 +163,27 @@
     self.latestCourse = nil;
     self.nowCourse = nil;
     NSDate *nowDate = [NSDate date];
-//    NSLog(@"now %@",nowDate);
+
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
     
-//    EKEventStore *store = [[EKEventStore alloc] init];
+    EKEventStore *store = [[EKEventStore alloc] init];
     
 
     
 
 
 
-//        
-//        NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[store calendars]];
-//        
-//        NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
-//        if ([arrayEvents count] != 0) {
-//            self.latestEvent = [arrayEvents objectAtIndex:0];
-//        }
-// NSLog(@"No Default Calendar Found");
+        
+        NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[store calendars]];
+
+        NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
+        if ([arrayEvents count] != 0) {
+            self.latestEvent = [arrayEvents objectAtIndex:0];
+        }
+ NSLog(@"No Default Calendar Found");
     
     
     //fetch all courses event
-//    [store release];
     
     [self getCourseNoticeInWeekOffset:0];
     if (!latestCourse) {
