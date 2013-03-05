@@ -29,7 +29,7 @@
 		411588EF14A3785400FBFA59 /* AssignPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411588ED14A3785400FBFA59 /* AssignPickViewController.m */; };
 		411588F014A3785400FBFA59 /* AssignPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 411588EE14A3785400FBFA59 /* AssignPickViewController.xib */; };
 		411588F514A394F200FBFA59 /* NoticeCenterHepler.m in Sources */ = {isa = PBXBuildFile; fileRef = 411588F414A394F200FBFA59 /* NoticeCenterHepler.m */; };
-		4127096716E6225200B2AE79 /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4127096616E6225100B2AE79 /* coredata.sqlite */; };
+		4127096916E6344D00B2AE79 /* coredata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4127096816E6344D00B2AE79 /* coredata.sqlite */; };
 		412D607C14A3570B00E0B7B5 /* AssignmentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D607A14A3570A00E0B7B5 /* AssignmentsListViewController.m */; };
 		412D607D14A3570B00E0B7B5 /* AssignmentsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412D607B14A3570B00E0B7B5 /* AssignmentsListViewController.xib */; };
 		412D608114A35AA100E0B7B5 /* AssignmentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D607F14A35AA100E0B7B5 /* AssignmentDetailViewController.m */; };
@@ -302,7 +302,7 @@
 		411588F314A394F100FBFA59 /* NoticeCenterHepler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeCenterHepler.h; sourceTree = "<group>"; };
 		411588F414A394F200FBFA59 /* NoticeCenterHepler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeCenterHepler.m; sourceTree = "<group>"; };
 		411E363214BD6C6F00410A53 /* PKUNoticeCenterProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKUNoticeCenterProtocols.h; sourceTree = "<group>"; };
-		4127096616E6225100B2AE79 /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
+		4127096816E6344D00B2AE79 /* coredata.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coredata.sqlite; sourceTree = "<group>"; };
 		412D607914A3570A00E0B7B5 /* AssignmentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssignmentsListViewController.h; sourceTree = "<group>"; };
 		412D607A14A3570A00E0B7B5 /* AssignmentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssignmentsListViewController.m; sourceTree = "<group>"; };
 		412D607B14A3570B00E0B7B5 /* AssignmentsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssignmentsListViewController.xib; sourceTree = "<group>"; };
@@ -690,7 +690,7 @@
 		410B418213902BA300002A46 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4127096616E6225100B2AE79 /* coredata.sqlite */,
+				4127096816E6344D00B2AE79 /* coredata.sqlite */,
 				418EF7DF167B7F3F002DD06E /* libz.dylib */,
 				418EF7DD167B7F2D002DD06E /* libxml2.dylib */,
 				41048A1B165122FC00C5A75A /* Default-568h@2x.png */,
@@ -1387,7 +1387,7 @@
 				41D101CB1556628700566E65 /* EULACell10.html in Resources */,
 				41D101CD15566BB500566E65 /* test_data.plist in Resources */,
 				41048A1C165122FD00C5A75A /* Default-568h@2x.png in Resources */,
-				4127096716E6225200B2AE79 /* coredata.sqlite in Resources */,
+				4127096916E6344D00B2AE79 /* coredata.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
