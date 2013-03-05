@@ -1,19 +1,21 @@
 //
 //  AppUser.m
-//  iOSOne
+//  pkuapp
 //
-//  Created by  on 11-10-6.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Created by wuhaotian on 13-3-5.
+//
 //
 
 #import "AppUser.h"
-
+#import "Assignment.h"
+#import "Course.h"
 
 
 @implementation AppUser
+
 @dynamic deanid;
-@dynamic realname;
 @dynamic password;
+@dynamic realname;
 @dynamic assignset;
 @dynamic courses;
 @dynamic localcourses;

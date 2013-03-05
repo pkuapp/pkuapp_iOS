@@ -42,7 +42,7 @@
 #pragma mark - AssignmentDelegate
 - (void)didDoneAssignment:(Assignment *)assignment {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.delegate.managedObjectContext save:nil];
+    [self.context save:nil];
     [self.tableView reloadData];
 }
 
@@ -68,7 +68,7 @@
 -(NSManagedObjectContext *)context
 {
     if (context == nil) {
-        context = self.delegate.managedObjectContext;
+        context = [NSManagedObjectContext defaultContext];
     }
     return context;
 }

@@ -1,9 +1,9 @@
 //
 //  AppUser.h
-//  iOSOne
+//  pkuapp
 //
-//  Created by  on 11-10-6.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Created by wuhaotian on 13-3-5.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -11,15 +11,14 @@
 
 @class Assignment, Course;
 
-@interface AppUser : NSManagedObject {
-@private
-}
-@property (nonatomic, strong) NSString * deanid;
-@property (nonatomic, strong) NSString * realname;
-@property (nonatomic, strong) NSString * password;
-@property (nonatomic, strong) NSSet *assignset;
-@property (nonatomic, strong) NSSet *courses;
-@property (nonatomic, strong) NSSet *localcourses;
+@interface AppUser : NSManagedObject
+
+@property (nonatomic, retain) NSString * deanid;
+@property (nonatomic, retain) NSString * password;
+@property (nonatomic, retain) NSString * realname;
+@property (nonatomic, retain) NSSet *assignset;
+@property (nonatomic, retain) NSSet *courses;
+@property (nonatomic, retain) NSSet *localcourses;
 @end
 
 @interface AppUser (CoreDataGeneratedAccessors)

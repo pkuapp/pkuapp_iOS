@@ -5,4 +5,5 @@ pod 'SBJson', '~>3.2'
 pod 'Nimbus', '~>1.0.0'
 pod 'RegexKitLite', '~>4.0'
 pod 'MBProgressHUD', '~>0.5'
+pod 'MagicalRecord', '~>2.1'
 

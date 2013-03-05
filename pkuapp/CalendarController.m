@@ -27,27 +27,13 @@
 @end
 
 @implementation CalendarController
-@synthesize didHitAssignBtn;
-@synthesize scrollViewPages;
-@synthesize segmentedSwtich;
-@synthesize btnResetTime;
-@synthesize switchableViewControllers;
-@synthesize noticeCenter,delegate;
-@synthesize didInitScrollView;
-@synthesize dateForDisplay;
-@synthesize dayViewBar;
-@synthesize calSwithSegment;
-@synthesize currentCenterOffset;
-@synthesize currentLength;
-@synthesize reuseController;
-
 #pragma mark - getter override
 - (NSMutableArray *)switchableViewControllers {
-    if (switchableViewControllers == nil) {
+    if (_switchableViewControllers == nil) {
         
-        switchableViewControllers = [[NSMutableArray alloc] initWithCapacity:3];
+        _switchableViewControllers = [[NSMutableArray alloc] initWithCapacity:3];
     }
-    return switchableViewControllers;
+    return _switchableViewControllers;
 }
 
 - (void)didSelectCalSegementControl
@@ -100,12 +86,12 @@
                 self.dateForDisplay = [NSDate dateWithTimeInterval:-86400 sinceDate:self.dateForDisplay];
 
                 
-                reuseController = (self.switchableViewControllers)[4];
+                _reuseController = (self.switchableViewControllers)[4];
                 
-                [self.switchableViewControllers removeObject:reuseController];
+                [self.switchableViewControllers removeObject:_reuseController];
                 
                 
-                [self.switchableViewControllers insertObject:reuseController atIndex:0];
+                [self.switchableViewControllers insertObject:_reuseController atIndex:0];
                 
 //                reuseContentController.dateInDayView = [NSDate dateWithTimeInterval:-86400 sinceDate:self.dateForDisplay];
                 
@@ -123,10 +109,10 @@
                 
                 self.dateForDisplay = [NSDate dateWithTimeInterval:86400 sinceDate:self.dateForDisplay];
                 
-                reuseController = (self.switchableViewControllers)[0];
+                _reuseController = (self.switchableViewControllers)[0];
                 
-                [self.switchableViewControllers removeObject:reuseController];
-                [self.switchableViewControllers addObject:reuseController];
+                [self.switchableViewControllers removeObject:_reuseController];
+                [self.switchableViewControllers addObject:_reuseController];
 
                 self.currentCenterOffset = self.currentCenterOffset + 330;
                 
@@ -134,7 +120,7 @@
                 
                 self.scrollViewPages.contentSize = CGSizeMake(self.currentLength, 340);
                 
-                reuseController.view.frame = CGRectMake(self.currentCenterOffset + 660 + 5, 0, 320, 372);
+                _reuseController.view.frame = CGRectMake(self.currentCenterOffset + 660 + 5, 0, 320, 372);
                 
                 [self performSelectorInBackground:@selector(reuseControllerForHigherTime) withObject:nil];
                 self.dayViewBar.delegate = (self.switchableViewControllers)[2];

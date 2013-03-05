@@ -24,22 +24,25 @@
 #import "Course.h"
 #import "ModalAlert.h"
 
+#import "CoreData+MagicalRecord.h"
 
-@interface iOSOneAppDelegate(Private)
+
+@interface iOSOneAppDelegate()
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 - (void)checkVersion;
 - (void)checkVersionDone;
 - (NSString *)parsedLoginError:(NSString *)loginmessage;
 @end
 
 @implementation iOSOneAppDelegate
-static UIFont *font;
 
 @synthesize window = _window;
 @synthesize operationQueue;
 @synthesize wifiTester,internetTester,globalTester,freeTester,localTester;
 @synthesize netStatus;
 @synthesize hasWifi;
-@synthesize appUser;
 @synthesize wvc;
 @synthesize progressHub;
 @synthesize test_data;
@@ -107,41 +110,25 @@ static UIFont *font;
 
 - (AppUser *)appUser
 {
-    if (nil == appUser) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        NSString *username = [defaults stringForKey:@"appUser"];
-        
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"AppUser" inManagedObjectContext:self.managedObjectContext];
-        
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        
-        fetchRequest.entity = entity;
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deanid == %@",username];
-        fetchRequest.predicate = predicate;
-        
-        appUser = (AppUser *) [[self.managedObjectContext executeFetchRequest:fetchRequest error:NULL] lastObject];
-        
-
-//        NSLog(@"get appUser%@",appUser);
-
+    if (nil == _appUser) {
+        NSArray *array = [AppUser findAll];
+        _appUser = [array lastObject];
     }
-    return appUser;
+    return _appUser;
 }
 
 -(void)logout
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"didLogin"];
+    NSSet *courses = self.appUser.courses;
+    [self.appUser removeCourses:courses];
+    [self.appUser deleteInContext:[NSManagedObjectContext defaultContext]];
 
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
     [NSUserDefaults resetStandardUserDefaults];
-    [self.appUser removeCourses:self.appUser.courses];
+
     self.appUser = nil;
-//    [persistentStoreCoordinator release];
-//    persistentStoreCoordinator = nil;
-//    [managedObjectContext release];
-//    managedObjectContext = nil;
     self.wvc = nil;
     [self showWithLoginView];
     
@@ -185,33 +172,31 @@ static UIFont *font;
         
         [requestLogin startSynchronous];
         
-        loginmessage = [requestLogin responseString]; //[[NSString alloc] initWithData:[requestLogin responseData] encoding:NSStringEncodingConversionAllowLossy];
+        loginmessage = [requestLogin responseString];
+        
         if (!requestLogin.isFinished) {
             *stringError = @"连接超时";
             return NO;
         }
         NSLog(@"get login response:%@",loginmessage);
     }
-
     
     
     if ([loginmessage isEqualToString:@"0"]){
-        if (appUser == nil) {
-            
-        appUser = (AppUser *) [NSEntityDescription insertNewObjectForEntityForName:@"AppUser" inManagedObjectContext:self.managedObjectContext];
-            NSLog(@"create appUser");
+        
+        NSManagedObjectContext *context = self.managedObjectContext;
+        
+        if (_appUser == nil) {
+            _appUser = (AppUser *) [AppUser createInContext:context];
         }
-     
+        _appUser.deanid = username;
+        _appUser.password = password;
+    
+//        [context save];
+        [context save:NULL];
+        [context saveToPersistentStoreAndWait];
+        return YES;
 
-        appUser.deanid = username;
-        appUser.password = password;
-        NSError *error;
-        if ([self.managedObjectContext save:&error]) {
-            return YES;
-        }
-        else {
-            NSLog(@"save data error:%@", error);
-        }
     }
     NSString *stringResult = [self parsedLoginError:loginmessage];
     *stringError = stringResult;
@@ -233,54 +218,54 @@ static UIFont *font;
     
     NSString *stringProfile = [requestProfile responseString];
     NSDictionary *dictProfile = [[[SBJsonParser alloc] init] objectWithString:stringProfile];
+    
+    
     self.appUser.realname = dictProfile[@"realname"];
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"%@",[error localizedDescription]);
-    }
+
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+  
     return error;
 }
 
 - (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dictCourse {
-    NSError *error;
- 
-    BOOL needRawName = NO;
+
     for (NSString *key in [dictCourse keyEnumerator]) {
-        NSString *localKey = key;
-    
-        if ([key isEqualToString:@"cname"]) {
-            if ([dictCourse[@"cname"] isKindOfClass:[NSNull class]] || [dictCourse[@"cname"] isEqualToString:@""]) {
-                needRawName = YES;
-                continue;
-            }
-            localKey = @"name";
-        }
-        if ([key isEqualToString:@"ename"]) {
+
+
+        if ([key isEqualToString:@"ename"] || [key isEqualToString:@"cname"]) {
             continue;
-        }
-        if (!needRawName && [key isEqualToString:@"name"]) {
-            continue;
-            needRawName = NO;
         }
         id object = dictCourse[key];
         if (![object isKindOfClass: [NSNull class]]) {
 
 
-            @try {
-                [_course setPrimitiveValue:dictCourse[key] forKey:localKey];
+//            @try {
+                [_course willChangeValueForKey:key];
+                [_course setPrimitiveValue:dictCourse[key] forKey:key];
+                [_course didChangeValueForKey:key];
 
-            }
-            @catch (NSException *exception) {
-                NSLog(@"Failed to update key %@",key);
-            }
-            @finally {
+//            }
+//            @catch (NSException *exception) {
+//                NSLog(@"Failed to update key %@",key);
+//            }
+//            @finally {
 
-            }
+//            }
         }
-        
     }
-    [self.managedObjectContext save:&error];
 
-//    NSLog(@"%@", error);
+    
+    NSString *cname = dictCourse[@"cname"];
+    if (cname && ![cname isKindOfClass:[NSNull class]] && ![cname isEqualToString:@""]) {
+        _course.name = cname;
+    }
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error])
+        NSLog(@"Save %@ error: %@", dictCourse, [error localizedDescription]);
+    [self.managedObjectContext saveToPersistentStoreAndWait];
+    
+ 
 }
 
 - (NSError *)updateServerCourses{
@@ -290,11 +275,10 @@ static UIFont *font;
     NSArray *jsonCourse;
     
     NSString *stringCourse;
-    
+
     if ([self.appUser.deanid isEqualToString:test_username]) {
                 
         stringCourse = [self.test_data valueForKeyPath:@"user.json_courses"];
-        NSLog(@"sdf%@",stringCourse);
 
     }
     
@@ -307,29 +291,29 @@ static UIFont *font;
     jsonCourse = [[[SBJsonParser alloc] init] objectWithString:stringCourse];
 
     if (jsonCourse.count == 0) {
-//        error = [[NSError alloc] initWithDomain:@"未获得有效课程" code:0 
+
         return nil;
     }
     
-    NSMutableArray *arrayCourses = [NSMutableArray arrayWithCapacity:5];
+    NSMutableSet *arrayCourses = [NSMutableSet setWithCapacity:8];
     
     NSDictionary *dictCourse;
     
     NSString *stringPredicate;// = [NSMutableString stringWithCapacity:0];
-    
+    NSManagedObjectContext *context = self.managedObjectContext;
+
 	for (int i = 0 ;i < jsonCourse.count; i++){
         dictCourse = jsonCourse[i];
         stringPredicate = [NSString stringWithFormat:@"id == %@",dictCourse[@"id"]];
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
         
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
+        
         NSPredicate *predicate = [NSPredicate predicateWithFormat:stringPredicate];
-        request.entity = entity;
-        request.predicate = predicate;
-        NSArray *_array = [self.managedObjectContext executeFetchRequest:request error:&error];
+
+        NSArray *_array = [Course findAllWithPredicate:predicate inContext:context];
+
         Course *_course = nil;
-        if (!_array.count) {
-            _course = (Course *)[NSEntityDescription insertNewObjectForEntityForName:@"Course" inManagedObjectContext:self.managedObjectContext];
+        if (!_array || !_array.count) {
+            _course = (Course *)[Course createInContext:context];
             
             [self saveCourse:_course withDict:dictCourse];
 
@@ -344,18 +328,21 @@ static UIFont *font;
         }
 
     }
-    [self.managedObjectContext save:&error];
-    
-
     
     NSLog(@"count:%d",arrayCourses.count);
     
-    NSSet *courseset = [NSSet setWithArray:arrayCourses];
-    
-    
+    NSSet *courseset = arrayCourses;
+
     [self.appUser addCourses:courseset];
-    
-    if (![self.managedObjectContext save:&error]) NSLog(@"SaveError: %@", [error localizedDescription]);
+
+    if (![self.managedObjectContext save:&error])
+    {
+        NSLog(@"add courses error: %@", error);
+        
+    }
+//
+    [self.managedObjectContext saveToPersistentStoreAndWait];
+
     return error;
 }
 
@@ -386,8 +373,6 @@ static UIFont *font;
     if (wvc == nil) {
         WelcomeViewController *wv = [[WelcomeViewController alloc] initWithNibName:nil bundle:nil];
         wvc = [[UINavigationController alloc] initWithRootViewController:wv];
-//        [wvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"]];
-    
     }
     return wvc;
 }
@@ -404,10 +389,6 @@ static UIFont *font;
     if (mvc == nil) {
         mvc = [[UINavigationController alloc] init];
         mvc.delegate = self;
-       
-//        [mvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBar-bg.png"]];
-        //mvc.navigationBar.tintColor = navigationBgColor;
-        //mvc.navigationBar
     }
     return mvc;
 }
@@ -444,15 +425,18 @@ static UIFont *font;
 }
 
 - (void)generateCoreDataBase {
-    /*
+
     NSFileManager *fmanager = [NSFileManager defaultManager];
     [fmanager removeItemAtPath:pathsql2 error:nil];
     
     NSError *error;
     
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[NSManagedObjectModel mergedModelFromBundles:nil]];
+    
     [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[NSURL fileURLWithPath:pathsql2] options:nil error:nil];
+    
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    
     [context setPersistentStoreCoordinator:coordinator];
     
     ASIHTTPRequest *schoolrq = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlCourseCategory]];
@@ -465,7 +449,7 @@ static UIFont *font;
         School *school = [NSEntityDescription insertNewObjectForEntityForName:@"School" inManagedObjectContext:context];
         school.name = dict[@"name"];
         school.code = dict[@"code"];
-        if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);
+        if (![context save:&error]) NSLog(@"%@",error);
         schoolDict[school.code] = school;
     }
     
@@ -510,7 +494,7 @@ static UIFont *font;
         
     }
     if (![context save:&error]) NSLog(@"%@",[error localizedDescription]);
-    */
+
 }
 
 #pragma mark UINavigation...Delegate Setup
@@ -530,12 +514,27 @@ static UIFont *font;
 #pragma mark application life-cycle Setup
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
-//    NSLog(@"%@",[[NSBundle mainBundle] bundleIdentifier] );
-    font = [UIFont fontWithName:@"Avenir-Black" size:14.0];
-    [self generateCoreDataBase];
 
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+#pragma mark ensure coredata file exists
     NSFileManager *fm = [NSFileManager defaultManager];
+//    [self generateCoreDataBase];
+
+    if (![fm fileExistsAtPath:pathSQLCore]) {
+        NSString *defaultSQLPath = [[NSBundle mainBundle] pathForResource:@"coredata" ofType:@"sqlite"];
+        if (defaultSQLPath) {
+            [fm copyItemAtPath:defaultSQLPath toPath:pathSQLCore error:NULL];
+        }
+    }
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"coredata.sqlite"];
+
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(mergeChanges:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:[NSManagedObjectContext defaultContext]];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"btn-back-normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
@@ -556,19 +555,14 @@ static UIFont *font;
     
     [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"btn-segmented-divider.png"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 
-    if (![fm fileExistsAtPath:pathSQLCore]) {
-        NSString *defaultSQLPath = [[NSBundle mainBundle] pathForResource:@"coredata" ofType:@"sqlite"];
-        if (defaultSQLPath) {
-            [fm copyItemAtPath:defaultSQLPath toPath:pathSQLCore error:NULL];
-        }
-    }
+
     [self showwithMainView];
 
 	if ([userDefaults boolForKey:@"didLogin"]){
         
-        if ([userDefaults integerForKey:@"VersionReLogin"] == VersionReLogin) {
+        if ([userDefaults integerForKey:@"VersionReLogin"] > VersionReLogin) {
             [self showWithLoginView];
-
+            NSLog(@"didiLogin");
         }
         else{
             [fm removeItemAtPath:pathUserPlist error:nil];
@@ -577,7 +571,7 @@ static UIFont *font;
             if (defaultSQLPath) {
                 [fm copyItemAtPath:defaultSQLPath toPath:pathSQLCore error:NULL];
             }
-            [self showWithLoginView];
+            [self showwithMainView];
 
         }
         
@@ -586,59 +580,60 @@ static UIFont *font;
         [self showWithLoginView];
     }
     
-    
-//    self.internetTester = [Reachability reachabilityForInternetConnection];
-//
-//	[self.internetTester startNotifier];
-//    
-//    self.wifiTester = [Reachability reachabilityForLocalWiFi];
-//
-//	[self.wifiTester startNotifier];
-//
-//    self.localTester = [Reachability reachabilityWithHostName:@"its.pku.edu.cn"];
-//    self.localTester.key = @"local";
-//    [self.localTester startNotifier];
-//    
 
-//    [self generateCoreDataBase];
     [self.window makeKeyAndVisible];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStatusDidChanged:) name:kReachabilityChangedNotification object:nil];
-    
-    [self checkVersion];
+
+//    [self checkVersion];
     return YES;
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    [MagicalRecord cleanUp];
+}
 
 #pragma mark - Core Data Setup
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (persistentStoreCoordinator == nil) {
+    if (_persistentStoreCoordinator == nil) {
         NSURL *storeUrl = [NSURL fileURLWithPath:self.persistentStorePath];
-        persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[NSManagedObjectModel mergedModelFromBundles:nil]];
+        _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[NSManagedObjectModel mergedModelFromBundles:nil]];
         NSError *error = nil;
-        NSPersistentStore *persistentStore = [persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error];
+        NSPersistentStore *persistentStore = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error];
         if (persistentStore == nil) {
             
         }
         NSAssert3(persistentStore != nil, @"Unhandled error %s at line %d: %@", __FUNCTION__, __LINE__, [error localizedDescription]);
     }
-    return persistentStoreCoordinator;
+    return _persistentStoreCoordinator;
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
     
-    if (managedObjectContext == nil) {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+    if (_managedObjectContext == nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [_managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
     }
-    return managedObjectContext;
+    return _managedObjectContext;
 }
 
 - (NSString *)persistentStorePath {
-    if (persistentStorePath == nil) {
-        persistentStorePath = pathSQLCore;
-    }
-    return persistentStorePath;
+    
+    return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"coredata.sqlite"];
 }
+
+- (void)updateContext:(NSNotification *)notification
+{
+	NSManagedObjectContext *mainContext = [NSManagedObjectContext defaultContext];
+	[mainContext mergeChangesFromContextDidSaveNotification:notification];
+
+}
+
+// this is called via observing "NSManagedObjectContextDidSaveNotification" from our ParseOperation
+- (void)mergeChanges:(NSNotification *)notification {
+
+    [self performSelectorOnMainThread:@selector(updateContext:) withObject:notification waitUntilDone:YES];
+}
+
 
 @end

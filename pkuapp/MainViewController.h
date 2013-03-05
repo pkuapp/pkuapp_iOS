@@ -38,7 +38,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong, readonly) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *results;
-@property (weak, nonatomic, readonly) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol> *delegate;
+@property (weak, nonatomic, readonly) NSObject<AppUserDelegateProtocol,ReachablityProtocol> *delegate;
 @property (strong, nonatomic) GateViewController *gvc;
 @property (strong, nonatomic) IPGateHelper *connector;
 @property (strong, nonatomic) NoticeCenterHepler *noticeCenterHelper;

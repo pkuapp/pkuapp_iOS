@@ -47,6 +47,8 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.secondNavigationController.view];
+    self.secondNavigationController.view.frame = CGRectMake(0, 0, 320, 480);
+    
 }
 
 

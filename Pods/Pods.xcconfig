@@ -1,7 +1,7 @@
 ALWAYS_SEARCH_USER_PATHS = YES
 HEADER_SEARCH_PATHS = ${PODS_HEADERS_SEARCH_PATHS} $(SDKROOT)/usr/include/libxml2
-OTHER_LDFLAGS = -ObjC -licucore -lxml2.2 -lz.1 -framework CFNetwork -framework CoreGraphics -framework CoreText -framework MobileCoreServices -framework SystemConfiguration
-PODS_BUILD_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/AFNetworking" "${PODS_ROOT}/BuildHeaders/ASIHTTPRequest" "${PODS_ROOT}/BuildHeaders/JSONKit" "${PODS_ROOT}/BuildHeaders/MBProgressHUD" "${PODS_ROOT}/BuildHeaders/Nimbus" "${PODS_ROOT}/BuildHeaders/Reachability" "${PODS_ROOT}/BuildHeaders/RegexKitLite" "${PODS_ROOT}/BuildHeaders/SBJson"
+OTHER_LDFLAGS = -ObjC -licucore -lxml2.2 -lz.1 -framework CFNetwork -framework CoreData -framework CoreGraphics -framework CoreText -framework MobileCoreServices -framework SystemConfiguration
+PODS_BUILD_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/AFNetworking" "${PODS_ROOT}/BuildHeaders/ASIHTTPRequest" "${PODS_ROOT}/BuildHeaders/JSONKit" "${PODS_ROOT}/BuildHeaders/MBProgressHUD" "${PODS_ROOT}/BuildHeaders/MagicalRecord" "${PODS_ROOT}/BuildHeaders/Nimbus" "${PODS_ROOT}/BuildHeaders/Reachability" "${PODS_ROOT}/BuildHeaders/RegexKitLite" "${PODS_ROOT}/BuildHeaders/SBJson"
 PODS_HEADERS_SEARCH_PATHS = ${PODS_PUBLIC_HEADERS_SEARCH_PATHS}
-PODS_PUBLIC_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/ASIHTTPRequest" "${PODS_ROOT}/Headers/JSONKit" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/Nimbus" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/RegexKitLite" "${PODS_ROOT}/Headers/SBJson"
+PODS_PUBLIC_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/ASIHTTPRequest" "${PODS_ROOT}/Headers/JSONKit" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/MagicalRecord" "${PODS_ROOT}/Headers/Nimbus" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/RegexKitLite" "${PODS_ROOT}/Headers/SBJson"
 PODS_ROOT = ${SRCROOT}/Pods

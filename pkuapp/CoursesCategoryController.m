@@ -54,7 +54,7 @@
 }
 - (NSManagedObjectContext *)context {
     if (context == nil) {
-        context = self.delegate.managedObjectContext;
+        context = [NSManagedObjectContext defaultContext];
     }
     return context;
 }

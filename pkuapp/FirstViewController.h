@@ -25,7 +25,6 @@
 	ASINetworkQueue *queueNet;
     MBProgressHUD *HUD;
     iOSOneAppDelegate *delegate;
-    NSManagedObjectContext *context;
     UITableView *tableView;
     
     UITextField *Username;

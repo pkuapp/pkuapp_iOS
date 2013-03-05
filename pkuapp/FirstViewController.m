@@ -122,13 +122,6 @@
     return validCode;
 }
 
--(NSManagedObjectContext *)context
-{
-    if (nil == context) {
-        context = self.delegate.managedObjectContext;
-    }
-    return context;
-}
 
 -(iOSOneAppDelegate *)delegate
 {
@@ -197,7 +190,6 @@
     
     NSAssert2([cookies count] > 0, @"Unhandled error at %s line %d", __FUNCTION__, __LINE__); 
     
-    NSLog(@"%@",cookies);
     
     NSString *tempString = [cookies[0] valueForKey:@"value"];// cStringUsingEncoding:-2147481083];
     if ([SystemHelper getPkuWeeknumberNow] > 2) {
@@ -205,7 +197,6 @@
     }
     else self.sessionid = tempString;
     
-    NSLog(@"%@",sessionid);
     
 	[self.firstImg setImage:[UIImage imageWithContentsOfFile: pathImg] forState:UIControlStateNormal];
     
@@ -238,7 +229,7 @@
 {	
     NSInteger pkuNumberNow = [SystemHelper getPkuWeeknumberNow];
     NSString *urlImg;
-    
+
     if (pkuNumberNow <= 2) {
         urlImg = urlImgEle;
     }
@@ -288,6 +279,7 @@
     self.delegate.progressHub.labelText = @"登录中";
     [self.delegate.progressHub show:YES];
     [self performSelectorInBackground:@selector(taskLogin) withObject:nil];
+//    [self taskLogin];
 	
 }
 
@@ -320,10 +312,12 @@
             
             [defaults setObject:[NSString stringWithString:self.Username.text] forKey:@"appUser"];
             
+            
             [self.delegate updateAppUserProfile];
             
-            [self.delegate updateServerCourses];
-            
+//            [self.delegate updateServerCourses];
+            [self.delegate performSelectorOnMainThread:@selector(updateServerCourses) withObject:nil waitUntilDone:YES];
+
             [defaults setInteger:VersionReLogin forKey:@"VersionReLogin"];
             
             [defaults setBool:YES forKey:@"didLogin"];
@@ -369,10 +363,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 
@@ -400,8 +391,6 @@
     HUD = nil;
 
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 

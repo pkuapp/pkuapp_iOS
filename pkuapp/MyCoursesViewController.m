@@ -22,6 +22,7 @@
 - (NSArray *)coursesArray
 {
     if (coursesArray == nil) {
+
         if (self.segmentedControl.selectedSegmentIndex == 0) {
 
             coursesArray = [self.delegate.appUser.courses allObjects];

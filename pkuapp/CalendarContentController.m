@@ -284,8 +284,7 @@
     if (managedObjectContext == nil)
     {
         UIApplication *application = [UIApplication sharedApplication];
-        iOSOneAppDelegate* appdelegate = (iOSOneAppDelegate*) application.delegate;
-        managedObjectContext = appdelegate.managedObjectContext;
+        managedObjectContext = [NSManagedObjectContext defaultContext];
     }
     return managedObjectContext;
 }

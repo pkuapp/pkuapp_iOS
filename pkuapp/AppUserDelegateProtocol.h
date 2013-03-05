@@ -10,7 +10,7 @@
 @class AppUser;
 
 @protocol AppUserDelegateProtocol <NSObject>
-@property(nonatomic, retain, readonly) AppUser *appUser;
+@property(nonatomic, weak, readonly) AppUser *appUser;
 - (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid error:(NSString *)stringError;
 - (BOOL)refreshAppSession;
 - (void)updateAppUserProfile;
