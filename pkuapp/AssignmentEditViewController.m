@@ -34,14 +34,14 @@
 
 
 - (void)canSaveOrNot{
-//    if (self.coord_assign.course && self.coord_assign.endDate && self.contentTextView.text ) {
-//        self.navigationItem.rightBarButtonItem.enabled = YES;
-//    }
-//    else self.navigationItem.rightBarButtonItem.enabled = NO;
+    if (self.coord_assign.course && self.coord_assign.endDate && self.contentTextView.text ) {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    else self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 - (IBAction)didTouchUpInsideBgView:(id)sender {
-//    [self.contentTextView resignFirstResponder];
+    [self.contentTextView resignFirstResponder];
 }
 
 - (void)didSelectCancelBtn {
@@ -49,38 +49,45 @@
 }
 
 - (void)didSelectEditDoneBtn{
-//    self.coord_assign.content = self.contentTextView.text;
+    self.coord_assign.content = self.contentTextView.text;
     
     [self.delegate didFinnishedEdit];
 }
 
 
-#pragma mark - UITextField Delegate
-//
-//- (void)textEditorDidChange:(TTTextEditor *)textEditor {
-//    [self canSaveOrNot];
-//    [self.tableView beginUpdates];
-//    [self.tableView endUpdates];
-//    
-//}
-//
-//- (void)textEditorDidBeginEditing:(TTTextEditor*)textEditor {
-//    [self canSaveOrNot];
-//}
-//
+#pragma mark - UITextView Delegate
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [self canSaveOrNot];
+    CGRect frame = self.contentTextView.frame;
+    frame.size.height = self.contentTextView.contentSize.height + 14;
+    [self.tableView beginUpdates];
+    self.contentTextView.frame = frame;
+    [self.tableView endUpdates];
+    NSLog(@"%f", self.contentTextView.contentSize.height);
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    [self canSaveOrNot];
+
+}
+
+
 - (void)dateDidChanged {
     _dateField.text = [self.formatter stringFromDate: _datePicker.date];
     self.coord_assign.endDate = _datePicker.date;
     [self canSaveOrNot];
+
 }
-//
-//- (BOOL)textEditor:(TTTextEditor *)textEditor shouldResizeBy:(CGFloat)height {
-//   
-//
-//    return YES;
-//}
 
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+//    if (touch.view.class == tableView.class) {
+//        return NO;
+//    }
+    return YES;
+}
 
 #pragma mark - tableVew Delegate
 
@@ -178,12 +185,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    switch (indexPath.section) {
-//        case 2:
-//            return MAX(self.contentTextView.frame.size.height + 28,88);
-//        default:
-//            break;
-//    }
+    switch (indexPath.section) {
+        case 2:
+            return MAX(self.contentTextView.frame.size.height + 14, 36 + 14);
+        default:
+            break;
+    }
     return 44;
 }
 
@@ -193,7 +200,6 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-//    TTTextEditor *contentView; 
     
     if (controllerMode == AssignmentEditControllerModeAdd) {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section+1];
@@ -236,25 +242,25 @@
             
             break;
         case 3:
- 
-//            contentView = [[TTTextEditor alloc] initWithFrame:CGRectMake(0, 5, cell.frame.size.width-6, 200)];
-//            contentView.font = [UIFont boldSystemFontOfSize:14];
-            //contentView.editable = YES;
-//            contentView.text = self.coord_assign.content;
+        {
+            UITextView *contentView = [[UITextView alloc] initWithFrame:CGRectMake(0, 5, cell.frame.size.width-6, 36)];
+            contentView.font = [UIFont boldSystemFontOfSize:14];
+            contentView.editable = YES;
+            contentView.text = self.coord_assign.content;
 //            contentView.autoresizesToText = YES;
-//            contentView.backgroundColor = [UIColor clearColor];
+            contentView.backgroundColor = [UIColor clearColor];
             
 //            contentView.placeholder = @"又是一年春好处";
-//            contentView.text = coord_assign.content;
-//            contentView.delegate = self;
+
+            contentView.delegate = self;
 //            contentView.maxNumberOfLines = 10;
-//            [cell.contentView addSubview:contentView];
-//            self.contentTextView = contentView;
-//            [contentView release];
-//            cell.frame = CGRectMake(0, 0, cell.frame.size.width, 220);
+            [cell.contentView addSubview:contentView];
+            self.contentTextView = contentView;
+
+            cell.frame = CGRectMake(0, 0, cell.frame.size.width, 88);
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
-        
+        }
         case 4:
             cell.textLabel.textAlignment = UITextAlignmentCenter;
             cell.textLabel.text = @"不做了";
@@ -292,29 +298,12 @@
 
 - (void)keyboardWillAppear:(BOOL)animated withBounds:(CGRect)bounds {
     self.view.frame = CGRectMake(0, 0, 320, 416 - bounds.size.height);
-//    [self.tableView scrollFirstResponderIntoView];
 }
 
 - (void)keyboardWillDisappear:(BOOL)animated withBounds:(CGRect)bounds {
     self.tableView.frame = CGRectMake(0, 0, 320, 416);
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -327,17 +316,37 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
- 
    
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
 
 - (void)viewDidLoad
 {
 
     [super viewDidLoad];
-//    self.autoresizesForKeyboard = YES;
 
     if (controllerMode == AssignmentEditControllerModeAdd) {
         
@@ -355,6 +364,7 @@
         
     }
     self.tableView.backgroundColor = tableBgColor;
+    self.view.backgroundColor = tableBgColor;
     
     NSMutableArray *_array = [NSMutableArray arrayWithCapacity:self.delegate.arrayCourses.count];
     for (Course *_course in self.delegate.arrayCourses) {
@@ -366,21 +376,75 @@
     if (controllerMode == AssignmentEditControllerModeAdd) {
         self.title = @"添加作业";
     }
-    // Do any additional setup after loading the view from its nib.
+    
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
+    tgr.delegate = self;
+    tgr.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tgr];
 }
 
-- (void)viewDidUnload
+- (void)didTap
 {
-    [self setTableView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [self.contentTextView resignFirstResponder];
+    [_dateField resignFirstResponder];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+
+
+-(void)keyboardWillShow:(NSNotification*)aNotification{
+    // Animate the current view out of the way
+    [self setViewMovedUp:YES withNotification:aNotification];
+}
+
+-(void)keyboardWillHide:(NSNotification*)aNotification{
+    [self setViewMovedUp:NO withNotification:aNotification];
+}
+
+//method to move the view up/down whenever the keyboard is shown/dismissed
+-(void)setViewMovedUp:(BOOL)movedUp withNotification:(NSNotification*)aNotification
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    NSDictionary* userInfo = [aNotification userInfo];
+    
+    // Get animation info from userInfo
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    
+    CGRect keyboardEndFrame;
+    
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    
+    // Animate up or down
+        
+    CGRect textFrame = [self.tableView convertRect:self.contentTextView.frame fromView:self.contentTextView.superview];
+    
+    CGFloat height = keyboardEndFrame.size.height;
+    
+    
+    if (movedUp) {
+        
+        CGFloat offset = textFrame.origin.y + textFrame.size.height + height - self.view.frame.size.height + 44;
+        self.tableView.contentOffset = CGPointMake(0, offset);
+        self.tableView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height - height);
+
+
+    }
+    else{
+        
+        self.tableView.contentOffset = CGPointZero;
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:animationDuration];
+        [UIView setAnimationCurve:animationCurve];
+        self.tableView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+        [UIView commitAnimations];
+
+
+//        [self.tableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionBottom animated:YES];
+
+    }
+    
+    
 }
 
 @end

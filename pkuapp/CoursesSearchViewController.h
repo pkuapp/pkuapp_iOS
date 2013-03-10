@@ -22,8 +22,6 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISearchDisplayController *searchDC;
 @property (nonatomic, strong) IBOutlet SearchDataSource *searchDS;
-
-@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, strong) NSFetchedResultsController *searchRC;
 

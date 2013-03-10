@@ -17,7 +17,7 @@
 @synthesize searchBar;
 @synthesize tableView;
 @synthesize searchDC;
-@synthesize context,fetchedResultController;
+@synthesize fetchedResultController;
 @synthesize indexArray;
 @synthesize searchRC;
 @synthesize searchDS,resultArray;
@@ -25,13 +25,13 @@
 - (NSFetchedResultsController *)fetchedResultController{
     if (fetchedResultController == nil) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.context];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext defaultContext]];
         NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCompare:)];
         request.entity = entity;
         request.sortDescriptors = @[sortD];
         
         [request setFetchBatchSize:2000];
-        fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:@"courseSectionName" cacheName:@"nameFilter"];
+        fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[NSManagedObjectContext defaultContext] sectionNameKeyPath:@"courseSectionName" cacheName:@"nameFilter"];
     }
     return fetchedResultController;
 }
@@ -124,13 +124,13 @@
 {
     if (resultArray == nil) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.context];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext defaultContext]];
         NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCompare:)];
         request.entity = entity;
         request.sortDescriptors = @[sortD];
         
         [request setFetchBatchSize:2000];
-        resultArray = [self.context executeFetchRequest:request error:NULL];
+        resultArray = [[NSManagedObjectContext defaultContext] executeFetchRequest:request error:NULL];
 
     }
     return resultArray;

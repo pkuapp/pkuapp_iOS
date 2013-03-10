@@ -32,7 +32,7 @@ typedef enum AssignmentEditControllerMode {
     AssignmentEditControllerModeEdit
 }AssignmentEditControllerMode;
 
-@interface AssignmentEditViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NITableViewModelDelegate>{
+@interface AssignmentEditViewController : UIViewController<UITextViewDelegate, UITableViewDataSource,UITableViewDelegate,NITableViewModelDelegate, UIGestureRecognizerDelegate>{
     UITextField *_dateField;
     UIDatePicker *_datePicker;
 }
@@ -44,11 +44,12 @@ typedef enum AssignmentEditControllerMode {
 @property (strong, nonatomic) NSArray *arrayCourses;
 @property (weak, nonatomic) NSObject<AssignmentEditDelegate> *delegate;
 @property (assign, nonatomic) BOOL courseAndDateSetup;
-//@property (retain, nonatomic) TTTextEditor *contentTextView;
 @property (strong, nonatomic) NITableViewModel* tableModel;
 @property (strong, nonatomic) UITableViewController *courseTVC;
 @property (strong, nonatomic) UILabel *_courseLabel;
 @property (assign, nonatomic) AssignmentEditControllerMode controllerMode;
+@property (strong, nonatomic) UITextView *contentTextView;
+
 
 - (id)initWithType:(AssignmentEditControllerMode)mode;
 - (void)didSelectEditDoneBtn;

@@ -36,7 +36,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonIPGate;
 @property (nonatomic, strong) IBOutlet UIButton *btnCourses;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong, readonly) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *results;
 @property (weak, nonatomic, readonly) NSObject<AppUserDelegateProtocol,ReachablityProtocol> *delegate;
 @property (strong, nonatomic) GateViewController *gvc;

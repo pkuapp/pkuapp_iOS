@@ -42,7 +42,7 @@
 #pragma mark - AssignmentDelegate
 - (void)didDoneAssignment:(Assignment *)assignment {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.context save:nil];
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
     [self.tableView reloadData];
 }
 
@@ -50,8 +50,9 @@
 
 - (void)shouldDeleteAssignment:(Assignment *)assignment {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.context deleteObject:assignment];
-    [self.context save:nil];
+    [assignment deleteInContext:[NSManagedObjectContext defaultContext]];
+    
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
     self.arrayNotices = nil;
     self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
     [self.tableView reloadData];
@@ -65,13 +66,6 @@
     return _arrayCourses;
 }
 
--(NSManagedObjectContext *)context
-{
-    if (context == nil) {
-        context = [NSManagedObjectContext defaultContext];
-    }
-    return context;
-}
 
 -(NSObject *)delegate
 {
@@ -345,8 +339,6 @@
     
     CoursesSearchViewController *csvc = [[CoursesSearchViewController alloc] initWithNibName:@"CoursesSearchView" bundle:nil];
     
-    csvc.context = self.context;
-    
     csvc.title = @"搜索";
     
     csvc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"搜索" image:[UIImage imageNamed:@"180-stickynote.png"] tag:2];
@@ -514,7 +506,7 @@
 {
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.context];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext defaultContext]];
     
 	[fetchRequest setEntity:entity];
 	[fetchRequest setFetchBatchSize:20]; 
@@ -527,7 +519,7 @@
 
 	NSError *error;
     
-	self.results = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+	self.results = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext defaultContext] sectionNameKeyPath:nil cacheName:nil];
     
     self.results.delegate = self;
     
