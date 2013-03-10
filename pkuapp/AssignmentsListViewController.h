@@ -13,11 +13,10 @@
 #import "Assignment.h"
 #import "AssignmentEditViewController.h"
 #import "AppCoreDataProtocol.h"
-@interface AssignmentsListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,AssignmentEditDelegate> {
-    NSMutableArray *arrayAssigns;
-}
+@interface AssignmentsListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,AssignmentEditDelegate>
+
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+
 @property (strong, nonatomic) NSMutableArray *arrayAssigns;
 @property (strong, nonatomic) NSArray *arrayCourses;
 @property (weak, nonatomic) Assignment *coord_assign;

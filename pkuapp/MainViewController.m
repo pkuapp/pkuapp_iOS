@@ -359,7 +359,7 @@
     //UINavigationController *mcvc = [[UINavigationController alloc] initWithNibName:@"MyCoursesViewController.xib" bundle:nil];
     
     MyCoursesViewController *mcvc = [[MyCoursesViewController alloc] init];
-    mcvc.delegate = self.delegate;
+
     
     mcvc.title = @"我的课程";
     
@@ -368,7 +368,7 @@
     
     AssignmentsListViewController *asvs = [[AssignmentsListViewController alloc] init];
     asvs.title = @"作业";
-    asvs.delegate = self.delegate;
+
     asvs.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作业" image:[UIImage imageNamed:@"180-stickynote.png"] tag:1];
 
     

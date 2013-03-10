@@ -260,4 +260,23 @@
     return array;
 }
 
+
++ (AppUser *)sharedUser
+{
+    static AppUser *sharedInstance;
+    // now it's a strong reference
+    AppUser *user = sharedInstance;
+    
+    @synchronized(self)
+    {
+        if (user == nil) {
+            user = [[AppUser findAll] lastObject];
+            NSLog(@"%@", [AppUser findAll]);
+
+            sharedInstance = user;
+        }
+    }
+    return user;
+}
+
 @end

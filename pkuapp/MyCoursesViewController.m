@@ -10,29 +10,27 @@
 #import "Course.h"
 #import "AppUser.h"
 #import "NITableViewModel.h"
-#import <CoreData/CoreData.h>
+#import "ModelsAddon.h"
 
 
 @implementation MyCoursesViewController
 @synthesize tableView;
 @synthesize segmentedControl;
-@synthesize delegate,coursesArray;
-
 
 - (NSArray *)coursesArray
 {
-    if (coursesArray == nil) {
+    if (_coursesArray == nil) {
 
         if (self.segmentedControl.selectedSegmentIndex == 0) {
 
-            coursesArray = [self.delegate.appUser.courses allObjects];
+            _coursesArray = [AppUser.sharedUser.courses allObjects];
         }
         else {
         
-            coursesArray = [self.delegate.appUser.localcourses allObjects];
+            _coursesArray = [AppUser.sharedUser.localcourses allObjects];
         }
     }
-    return coursesArray;
+    return _coursesArray;
 }
 
 - (UISegmentedControl *)segmentedControl {

@@ -7,63 +7,61 @@
 //
 
 #import "AssignmentsListViewController.h"
+#import "ModelsAddon.h"
 
 @implementation AssignmentsListViewController
-@synthesize tableView;
-@synthesize delegate;
-@synthesize arrayAssigns;
-@synthesize arrayCourses;
-@synthesize coord_assign;
 
 - (NSMutableArray *)arrayAssigns{
-    if (arrayAssigns == nil) {
-        arrayAssigns =  [[NSMutableArray alloc] initWithArray:[self.delegate.appUser.assignset allObjects]];
-        [arrayAssigns filterUsingPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
+    if (_arrayAssigns == nil) {
+        _arrayAssigns =  [[NSMutableArray alloc] initWithArray:[AppUser.sharedUser.assignset allObjects]];
+        [_arrayAssigns filterUsingPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
     }
-    return arrayAssigns;
+    return _arrayAssigns;
 }
 
 - (NSArray *)arrayCourses{
-    if (arrayCourses == nil) {
-        arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
+    if (_arrayCourses == nil) {
+        _arrayCourses = [NSArray arrayWithArray:[AppUser.sharedUser.courses allObjects]];
     }
-    return arrayCourses;
+    return _arrayCourses;
 }
 
-- (NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *)delegate {
-    if (nil == delegate) {
-        delegate = (NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *)[UIApplication sharedApplication].delegate;
-    }
-    return delegate;
-}
 
 #pragma mark - action setup
 - (void)didFinnishedEdit {
     NSError *error;
-    if (![self.delegate.managedObjectContext save:&error]) {
+    if (![[NSManagedObjectContext defaultContext] save:&error]) {
         NSLog(@"%@",error);
     }
+    
     self.arrayAssigns = nil;
     [self.tableView reloadData];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didCancelEdit {
-    NSLog(@"Cancel");
-    [self.delegate.managedObjectContext deleteObject:coord_assign];
-    [self.delegate.managedObjectContext save:nil];
+
+    [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
+        [_coord_assign deleteEntity];
+    } completion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"%@", error);
+        }
+        else
+            [[NSManagedObjectContext contextForCurrentThread] saveToPersistentStoreAndWait];
+    }];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didSelectAddBtn {
-    coord_assign = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.delegate.managedObjectContext];
+    self.coord_assign = [Assignment createEntity];
     
-    coord_assign.Person = self.delegate.appUser;
+    self.coord_assign.Person = [AppUser sharedUser];
     
-    coord_assign.isDone = @NO;
+    self.coord_assign.isDone = @NO;
     
     AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
-    evc.coord_assign = coord_assign;
+    evc.coord_assign = self.coord_assign;
     evc.delegate = self;
     evc.controllerMode = AssignmentEditControllerModeAdd;
     

@@ -88,5 +88,5 @@ typedef enum DoubleType{
 @interface AppUser (ModelsAddOn)
 
 - (NSArray *)sortedAssignmentNotDone;
-
++ (AppUser *)sharedUser;
 @end

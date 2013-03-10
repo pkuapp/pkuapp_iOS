@@ -112,6 +112,7 @@
 {
     if (nil == _appUser) {
         NSArray *array = [AppUser findAll];
+
         _appUser = [array lastObject];
     }
     return _appUser;
@@ -133,6 +134,7 @@
     [self showWithLoginView];
     
 }
+
 
 - (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid error:(NSString **)stringError
 {
@@ -184,18 +186,20 @@
     
     if ([loginmessage isEqualToString:@"0"]){
         
-        NSManagedObjectContext *context = self.managedObjectContext;
-        
-        if (_appUser == nil) {
-            _appUser = (AppUser *) [AppUser createInContext:context];
-        }
-        _appUser.deanid = username;
-        _appUser.password = password;
     
-//        [context save];
-        [context save:NULL];
-        [context saveToPersistentStoreAndWait];
-        return YES;
+         if (_appUser == nil) {
+             self.appUser = (AppUser *) [AppUser createInContext:[NSManagedObjectContext defaultContext]];
+         }
+
+        self.appUser.deanid = username;
+        self.appUser.password = password;
+    
+        [[NSOperationQueue  mainQueue] addOperationWithBlock:^{
+            [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+        }];
+
+
+    return YES;
 
     }
     NSString *stringResult = [self parsedLoginError:loginmessage];
@@ -238,19 +242,10 @@
         id object = dictCourse[key];
         if (![object isKindOfClass: [NSNull class]]) {
 
-
-//            @try {
                 [_course willChangeValueForKey:key];
                 [_course setPrimitiveValue:dictCourse[key] forKey:key];
                 [_course didChangeValueForKey:key];
 
-//            }
-//            @catch (NSException *exception) {
-//                NSLog(@"Failed to update key %@",key);
-//            }
-//            @finally {
-
-//            }
         }
     }
 
@@ -260,11 +255,11 @@
         _course.name = cname;
     }
     
-    NSError *error;
-    if (![self.managedObjectContext save:&error])
-        NSLog(@"Save %@ error: %@", dictCourse, [error localizedDescription]);
-    [self.managedObjectContext saveToPersistentStoreAndWait];
     
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    }];
+
  
 }
 
@@ -300,7 +295,7 @@
     NSDictionary *dictCourse;
     
     NSString *stringPredicate;// = [NSMutableString stringWithCapacity:0];
-    NSManagedObjectContext *context = self.managedObjectContext;
+    NSManagedObjectContext *context = [NSManagedObjectContext defaultContext];
 
 	for (int i = 0 ;i < jsonCourse.count; i++){
         dictCourse = jsonCourse[i];
@@ -335,13 +330,9 @@
 
     [self.appUser addCourses:courseset];
 
-    if (![self.managedObjectContext save:&error])
-    {
-        NSLog(@"add courses error: %@", error);
-        
-    }
-//
-    [self.managedObjectContext saveToPersistentStoreAndWait];
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    }];
 
     return error;
 }

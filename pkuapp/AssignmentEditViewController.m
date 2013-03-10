@@ -68,11 +68,11 @@
 //    [self canSaveOrNot];
 //}
 //
-//- (void)dateDidChanged {
-//    _dateField.text = [self.formatter stringFromDate: _datePicker.date];
-//    self.coord_assign.endDate = _datePicker.date;
-//    [self canSaveOrNot];
-//}
+- (void)dateDidChanged {
+    _dateField.text = [self.formatter stringFromDate: _datePicker.date];
+    self.coord_assign.endDate = _datePicker.date;
+    [self canSaveOrNot];
+}
 //
 //- (BOOL)textEditor:(TTTextEditor *)textEditor shouldResizeBy:(CGFloat)height {
 //   

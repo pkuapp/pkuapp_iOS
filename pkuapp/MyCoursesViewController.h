@@ -8,15 +8,11 @@
 
 
 #import <UIKit/UIKit.h>
-#import "AppUserDelegateProtocol.h"
 #import "CourseDetailsViewController.h"
 #import <CoreData/CoreData.h>
 
 @interface MyCoursesViewController : UIViewController
-{
-    NSArray *coursesArray;
-}
-@property (nonatomic, weak)NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
+
 @property (nonatomic, strong)NSArray *coursesArray;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
