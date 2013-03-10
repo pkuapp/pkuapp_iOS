@@ -283,7 +283,6 @@
 {
     if (managedObjectContext == nil)
     {
-        UIApplication *application = [UIApplication sharedApplication];
         managedObjectContext = [NSManagedObjectContext defaultContext];
     }
     return managedObjectContext;
