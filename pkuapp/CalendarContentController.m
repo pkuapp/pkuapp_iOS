@@ -207,7 +207,7 @@
 {
     // Upon selecting an event, create an EKEventViewController to display the event.
 	self.detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
-	self.detailViewController.event = [self.systemEventDayList objectAtIndex:index];
+	self.detailViewController.event = (self.systemEventDayList)[index];
 
 	// Allow event editing.
 	self.detailViewController.allowsEditing = YES;
@@ -853,7 +853,7 @@
 	NSDate *endDate = [NSDate dateWithTimeInterval:86400*7 sinceDate:self.dateBegInDayView];
 	
 	// Create the predicate. Pass it the default calendar.
-	NSArray *calendarArray = [NSArray arrayWithObject:[self.eventStore calendars]];
+	NSArray *calendarArray = @[[self.eventStore calendars]];
 	NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:self.dateBegInDayView endDate:endDate 
                                                                     calendars:calendarArray]; 
 	
@@ -929,7 +929,7 @@
 	EKCalendar *calendarForEdit = self.defaultCalendar;
     if (!calendarForEdit) {
         @try {
-            calendarForEdit = [[self.eventStore calendars] objectAtIndex:0];
+            calendarForEdit = [self.eventStore calendars][0];
         }
         @catch (NSException *exception) {
             return nil;

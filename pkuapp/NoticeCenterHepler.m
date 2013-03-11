@@ -178,7 +178,7 @@
 
         NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
         if ([arrayEvents count] != 0) {
-            self.latestEvent = [arrayEvents objectAtIndex:0];
+            self.latestEvent = arrayEvents[0];
         }
  NSLog(@"No Default Calendar Found");
     

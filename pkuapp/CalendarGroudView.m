@@ -297,9 +297,9 @@
         
     float end = [self floatHourForDate:event.endDate inDate:date];
     
-    NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+    NSNumber *daynum = @([SystemHelper getDayForDate:event.startDate]);
         
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil];
+    NSDictionary *dict = @{@"name": name,@"start": @(start),@"end": @(end),@"day": daynum ,@"place": location};
         
     return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
         
@@ -311,9 +311,9 @@
             
             float end = [self floatHourForDate:event.endDate inDate:date];
 
-            NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+            NSNumber *daynum = @([SystemHelper getDayForDate:event.startDate]);
             
-            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] ;
+            NSDictionary *dict = @{@"name": name,@"start": @(start),@"end": @(end),@"day": daynum ,@"place": location} ;
             
             return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
         }
