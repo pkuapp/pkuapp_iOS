@@ -16,7 +16,7 @@
 #import "ModelsAddon.h"
 #import "SystemHelper.h"
 #import "CalendarController.h"
-
+#import <EventKitUI/EventKitUI.h>
 #import "AppUser.h"
 #import "CourseDetailsViewController.h"
 
@@ -113,33 +113,33 @@
 @synthesize allCourses;
 #pragma mark - getter method setup
 
-//- (NSMutableArray *)systemEventDayList {
-//    if (nil == systemEventDayList) {
-//        systemEventDayList = [[NSMutableArray alloc] initWithArray:0];
-//    }
-//    return systemEventDayList;
-//}
-//
-//- (NSMutableArray *)systemEventWeekList {
-//    if (nil == systemEventWeekList) {
-//        systemEventWeekList = [[NSMutableArray alloc] initWithArray:0];
-//    }
-//    return systemEventWeekList;
-//}
-//
-//- (NSMutableArray *)arrayEventGroups {
-//    if (nil == arrayEventGroups) {
-//        arrayEventGroups = [[NSMutableArray alloc] initWithArray:0];
-//    }
-//    return arrayEventGroups;
-//}
-//
-//- (NSMutableArray *)alldayList {
-//    if (nil == alldayList) {
-//        alldayList = [[NSMutableArray alloc] initWithArray:0];
-//    }
-//    return alldayList;
-//}
+- (NSMutableArray *)systemEventDayList {
+    if (nil == _systemEventDayList) {
+        _systemEventDayList = [[NSMutableArray alloc] initWithArray:0];
+    }
+    return _systemEventDayList;
+}
+
+- (NSMutableArray *)systemEventWeekList {
+    if (nil == _systemEventWeekList) {
+        _systemEventWeekList = [[NSMutableArray alloc] initWithArray:0];
+    }
+    return _systemEventWeekList;
+}
+
+- (NSMutableArray *)arrayEventGroups {
+    if (nil == arrayEventGroups) {
+        arrayEventGroups = [[NSMutableArray alloc] initWithArray:0];
+    }
+    return arrayEventGroups;
+}
+
+- (NSMutableArray *)alldayList {
+    if (nil == _alldayList) {
+        _alldayList = [[NSMutableArray alloc] initWithArray:0];
+    }
+    return _alldayList;
+}
 
 - (NSMutableArray *)arrayClassGroup {
     if (nil == arrayClassGroup) {
@@ -206,16 +206,16 @@
 - (void)didSelectEKEventForIndex:(NSInteger)index
 {
     // Upon selecting an event, create an EKEventViewController to display the event.
-//	self.detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
-//	detailViewController.event = [self.systemEventDayList objectAtIndex:index];
-//	
-//	// Allow event editing.
-//	detailViewController.allowsEditing = YES;
+	self.detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
+	self.detailViewController.event = [self.systemEventDayList objectAtIndex:index];
+
+	// Allow event editing.
+	self.detailViewController.allowsEditing = YES;
 	
 	//	Push detailViewController onto the navigation controller stack
 	//	If the underlying event gets deleted, detailViewController will remove itself from
 	//	the stack and clear its event property.
-//	[self.fatherController.navigationController pushViewController:detailViewController animated:YES];
+	[self.fatherController.navigationController pushViewController:self.detailViewController animated:YES];
 }
 
 
@@ -510,7 +510,7 @@
     
     for (EventView *event in arrayEvent) {
         
-        //NSLog(@"%@",event.EventName);
+
         [groundView addSubview:event];
     }
     
@@ -899,9 +899,9 @@
 			// and reload table view.
 			// If the new event is being added to the default calendar, then update its 
 			// systemEventDayList.
-//			if (self.defaultCalendar ==  thisEvent.calendar) {
+			if (self.defaultCalendar ==  thisEvent.calendar) {
 				[self.systemEventDayList addObject:thisEvent];
-//			}
+			}
 			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
 			break;
 			
@@ -910,9 +910,9 @@
 			// and reload table view.
 			// If deleting an event from the currenly default calendar, then update its 
 			// systemEventDayList.
-//			if (self.defaultCalendar ==  thisEvent.calendar) {
+			if (self.defaultCalendar ==  thisEvent.calendar) {
 				[self.systemEventDayList removeObject:thisEvent];
-//			}
+			}
 			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
 			break;
 		default:
@@ -1007,40 +1007,11 @@
 
 
 #pragma mark - View lifecycle
-/*
- - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
- {
- self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
- if (self) {
- // Custom initialization
- }
- return self;
- }
- */
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"dateInDayView"];
     [self removeObserver:self forKeyPath:@"dateInWeekView"];
-    
 
-
-//    [alldayList release];
-//    [systemEventDayList release];
-//    [systemEventWeekList release];
-
-//    [eventStore release];
-//    [defaultCalendar release];
-//    [detailViewController release];
-//    [dateBegInDayView release];
-
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1062,26 +1033,23 @@
     self.bitListControl = 0;
 //    
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
-////    
-////    
-    self.navigationItem.rightBarButtonItem = rightButton;
-////    
+    self.fatherController.navigationItem.rightBarButtonItem = rightButton;
+
     self.title = @"日程";
-//    
         self.scrollDayView.decelerationRate = 0.5;
         self.scrollWeekView.decelerationRate = 0.5;
 //    [[UIScrollView appearance] setDecelerationRate:0.5];
-//
+
     self.dateBegInDayView = [SystemHelper dateBeginForDate:self.dateInDayView];
-//    
+
     [self addObserver:self forKeyPath:@"dateInDayView" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"dateInWeekView" options:NSKeyValueObservingOptionNew context:nil];
 
-//    self.eventStore = [[EKEventStore alloc] init];
+    self.eventStore = [[EKEventStore alloc] init];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"calendar-list-bg.png"]];
     self.dayView.frame = CGRectMake(0, -32, 320, 340);
-    
+    self.scrollDayView.contentOffset = CGPointMake(0, 400);
     [self toListView];
 }
 

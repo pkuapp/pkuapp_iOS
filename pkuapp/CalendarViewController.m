@@ -8,7 +8,7 @@
 //
 //#import "CalendarViewController.h"
 //#import "CoreData/CoreData.h"
-//#import "iOSOneAppDelegate.h"
+//#import "AppDelegate.h"
 //#import "CalendarGroudView.h"
 //#import "ModelsAddon.h"
 //#import "SystemHelper.h"
@@ -45,7 +45,7 @@
 //- (NSArray *)serverCourses
 //{
 //    if (nil == serverCourses) {
-//        serverCourses = [[self.delegate.appUser.courses allObjects] retain];
+//        serverCourses = [AppUser.sharedUser.courses allObjects];
 //    }
 //    return serverCourses;
 //}
@@ -171,17 +171,6 @@
 //    NSLog(@"FetchCourse%d",[self.eventResults.fetchedObjects count] );
 //}*/
 //
-//- (NSManagedObjectContext *)managedObjectContext
-//{
-//    if (managedObjectContext == nil)
-//    {
-//        UIApplication *application = [UIApplication sharedApplication];
-//        iOSOneAppDelegate* appdelegate = (iOSOneAppDelegate*) application.delegate;
-//        managedObjectContext = appdelegate.managedObjectContext;
-//    }
-//    return managedObjectContext;
-//}
-//
 //- (NSArray *)arrayEventDict
 //{
 //    if (nil == arrayEventDict) {
@@ -236,7 +225,7 @@
 //    BOOL foundCoursePresent = NO;
 //    
 //    for (Course *course in self.delegate.appUser.courses) {
-//        DayVector _v = [course dayVectorInDay:[SystemHelper getDayForDate:self.dateInDayView]];
+//        DayVector *_v = [course dayVectorInDay:[SystemHelper getDayForDate:self.dateInDayView]];
 //        
 //        if (_v.startclass != -1) {
 //            
@@ -348,7 +337,6 @@
 //    ClassGroup *group = [[ClassGroup alloc] init];
 //    group.type = ClassGroupTypeEnd;
 //    [self.arrayClassGroup addObject:group];
-//    [group release];
 //    
 //}
 //
@@ -408,8 +396,6 @@
 //    self.didInitDayView = YES;
 //    
 //    [groundView setupForDisplay];
-//
-//    [groundView release];
 //    
 //    [self.dayViewBar setupForDisplay];
 //    
@@ -430,8 +416,6 @@
 //        eventGroup *group = [[eventGroup alloc] initWithEvent:event];
 //        
 //        [self.arrayEventGroups addObject:group];
-//        
-//        [group release];
 //        
 //    }
 //    BOOL needReGroup = YES;
@@ -482,7 +466,6 @@
 //        
 //        [arrayEvent addObject:tempEvent];    
 //        
-//        [tempEvent release];
 //    }
 //    for (EKEvent *event in self.systemEventWeekList) {
 //        
@@ -510,8 +493,6 @@
 //    self.scrollWeekView.contentSize = CGSizeMake(widthTotal, heightTotal);
 //    
 //    [groundView setupForDisplay];
-//    
-//    [groundView release];
 //    
 //    self.didInitWeekView = YES;
 //    
@@ -545,7 +526,6 @@
 //            
 //            eventGroup *group = [[eventGroup alloc] initWithEvent:event];
 //            [self.arrayEventGroups addObject:group];
-//            [group release];
 //            
 //        }
 //        BOOL needReGroup = YES;
@@ -586,7 +566,6 @@
 //        CourseDetailsViewController *cdv = [[CourseDetailsViewController alloc] init];
 //        cdv.course = group.course;
 //        [self.navigationController pushViewController:cdv animated:YES];
-//        [cdv release];
 //    }
 //}
 //
@@ -605,7 +584,7 @@
 //    if (cell == nil) {
 //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
 //    }
-//    [cell.contentView removeAllSubviews];
+//    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 //
 //    ClassGroup *group = [self.arrayClassGroup objectAtIndex:indexPath.row];
 //    [self setupDefaultCell:cell withClassGroup:group];
@@ -854,7 +833,6 @@
 //    [self presentModalViewController:addController animated:YES];
 //	
 //	addController.editViewDelegate = self;
-//	[addController release];
 //}
 //
 //#pragma mark - appearance
@@ -870,7 +848,6 @@
 //        numLabel.highlightedTextColor = [UIColor whiteColor];
 //        numLabel.text = [NSString stringWithFormat:@"%d",i];
 //        [cell.contentView addSubview:numLabel];
-//        [numLabel release];
 //    }
 //}
 //
@@ -883,13 +860,13 @@
 //#pragma mark - KVO
 //- (void)didChangeValueForKey:(NSString *)key
 //{
-//    if (key == @"dateInDayView") {
+//    if ([key isEqualToString:@"dateInDayView"]) {
 //        self.dateBegInDayView = [SystemHelper dateBeginForDate:self.dateInDayView];
 //        [self displayCoursesInDayView];
 //        [self prepareListViewDataSource];
 //        [self.tableView reloadData];        
 //    }
-//    else if (key == @"dateInWeekView")
+//    else if ([key isEqualToString:@"dateInWeekView"])
 //        NSLog(@"wait for action dateInWeekView");
 //}
 //
@@ -909,15 +886,6 @@
 //{
 //    [self removeObserver:self forKeyPath:@"dateInDayView"];
 //    [self removeObserver:self forKeyPath:@"dateInWeekView"];
-//
-//    [scrollDayView release];
-//    [calSwithSegment release];
-//    [weekView release];
-//    [scrollWeekView release];
-//    [dayView release];
-//    [dayViewBar release];
-//    [barListView release];
-//    [super dealloc];
 //}
 //
 //- (void)didReceiveMemoryWarning

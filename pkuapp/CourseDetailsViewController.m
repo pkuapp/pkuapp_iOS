@@ -368,10 +368,12 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated
+{
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+
 }
+
 
 - (void)viewDidLoad
 {

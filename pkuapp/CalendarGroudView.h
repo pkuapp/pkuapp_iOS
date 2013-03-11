@@ -14,7 +14,7 @@
 @class EKEvent;
 #pragma mark - appearance params
 
-#define radius 5.0
+#define day_radius 5.0
 //define width
 #define padding_right 10
 #define widthTotal 320

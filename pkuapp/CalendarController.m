@@ -69,10 +69,6 @@
     self.reuseController.dateInDayView = [NSDate dateWithTimeInterval:+86400*2 sinceDate:self.dateForDisplay];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    return;
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
@@ -155,6 +151,18 @@
 }
 
 - (IBAction)didHitResetTimeBtn:(id)sender {
+    self.dateForDisplay = [NSDate date];
+    for (int i = -2; i < 3; ++i) {
+        
+        CalendarContentController *c = self.switchableViewControllers[i + 2];
+        
+        c.dateInDayView = [NSDate dateWithTimeInterval:(i)*84600 sinceDate:self.dateForDisplay];
+        
+    }
+    [self.dayViewBar setupForDisplay];
+
+
+//    self.
 }
 
 - (IBAction)segmentedValueDidChanged:(id)sender {
@@ -173,15 +181,6 @@
         default:
             break;
     }
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

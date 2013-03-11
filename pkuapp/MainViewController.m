@@ -24,8 +24,8 @@
 #import "UIKitAddon.h"
 #import "NimbusLauncher.h"
 
-//#import <EventKit/EventKit.h>
-//#import <EventKitUI/EventKitUI.h>
+#import <EventKit/EventKit.h>
+#import <EventKitUI/EventKitUI.h>
 
 @interface MainViewController ()
 @property (strong, nonatomic) NILauncherViewModel *launchModel;
@@ -134,7 +134,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Notice *notice = (self.arrayNotices)[indexPath.row];
-//    EKEventViewController *detailViewController;
+
     switch (notice.type) {
         case PKUNoticeTypeNowCourse:
         case PKUNoticeTypeLatestCourse:
@@ -143,20 +143,20 @@
         case PKUNoticeTypeAssignment:
             [self navToAssignment:(Assignment *)notice.object];
             break;
-        case PKUNoticeTypeLatestEvent:
+        case PKUNoticeTypeLatestEvent:{
             // Upon selecting an event, create an EKEventViewController to display the event.
-//            detailViewController = [[EKEventViewController alloc] initWithNibName:nil bundle:nil];			
-//            detailViewController.event = (EKEvent *)notice.object;
+            EKEventViewController *detailViewController = [[EKEventViewController alloc] init];
+            detailViewController.event = (EKEvent *)notice.object;
             
             // Allow event editing.
-//            detailViewController.allowsEditing = YES;
+            detailViewController.allowsEditing = YES;
             
             //	Push detailViewController onto the navigation controller stack
             //	If the underlying event gets deleted, detailViewController will remove itself from
             //	the stack and clear its event property.
-//            [self.navigationController pushViewController:detailViewController animated:YES];
+            [self.navigationController pushViewController:detailViewController animated:YES];
 
-            
+        }
         default:
             break;
     }
@@ -223,13 +223,12 @@
             cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-course.png"];
             break;
 
-//        case PKUNoticeTypeLatestEvent:
-//            cell.typeLabel.text = @"下一";
-//            cell.typeImg.image = [UIImage imageNamed:@"notification-calendar.png"];
-//            cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-calendar.png"];
-//            
-//            cell.contentLabel.text = [(EKEvent*) notice.object title];
-//            break;
+        case PKUNoticeTypeLatestEvent:
+            cell.typeLabel.text = @"下一";
+            cell.typeImg.image = [UIImage imageNamed:@"notification-calendar.png"];
+            cell.typeImg.highlightedImage = [UIImage imageNamed:@"notification-selected-calendar.png"];
+            cell.contentLabel.text = [(EKEvent*) notice.object title];
+            break;
         case PKUNoticeTypeAssignment:
             [self prepareCell:cell WithAssignment:notice.object];
             break;

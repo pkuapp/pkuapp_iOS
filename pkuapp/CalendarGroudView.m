@@ -11,7 +11,7 @@
 #import "CalendarGroudView.h"
 #import "QuartzCore/CALayer.h"
 #import "SystemHelper.h"
-//#import <EventKit/EventKit.h>
+#import <EventKit/EventKit.h>
 #import "SystemHelper.h"
 #import "Course.h"
 #import "ModelsAddon.h"
@@ -185,12 +185,12 @@
 {
     self = [super initWithFrame:CGRectMake(frame.origin.x+1, frame.origin.y, frame.size.width-2, frame.size.height)];
     if (nil != self) {
-        //self.layer.cornerRadius = 6.0;
-        //self.layer.masksToBounds = YES;
-        //self.layer.borderWidth = 1.0;
-        //self.layer.borderColor = colorBorder;
-        //self.clearsContextBeforeDrawing = YES;
-        //self.backgroundColor = colorCourseBg;
+        self.layer.cornerRadius = 6.0;
+        self.layer.masksToBounds = YES;
+        self.layer.borderWidth = 1.0;
+//        self.layer.borderColor = colorBorder;
+        self.clearsContextBeforeDrawing = YES;
+        self.backgroundColor = colorCourseBg;
     }
     return self;
 }
@@ -204,40 +204,40 @@
 
 - (void)drawInDayContext:(CGContextRef)context
 {
-//    CGPoint titlePoint,subtitlePoint;
-//    
-//    float titleWidth;
-//    
-//    CGContextSetRGBFillColor(context,1.0 , 1.0, 1.0, 1.0);
-//    
-////    float lineWidthOffset = 0;
-//    
-////    if (self.viewType == EventViewCourse) {
-////        
-////        lineWidthOffset = wClassTag;
-////        
-////    }
-//    
-//    titlePoint = CGPointMake(5,5);
-//    
-//    titleWidth = self.bounds.size.width -10;
-//    
-//    subtitlePoint = CGPointMake(5, 10+18);
-//    
-//    float fulltitleWidth = [self.EventName sizeWithFont:day_font_title].width;
-//    
-//    if (fulltitleWidth > titleWidth) {
-//  
-//        NSInteger index = self.EventName.length * titleWidth/fulltitleWidth -2;
-//        
-//        if (index > 0) {
-//            self.EventName = [[self.EventName substringToIndex:index] stringByAppendingFormat:@"..."];   
-//        }
-//    }
-//    
-////    [self.EventName drawAtPoint:titlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
-//    
-//    [self.stringLocation drawAtPoint:subtitlePoint forWidth:titleWidth withFont:day_font_sub lineBreakMode:UILineBreakModeWordWrap];
+    CGPoint titlePoint,subtitlePoint;
+    
+    float titleWidth;
+    
+    CGContextSetRGBFillColor(context,1.0 , 1.0, 1.0, 1.0);
+    
+    float lineWidthOffset = 0;
+
+    if (self.viewType == EventViewCourse) {
+        
+        lineWidthOffset = wClassTag;
+        
+    }
+    
+    titlePoint = CGPointMake(5,5);
+    
+    titleWidth = self.bounds.size.width -10;
+    
+    subtitlePoint = CGPointMake(5, 10+18);
+    
+    float fulltitleWidth = [self.EventName sizeWithFont:day_font_title].width;
+    
+    if (fulltitleWidth > titleWidth) {
+  
+        NSInteger index = self.EventName.length * titleWidth/fulltitleWidth -2;
+        
+        if (index > 0) {
+            self.EventName = [[self.EventName substringToIndex:index] stringByAppendingFormat:@"..."];   
+        }
+    }
+    
+    [self.EventName drawAtPoint:titlePoint forWidth:titleWidth withFont:fontTitle lineBreakMode:UILineBreakModeWordWrap];
+    
+    [self.stringLocation drawAtPoint:subtitlePoint forWidth:titleWidth withFont:day_font_sub lineBreakMode:UILineBreakModeWordWrap];
     
 }
 
@@ -287,37 +287,37 @@
 
 - (id)initWithEKEvent:(EKEvent *)event ForGroudType:(CalendarGroundType)thegroundType inDate:(NSDate *)date
 {
-//    NSString *name = event.title;
-//    
-//    NSString *location = event.location;
-//    
-//    if (thegroundType == CalendarGroundTypeDay) {
-//    
-//    float start = [self floatHourForDate:event.startDate inDate:date];
-//        
-//    float end = [self floatHourForDate:event.endDate inDate:date];
-//    
-//    NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
-//        
-//    NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
-//        
-//    return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
-//        
-//    }
-//    else if (thegroundType == CalendarGroundTypeWeek){
-//        if ([event.endDate timeIntervalSinceDate:event.startDate] < 86400) {
-//            
-//            float start = [self floatHourForDate:event.startDate inDate:date];
-//            
-//            float end = [self floatHourForDate:event.endDate inDate:date];
-//
-//            NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
-//            
-//            NSDictionary *dict = [[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] autorelease];
-//            
-//            return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
-//        }
-//    }
+    NSString *name = event.title;
+    
+    NSString *location = event.location;
+    
+    if (thegroundType == CalendarGroundTypeDay) {
+    
+    float start = [self floatHourForDate:event.startDate inDate:date];
+        
+    float end = [self floatHourForDate:event.endDate inDate:date];
+    
+    NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+        
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil];
+        
+    return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
+        
+    }
+    else if (thegroundType == CalendarGroundTypeWeek){
+        if ([event.endDate timeIntervalSinceDate:event.startDate] < 86400) {
+            
+            float start = [self floatHourForDate:event.startDate inDate:date];
+            
+            float end = [self floatHourForDate:event.endDate inDate:date];
+
+            NSNumber *daynum = [NSNumber numberWithInt:[SystemHelper getDayForDate:event.startDate]];
+            
+            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:name,@"name",[NSNumber numberWithFloat:start],@"start",[NSNumber numberWithFloat:end],@"end",daynum,@"day" ,location,@"place",nil] ;
+            
+            return [self initWithDict:dict ForGroundType:CalendarGroundTypeDay ViewType:EventViewNone];
+        }
+    }
     return nil;
     
 }
@@ -332,7 +332,7 @@
     
     self.layer.masksToBounds = YES;
     
-    //self.layer.borderWidth = 1.0;
+    self.layer.borderWidth = 1.0;
     
     self.clearsContextBeforeDrawing = YES;
     
@@ -347,7 +347,7 @@
            // bgView.image =  ];
            [self addSubview:bgView];
            
-           
+          /*
            UIButton *buttonDiz = [UIButton buttonWithType:UIButtonTypeCustom];
            UIButton *buttonAssign = [UIButton buttonWithType:UIButtonTypeCustom];
            [buttonDiz setImage:[UIImage imageNamed:@"discuss.png"] forState:UIControlStateNormal];
@@ -369,18 +369,18 @@
            buttonAssign.imageEdgeInsets = UIEdgeInsetsMake(2, 0, -2, 0);
            
            
-//        buttonDiz.layer.cornerRadius = radius;
-//        buttonAssign.layer.cornerRadius = radius;
-//        buttonDiz.layer.borderColor = colorCourseBorder;
-//        buttonDiz.backgroundColor = colorCourseBg;
-//        buttonAssign.layer.borderColor = colorCourseBorder;
-//        buttonAssign.backgroundColor = colorCourseBg;
-//        buttonAssign.titleLabel.font = fontTitle;
-//        buttonDiz.titleLabel.font = fontTitle;
-//        
-//        buttonDiz.layer.borderWidth = 1.0;
-//        buttonAssign.layer.borderWidth = 1.0;
-//        
+        buttonDiz.layer.cornerRadius = day_radius;
+        buttonAssign.layer.cornerRadius = day_radius;
+        buttonDiz.layer.borderColor = colorCourseBorder;
+        buttonDiz.backgroundColor = colorCourseBg;
+        buttonAssign.layer.borderColor = colorCourseBorder;
+        buttonAssign.backgroundColor = colorCourseBg;
+        buttonAssign.titleLabel.font = fontTitle;
+        buttonDiz.titleLabel.font = fontTitle;
+        
+        buttonDiz.layer.borderWidth = 1.0;
+        buttonAssign.layer.borderWidth = 1.0;
+//
            [buttonAssign addTarget:self action:@selector(didHitDizButtonInEventView:) forControlEvents:UIControlEventTouchUpInside];
         
         //buttonAssign.highlighted = YES;
@@ -392,7 +392,7 @@
            [self addSubview:buttonAssign];
             
            [self addSubview:buttonDiz];
-           
+           */
            // handle title display
            
            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, self.bounds.size.width - 10, 21)];
@@ -466,8 +466,7 @@
 
 - (void)didHitDizButtonInEventView:(UIButton *)dizButton
 {
-    EventView *eventView = (EventView *)dizButton.superview;
-    NSLog(@"%@",eventView.EventName);
+  
 }
 @end
 

@@ -433,7 +433,7 @@
     ASIHTTPRequest *schoolrq = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlCourseCategory]];
     [schoolrq startSynchronous];
     NSString *responseString = [schoolrq responseString];
-    NSArray *tempArray = [responseString JSONValue];
+    NSArray *tempArray = [[[SBJsonParser alloc] init] objectWithString:responseString];
     tempArray = tempArray[5];
     NSMutableDictionary *schoolDict = [[NSMutableDictionary alloc] initWithCapacity:0];
     for (NSDictionary *dict in tempArray) {
@@ -461,7 +461,7 @@
     responseString = [request responseString];
     
     
-    NSArray *array = [responseString JSONValue];
+    NSArray *array = [[[SBJsonParser alloc] init] objectWithString:responseString];
     for (NSDictionary *dict in array) {
         if ([dict[@"name"] isEmpty] || [dict[@"name"] isEqualToString:@""]) {
             continue;

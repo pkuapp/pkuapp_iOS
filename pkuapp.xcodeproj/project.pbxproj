@@ -97,7 +97,6 @@
 		415DC3571411C6F0008C2D78 /* free-rooms-filter-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 415DC3551411C6F0008C2D78 /* free-rooms-filter-bar-bg.png */; };
 		415DC3581411C6F0008C2D78 /* free-rooms-filter-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415DC3561411C6F0008C2D78 /* free-rooms-filter-bar-bg@2x.png */; };
 		415E6FFB14767DFC002C9A4C /* EULAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415E6FF914767DFC002C9A4C /* EULAViewController.m */; };
-		415E6FFE147685A8002C9A4C /* EULACell0.html in Resources */ = {isa = PBXBuildFile; fileRef = 415E6FFD147685A8002C9A4C /* EULACell0.html */; };
 		415E70041476900C002C9A4C /* EULAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 415E70031476900C002C9A4C /* EULAView.xib */; };
 		415F499714DC137F00260A08 /* current-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 415F497914DC137F00260A08 /* current-bg.png */; };
 		415F499814DC137F00260A08 /* current-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415F497A14DC137F00260A08 /* current-bg@2x.png */; };
@@ -390,7 +389,6 @@
 		415DC3561411C6F0008C2D78 /* free-rooms-filter-bar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "free-rooms-filter-bar-bg@2x.png"; sourceTree = "<group>"; };
 		415E6FF814767DFC002C9A4C /* EULAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EULAViewController.h; sourceTree = "<group>"; };
 		415E6FF914767DFC002C9A4C /* EULAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EULAViewController.m; sourceTree = "<group>"; };
-		415E6FFD147685A8002C9A4C /* EULACell0.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell0.html; sourceTree = "<group>"; };
 		415E70031476900C002C9A4C /* EULAView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EULAView.xib; sourceTree = "<group>"; };
 		415F497914DC137F00260A08 /* current-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "current-bg.png"; sourceTree = "<group>"; };
 		415F497A14DC137F00260A08 /* current-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "current-bg@2x.png"; sourceTree = "<group>"; };
@@ -732,7 +730,6 @@
 				41442B11147A813B003B3BB6 /* Welcome-button-active@2x.png */,
 				41442B12147A813B003B3BB6 /* Welcome-button.png */,
 				41442B13147A813B003B3BB6 /* Welcome-button@2x.png */,
-				415E6FFD147685A8002C9A4C /* EULACell0.html */,
 				414AEA7614765869007292B2 /* Icons */,
 				415D35A1145C05C200D492B6 /* GateView */,
 				41307AB51453EFEF007A5A86 /* free-rooms-filter-bar-checkmark.png */,
@@ -1230,7 +1227,6 @@
 				414AEA7514765864007292B2 /* iTunesArtwork in Resources */,
 				414AEA7814765C4C007292B2 /* Default.png in Resources */,
 				414AEA7A14765C51007292B2 /* Default@2x.png in Resources */,
-				415E6FFE147685A8002C9A4C /* EULACell0.html in Resources */,
 				415E70041476900C002C9A4C /* EULAView.xib in Resources */,
 				417793071478E9B700890739 /* WelcomeViewController.xib in Resources */,
 				41442B14147A813B003B3BB6 /* welcome-bg.png in Resources */,
