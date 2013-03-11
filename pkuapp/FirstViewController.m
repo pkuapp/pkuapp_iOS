@@ -218,11 +218,6 @@
     [self.delegate.progressHub show:YES];
     
     [self.delegate.progressHub hide:YES afterDelay:0.5];
-
-//	firstAlertView = [[[UIAlertView alloc] initWithTitle:@"Fetch authImg failed" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] autorelease];
-//    [firstAlertView show];
-//    [self.activityView stopAnimating];
-
     
 }
 -(BOOL)refreshImg
@@ -328,6 +323,7 @@
         }
         else {
             [self performSelectorOnMainThread:@selector(loginFailed:) withObject:@{@"info": error} waitUntilDone:YES];
+            [self refreshImg];
         }
     }
     @catch (NSException *exception) {
