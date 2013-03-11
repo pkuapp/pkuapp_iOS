@@ -72,6 +72,7 @@
 }
 
 - (MBProgressHUD *)progressHub{
+    
     if (progressHub == nil) {
         progressHub = self.delegate.progressHub;
     }
@@ -133,16 +134,11 @@
         labelWarning.backgroundColor = [UIColor clearColor];
         labelWarning.textAlignment = UITextAlignmentCenter;
         labelWarning.font = [UIFont systemFontOfSize:14];
-        NSString *text = [defaults objectForKey:@"stringUpdateStatus"];
+        NSString *text = self.gateStateDictionary[_keyIPGateUpdatedTime];
         if (!text) {
             text = @"账户状态未知";
         }
         labelWarning.text = text;
-
-//        if (labelStatus.text == nil || [labelStatus.text isEqualToString:@"(null)"]) {
-//
-//            labelWarning.text = @"账户状态未知";
-//        }
     }
     return labelWarning;
 }
@@ -281,7 +277,7 @@
         cell.textLabel.text = @"可访问收费地址";
         
         self.numStatus = 3;
-//        NSLog(@"%@",dictDetail);
+
     }
         progressHub.animationType = MBProgressHUDAnimationZoom;
 
