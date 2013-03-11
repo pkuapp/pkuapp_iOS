@@ -22,7 +22,6 @@
 #import "SystemHelper.h"
 #import "School.h"
 #import "Course.h"
-#import "ModalAlert.h"
 
 #import "CoreData+MagicalRecord.h"
 
@@ -75,9 +74,9 @@
     NSNumber *version = [[[SBJsonParser alloc] init] objectWithString:[request responseString]][@"beta"];
     NSLog(@"checking version");
     if ([version intValue] > iOSVersionNum) {
-        if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=http://pkuapp.com/download/iOS/manifest.plist"]];
-        } 
+//        if ([ModalAlert ask:@"新的版本可用" withMessage:@"前往网站获取新版本"]) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=http://pkuapp.com/download/iOS/manifest.plist"]];
+//        } 
     }
 }
 

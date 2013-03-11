@@ -9,8 +9,7 @@
 #import "IPGateHelper.h"
 #import "RegexKitLite.h"
 #import "ASIHTTPRequest.h"
-//#import "AsyncUdpSocket.h"
-
+#import "AFNetworking.h"
 
 @interface IPGateHelper (Private)
 - (BOOL)connectionSucceed:(NSString *)stringResponse;
@@ -64,6 +63,9 @@
         self.dictResult = dict;
         
         NSMutableDictionary *dictDetail =[NSMutableDictionary dictionaryWithDictionary:[stringResponse dictionaryByMatchingRegex:patternAccountDetail withKeysAndCaptures:@"Type",1,@"Time",2,@"Balance",3, nil]];
+        if (dictDetail.allKeys.count == 0) {
+            dictDetail = [NSMutableDictionary dictionaryWithDictionary:[stringResponse dictionaryByMatchingRegex:patternAccountFree withKeysAndCaptures:@"Type",1, @"Balance",2, nil]];
+        }
         
         if (![dictDetail[@"Type"] isEqualToString:@"未包月"]) {
             
@@ -103,55 +105,6 @@
     return NO;
 }
 
-#pragma mark - ASIHttpDelegate
-
-- (void)connectFreeFinished:(ASIHTTPRequest *)Request
-{
-    NSString *stringResponse = [Request responseString];
-    
-    if ([self connectionSucceed:stringResponse]) {
-        [self.delegate connectFreeSuccess];        
-    }
-    else [self.delegate connectFailed];
-}
-
-- (void)connectGlobalFinished:(ASIHTTPRequest *)Request
-{
-    NSString *stringResponse = [Request responseString];
-        
-    if ([self connectionSucceed:stringResponse]) {
-        
-        [self.delegate connectGlobalSuccess]; 
-    }
-    else [self.delegate connectFailed];
-}
-
-- (void)disConnectFinished:(ASIHTTPRequest *)arequest
-{
-    NSString *stringResponse = [arequest responseString];
-    
-    if ([self connectAcceptAsExceptForResponse:stringResponse]){
-    
-        [self.delegate disconnectSuccess];
-        
-    }
-    else {
-        
-        NSDictionary *dict = [self dictRefuseForResponse:stringResponse];
-        
-        self.dictResult = dict;
-        
-        self.error = IPGateErrorUnknown;
-        
-        [self.delegate connectFailed];
-    }
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request {
-    self.error = IPGateErrorTimeout;
-    [self.delegate connectFailed];
-}
-
 #pragma mark - Interface Method
 - (void)reConnect {
 //    _request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
@@ -180,38 +133,101 @@
 {
     _status = IPGateConnectingFree;
     stringRange = @"2";
-    _request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
+//    _request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
     
-    [_request setValidatesSecureCertificate:NO];
-    [_request setShouldRedirect:NO];
-    _request.delegate = self;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[self urlConnect]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    __weak IPGateHelper *weak = self;
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", operation.responseString);
+//        NSString *text = [NSString stringwith]
+        if ([weak connectionSucceed:operation.responseString]) {
+            
+            if ([weak connectionSucceed:operation.responseString]) {
+                [weak.delegate connectFreeSuccess];
+            }
+            else [weak.delegate connectFailed];
+        }
+        else [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [weak.delegate connectFailed];
+        }];
 
-    _request.shouldAttemptPersistentConnection = NO;
-    [_request setDidFinishSelector:@selector(connectFreeFinished:)];
-    [_request startAsynchronous];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [weak.delegate connectFailed];
+        }];
+    }];
+    [operation start];
 }
 - (void)connectGlobal
 {
+    
+    
     _status = IPGateConnectingGlobal;
     
     stringRange = @"1";
-    _request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
-    [_request setValidatesSecureCertificate:NO];
-    [_request setShouldRedirect:NO];
-    _request.delegate = self;
-    
-    [_request setDidFinishSelector:@selector(connectGlobalFinished:)];
-    [_request startAsynchronous];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[self urlConnect]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    __weak IPGateHelper *weak = self;
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", operation.responseString);
+        if ([weak connectionSucceed:operation.responseString]) {
+            
+            if ([weak connectionSucceed:operation.responseString]) {
+                
+                [weak.delegate connectGlobalSuccess];
+            }
+            else [weak.delegate connectFailed];
+        }
+        else [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [weak.delegate connectFailed];
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [weak.delegate connectFailed];
+        }];
+    }];
+    [operation start];
 
 }
 
 - (void)disConnect{
-    _request = [ASIHTTPRequest requestWithURL:[self urlDisconnect]];
-    [_request setValidatesSecureCertificate:NO];
-    [_request setShouldRedirect:NO];
-    _request.delegate = self;
-    [_request setDidFinishSelector:@selector(disConnectFinished:)];
-    [_request startAsynchronous];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:[self urlDisconnect]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    __weak IPGateHelper *weak = self;
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", operation.responseString);
+        
+        NSString *stringResponse = [operation responseString];
+        
+        if ([weak connectAcceptAsExceptForResponse:stringResponse]){
+            
+            [weak.delegate disconnectSuccess];
+            
+        }
+        else {
+            
+            NSDictionary *dict = [weak dictRefuseForResponse:stringResponse];
+            
+            weak.dictResult = dict;
+            
+            weak.error = IPGateErrorUnknown;
+            
+            [weak.delegate connectFailed];
+        }
+
+       
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [weak.delegate connectFailed];
+        }];
+    }];
+    [operation start];
 }
 
 #pragma mark - lifecycle method setup 
@@ -315,11 +331,10 @@
 {
     NSDictionary *result;
    
-    result = [Target dictionaryByMatchingRegex:patternConnectSuccess withKeysAndCaptures:@"SUCCESS",1,@"连接状态",2,@"用户名",3,@"包月",4,@"连接范围",5,@"欠费",6,@"连接数",7,@"余额",8,@"IP",9, nil];
+    result = [Target dictionaryByMatchingRegex:patternConnectSuccess withKeysAndCaptures:@"SUCCESS",1,@"连接状态",2,@"用户名",3,@"包月",4,@"连接范围",5,@"余额",6,@"IP",7, nil];
     
    
     //result = [[responseArray objectAtIndex:1] dictionaryByMatchingRegex:patternFailure withKeysAndCaptures:@"SUCCESS",1,@"REASON",2, nil];
-    
     return result;
 }
 
@@ -348,6 +363,7 @@
 }
 - (NSURL* )urlWithOperation:(NSString* )arg
 {
+
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@%@?uid=%@&password=%@&timeout=2&range=%@&operation=%@",HOST,PORT,ippage,[self.delegate Username],[self.delegate Password],stringRange,arg]];
     return url;
  

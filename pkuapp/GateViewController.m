@@ -11,8 +11,7 @@
 #import "SystemHelper.h"
 #import "RegexKitLite.h"
 #import "IPGateHelper.h"
-#import "ModalAlert.h"
-#import "AppUser.h"
+#import "ModelsAddon.h"
 
 #define _keyAutoDisconnect @"AutoDisconnect"
 #define _keyAlwaysGlobal @"AlwaysGlobal"
@@ -224,7 +223,29 @@
     if (self.connector.error == IPGateErrorOverCount) {
         self.progressHub.mode = MBProgressHUDModeIndeterminate;
         self.progressHub.labelText = @"连接数超过预定值";
-        if ([ModalAlert confirm:@"断开别处的连接" withMessage:@"断开别处的连接才能在此处建立连接"]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"断开别处的连接" message:@"断开别处的连接才能在此处建立连接" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"确定", nil];
+        [alert show];
+    }
+    else {
+        self.progressHub.labelText = (self.connector.dictResult)[@"REASON"];
+        //        self.progressHub.mode = MBProgressHUDModeIndeterminate;
+        //        [self.progressHub show:YES];
+        self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
+        self.progressHub.mode = MBProgressHUDModeCustomView;
+        
+        [self.progressHub hide:YES afterDelay:0.5];
+        
+        NSLog(@"Reason %@",(self.connector.dictResult)[@"REASON"]);
+    }
+    if (self.connector.error != IPGateErrorTimeout) {
+        [self saveAccountState];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+
+        if (buttonIndex == 1){
             _hasSilentCallback = YES;
             
             [self.connector disConnect];
@@ -236,23 +257,6 @@
             
         }
         else [self.progressHub hide:YES afterDelay:0.5];
-
-        
-    }
-    else {
-        self.progressHub.labelText = (self.connector.dictResult)[@"REASON"];
-//        self.progressHub.mode = MBProgressHUDModeIndeterminate;
-//        [self.progressHub show:YES];
-        self.progressHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert-no.png"]];
-        self.progressHub.mode = MBProgressHUDModeCustomView;
-
-        [self.progressHub hide:YES afterDelay:0.5];
-        
-        NSLog(@"Reason %@",(self.connector.dictResult)[@"REASON"]);
-    }
-    if (self.connector.error != IPGateErrorTimeout) {
-//        [self saveAccountState];
-    }
 
 }
 
@@ -610,9 +614,9 @@
 
     [super viewDidLoad];
     self.defaults = [NSUserDefaults standardUserDefaults];
-    self.Username = [defaults objectForKey:@"Username"];
-    
-    self.Password = [defaults objectForKey:@"Password"];
+    self.Username = AppUser.sharedUser.deanid;
+
+    self.Password = AppUser.sharedUser.password;
     self.title = @"网关";
     self.gateStateDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:_keyAccountState]];
     

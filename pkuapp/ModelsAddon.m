@@ -271,8 +271,6 @@
     {
         if (user == nil) {
             user = [[AppUser findAll] lastObject];
-            NSLog(@"%@", [AppUser findAll]);
-
             sharedInstance = user;
         }
     }

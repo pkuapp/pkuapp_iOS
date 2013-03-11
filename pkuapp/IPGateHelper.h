@@ -22,11 +22,12 @@
 
 #define patternFailure @"SUCCESS=([^ ]+).+REASON=([^ ]+).+"
 
-#define patternConnectSuccess @"SUCCESS=([^ ]+) STATE=([^ ]+) USERNAME=([^ ]+) FIXRATE=([^ ]+) SCOPE=([^ ]+) DEFICIT=([^ ]+) CONNECTIONS=([^ ]+) BALANCE=([^ ]+) IP=([^ ]+) MESSAGE=(.+)"
+#define patternConnectSuccess @"SUCCESS=([^ ]+) STATE=([^ ]+) USERNAME=([^ ]+) FIXRATE=([^ ]+).+SCOPE=([^ ]+).+BALANCE=([^ ]+) IP=([^ ]+) MESSAGE=(.+)"
 
-#define patternDisconnectSuccess @"SUCCESS=([^ ]+) IP=([^ ]+) CONNECTIONS=([^ ]+)"
+#define patternDisconnectSuccess @"SUCCESS=([^ ]+).+IP=([^ ]+).+CONNECTIONS=([^ ]+)"
 
-#define patternAccountDetail @"包月状态：</td><td>([^ ]+?)<[^#]+?([0-9.]+)小时[^#]+>([0-9.]+)"
+#define patternAccountDetail @"包月状态.+</td><td>([^ ]+?)<[^#]+?([0-9.]+)小时[^#]+>([0-9.]+)"
+#define patternAccountFree @"包月状态.+</td><td>([^<]+?)<[^#]+余额[^#]+>([0-9.]+)"
 #define pTime @"([0-9]+)小时"
 
 typedef enum IPGateConnectError{

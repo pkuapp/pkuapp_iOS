@@ -17,7 +17,7 @@
 
 #import "PABezelHUDDelegate.h"
 
-@interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate,NITableViewModelDelegate> { 
+@interface GateViewController : UITableViewController<IPGateConnectDelegate,MBProgressHUDDelegate,NITableViewModelDelegate, UIAlertViewDelegate> {
     BOOL _autoDisconnect;
     BOOL _alwaysGlobal;
     BOOL _hasSilentCallback;
