@@ -42,7 +42,7 @@
 							<object class="IBUITextView" id="640321488">
 								<reference key="NSNextResponder" ref="710653397"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{6, 8}, {314, 28}}</string>
+								<string key="NSFrame">{{5, 8}, {314, 28}}</string>
 								<reference key="NSSuperview" ref="710653397"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="304448101"/>
@@ -52,7 +52,7 @@
 									<bytes key="NSWhite">MCAwAA</bytes>
 								</object>
 								<bool key="IBUIClipsSubviews">YES</bool>
-								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<bool key="IBUIScrollEnabled">NO</bool>
 								<bool key="IBUIEditable">NO</bool>
@@ -79,21 +79,16 @@
 								<string key="NSFrame">{{6, 24}, {284, 60}}</string>
 								<reference key="NSSuperview" ref="710653397"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:613</string>
 								<reference key="IBUIBackgroundColor" ref="236473789"/>
 								<bool key="IBUIClipsSubviews">YES</bool>
-								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<bool key="IBUIScrollEnabled">NO</bool>
 								<bool key="IBUIEditable">NO</bool>
 								<string type="base64-UTF8" key="IBUIText">5bqU55So56iL5bqP5pyA57uI55So5oi36K645Y+v5Y2P6K6uCgrmnKzjgIrlupTnlKjnqIvluo/mnIDn
-u4jnlKjmiLforrjlj6/ljY/orq7jgIvvvIjku6XkuIvnroDnp7DigJzorrjlj6/ljY/orq7igJ3vvInm
-mK/mgqjkuI7mgqjkvb/nlKjnmoTigJzpopDlkozlm63ot6815Y+34oCd56e75Yqo5bqU55So56iL5bqP
-55qE5byA5Y+R6ICF5LmL6Ze055qE5Y2P6K6u44CC5pys6K645Y+v5Y2P6K6u5piv5oKo5L2/55So56e7
-5Yqo5bqU55So56iL5bqP5ZKM5YW255u45YWz5paH5Lu277yI5Lul5LiL5ZCI56ew4oCc5bqU55So56iL
-5bqP4oCd77yJ55qE6KeE6IyD44CCCgror7fmgqjku5Tnu4bpmIXor7vku6XkuIvmnaHmrL7vvIzlpoLm
-npzmgqjkuI3lkIzmhI/ljY/orq7lhoXlrrnvvIzkvaDvvIjljbPigJznlKjmiLfigJ3vvInlj6/ku6Xp
-gInmi6nkuI3ov5vlhaXmnKzlupTnlKjnqIvluo/jgII</string>
+u4jnlKjmiLforrjlj6/ljY/orq7jgIvvvIjku6UuLi4</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">2</int>
 									<bytes key="NSRGB">MC41Njg2Mjc0NzY3IDAuNTY4NjI3NDc2NyAwLjU2ODYyNzQ3NjcAA</bytes>
@@ -180,6 +175,7 @@ gInmi6nkuI3ov5vlhaXmnKzlupTnlKjnqIvluo/jgII</string>
 								<string key="NSFrame">{{20, 24}, {280, 70}}</string>
 								<reference key="NSSuperview" ref="111998708"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:613</string>
 								<reference key="IBUIBackgroundColor" ref="236473789"/>
 								<bool key="IBUIClipsSubviews">YES</bool>

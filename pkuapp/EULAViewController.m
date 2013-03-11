@@ -96,10 +96,6 @@
 
 #pragma mark - Table view data source
 
-
-- (CGFloat)tableView:(UITableView *)atableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self tableView:atableView cellForRowAtIndexPath:indexPath].frame.size.height;
-}
 /*
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     //return 
@@ -122,14 +118,13 @@
     }
     return 0;
 }
-/*
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 94;
     }
-    return 56;
+    return 44;
 }
-*/
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"欢迎使用颐和园路5号";
 }
@@ -238,13 +233,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row > 0) {
-        EULADetailView *edvc = [[EULADetailView alloc] initWithNibName:@"EULADetailView" bundle:nil];
-
-       
-        [self.navigationController pushViewController:edvc animated:YES];
-        edvc.filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"EULACell%d",indexPath.row] ofType:@"html"];
-    }
+    EULADetailView *edvc = [[EULADetailView alloc] initWithNibName:@"EULADetailView" bundle:nil];
+   
+    [self.navigationController pushViewController:edvc animated:YES];
+    edvc.filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"EULACell%d",indexPath.row] ofType:@"html"];
 }
 
 @end

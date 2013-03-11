@@ -244,8 +244,6 @@
     
   
 	[self.requestImg startAsynchronous];
-	//		  [queueNet addOperation:imgDeanCode];
-	//		  [queueNet go];
 	return YES;
 }
 
