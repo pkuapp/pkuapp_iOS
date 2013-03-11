@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AppUser" representedClassName="AppUser" syncable="YES">
+        <attribute name="deanid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="realname" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="assignset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="Person" inverseEntity="Assignment" indexed="YES" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="serverUser" inverseEntity="Course" indexed="YES" syncable="YES"/>
+        <relationship name="localcourses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="localUser" inverseEntity="Course" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Assignment" representedClassName="Assignment" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isDone" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="course" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="localAssignment" inverseEntity="Course" indexed="YES" syncable="YES"/>
+        <relationship name="Person" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="assignset" inverseEntity="AppUser" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="course_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="FromPerson" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="course" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="commentset" inverseEntity="Course" indexed="YES" syncable="YES"/>
+        <relationship name="replyset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reply" inverseName="comment" inverseEntity="Reply" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Course" representedClassName="Course" syncable="YES">
+        <attribute name="classnum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="courseid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="Coursetype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="credit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="day1" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day2" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day3" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day4" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day5" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day6" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day7" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rawplace" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="SchoolCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teachername" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time_test" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="txType" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="commentset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="course" inverseEntity="Comment" indexed="YES" syncable="YES"/>
+        <relationship name="localAssignment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="course" inverseEntity="Assignment" indexed="YES" syncable="YES"/>
+        <relationship name="localUser" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppUser" inverseName="localcourses" inverseEntity="AppUser" indexed="YES" syncable="YES"/>
+        <relationship name="school" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="courses" inverseEntity="School" indexed="YES" syncable="YES"/>
+        <relationship name="serverUser" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppUser" inverseName="courses" inverseEntity="AppUser" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Place" representedClassName="Place" syncable="YES"/>
+    <entity name="Reply" representedClassName="Reply" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="comment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Comment" inverseName="replyset" inverseEntity="Comment" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="School" representedClassName="School" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="courses" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="school" inverseEntity="Course" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AppUser" positionX="-45" positionY="324" width="128" height="135"/>
+        <element name="Assignment" positionX="142" positionY="51" width="128" height="120"/>
+        <element name="Comment" positionX="583" positionY="438" width="128" height="165"/>
+        <element name="Course" positionX="367" positionY="72" width="128" height="420"/>
+        <element name="Place" positionX="603" positionY="288" width="128" height="45"/>
+        <element name="Reply" positionX="187" positionY="696" width="128" height="75"/>
+        <element name="School" positionX="189" positionY="540" width="128" height="90"/>
+    </elements>
+</model>
