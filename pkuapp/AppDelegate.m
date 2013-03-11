@@ -162,7 +162,6 @@
             validKey = @"check";
             sessionKey = @"sid";
         }
-        NSLog(@"%@, %@", sid, deanCode);
         
         ASIFormDataRequest *requestLogin = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: urlLogin]];
 
