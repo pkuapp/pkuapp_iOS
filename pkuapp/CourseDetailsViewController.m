@@ -11,59 +11,47 @@
 #import "Assignment.h"
 #import "ModelsAddon.h"
 
-@interface CourseDetailsViewController(Private)
+@interface CourseDetailsViewController()
 
 @end
 
 @implementation CourseDetailsViewController
-@synthesize tableView;
-@synthesize course;
-@synthesize arrayAssignments;
-@synthesize delegate;
-@synthesize coord_assign;
-@synthesize arrayCourses;
+
 
 - (NSArray *)arrayCourses{
-    if (arrayCourses == nil) {
-        arrayCourses = [NSArray arrayWithArray:[self.delegate.appUser.courses allObjects]];
+    if (_arrayCourses == nil) {
+        _arrayCourses = [NSArray arrayWithArray:[AppUser.sharedUser.courses allObjects]];
     }
-    return arrayCourses;
+    return _arrayCourses;
 }
 
 #pragma mark - getter override
 - (NSMutableArray *)arrayAssignments {
-    if (arrayAssignments == nil) {
-        arrayAssignments = [[NSMutableArray alloc] initWithCapacity:1];
-        for (Assignment *assign in self.delegate.appUser.assignset) {
+    if (_arrayAssignments == nil) {
+        _arrayAssignments = [[NSMutableArray alloc] initWithCapacity:1];
+        for (Assignment *assign in AppUser.sharedUser.assignset) {
             if (assign.course == self.course && [assign.isDone boolValue]== NO) {
-                [arrayAssignments addObject:assign];
+                [_arrayAssignments addObject:assign];
             }
         }
     }
-    return arrayAssignments;
-}
-
-- (NSObject<AppUserDelegateProtocol> *)delegate {
-    if (delegate == nil) {
-        delegate = (NSObject<AppUserDelegateProtocol,AppCoreDataProtocol>*) [UIApplication sharedApplication].delegate;
-    }
-    return delegate;
+    return _arrayAssignments;
 }
 
 #pragma mark - AssignmentEditDelegate
 - (void)didFinnishedEdit {
-    [self.delegate.managedObjectContext save:nil];
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didCancelEdit {
-    [self.delegate.managedObjectContext deleteObject:coord_assign];
-    [self.delegate.managedObjectContext save:nil];
+    [self.coord_assign deleteInContext:[NSManagedObjectContext defaultContext]];
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didDoneAssignment:(Assignment *)assignment {
-    [self.delegate.managedObjectContext save:nil];
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -106,15 +94,15 @@
         case 0:
         {
             if (indexPath.row == self.arrayAssignments.count) {
-                coord_assign = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.delegate.managedObjectContext];
+                self.coord_assign = [Assignment createInContext:[NSManagedObjectContext defaultContext]];
                 
-                coord_assign.course = self.course;
-                coord_assign.Person = self.delegate.appUser;
+                self.coord_assign.course = self.course;
+                self.coord_assign.Person = [AppUser sharedUser];
                 
-                coord_assign.isDone = @NO;
+                self.coord_assign.isDone = @NO;
                 
                 AssignmentEditViewController *evc = [[AssignmentEditViewController alloc] init];
-                evc.coord_assign = coord_assign;
+                evc.coord_assign = self.coord_assign;
                 
                 evc.delegate = self;
                 evc.controllerMode = AssignmentEditControllerModeAdd;
@@ -132,14 +120,14 @@
         case 3:
         {
 
-            if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusDefault) {
-                [self.delegate.appUser addLocalcoursesObject:self.course];
+            if ([self.course currentCourseStatusForUser:AppUser.sharedUser] == CourseStatusDefault) {
+                [AppUser.sharedUser addLocalcoursesObject:self.course];
             }
             else {
-                [self.delegate.appUser removeLocalcoursesObject:self.course];
+                [AppUser.sharedUser removeLocalcoursesObject:self.course];
             }
             
-            [self.delegate.managedObjectContext save:nil];
+            [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
             [self.tableView reloadData];
             
 //            NSInvocation *ivc = [NSInvocation invocationWithMethodSignature:[self.tableView methodSignatureForSelector:@selector(deselectRowAtIndexPath:animated:)]];
@@ -168,7 +156,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusServer) {
+    if ([self.course currentCourseStatusForUser:AppUser.sharedUser] == CourseStatusServer) {
         return 3;
     }
     return 4;
@@ -341,7 +329,7 @@
         case 3://share and audit courses
             switch (indexPath.row) {
                 case 0:
-                    if ([self.course currentCourseStatusForUser:self.delegate.appUser] == CourseStatusDefault) {
+                    if ([self.course currentCourseStatusForUser:AppUser.sharedUser] == CourseStatusDefault) {
                         cell.textLabel.text = @"加入旁听列表";
                     }
                     else {

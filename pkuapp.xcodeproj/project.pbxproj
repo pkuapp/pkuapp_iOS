@@ -337,7 +337,6 @@
 		413E8FC4143DB44F0042BE88 /* AppUserDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUserDelegateProtocol.h; sourceTree = "<group>"; };
 		413E8FD6143DE7A20042BE88 /* SearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDataSource.h; sourceTree = "<group>"; };
 		413E8FD7143DE7A30042BE88 /* SearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDataSource.m; sourceTree = "<group>"; };
-		413E8FD9143DF1220042BE88 /* AppCoreDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCoreDataProtocol.h; sourceTree = "<group>"; };
 		413E8FDA143DF6A70042BE88 /* MyCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCoursesViewController.h; sourceTree = "<group>"; };
 		413E8FDB143DF6A80042BE88 /* MyCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCoursesViewController.m; sourceTree = "<group>"; };
 		413E8FDC143DF6A80042BE88 /* MyCoursesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyCoursesViewController.xib; sourceTree = "<group>"; };
@@ -677,7 +676,6 @@
 				41429C921397AC0700A62D9C /* FirstView */,
 				41DAB33E13951D430017F7C7 /* GateView */,
 				413E8FC4143DB44F0042BE88 /* AppUserDelegateProtocol.h */,
-				413E8FD9143DF1220042BE88 /* AppCoreDataProtocol.h */,
 				410B418A13902BA400002A46 /* AppDelegate.h */,
 				410B418B13902BA400002A46 /* AppDelegate.m */,
 				4174449414DD89E1001E95DF /* ReachablityProtocol.h */,

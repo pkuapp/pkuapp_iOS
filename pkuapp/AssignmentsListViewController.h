@@ -12,7 +12,7 @@
 #import "AppUser.h"
 #import "Assignment.h"
 #import "AssignmentEditViewController.h"
-#import "AppCoreDataProtocol.h"
+
 @interface AssignmentsListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,AssignmentEditDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

@@ -13,7 +13,6 @@
 #import <CoreData/CoreData.h>
 #import "Course.h"
 #import "School.h"
-#import "AppCoreDataProtocol.h"
 #import "CourseDetailsViewController.h"
 
 
@@ -31,7 +30,6 @@
 @synthesize searchDC;
 @synthesize searchDS;
 @synthesize searchBar;
-@synthesize context;
 @synthesize txCategorySegmentedControl;
 
 - (UISegmentedControl *)txCategorySegmentedControl {
@@ -51,12 +49,6 @@
     }
     
     return txCategorySegmentedControl;
-}
-- (NSManagedObjectContext *)context {
-    if (context == nil) {
-        context = [NSManagedObjectContext defaultContext];
-    }
-    return context;
 }
 
 - (NSArray *)arrayCategories
@@ -94,7 +86,8 @@
         subType = subCategoryTypeDefault;
     }
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:self.delegate.managedObjectContext];
+    NSManagedObjectContext *context = NSManagedObjectContext.defaultContext;
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:context];
     
     self.request = [[NSFetchRequest alloc] init];
     
@@ -108,7 +101,7 @@
     
     request.sortDescriptors = @[sort];
     
-    self.fetchResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.delegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    self.fetchResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
     
     [self.fetchResultController performFetch:NULL];
 }

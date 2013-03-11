@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "NoticeCenterHepler.h"
 #import "PKUNoticeCenterProtocols.h"

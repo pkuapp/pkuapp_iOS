@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppUserDelegateProtocol.h"
-#import "AppCoreDataProtocol.h"
 #import "Reachability.h"
 #import "ReachablityProtocol.h"
 #import "PABezelHUDDelegate.h"

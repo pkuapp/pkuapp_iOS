@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "NITableViewModel.h"
 #import <CoreData/CoreData.h>
@@ -30,7 +29,7 @@ typedef enum {
 }
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
+@property (nonatomic, strong) NSObject<AppUserDelegateProtocol> *delegate;
 @property (nonatomic, strong, readonly) NSArray *arrayCategories;
 @property (nonatomic, strong) NITableViewModel* subDataSource;
 @property (strong, nonatomic) NSFetchedResultsController *fetchResultController;
@@ -38,7 +37,6 @@ typedef enum {
 @property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) IBOutlet UISearchDisplayController *searchDC;
 @property (nonatomic, strong) IBOutlet SearchDataSource *searchDS;
-@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) UISegmentedControl* txCategorySegmentedControl;
 
 @end

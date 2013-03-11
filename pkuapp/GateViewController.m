@@ -35,9 +35,9 @@
 @synthesize detailDataSource;
 @synthesize detailTVC;
 
-- (NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *)delegate {
+- (NSObject<AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *)delegate {
     if (delegate == nil) {
-        delegate = (NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *)[UIApplication sharedApplication].delegate;
+        delegate = (NSObject<AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *)[UIApplication sharedApplication].delegate;
     }
     return delegate;
 }

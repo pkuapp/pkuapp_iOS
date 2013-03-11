@@ -11,7 +11,6 @@
 #import "ModelsAddon.h"
 #import "Environment.h"
 #import "AppUserDelegateProtocol.h"
-#import "AppCoreDataProtocol.h"
 #import "AssignmentEditViewController.h"
 
 @interface CourseDetailsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AssignmentEditDelegate>
@@ -20,7 +19,6 @@
 
 @property (strong, nonatomic) Course *course;
 @property (strong, nonatomic) NSMutableArray *arrayAssignments;
-@property (strong, nonatomic, readonly) NSObject<AppUserDelegateProtocol,AppCoreDataProtocol> *delegate;
 @property (weak, nonatomic) Assignment *coord_assign;
 @property (strong, nonatomic) NSArray *arrayCourses;
 @end

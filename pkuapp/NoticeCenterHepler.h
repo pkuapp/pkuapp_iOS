@@ -10,7 +10,6 @@
  */
 #import <Foundation/Foundation.h>
 #import "ModelsAddon.h"
-#import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "Course.h"
 #import "Assignment.h"
@@ -37,7 +36,7 @@ typedef enum{
 @end
 
 @interface NoticeCenterHepler: NSObject 
-@property (weak, nonatomic) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol> *delegate;
+@property (weak, nonatomic) NSObject<AppUserDelegateProtocol> *delegate;
 @property (strong, nonatomic) NSArray* arrayAssignments;
 @property (weak, nonatomic) Course* latestCourse;
 @property (retain, nonatomic) EKEvent* latestEvent;

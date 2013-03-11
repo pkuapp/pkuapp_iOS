@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "IPGateHelper.h"
 #import "MBProgressHUD.h"
-#import "AppCoreDataProtocol.h"
 #import "AppUserDelegateProtocol.h"
 #import "Environment.h"
 #import "Reachability.h"
@@ -34,7 +33,7 @@
 @property (strong, nonatomic) UILabel *labelStatus;
 @property (strong, nonatomic) UILabel *labelWarning;
 @property (strong, nonatomic) MBProgressHUD *progressHub;
-@property (nonatomic, weak) NSObject<AppCoreDataProtocol,AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *delegate;
+@property (nonatomic, weak) NSObject<AppUserDelegateProtocol,ReachablityProtocol,PABezelHUDDelegate> *delegate;
 @property (strong, nonatomic) NITableViewModel *detailDataSource;
 @property (strong, atomic) UITableViewController *detailTVC;
 
