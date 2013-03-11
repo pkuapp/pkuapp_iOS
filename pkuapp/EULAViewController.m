@@ -66,16 +66,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    //[self.navigationController.view bringSubviewToFront: [self.navigationController.view.subviews objectAtIndex:0]];
-    //UIView * view = [self.navigationController.view.subviews objectAtIndex:0];
-    //self.view.frame = CGRectMake(0, 64, 320, 480);
-    //view.frame = CGRectMake(0, 0, 320, 480);
-    //view.clipsToBounds = NO;
-    //NSLog(@"%@",[[self.navigationController.view.subviews objectAtIndex:0] subviews]);
-    
+  
     [super viewWillAppear:animated];
-    
-    
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -161,8 +154,6 @@
     switch (indexPath.row) {
         case 0:
             cell = (self.arrayCells)[0];
-            
-            cell.accessoryType = UITableViewCellAccessoryNone;
             break;
         case 1:
             cell.textLabel.text = @"一、使用规则";

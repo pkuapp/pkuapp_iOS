@@ -18,13 +18,12 @@
 @class WelcomeViewController;
 @class AppUser;
 @class Course;
+@class EULANavController;
 
 @interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,PABezelHUDDelegate> {
     IBOutlet UIWindow *window;
 
     UINavigationController *mvc;
-
-    UINavigationController *wvc;
 
     UIViewController *mv;
 }
@@ -32,8 +31,8 @@
 @property (nonatomic, strong) IBOutlet UIWindow *window;
 @property (nonatomic, strong, readonly) NSOperationQueue *operationQueue;
 @property (nonatomic, strong, readonly) UINavigationController *mvc;
+@property (nonatomic, strong) EULANavController *wvc;
 
-@property (nonatomic, strong) UINavigationController *wvc;
 @property (nonatomic, weak) AppUser *appUser;
 @property (atomic, strong) Reachability *wifiTester;
 @property (atomic, strong) Reachability *internetTester;

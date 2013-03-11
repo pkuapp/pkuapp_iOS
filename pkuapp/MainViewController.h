@@ -50,7 +50,6 @@
 - (IBAction) navToCanlendar;
 - (void) performActionSheet;
 - (IBAction)navToCoursesView;
-- (IBAction)testTableView:(id)sender;
 - (void)performFetch;
 - (void)navToCourseDetail:(Course *)course;
 @end

@@ -1,3 +1,8 @@
+p {
+	text-align:justify; 
+	word-break: normal; 
+	padding-right: 1em;
+}
 h1, p {
     font: 14px/1.5 sans-serif;
     margin-bottom: 0;
@@ -9,4 +14,11 @@ h1 {
 
 p {
     padding-left: 1em;
+}
+
+body
+{
+	background-color: #EFEADE;
+	text-shadow: 0px 1px #FFFFFF;
+	color: #4C566A;
 }

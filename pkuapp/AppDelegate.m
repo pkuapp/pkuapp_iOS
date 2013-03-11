@@ -43,7 +43,6 @@
 @synthesize wifiTester,internetTester,globalTester,freeTester,localTester;
 @synthesize netStatus;
 @synthesize hasWifi;
-@synthesize wvc;
 @synthesize progressHub;
 @synthesize test_data;
 
@@ -359,13 +358,14 @@
 }
 
 #pragma mark - getter Setup
-- (UINavigationController *)wvc
+- (EULANavController *)wvc
 {
-    if (wvc == nil) {
-        WelcomeViewController *wv = [[WelcomeViewController alloc] initWithNibName:nil bundle:nil];
-        wvc = [[UINavigationController alloc] initWithRootViewController:wv];
+    if (_wvc == nil) {
+        EULANavController *eulaVC = [[EULANavController alloc] initWithNibName:@"EULAView" bundle:nil];
+//        WelcomeViewController *wv = [[WelcomeViewController alloc] initWithNibName:nil bundle:nil];
+        _wvc = eulaVC;
     }
-    return wvc;
+    return _wvc;
 }
 
 - (UIViewController *)mv{

@@ -213,7 +213,7 @@
 		41D078D0150415D300323618 /* btn-its-3-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D078C4150415D300323618 /* btn-its-3-normal.png */; };
 		41D078D1150415D300323618 /* btn-its-2-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D078C5150415D300323618 /* btn-its-2-normal.png */; };
 		41D078D2150415D300323618 /* btn-its-1-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D078C6150415D300323618 /* btn-its-1-normal.png */; };
-		41D101C61556628700566E65 /* EULACell5.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C01556628700566E65 /* EULACell5.html */; };
+		41D101C61556628700566E65 /* EULACell0.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C01556628700566E65 /* EULACell0.html */; };
 		41D101C71556628700566E65 /* EULACell6.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C11556628700566E65 /* EULACell6.html */; };
 		41D101C81556628700566E65 /* EULACell7.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C21556628700566E65 /* EULACell7.html */; };
 		41D101C91556628700566E65 /* EULACell8.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C31556628700566E65 /* EULACell8.html */; };
@@ -525,7 +525,7 @@
 		41D078C4150415D300323618 /* btn-its-3-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-its-3-normal.png"; sourceTree = "<group>"; };
 		41D078C5150415D300323618 /* btn-its-2-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-its-2-normal.png"; sourceTree = "<group>"; };
 		41D078C6150415D300323618 /* btn-its-1-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-its-1-normal.png"; sourceTree = "<group>"; };
-		41D101C01556628700566E65 /* EULACell5.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell5.html; sourceTree = "<group>"; };
+		41D101C01556628700566E65 /* EULACell0.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell0.html; sourceTree = "<group>"; };
 		41D101C11556628700566E65 /* EULACell6.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell6.html; sourceTree = "<group>"; };
 		41D101C21556628700566E65 /* EULACell7.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell7.html; sourceTree = "<group>"; };
 		41D101C31556628700566E65 /* EULACell8.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell8.html; sourceTree = "<group>"; };
@@ -967,11 +967,11 @@
 		41CD0C2E148B40E100F904CC /* EULA HTMLS */ = {
 			isa = PBXGroup;
 			children = (
+				41D101C01556628700566E65 /* EULACell0.html */,
 				41CD0C2F148B40E100F904CC /* EULACell1.html */,
 				41CD0C30148B40E100F904CC /* EULACell2.html */,
 				41CD0C31148B40E100F904CC /* EULACell3.html */,
 				41CD0C32148B40E100F904CC /* EULACell4.html */,
-				41D101C01556628700566E65 /* EULACell5.html */,
 				41D101C11556628700566E65 /* EULACell6.html */,
 				41D101C21556628700566E65 /* EULACell7.html */,
 				41D101C31556628700566E65 /* EULACell8.html */,
@@ -1377,7 +1377,7 @@
 				41942AA715042DEB0012F5BE /* datebar-arrow-right-pressed@2x.png in Resources */,
 				4112C64815242C14002B5FCC /* CalendarController.xib in Resources */,
 				41EE477115243111005500E5 /* CalendarContentController.xib in Resources */,
-				41D101C61556628700566E65 /* EULACell5.html in Resources */,
+				41D101C61556628700566E65 /* EULACell0.html in Resources */,
 				41D101C71556628700566E65 /* EULACell6.html in Resources */,
 				41D101C81556628700566E65 /* EULACell7.html in Resources */,
 				41D101C91556628700566E65 /* EULACell8.html in Resources */,

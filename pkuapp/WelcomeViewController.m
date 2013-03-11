@@ -89,31 +89,6 @@
     
     
     EULANavController *eulaVC = [[EULANavController alloc] initWithNibName:@"EULAView" bundle:nil];
-    /*
-    UINavigationController *secondNavController = [[UINavigationController alloc ]initWithRootViewController:eulaVC];
-    CATransition *animation = [CATransition animation];
-    [animation setDuration:0.3];
-    [animation setType:kCATransitionPush];
-    [animation setSubtype:kCATransitionFromRight];
-    [animation setFillMode:kCAFillModeBoth];
-    [animation setTimingFunction:[CAMediaTimingFunction
-                                  functionWithName:kCAMediaTimingFunctionLinear]];
-    [[secondNavController.view layer] removeAllAnimations];
-    [[secondNavController.view layer] addAnimation:animation forKey:@
-     "pushAnimation"];
-    CATransition *animation2 = [CATransition animation];
-    [animation setDuration:0.3];
-    [animation setType:kCATransitionPush];
-    [animation setSubtype:kCATransitionFromRight];
-    [animation setFillMode:kCAFillModeBoth];
-    [animation setTimingFunction:[CAMediaTimingFunction
-                                  functionWithName:kCAMediaTimingFunctionLinear]];
-    [self.view.layer removeAllAnimations];
-    [self.view.layer addAnimation:animation2 forKey:@"pushAnimation2"];
-    [[self.view superview] addSubview:secondNavController.view];
-    [self.view removeFromSuperview];
-     */
-    //[UIView transitionFromView:self.view toView:secondNavController.view duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve  completion:NULL];
     [self.navigationController pushViewController:eulaVC animated:YES];
 }
 @end
