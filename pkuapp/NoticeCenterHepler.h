@@ -39,10 +39,10 @@ typedef enum{
 @property (weak, nonatomic) NSObject<AppUserDelegateProtocol> *delegate;
 @property (strong, nonatomic) NSArray* arrayAssignments;
 @property (strong, nonatomic) Course* latestCourse;
-@property (retain, nonatomic) EKEvent* latestEvent;
-@property (weak, nonatomic) Course* nowCourse;
+@property (strong, nonatomic) EKEvent* latestEvent;
+@property (strong, nonatomic) Course* nowCourse;
 @property (strong, nonatomic) Assignment* latestAssignment;
-@property (nonatomic, strong) NSDictionary *dictLatestCourse;
+@property (strong, nonatomic) NSDictionary *dictLatestCourse;
 
 //i was thinking whether ot not break notices into four parts so that it could be use in different part in this app.
 - (NSArray *)getAllNotice;
