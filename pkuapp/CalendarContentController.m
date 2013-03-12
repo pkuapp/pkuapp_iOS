@@ -318,17 +318,6 @@
 
 - (void)prepareListViewDataSource {
     
-    NSCalendar *nsCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    unsigned uniflag = NSHourCalendarUnit|NSMinuteCalendarUnit;
-    NSDateComponents *components = [nsCalendar components:uniflag fromDate:self.dateInDayView];
-    
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
-    
-    NSInteger dayMinuteNow = hour*60 +minute;
-    
-    
     _bitListControl = 0;
     _bitListControl |= 1 << 13;
     
@@ -336,9 +325,6 @@
     
     NSInteger weekNow = [SystemHelper getPkuWeeknumberForDate:self.dateInDayView];
     NSMutableSet *waitSet = [NSMutableSet setWithCapacity:0];
-    Notice *_notice = [self.noticeCenter getNoticeNextCourse];
-    NSInteger dayOffset = [(_notice.dictInfo)[@"dayOffset"] intValue];
-    NSInteger startMinuteNextCourse = [(_notice.dictInfo)[@"startMinute"] intValue];
     BOOL foundCoursePresent = NO;
     
     NSMutableSet *courseSet = [NSMutableSet setWithSet:self.delegate.appUser.courses];
