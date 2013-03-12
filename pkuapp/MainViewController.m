@@ -400,8 +400,8 @@
     CalendarController *cvc = [[CalendarController alloc] initWithNibName: @"CalendarController" bundle:nil];
     //cvc.EventResults = self.results;
     cvc.delegate = self.delegate;
-    cvc.noticeCenter = [[NoticeCenterHepler alloc] init];
-    [cvc.noticeCenter loadData];
+    cvc.noticeCenter = self.noticeCenterHelper;
+//    [cvc.noticeCenter loadData];
     [self.navigationController pushViewController:cvc animated:YES];
     
 }

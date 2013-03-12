@@ -364,8 +364,8 @@
             if (startMinute <= dayMinuteNow && endMinute > dayMinuteNow && fabs([dateInDayView timeIntervalSinceNow]) <= 1) {
                 group.type = ClassGroupTypeNow;
             }
-            
-            if (fabs([self.dateBegInDayView timeIntervalSinceDate:[SystemHelper dateBeginForDate:[NSDate date]]] - dayOffset*86400) <= 1 && startMinute == startMinuteNextCourse ) {
+                        
+            if (group.course.id == self.noticeCenter.latestCourse.id) {
                 group.type = ClassGroupTypeNext;
             }
             
@@ -762,6 +762,7 @@
         
     }
     else if (group.type == ClassGroupTypeNext) {
+        
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
         nameLabel.text = group.course.name;
         nameLabel.textColor = UIColorFromRGB(0x538A2A);
