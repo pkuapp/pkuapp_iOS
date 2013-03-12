@@ -219,7 +219,6 @@
 		41D101CB1556628700566E65 /* EULACell10.html in Resources */ = {isa = PBXBuildFile; fileRef = 41D101C51556628700566E65 /* EULACell10.html */; };
 		41D101CD15566BB500566E65 /* test_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41D101CC15566BB500566E65 /* test_data.plist */; };
 		41D1068213AFCD85006E2D10 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D1068113AFCD85006E2D10 /* CoreData.framework */; };
-		41D368F013CCA0A000789429 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D368EE13CCA09F00789429 /* CalendarViewController.m */; };
 		41D368F113CCA0A000789429 /* CalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D368EF13CCA09F00789429 /* CalendarView.xib */; };
 		41D3DA7313946C5F00D7066F /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D3DA7113946C5F00D7066F /* FirstViewController.m */; };
 		41DFD9D113E6B12F00B19E24 /* IPGateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DFD9D013E6B12F00B19E24 /* IPGateHelper.m */; };
@@ -528,8 +527,6 @@
 		41D101C51556628700566E65 /* EULACell10.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EULACell10.html; sourceTree = "<group>"; };
 		41D101CC15566BB500566E65 /* test_data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = test_data.plist; sourceTree = "<group>"; };
 		41D1068113AFCD85006E2D10 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		41D368ED13CCA09F00789429 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
-		41D368EE13CCA09F00789429 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		41D368EF13CCA09F00789429 /* CalendarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarView.xib; sourceTree = "<group>"; };
 		41D3DA7013946C5F00D7066F /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		41D3DA7113946C5F00D7066F /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
@@ -947,8 +944,6 @@
 				4112C64515242C14002B5FCC /* CalendarController.xib */,
 				41F2494013D061290019C223 /* CalendarGroudView.h */,
 				41F2494113D0612A0019C223 /* CalendarGroudView.m */,
-				41D368ED13CCA09F00789429 /* CalendarViewController.h */,
-				41D368EE13CCA09F00789429 /* CalendarViewController.m */,
 				41D368EF13CCA09F00789429 /* CalendarView.xib */,
 				415DC3521411C65F008C2D78 /* PKUCalendarBarView.h */,
 				415DC3531411C65F008C2D78 /* PKUCalendarBarView.m */,
@@ -1424,7 +1419,6 @@
 				41CD391C13A7A69200CA3D3A /* MainViewController.m in Sources */,
 				417AC5E513F6F9F6003BD79B /* ClassroomQueryController.m in Sources */,
 				41C5F4401402738C000CF13B /* QueryResultsController.m in Sources */,
-				41D368F013CCA0A000789429 /* CalendarViewController.m in Sources */,
 				41F2494213D0612B0019C223 /* CalendarGroudView.m in Sources */,
 				41EF674513D172C5009A251C /* SystemHelper.m in Sources */,
 				41DFD9D113E6B12F00B19E24 /* IPGateHelper.m in Sources */,

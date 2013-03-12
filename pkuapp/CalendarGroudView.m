@@ -163,7 +163,7 @@
 
 @end
 
-#pragma mark - EventView -
+#pragma mark - EventView
 
 @implementation EventView
 
@@ -291,6 +291,13 @@
     
     NSString *location = event.location;
     
+    if (!name) {
+        name = @"";
+    }
+    if (!location) {
+        location = @"";
+    }
+    
     if (thegroundType == CalendarGroundTypeDay) {
     
     float start = [self floatHourForDate:event.startDate inDate:date];
@@ -299,12 +306,6 @@
     
     NSNumber *daynum = @([SystemHelper getDayForDate:event.startDate]);
     
-        if (!name) {
-            name = @"";
-        }
-        if (!location) {
-            location = @"";
-        }
         
     NSDictionary *dict = @{@"name": name,@"start": @(start),@"end": @(end),@"day": daynum ,@"place": location};
         
