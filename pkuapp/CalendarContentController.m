@@ -1014,14 +1014,13 @@
     [super viewDidLoad];
     [self configureGlobalAppearance];
     self.bitListControl = 0;
-//    
+
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
     self.fatherController.navigationItem.rightBarButtonItem = rightButton;
 
     self.title = @"日程";
         self.scrollDayView.decelerationRate = 0.5;
         self.scrollWeekView.decelerationRate = 0.5;
-//    [[UIScrollView appearance] setDecelerationRate:0.5];
 
     self.dateBegInDayView = [SystemHelper dateBeginForDate:self.dateInDayView];
 
@@ -1049,9 +1048,9 @@
     [self setArrayEventGroups:nil];
     [self setListView:nil];
 
-//    self.eventStore = nil;
-//    self.defaultCalendar = nil;
-//    self.detailViewController = nil;
+    self.eventStore = nil;
+    self.defaultCalendar = nil;
+    self.detailViewController = nil;
     self.arrayEventDict = nil;
     self.dateBegInDayView = nil;
     self.dateInDayView = nil;
@@ -1061,17 +1060,7 @@
     self.serverCourses = nil;
     self.arrayClassGroup = nil;
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
 @end
 
 
