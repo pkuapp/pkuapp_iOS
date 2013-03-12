@@ -176,7 +176,6 @@
 - (void)didSelectSelfView
 {
     if (self.viewType == EventViewNone) {
-        NSLog(@"%d",self.objIndex);
         [self.delegate didSelectEKEventForIndex:self.objIndex];
     }
 }

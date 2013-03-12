@@ -31,7 +31,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (void)checkVersion;
-- (void)checkVersionDone;
+//- (void)checkVersionDone;
 - (NSString *)parsedLoginError:(NSString *)loginmessage;
 @end
 
@@ -406,11 +406,10 @@
 //        self.hasWifi = r.isReachable?YES:NO;
 //    }
     if (r.isReachable) {
-        [self checkVersion];
+//        [self checkVersion];
     }
     //[r startNotifier];
 //    NSLog(@"%d",r.currentReachabilityStatus);
-    NSLog(@"%d",r.isReachable);
     
 }
 
