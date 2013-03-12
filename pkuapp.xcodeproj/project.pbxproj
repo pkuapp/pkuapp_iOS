@@ -592,9 +592,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				418EF7E1167B7F54002DD06E /* MobileCoreServices.framework in Frameworks */,
 				41E1A1FC16E3164C004D1A4A /* EventKitUI.framework in Frameworks */,
 				41E1A1FA16E31646004D1A4A /* EventKit.framework in Frameworks */,
-				418EF7E1167B7F54002DD06E /* MobileCoreServices.framework in Frameworks */,
 				418EF7E0167B7F3F002DD06E /* libz.dylib in Frameworks */,
 				418EF7DE167B7F2D002DD06E /* libxml2.dylib in Frameworks */,
 				320AF8492C47A4D819F7C451 /* QuartzCore.framework in Frameworks */,
@@ -671,6 +671,7 @@
 				410B418A13902BA400002A46 /* AppDelegate.h */,
 				410B418B13902BA400002A46 /* AppDelegate.m */,
 				4174449414DD89E1001E95DF /* ReachablityProtocol.h */,
+				410B418713902BA300002A46 /* pkuapp-Prefix.pch */,
 				410B418213902BA300002A46 /* Supporting Files */,
 				41EC28B813A7099E00566ACE /* MainWindow.xib */,
 			);
@@ -738,7 +739,6 @@
 				412E0BEB14106B82009E0EBB /* free-rooms-free-regular@2x.png */,
 				41E2A12F13D66A7200E3EEF8 /* 37x-Checkmark.png */,
 				418258DE147A84A200124AA3 /* pkuapp-Info.plist */,
-				410B418713902BA300002A46 /* pkuapp-Prefix.pch */,
 				410B418813902BA300002A46 /* main.m */,
 			);
 			name = "Supporting Files";
