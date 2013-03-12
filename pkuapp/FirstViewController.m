@@ -272,8 +272,6 @@
     self.delegate.progressHub.labelText = @"登录中";
     [self.delegate.progressHub show:YES];
     [self performSelectorInBackground:@selector(taskLogin) withObject:nil];
-//    [self taskLogin];
-	
 }
 
 - (void)loginSucceed {
@@ -305,10 +303,7 @@
             
             [defaults setObject:[NSString stringWithString:self.Username.text] forKey:@"appUser"];
             
-            
-            [self.delegate updateAppUserProfile];
-            
-//            [self.delegate updateServerCourses];
+            [self.delegate performSelectorOnMainThread:@selector(updateAppUserProfile) withObject:nil waitUntilDone:YES];
             [self.delegate performSelectorOnMainThread:@selector(updateServerCourses) withObject:nil waitUntilDone:YES];
 
             [defaults setInteger:VersionReLogin forKey:@"VersionReLogin"];
