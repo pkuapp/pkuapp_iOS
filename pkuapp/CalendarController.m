@@ -8,6 +8,7 @@
 
 #import "CalendarController.h"
 #import "CalendarContentController.h"
+#import "AssignmentsListViewController.h"
 #define pageWidth 330
 
 @interface CalendarController ()
@@ -161,8 +162,11 @@
     }
     [self.dayViewBar setupForDisplay];
 
+}
 
-//    self.
+- (IBAction)didHitAssignmentBtn:(id)sender {
+    AssignmentsListViewController *alvc = [[AssignmentsListViewController alloc] init];
+    [self.navigationController pushViewController:alvc animated:YES];
 }
 
 - (IBAction)segmentedValueDidChanged:(id)sender {
@@ -262,7 +266,6 @@
     [self setScrollViewPages:nil];
     [self setSegmentedSwtich:nil];
     [self setBtnResetTime:nil];
-    [self setDidHitAssignBtn:nil];
     [self setSwitchableViewControllers:nil];
     self.dateForDisplay = nil;
     self.switchableViewControllers = nil;

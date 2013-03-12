@@ -17,8 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewPages;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedSwtich;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *btnResetTime;
-
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *didHitAssignBtn;
 @property (atomic, strong) NoticeCenterHepler *noticeCenter;
 @property (nonatomic, weak) id<AppUserDelegateProtocol> delegate;
 
@@ -26,6 +24,7 @@
 
 @property (nonatomic, strong) IBOutlet UISegmentedControl *calSwithSegment;
 
+- (IBAction)didHitAssignmentBtn:(id)sender;
 
 - (IBAction)segmentedValueDidChanged:(id)sender;
 - (IBAction)didHitResetTimeBtn:(id)sender;
