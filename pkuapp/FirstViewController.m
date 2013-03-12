@@ -109,7 +109,7 @@
 - (UITextField *)validCode{
     if (validCode == nil) {
         validCode = [[UITextField alloc] initWithFrame:CGRectMake(90, 11, 140, 20)];
-        validCode.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        validCode.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 
         validCode.borderStyle = UITextBorderStyleNone;
         validCode.enablesReturnKeyAutomatically = YES;
