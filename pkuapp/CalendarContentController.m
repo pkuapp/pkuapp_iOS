@@ -358,20 +358,14 @@
             group.course = course;
             group.type = ClassGroupTypeCourse;
             
-            NSInteger startMinute = [Course starthourForClass:group.startclass] * 60;
-            float endMinute = [Course starthourForClass:group.endclass] *60 +50;
-            
             if (group.course.id == self.noticeCenter.nowCourse.id)
             {
                 group.type = ClassGroupTypeNow;
             }
-            
-                        
-            if (group.course.id == self.noticeCenter.latestCourse.id) {
+            else if (group.course.id == self.noticeCenter.latestCourse.id) {
                 group.type = ClassGroupTypeNext;
             }
-            
-            if ((weekNow%2 ==0 && _v.doubleType == doubleTypeSingle) || (weekNow%2==1 &&_v.doubleType == doubleTypeDouble)) {
+            else if ((weekNow%2 ==0 && _v.doubleType == doubleTypeSingle) || (weekNow%2==1 &&_v.doubleType == doubleTypeDouble)) {
                 group.type = ClassGroupTypeDisable;
                 [waitSet addObject:group];
                 continue;
