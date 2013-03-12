@@ -86,7 +86,6 @@
 - (NoticeCenterHepler *)noticeCenterHelper {
     if (_noticeCenterHelper == nil) {
         _noticeCenterHelper = [[NoticeCenterHepler alloc] init];
-        _noticeCenterHelper.delegate = self.delegate;
         [_noticeCenterHelper loadData];
     }
     return _noticeCenterHelper;

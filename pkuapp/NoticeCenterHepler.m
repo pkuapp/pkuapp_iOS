@@ -26,7 +26,6 @@
 @end
 
 @implementation NoticeCenterHepler
-@synthesize delegate;
 @synthesize arrayAssignments;
 @synthesize latestCourse,latestAssignment;
 @synthesize nowCourse;
@@ -98,11 +97,11 @@
 
     NSMutableArray *arrayCourseDicts = [NSMutableArray arrayWithCapacity:10];
     
-    for (Course *course in self.delegate.appUser.courses) {
+    for (Course *course in AppUser.sharedUser.courses) {
         
         [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]+weekOffset]];
     }
-    for (Course *course in self.delegate.appUser.localcourses) {
+    for (Course *course in AppUser.sharedUser.localcourses) {
         [arrayCourseDicts addObjectsFromArray:[course arrayEventsForWeek:[SystemHelper getPkuWeeknumberNow]+weekOffset]];    
     }
     
@@ -193,7 +192,7 @@
     //setup latest event in code below
     
     
-    self.arrayAssignments = [self.delegate.appUser sortedAssignmentNotDone];
+    self.arrayAssignments = [AppUser.sharedUser sortedAssignmentNotDone];
 }
 
 - (void)loadCourse {

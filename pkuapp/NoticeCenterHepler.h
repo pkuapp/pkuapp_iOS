@@ -36,7 +36,6 @@ typedef enum{
 @end
 
 @interface NoticeCenterHepler: NSObject 
-@property (weak, nonatomic) NSObject<AppUserDelegateProtocol> *delegate;
 @property (strong, nonatomic) NSArray* arrayAssignments;
 @property (strong, nonatomic) Course* latestCourse;
 @property (strong, nonatomic) EKEvent* latestEvent;
