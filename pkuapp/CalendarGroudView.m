@@ -298,6 +298,13 @@
     float end = [self floatHourForDate:event.endDate inDate:date];
     
     NSNumber *daynum = @([SystemHelper getDayForDate:event.startDate]);
+    
+        if (!name) {
+            name = @"";
+        }
+        if (!location) {
+            location = @"";
+        }
         
     NSDictionary *dict = @{@"name": name,@"start": @(start),@"end": @(end),@"day": daynum ,@"place": location};
         
