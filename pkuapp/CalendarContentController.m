@@ -802,7 +802,7 @@
         placeLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:placeLabel];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
     
