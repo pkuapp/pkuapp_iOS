@@ -361,9 +361,11 @@
             NSInteger startMinute = [Course starthourForClass:group.startclass] * 60;
             float endMinute = [Course starthourForClass:group.endclass] *60 +50;
             
-            if (startMinute <= dayMinuteNow && endMinute > dayMinuteNow && fabs([dateInDayView timeIntervalSinceNow]) <= 1) {
+            if (group.course.id == self.noticeCenter.nowCourse.id)
+            {
                 group.type = ClassGroupTypeNow;
             }
+            
                         
             if (group.course.id == self.noticeCenter.latestCourse.id) {
                 group.type = ClassGroupTypeNext;
