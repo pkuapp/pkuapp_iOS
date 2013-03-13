@@ -23,8 +23,8 @@
 @property (atomic, weak) NoticeCenterHepler *noticeCenter;
 @property (nonatomic, weak) id<AppUserDelegateProtocol> delegate;
 @property (nonatomic, weak) CalendarController* fatherController;
-@property (nonatomic, strong)NSDate *dateInDayView;
-@property (nonatomic, strong)NSDate *dateInWeekView;
+@property (nonatomic, strong) NSDate *dateInDayView;
+@property (nonatomic, strong) NSDate *dateInWeekView;
 - (void)toDayView;
 - (void)toWeekView;
 - (void)toListView;

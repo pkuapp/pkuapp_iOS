@@ -142,7 +142,6 @@
         
         CalendarContentController *c = (self.switchableViewControllers)[i];
         
-//        NSLog(@"%@",c.dateInDayView);
         c.view.frame = CGRectMake(self.currentCenterOffset + (i-2)*330+5, 0, 320, 372);
         
     }
@@ -307,13 +306,12 @@
         c.delegate = self.delegate;
         c.fatherController = self;
         c.noticeCenter = self.noticeCenter;
-                
+        c.dateInDayView = [NSDate dateWithTimeInterval:(i)*84600 sinceDate:self.dateForDisplay];
+
         [self.switchableViewControllers addObject:c];
         
         [self.scrollViewPages addSubview:c.view];
         
-        c.dateInDayView = [NSDate dateWithTimeInterval:(i)*84600 sinceDate:self.dateForDisplay];
-
     }
     [self configurePages];
     self.scrollViewPages.contentOffset = CGPointMake(self.currentCenterOffset,0);

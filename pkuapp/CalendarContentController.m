@@ -58,7 +58,6 @@
 
 - (NSArray *) fetchEventsForWeek;
 - (NSArray *) fetchEventsForDay;
-- (IBAction) addEvent:(id)sender;
 - (IBAction)toAssignmentView:(id)sender;
 
 - (void)displayCoursesInWeekView;
