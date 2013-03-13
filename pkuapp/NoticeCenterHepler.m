@@ -31,6 +31,14 @@
 @synthesize nowCourse;
 @synthesize dictLatestCourse;
 
+- (EKEventStore *)eventStore
+{
+    if (_eventStore == nil) {
+        _eventStore = [[EKEventStore alloc] init];
+    }
+    return _eventStore;
+}
+
 - (Notice *)getNoticeNextCourse {
     if (self.latestCourse != nil) {
         Notice *_notice = [Notice noticeWithObject:self.latestCourse Type:PKUNoticeTypeLatestCourse];
@@ -164,12 +172,10 @@
     NSDate *nowDate = [NSDate date];
 
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
+            
+    NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[self.eventStore calendars]];
     
-    EKEventStore *store = [[EKEventStore alloc] init];
-        
-    NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[store calendars]];
-    
-    NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
+    NSArray *arrayEvents = [self.eventStore eventsMatchingPredicate:predicate];
     if ([arrayEvents count] != 0) {
         self.latestEvent = arrayEvents[0];
     }

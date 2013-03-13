@@ -20,6 +20,8 @@
 @property (assign, nonatomic) float currentLength;
 @property (weak, atomic) CalendarContentController *reuseController;
 @property (strong, atomic) EKEventStore *store;
+@property (nonatomic, retain) EKCalendar *defaultCalendar;
+
 - (void)configurePages;
 - (void)reuseControllerForLowerTime;
 - (void)reuseControllerForHigherTime;
@@ -182,6 +184,74 @@
 	
 	addController.editViewDelegate = self;
 }
+
+- (EKCalendar *)defaultCalendar {
+    if (!_defaultCalendar) {
+        _defaultCalendar = [self.store defaultCalendarForNewEvents];
+    }
+    return _defaultCalendar;
+}
+
+// Overriding EKEventEditViewDelegate method to update event store according to user actions.
+- (void)eventEditViewController:(EKEventEditViewController *)controller
+          didCompleteWithAction:(EKEventEditViewAction)action {
+	
+	NSError *error = nil;
+	EKEvent *thisEvent = controller.event;
+	
+	switch (action) {
+		case EKEventEditViewActionCanceled:
+			// Edit action canceled, do nothing.
+			break;
+			
+		case EKEventEditViewActionSaved:
+			// When user hit "Done" button, save the newly created event to the event store,
+			// and reload table view.
+			// If the new event is being added to the default calendar, then update its
+			// systemEventDayList.
+			if (self.defaultCalendar ==  thisEvent.calendar) {
+//				[self.systemEventDayList addObject:thisEvent];
+			}
+			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
+			break;
+			
+		case EKEventEditViewActionDeleted:
+			// When deleting an event, remove the event from the event store,
+			// and reload table view.
+			// If deleting an event from the currenly default calendar, then update its
+			// systemEventDayList.
+			if (self.defaultCalendar ==  thisEvent.calendar) {
+//				[self.systemEventDayList removeObject:thisEvent];
+			}
+			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
+			break;
+		default:
+			break;
+	}
+	// Dismiss the modal view controller
+	[controller dismissModalViewControllerAnimated:YES];
+	
+}
+
+
+// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
+- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller {
+	EKCalendar *calendarForEdit = self.defaultCalendar;
+    if (!calendarForEdit) {
+        @try {
+            calendarForEdit = [self.store calendars][0];
+        }
+        @catch (NSException *exception) {
+            return nil;
+        }
+        @finally {
+            NSLog(@"use first found calendar");
+        }
+    }
+	return calendarForEdit;
+}
+
+
 
 - (IBAction)segmentedValueDidChanged:(id)sender {
     switch (self.segmentedSwtich.selectedSegmentIndex) {

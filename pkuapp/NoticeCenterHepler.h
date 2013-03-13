@@ -27,7 +27,7 @@ typedef enum{
 
 @interface Notice : NSObject {
 }
-@property (weak, nonatomic) id object;
+@property (strong, nonatomic) id object;
 @property (assign, nonatomic) PKUNoticeType type;
 @property (nonatomic, strong) NSDictionary *dictInfo;
 
@@ -35,7 +35,9 @@ typedef enum{
 
 @end
 
-@interface NoticeCenterHepler: NSObject 
+@interface NoticeCenterHepler: NSObject
+
+@property (strong, nonatomic) EKEventStore *eventStore;
 @property (strong, nonatomic) NSArray* arrayAssignments;
 @property (strong, nonatomic) Course* latestCourse;
 @property (strong, nonatomic) EKEvent* latestEvent;

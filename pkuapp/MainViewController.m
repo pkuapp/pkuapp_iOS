@@ -149,7 +149,7 @@
             
             // Allow event editing.
             detailViewController.allowsEditing = YES;
-            
+            NSLog(@"%@", notice.object);
             //	Push detailViewController onto the navigation controller stack
             //	If the underlying event gets deleted, detailViewController will remove itself from
             //	the stack and clear its event property.
