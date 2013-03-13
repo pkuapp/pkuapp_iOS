@@ -552,6 +552,14 @@
     [super viewDidAppear:animated];
     self.arrayNotices = nil;
     [self.tableView reloadData];
+    
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (granted) {
+            [self.noticeCenterHelper loadData];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 

@@ -166,20 +166,13 @@
     NSDate *endDate = [NSDate dateWithTimeInterval:86400*7*30 sinceDate:nowDate];
     
     EKEventStore *store = [[EKEventStore alloc] init];
-    
-
-    
-
-
-
         
-        NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[store calendars]];
-
-        NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
-        if ([arrayEvents count] != 0) {
-            self.latestEvent = arrayEvents[0];
-        }
- NSLog(@"No Default Calendar Found");
+    NSPredicate *predicate = [store predicateForEventsWithStartDate:nowDate endDate:endDate calendars:[store calendars]];
+    
+    NSArray *arrayEvents = [store eventsMatchingPredicate:predicate];
+    if ([arrayEvents count] != 0) {
+        self.latestEvent = arrayEvents[0];
+    }
     
     
     //fetch all courses event
