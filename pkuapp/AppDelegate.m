@@ -358,12 +358,12 @@
 
 - (void)didLogin {
     EKEventStore *store = [[EKEventStore alloc] init];
-    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-        if (granted) {
-//            [self.noticeCenterHelper loadData];
-//            [self.tableView reloadData];
-        }
-    }];
+    if([store respondsToSelector:@selector(requestAccessToEntityType:completion:)]) {
+        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+            if (granted) {
+            }
+        }];
+    }
 }
 
 #pragma mark - getter Setup
