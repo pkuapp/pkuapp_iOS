@@ -11,7 +11,7 @@
 #import "AssignmentsListViewController.h"
 #define pageWidth 330
 
-@interface CalendarController ()
+@interface CalendarController ()<EKEventEditViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *switchableViewControllers;
 @property (assign, nonatomic) BOOL didInitScrollView;
@@ -19,6 +19,7 @@
 @property (assign, nonatomic) float currentCenterOffset;
 @property (assign, nonatomic) float currentLength;
 @property (weak, atomic) CalendarContentController *reuseController;
+@property (strong, atomic) EKEventStore *store;
 - (void)configurePages;
 - (void)reuseControllerForLowerTime;
 - (void)reuseControllerForHigherTime;
@@ -169,6 +170,19 @@
     [self.navigationController pushViewController:alvc animated:YES];
 }
 
+- (void)addEvent:(id)sender {
+	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
+	
+    if (_store) {
+        self.store = [[EKEventStore alloc] init];
+    }
+    
+	addController.eventStore = self.store;
+    [self presentModalViewController:addController animated:YES];
+	
+	addController.editViewDelegate = self;
+}
+
 - (IBAction)segmentedValueDidChanged:(id)sender {
     switch (self.segmentedSwtich.selectedSegmentIndex) {
         case 0:
@@ -199,6 +213,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+    self.navigationItem.rightBarButtonItem = rightButton;
     
     self.didInitScrollView = NO;
     
