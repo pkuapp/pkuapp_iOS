@@ -27,11 +27,12 @@
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
 
-@interface MainViewController ()
+@interface MainViewController () <EKEventViewDelegate>
 @property (strong, nonatomic) NILauncherViewModel *launchModel;
 @property (strong, nonatomic) IBOutlet NILauncherView *launcherView;
 @property (strong, nonatomic) NILauncherViewController *lvc;
-
+@property (strong, nonatomic) EKEventStore *store;
+@property (strong, nonatomic) EKCalendar *defaultCalendar;
 - (UILabel *)detailLabel;
 - (void)prepareCell:(NotificationCell *)cell WithCourse:(Course *)course inDay:(NSInteger)day;
 - (void)prepareCell:(NotificationCell *)cell WithAssignment:(Course *)assignment;
@@ -149,6 +150,7 @@
             
             // Allow event editing.
             detailViewController.allowsEditing = YES;
+            detailViewController.delegate = self;
             //	Push detailViewController onto the navigation controller stack
             //	If the underlying event gets deleted, detailViewController will remove itself from
             //	the stack and clear its event property.
@@ -628,4 +630,55 @@
     bv.label.font = [UIFont boldSystemFontOfSize:13];
     bv.label.textColor = [UIColor blackColor];
 }
+
+#pragma mark - EKEvent edit
+
+- (EKEventStore *)store
+{
+    if (!_store) {
+        _store = [[EKEventStore alloc] init];
+    }
+    return _store;
+}
+
+- (EKCalendar *)defaultCalendar {
+    if (!_defaultCalendar) {
+        _defaultCalendar = [self.store defaultCalendarForNewEvents];
+    }
+    return _defaultCalendar;
+}
+
+- (void)eventViewController:(EKEventViewController *)controller didCompleteWithAction:(EKEventViewAction)action
+{
+    switch (action) {
+        case EKEventEditViewActionSaved:
+            if (controller.event.calendar == self.defaultCalendar) {
+                [self.noticeCenterHelper loadData];
+                [self.tableView reloadData];
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+// Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
+- (EKCalendar *)eventEditViewControllerDefaultCalendarForNewEvents:(EKEventEditViewController *)controller {
+	EKCalendar *calendarForEdit = self.defaultCalendar;
+    if (!calendarForEdit) {
+        @try {
+            calendarForEdit = [self.store calendarsForEntityType:EKEntityTypeEvent][0];
+        }
+        @catch (NSException *exception) {
+            return nil;
+        }
+        @finally {
+            NSLog(@"use first found calendar");
+        }
+    }
+	return calendarForEdit;
+}
+
+
 @end
