@@ -19,7 +19,7 @@
 @property (assign, nonatomic) float currentCenterOffset;
 @property (assign, nonatomic) float currentLength;
 @property (weak, atomic) CalendarContentController *reuseController;
-@property (strong, atomic) EKEventStore *store;
+@property (strong, nonatomic) EKEventStore *store;
 @property (nonatomic, retain) EKCalendar *defaultCalendar;
 
 - (void)configurePages;
@@ -174,15 +174,20 @@
 
 - (void)addEvent:(id)sender {
 	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
-	
-    if (_store) {
-        self.store = [[EKEventStore alloc] init];
-    }
     
 	addController.eventStore = self.store;
+    addController.editViewDelegate = self;
+
     [self presentModalViewController:addController animated:YES];
 	
-	addController.editViewDelegate = self;
+}
+
+- (EKEventStore *)store
+{
+    if (!_store) {
+        _store = [[EKEventStore alloc] init];
+    }
+    return _store;
 }
 
 - (EKCalendar *)defaultCalendar {
@@ -239,7 +244,7 @@
 	EKCalendar *calendarForEdit = self.defaultCalendar;
     if (!calendarForEdit) {
         @try {
-            calendarForEdit = [self.store calendars][0];
+            calendarForEdit = [self.store calendarsForEntityType:EKEntityTypeEvent][0];
         }
         @catch (NSException *exception) {
             return nil;
