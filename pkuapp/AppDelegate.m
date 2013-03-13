@@ -356,6 +356,16 @@
 
 }
 
+- (void)didLogin {
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (granted) {
+//            [self.noticeCenterHelper loadData];
+//            [self.tableView reloadData];
+        }
+    }];
+}
+
 #pragma mark - getter Setup
 - (EULANavController *)wvc
 {

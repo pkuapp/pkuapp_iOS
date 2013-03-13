@@ -281,7 +281,7 @@
     self.delegate.progressHub.labelText = @"已完成";
     
     [self.delegate.progressHub hide:YES afterDelay:1];
-    
+    [self.delegate didLogin];
     [self.delegate.mvc dismissModalViewControllerAnimated:YES];
 }
 

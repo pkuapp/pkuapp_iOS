@@ -535,11 +535,6 @@
     return self;
 }
 
-
-- (void)loadView {
-    [super loadView];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _noticeLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notification-title.png"]];
@@ -552,14 +547,6 @@
     [super viewDidAppear:animated];
     self.arrayNotices = nil;
     [self.tableView reloadData];
-    
-    EKEventStore *store = [[EKEventStore alloc] init];
-    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-        if (granted) {
-            [self.noticeCenterHelper loadData];
-            [self.tableView reloadData];
-        }
-    }];
 }
 
 

@@ -54,5 +54,5 @@
 - (NSError *)updateServerCourses;
 - (void)saveCourse:(Course *)_course withDict:(NSDictionary *)dict;
 - (void)netStatusDidChanged:(Reachability *)notice;
-
+- (void)didLogin;
 @end
