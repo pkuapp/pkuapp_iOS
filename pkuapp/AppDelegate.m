@@ -107,10 +107,10 @@
     return progressHub;
 }
 
-//- (void)hudWasHidden:(MBProgressHUD *)hud
-//{
-//    self.progressHub = nil;
-//}
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+    self.progressHub = nil;
+}
 - (AppUser *)appUser
 {
     if (nil == _appUser) {
