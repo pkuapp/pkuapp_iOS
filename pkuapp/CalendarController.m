@@ -146,8 +146,7 @@
         CalendarContentController *c = (self.switchableViewControllers)[i];
         CGRect frame = c.view.frame;
         frame.origin.x = self.currentCenterOffset + (i-2)*330+5;
-        c.view.frame = frame;
-        
+        c.view.frame = frame;        
     }
 //    self.scrollViewPages.contentOffset = CGPointMake(320, 0);
 
@@ -284,7 +283,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    CGRect frame = self.view.frame;
+    frame.size.height = bounds.size.height - 140;
+    self.view.frame = frame;
+    CGRect scroll_frame = self.scrollViewPages.frame;
+    scroll_frame.size.height = bounds.size.height - 140;
+    self.scrollViewPages.frame = scroll_frame;
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     

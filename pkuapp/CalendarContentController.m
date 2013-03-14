@@ -497,7 +497,7 @@
     
     [self.scrollDayView addSubview:groundView];
     
-    self.scrollDayView.contentSize = CGSizeMake(widthTotal, heightTotal);
+    self.scrollDayView.contentSize = groundView.frame.size;
     
     self.didInitDayView = YES;
     
@@ -945,6 +945,7 @@
     CGRect frame = self.view.frame;
     frame.size.height = bounds.size.height - 140;
     self.view.frame = frame;
+
     self.listView.frame = self.view.bounds;
     self.tableView.frame = self.view.bounds;
     self.dayView.frame = self.view.bounds;
