@@ -10,6 +10,8 @@
 #import "RegexKitLite.h"
 #import "ASIHTTPRequest.h"
 #import "AFNetworking.h"
+#import "ModelsAddon.h"
+#import "Environment.h"
 
 @interface IPGateHelper (Private)
 - (BOOL)connectionSucceed:(NSString *)stringResponse;
@@ -131,6 +133,12 @@
 
 - (void)connectFree
 {
+    if ([AppUser.sharedUser.deanid isEqualToString:test_username]) {
+        self.dictDetail = @{@"Type":@"NO"};
+        [NSTimer scheduledTimerWithTimeInterval:1.5 target:self.delegate selector:@selector(connectFreeSuccess) userInfo:nil repeats:NO];
+
+        return;
+    }
     _status = IPGateConnectingFree;
     stringRange = @"2";
 //    _request = [ASIHTTPRequest requestWithURL:[self urlConnect]];
@@ -163,7 +171,12 @@
 - (void)connectGlobal
 {
     
-    
+    if ([AppUser.sharedUser.deanid isEqualToString:test_username]) {
+        self.dictDetail = @{@"Type":@"NO"};
+
+        [NSTimer scheduledTimerWithTimeInterval:1.5 target:self.delegate selector:@selector(connectGlobalSuccess) userInfo:nil repeats:NO];
+        return;
+    }
     _status = IPGateConnectingGlobal;
     
     stringRange = @"1";
@@ -195,6 +208,11 @@
 
 - (void)disConnect{
 
+    if ([AppUser.sharedUser.deanid isEqualToString:test_username]) {
+        self.dictDetail = @{@"Type":@"NO"};
+        [NSTimer scheduledTimerWithTimeInterval:1.5 target:self.delegate selector:@selector(disconnectSuccess) userInfo:nil repeats:NO];
+        return;
+    }
     NSURLRequest *request = [NSURLRequest requestWithURL:[self urlDisconnect]];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     __weak IPGateHelper *weak = self;

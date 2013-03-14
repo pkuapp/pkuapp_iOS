@@ -101,11 +101,16 @@
         progressHub.userInteractionEnabled = NO;
         progressHub.opacity = 0.618;
         progressHub.animationType = MBProgressHUDAnimationZoom;
+        progressHub.delegate = self;
         [self.window addSubview:progressHub];
     }
     return progressHub;
 }
 
+//- (void)hudWasHidden:(MBProgressHUD *)hud
+//{
+//    self.progressHub = nil;
+//}
 - (AppUser *)appUser
 {
     if (nil == _appUser) {

@@ -72,11 +72,7 @@
 }
 
 - (MBProgressHUD *)progressHub{
-    
-    if (progressHub == nil) {
-        progressHub = self.delegate.progressHub;
-    }
-    return progressHub;
+    return self.delegate.progressHub;
 }
 
 - (void)setNumStatus:(NSInteger)anumStatus{
@@ -398,7 +394,6 @@
         return;
     }
     progressHub.animationType = MBProgressHUDAnimationFade;
-
     switch (indexPath.section) {
         case 0:return;
         case 1:

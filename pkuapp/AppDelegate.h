@@ -20,7 +20,7 @@
 @class Course;
 @class EULANavController;
 
-@interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,PABezelHUDDelegate> {
+@interface iOSOneAppDelegate : NSObject <ReachablityProtocol,UIApplicationDelegate,UINavigationControllerDelegate,AppUserDelegateProtocol,PABezelHUDDelegate, MBProgressHUDDelegate> {
     IBOutlet UIWindow *window;
 
     UINavigationController *mvc;
