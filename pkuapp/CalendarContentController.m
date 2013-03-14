@@ -808,19 +808,15 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-    }
-    
-    if (self.view.frame.size.height > 340) {
-        nameLabel.frame = CGRectMake(50, 8, 250, 18);
-        placeLabel.frame = CGRectMake(50, 34, 250, 18);
-    }
-    
-    else {
+    } else {
         //        cell.contentView.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    
+    if (self.view.frame.size.height > 340) {
+        nameLabel.frame = CGRectMake(50, 8, 250, 18);
+        placeLabel.frame = CGRectMake(50, 34, 250, 18);
+    }
     
     
     return cell;
