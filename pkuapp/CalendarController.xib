@@ -96,7 +96,7 @@
 					</object>
 					<object class="IBUIScrollView" id="77021253">
 						<reference key="NSNextResponder" ref="21166589"/>
-						<int key="NSvFlags">301</int>
+						<int key="NSvFlags">277</int>
 						<string key="NSFrame">{{-5, 32}, {330, 340}}</string>
 						<reference key="NSSuperview" ref="21166589"/>
 						<reference key="NSWindow"/>

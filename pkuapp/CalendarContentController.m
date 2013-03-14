@@ -941,6 +941,14 @@
 {
     
     [super viewDidLoad];
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    CGRect frame = self.view.frame;
+    frame.size.height = bounds.size.height - 140;
+    self.view.frame = frame;
+    self.listView.frame = self.view.bounds;
+    self.tableView.frame = self.view.bounds;
+    self.dayView.frame = self.view.bounds;
+    self.scrollDayView.frame = self.view.bounds;
     [self configureGlobalAppearance];
     self.bitListControl = 0;
 
@@ -956,7 +964,6 @@
     self.eventStore = [[EKEventStore alloc] init];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"calendar-list-bg.png"]];
-    self.dayView.frame = CGRectMake(0, -32, 320, 340);
     self.scrollDayView.contentOffset = CGPointMake(0, 400);
     [self toListView];
 }

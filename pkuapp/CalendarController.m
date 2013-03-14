@@ -82,7 +82,7 @@
 
         switch (page){
             case -1: 
-                
+            {
                 self.dateForDisplay = [NSDate dateWithTimeInterval:-86400 sinceDate:self.dateForDisplay];
 
                 
@@ -98,15 +98,16 @@
                 [self performSelectorInBackground:@selector(reuseControllerForLowerTime) withObject:nil];
                 
                 self.currentCenterOffset = self.currentCenterOffset - 330;
-                
-                self.reuseController.view.frame = CGRectMake(self.currentCenterOffset - 660 + 5, 0, 320, 372);
+                CGRect frame = self.reuseController.view.frame;
+                frame.origin.x = self.currentCenterOffset - 660 + 5;
+                self.reuseController.view.frame = frame;
                 self.dayViewBar.delegate = (self.switchableViewControllers)[2];
                 [self.dayViewBar setupForDisplay];
 
                 break;
-                
+            }
             case 1:
-                
+            {
                 self.dateForDisplay = [NSDate dateWithTimeInterval:86400 sinceDate:self.dateForDisplay];
                 
                 _reuseController = (self.switchableViewControllers)[0];
@@ -120,14 +121,16 @@
                 
                 self.scrollViewPages.contentSize = CGSizeMake(self.currentLength, 340);
                 
-                _reuseController.view.frame = CGRectMake(self.currentCenterOffset + 660 + 5, 0, 320, 372);
+                CGRect frame = self.reuseController.view.frame;
+                frame.origin.x = self.currentCenterOffset + 660 + 5;
+                self.reuseController.view.frame = frame;
                 
                 [self performSelectorInBackground:@selector(reuseControllerForHigherTime) withObject:nil];
                 self.dayViewBar.delegate = (self.switchableViewControllers)[2];
                 [self.dayViewBar setupForDisplay];
 
                 break;
-                
+            }
             default:
                 break;
         }
@@ -141,8 +144,9 @@
     for (int i = 0; i < 5; ++i) {
         
         CalendarContentController *c = (self.switchableViewControllers)[i];
-        
-        c.view.frame = CGRectMake(self.currentCenterOffset + (i-2)*330+5, 0, 320, 372);
+        CGRect frame = c.view.frame;
+        frame.origin.x = self.currentCenterOffset + (i-2)*330+5;
+        c.view.frame = frame;
         
     }
 //    self.scrollViewPages.contentOffset = CGPointMake(320, 0);
