@@ -128,6 +128,7 @@
     [NSUserDefaults resetStandardUserDefaults];
 
     self.appUser = nil;
+    [AppUser releaseSharedUser];
     self.wvc = nil;
     [self showWithLoginView];
     
@@ -348,12 +349,13 @@
 -(void)showwithMainView {
     
     [self.window addSubview:self.mvc.view];
+    self.window.rootViewController = self.mvc;
     [self.mvc dismissModalViewControllerAnimated:YES];
     [self.mvc setViewControllers:@[self.mv]];
 }
 
 - (void)reloadMainView {
-
+    
 }
 
 - (void)didLogin {
@@ -364,6 +366,7 @@
             }
         }];
     }
+//    AppUser.sharedUser = nil;
 }
 
 #pragma mark - getter Setup

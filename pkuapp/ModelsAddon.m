@@ -249,6 +249,7 @@
 
 #pragma mark - AppUser
 @implementation AppUser(ModelsAddOn)
+static AppUser *sharedInstance;
 
 - (NSArray *)sortedAssignmentNotDone{
     
@@ -263,7 +264,6 @@
 
 + (AppUser *)sharedUser
 {
-    static AppUser *sharedInstance;
     // now it's a strong reference
     AppUser *user = sharedInstance;
     
@@ -277,4 +277,8 @@
     return user;
 }
 
++ (void)releaseSharedUser
+{
+    sharedInstance = nil;
+}
 @end

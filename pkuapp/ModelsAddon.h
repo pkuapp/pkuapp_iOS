@@ -89,4 +89,5 @@ typedef enum DoubleType{
 
 - (NSArray *)sortedAssignmentNotDone;
 + (AppUser *)sharedUser;
++ (void) releaseSharedUser;
 @end
