@@ -20,6 +20,25 @@
 #import "AppUser.h"
 #import "CourseDetailsViewController.h"
 
+
+@interface UIImage (resize)
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
+@end
+
+@implementation UIImage (resize)
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+@end
+
+
 @interface CalendarContentController ()<EventViewDelegate>
 
 @property (nonatomic, retain) EKEventStore *eventStore;
@@ -698,15 +717,17 @@
     ClassGroup *group = (self.arrayClassGroup)[indexPath.row];
     [self setupDefaultCell:cell withClassGroup:group];
     //    cell.textLabel.text = group.course.name;
+    UILabel *nameLabel;
+    UILabel *placeLabel;
     if (group.type == ClassGroupTypeCourse ) {
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
         nameLabel.text = group.course.name;
         nameLabel.font = [UIFont boldSystemFontOfSize:18];
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:nameLabel];
         
-        UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
+        placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
         placeLabel.font = [UIFont systemFontOfSize:12];
         placeLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
@@ -721,7 +742,7 @@
         //        cell.accessoryView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.85];
     }
     else if (group.type == ClassGroupTypeNow) {
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
         nameLabel.text = group.course.name;
         nameLabel.textColor = UIColorFromRGB(0x0074E6);
         nameLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -729,7 +750,7 @@
         nameLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:nameLabel];
         
-        UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
+        placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
         placeLabel.font = [UIFont systemFontOfSize:12];
         placeLabel.textColor = [UIColor colorWithRed:0 green:116/255.0 blue:230.0 alpha:0.597656];
@@ -744,7 +765,7 @@
     }
     else if (group.type == ClassGroupTypeNext) {
         
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
         nameLabel.text = group.course.name;
         nameLabel.textColor = UIColorFromRGB(0x538A2A);
         nameLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -753,7 +774,7 @@
         [cell.contentView addSubview:nameLabel];
         
         
-        UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
+        placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
         placeLabel.font = [UIFont systemFontOfSize:12];
         placeLabel.textColor = [UIColor colorWithRed:83/255.0 green:138/255.0 blue:42/255.0 alpha:0.597656];
@@ -767,7 +788,8 @@
         
     }
     else if (group.type == ClassGroupTypeDisable) {
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 4, 250, 22)];
+        
         nameLabel.text = group.course.name;
         nameLabel.textColor = UIColorFromRGB(0xCCCCCC);
         nameLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -775,7 +797,7 @@
         nameLabel.highlightedTextColor = [UIColor whiteColor];
         [cell.contentView addSubview:nameLabel];
         
-        UILabel *placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
+        placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 26, 250, 18)];
         placeLabel.text = group.course.rawplace;
         placeLabel.font = [UIFont systemFontOfSize:12];
         //        placeLabel.textColor = [UIColor colorWithRed:83 green:138 blue:42 alpha:0.597656];
@@ -786,6 +808,11 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+    }
+    
+    if (self.view.frame.size.height > 340) {
+        nameLabel.frame = CGRectMake(50, 8, 250, 18);
+        placeLabel.frame = CGRectMake(50, 34, 250, 18);
     }
     
     else {
@@ -812,10 +839,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     ClassGroup *group = (self.arrayClassGroup)[indexPath.row];
+    if (self.view.frame.size.height > 340) {
+        if (group.type == ClassGroupTypeEnd) {
+            return 39;
+        }
+        return (group.endclass - group.startclass+1) * 33;
+    }
     if (group.type == ClassGroupTypeEnd) {
         return 28;
     }
-    return (group.endclass - group.startclass+1)*26;
+    return (group.endclass - group.startclass+1) * 26;
 }
 
 #pragma mark -
@@ -887,8 +920,14 @@
     if (group.startclass == 0) {
         return;
     }
+    CGFloat offset = 28;
+    if (self.view.frame.size.height > 340) {
+        offset = 32;
+    }
     for (int i = group.startclass; i <= group.endclass; i++) {
-        UILabel *numLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,(i-group.startclass)*25, 20, 25)];
+        UILabel *numLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,(i-group.startclass) * offset + offset / 2 - 7, 20, 16)];
+
+        
         numLabel.font = [UIFont boldSystemFontOfSize:16];
         numLabel.textAlignment = UITextAlignmentRight;
         numLabel.backgroundColor = [UIColor clearColor];
@@ -963,8 +1002,15 @@
     [self addObserver:self forKeyPath:@"dateInWeekView" options:NSKeyValueObservingOptionNew context:nil];
 
     self.eventStore = [[EKEventStore alloc] init];
+    UIImage *bg_list = [UIImage imageNamed:@"calendar-list-bg.png"];
+    UIImage *bg_scale = [UIImage imageWithImage:bg_list scaledToSize:self.view.frame.size];
+    CGFloat scale = frame.size.height / 340.0;
+    NSLog(@"%f", scale);
+    UIImage *scale_bg = [UIImage imageWithCGImage:bg_list.CGImage scale:scale orientation:bg_list.imageOrientation];
+    UIImageView *bg_view = [[UIImageView alloc] initWithImage:scale_bg];
+//    [self.view addSubview:bg_view];
 
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"calendar-list-bg.png"]];
+//    self.tableView.backgroundColor = [UIColor colorWithPatternImage:bg_scale];
     self.scrollDayView.contentOffset = CGPointMake(0, 400);
     [self toListView];
 }
@@ -1047,3 +1093,4 @@
 
 
 @end
+
