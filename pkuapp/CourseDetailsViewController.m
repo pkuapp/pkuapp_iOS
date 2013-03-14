@@ -379,6 +379,7 @@
 {
     [super viewDidLoad];
     self.title = @"课程信息";
+    self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = tableBgColor;
      
     //NSLog(@"table%@",[[self.tableView subviews] objectAtIndex:0]);

@@ -363,6 +363,7 @@
         self.navigationItem.rightBarButtonItem.enabled = NO;
         
     }
+    self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = tableBgColor;
     self.view.backgroundColor = tableBgColor;
     

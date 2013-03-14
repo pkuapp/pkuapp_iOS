@@ -367,6 +367,7 @@
     self.navigationController.navigationBar.tintColor = navBarBgColor;
     self.didInputUsername = NO;
     self.tableView.backgroundColor = tableBgColor;
+    self.tableView.backgroundView = nil;
     ;//[self refreshImgDean];
 }
 

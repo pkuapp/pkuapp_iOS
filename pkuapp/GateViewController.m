@@ -432,7 +432,7 @@
                 detailTVC = [[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped];
                 
                 detailTVC.tableView.dataSource = self.detailDataSource;
-                
+                detailTVC.tableView.backgroundView = nil;
                 detailTVC.tableView.backgroundColor = tableBgColor;
                 detailTVC.tableView.delegate = self;
                 detailTVC.tableView.allowsSelection = NO;
@@ -615,7 +615,7 @@
     self.Password = AppUser.sharedUser.password;
     self.title = @"网关";
     self.gateStateDictionary = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:_keyAccountState]];
-    
+    self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = tableBgColor;
 
 	// Do any additional setup after loading the view from its nib.

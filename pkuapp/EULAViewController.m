@@ -50,6 +50,7 @@
     [super viewDidLoad];
     self.arrayCells = [[NSBundle mainBundle] loadNibNamed:@"EULACell" owner:self options:nil];
     self.tableView.backgroundColor = tableBgColor;
+    self.tableView.backgroundView = nil;
       // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  

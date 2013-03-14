@@ -108,6 +108,7 @@
     [super viewDidLoad];
     
     self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectBtn)];
+    self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = tableBgColor;
     // Do any additional setup after loading the view from its nib.
 }
