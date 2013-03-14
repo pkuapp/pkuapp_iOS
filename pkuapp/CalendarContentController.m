@@ -1002,12 +1002,7 @@
     [self addObserver:self forKeyPath:@"dateInWeekView" options:NSKeyValueObservingOptionNew context:nil];
 
     self.eventStore = [[EKEventStore alloc] init];
-    UIImage *bg_list = [UIImage imageNamed:@"calendar-list-bg.png"];
-    UIImage *bg_scale = [UIImage imageWithImage:bg_list scaledToSize:self.view.frame.size];
-    CGFloat scale = frame.size.height / 340.0;
-    NSLog(@"%f", scale);
-    UIImage *scale_bg = [UIImage imageWithCGImage:bg_list.CGImage scale:scale orientation:bg_list.imageOrientation];
-    UIImageView *bg_view = [[UIImageView alloc] initWithImage:scale_bg];
+//    UIImage *bg_list = [UIImage imageNamed:@"calendar-list-bg.png"];
 //    [self.view addSubview:bg_view];
 
 //    self.tableView.backgroundColor = [UIColor colorWithPatternImage:bg_scale];
