@@ -916,7 +916,7 @@
     if (group.startclass == 0) {
         return;
     }
-    CGFloat offset = 28;
+    CGFloat offset = 24;
     if (self.view.frame.size.height > 340) {
         offset = 32;
     }
