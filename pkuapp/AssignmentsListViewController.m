@@ -46,7 +46,7 @@
             NSLog(@"%@", error);
         }
         else
-            [[NSManagedObjectContext contextForCurrentThread] saveToPersistentStoreAndWait];
+            [[NSManagedObjectContext fake_contextForCurrentThread] saveToPersistentStoreAndWait];
     }];
     [self dismissModalViewControllerAnimated:YES];
 }

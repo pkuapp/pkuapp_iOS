@@ -365,6 +365,7 @@
 		414AEA7714765C4C007292B2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		414AEA7914765C51007292B2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		414BB8411481E35700CC8A4B /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		414E3ED016F228C600B8D808 /* MogeneratorStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MogeneratorStubs.h; path = pkuapp/MogeneratorStubs.h; sourceTree = "<group>"; };
 		415A80FB140421C0003F6EB9 /* PKUBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKUBarView.h; sourceTree = "<group>"; };
 		415A80FC140421C0003F6EB9 /* PKUBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKUBarView.m; sourceTree = "<group>"; };
 		415D3585145C05B900D492B6 /* button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-1.png"; sourceTree = "<group>"; };
@@ -617,6 +618,7 @@
 		410B416C13902BA300002A46 = {
 			isa = PBXGroup;
 			children = (
+				414E3ED016F228C600B8D808 /* MogeneratorStubs.h */,
 				410B418113902BA300002A46 /* pkuapp */,
 				410B417A13902BA300002A46 /* Frameworks */,
 				410B417813902BA300002A46 /* Products */,

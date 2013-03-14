@@ -148,7 +148,7 @@
 - (void) saveNestedContextsErrorHandler:(void (^)(NSError *error))errorCallback completion:(void (^)(void))completion __attribute__((deprecated));
 @end
 @interface NSManagedObjectContext (MagicalThreadingShortHand)
-+ (NSManagedObjectContext *) contextForCurrentThread;
++ (NSManagedObjectContext *) fake_contextForCurrentThread;
 + (NSManagedObjectContext *) contextThatNotifiesDefaultContextOnMainThread;
 + (NSManagedObjectContext *) contextThatNotifiesDefaultContextOnMainThreadWithCoordinator:(NSPersistentStoreCoordinator *)coordinator;
 + (void) resetContextForCurrentThread;
