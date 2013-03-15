@@ -127,9 +127,9 @@
     [defaults setBool:NO forKey:@"didLogin"];
     NSSet *courses = self.appUser.courses;
     [self.appUser removeCourses:courses];
-    [self.appUser deleteInContext:[NSManagedObjectContext defaultContext]];
+    [self.appUser deleteInContext:[NSManagedObjectContext fake_defaultContext]];
 
-    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     [NSUserDefaults resetStandardUserDefaults];
 
     self.appUser = nil;
@@ -192,14 +192,14 @@
         
     
          if (_appUser == nil) {
-             self.appUser = (AppUser *) [AppUser createInContext:[NSManagedObjectContext defaultContext]];
+             self.appUser = (AppUser *) [AppUser createInContext:[NSManagedObjectContext fake_defaultContext]];
          }
 
         self.appUser.deanid = username;
         self.appUser.password = password;
     
         [[NSOperationQueue  mainQueue] addOperationWithBlock:^{
-            [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+            [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
         }];
 
 
@@ -230,7 +230,7 @@
     
     self.appUser.realname = dictProfile[@"realname"];
 
-    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
   
     return error;
 }
@@ -261,7 +261,7 @@
     
     
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+        [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     }];
 
  
@@ -299,7 +299,7 @@
     NSDictionary *dictCourse;
     
     NSString *stringPredicate;// = [NSMutableString stringWithCapacity:0];
-    NSManagedObjectContext *context = [NSManagedObjectContext defaultContext];
+    NSManagedObjectContext *context = [NSManagedObjectContext fake_defaultContext];
 
 	for (int i = 0 ;i < jsonCourse.count; i++){
         dictCourse = jsonCourse[i];
@@ -335,7 +335,7 @@
     [self.appUser addCourses:courseset];
 
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+        [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     }];
 
     return error;
@@ -539,7 +539,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(mergeChanges:)
                                                  name:NSManagedObjectContextDidSaveNotification
-                                               object:[NSManagedObjectContext defaultContext]];
+                                               object:[NSManagedObjectContext fake_defaultContext]];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -632,7 +632,7 @@
 
 - (void)updateContext:(NSNotification *)notification
 {
-	NSManagedObjectContext *mainContext = [NSManagedObjectContext defaultContext];
+	NSManagedObjectContext *mainContext = [NSManagedObjectContext fake_defaultContext];
 	[mainContext mergeChangesFromContextDidSaveNotification:notification];
 
 }

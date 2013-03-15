@@ -30,7 +30,7 @@
 #pragma mark - action setup
 - (void)didFinnishedEdit {
 
-    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     
     self.arrayAssigns = nil;
     [self.tableView reloadData];

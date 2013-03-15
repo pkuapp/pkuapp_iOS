@@ -25,7 +25,7 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext defaultContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext fake_defaultContext]];
     
     NSPredicate *predicate;
     
@@ -72,7 +72,7 @@
     
     request.sortDescriptors = @[sort];
     
-     self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[NSManagedObjectContext defaultContext] sectionNameKeyPath:@"courseSectionName" cacheName:nil];
+     self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[NSManagedObjectContext fake_defaultContext] sectionNameKeyPath:@"courseSectionName" cacheName:nil];
     
     [self.fetchedResultController performFetch:NULL];
 }

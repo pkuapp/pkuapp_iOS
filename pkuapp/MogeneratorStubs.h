@@ -12,5 +12,5 @@
 + (NSEntityDescription*)fake_entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (id)fake_insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSManagedObjectContext *)fake_contextForCurrentThread;
-+ (NSManagedObjectContext *)defaultContext;
++ (NSManagedObjectContext *)fake_defaultContext;
 @end

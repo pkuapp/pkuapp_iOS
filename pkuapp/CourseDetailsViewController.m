@@ -40,18 +40,18 @@
 
 #pragma mark - AssignmentEditDelegate
 - (void)didFinnishedEdit {
-    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didCancelEdit {
-    [self.coord_assign deleteInContext:[NSManagedObjectContext defaultContext]];
-    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    [self.coord_assign deleteInContext:[NSManagedObjectContext fake_defaultContext]];
+    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didDoneAssignment:(Assignment *)assignment {
-    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -94,7 +94,7 @@
         case 0:
         {
             if (indexPath.row == self.arrayAssignments.count) {
-                self.coord_assign = [Assignment createInContext:[NSManagedObjectContext defaultContext]];
+                self.coord_assign = [Assignment createInContext:[NSManagedObjectContext fake_defaultContext]];
                 
                 self.coord_assign.course = self.course;
                 self.coord_assign.Person = [AppUser sharedUser];
@@ -127,7 +127,7 @@
                 [AppUser.sharedUser removeLocalcoursesObject:self.course];
             }
             
-            [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+            [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
             [self.tableView reloadData];
             
 //            NSInvocation *ivc = [NSInvocation invocationWithMethodSignature:[self.tableView methodSignatureForSelector:@selector(deselectRowAtIndexPath:animated:)]];

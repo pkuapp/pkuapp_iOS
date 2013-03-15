@@ -86,7 +86,7 @@
         subType = subCategoryTypeDefault;
     }
     
-    NSManagedObjectContext *context = NSManagedObjectContext.defaultContext;
+    NSManagedObjectContext *context = NSManagedObjectContext.fake_defaultContext;
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:context];
     
     self.request = [[NSFetchRequest alloc] init];

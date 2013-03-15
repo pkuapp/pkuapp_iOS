@@ -127,7 +127,7 @@
 + (NSManagedObjectContext *) contextWithStoreCoordinator:(NSPersistentStoreCoordinator *)coordinator NS_RETURNS_RETAINED;
 + (void) resetDefaultContext;
 + (NSManagedObjectContext *) rootSavingContext;
-+ (NSManagedObjectContext *) defaultContext;
++ (NSManagedObjectContext *) fake_defaultContext;
 + (void) cleanUp;
 - (NSString *) description;
 @end
