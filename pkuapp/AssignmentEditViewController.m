@@ -64,7 +64,6 @@
     [self.tableView beginUpdates];
     self.contentTextView.frame = frame;
     [self.tableView endUpdates];
-    NSLog(@"%f", self.contentTextView.contentSize.height);
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
