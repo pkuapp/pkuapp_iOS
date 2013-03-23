@@ -270,7 +270,7 @@ static AppUser *sharedInstance;
     @synchronized(self)
     {
         if (user == nil) {
-            user = [[AppUser findAll] lastObject];
+            user = [[AppUser MR_findAll] lastObject];
             sharedInstance = user;
         }
     }

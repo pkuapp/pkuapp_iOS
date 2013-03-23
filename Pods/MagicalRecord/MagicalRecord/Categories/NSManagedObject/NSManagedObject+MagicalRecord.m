@@ -83,7 +83,7 @@ static NSUInteger defaultBatchSize = kMagicalRecordDefaultBatchSize;
 
 + (NSEntityDescription *) MR_entityDescriptionInContext:(NSManagedObjectContext *)context
 {
-    if ([self respondsToSelector:@selector(fake_fake_entityInManagedObjectContext:)])
+    if ([self respondsToSelector:@selector(fake_entityInManagedObjectContext:)])
     {
         NSEntityDescription *entity = [self performSelector:@selector(fake_entityInManagedObjectContext:) withObject:context];
         return entity;

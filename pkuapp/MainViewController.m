@@ -43,7 +43,7 @@
 #pragma mark - AssignmentDelegate
 - (void)didDoneAssignment:(Assignment *)assignment {
     [self.navigationController popViewControllerAnimated:YES];
-    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     [self.tableView reloadData];
 }
 
@@ -51,9 +51,9 @@
 
 - (void)shouldDeleteAssignment:(Assignment *)assignment {
     [self.navigationController popViewControllerAnimated:YES];
-    [assignment deleteInContext:[NSManagedObjectContext fake_defaultContext]];
+    [assignment MR_deleteInContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     self.arrayNotices = nil;
     self.noticeCenterHelper = [[NoticeCenterHepler alloc] init];
     [self.tableView reloadData];
@@ -431,7 +431,7 @@
 {
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext fake_defaultContext]];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     
 	[fetchRequest setEntity:entity];
 	[fetchRequest setFetchBatchSize:20]; 
@@ -444,7 +444,7 @@
 
 	NSError *error;
     
-	self.results = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext fake_defaultContext] sectionNameKeyPath:nil cacheName:nil];
+	self.results = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_defaultContext] sectionNameKeyPath:nil cacheName:nil];
     
     self.results.delegate = self;
     

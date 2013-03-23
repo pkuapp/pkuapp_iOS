@@ -30,7 +30,7 @@
 #pragma mark - action setup
 - (void)didFinnishedEdit {
 
-    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     self.arrayAssigns = nil;
     [self.tableView reloadData];
@@ -40,19 +40,19 @@
 - (void)didCancelEdit {
 
     [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-        [_coord_assign deleteEntity];
+        [_coord_assign MR_deleteEntity];
     } completion:^(BOOL success, NSError *error) {
         if (!success) {
             NSLog(@"%@", error);
         }
         else
-            [[NSManagedObjectContext fake_contextForCurrentThread] saveToPersistentStoreAndWait];
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     }];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didSelectAddBtn {
-    self.coord_assign = [Assignment createEntity];
+    self.coord_assign = [Assignment MR_createEntity];
     
     self.coord_assign.Person = [AppUser sharedUser];
     

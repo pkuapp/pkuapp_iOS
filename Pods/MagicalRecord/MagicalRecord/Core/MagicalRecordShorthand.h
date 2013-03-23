@@ -127,7 +127,7 @@
 + (NSManagedObjectContext *) contextWithStoreCoordinator:(NSPersistentStoreCoordinator *)coordinator NS_RETURNS_RETAINED;
 + (void) resetDefaultContext;
 + (NSManagedObjectContext *) rootSavingContext;
-+ (NSManagedObjectContext *) fake_defaultContext;
++ (NSManagedObjectContext *) defaultContext;
 + (void) cleanUp;
 - (NSString *) description;
 @end
@@ -148,7 +148,7 @@
 - (void) saveNestedContextsErrorHandler:(void (^)(NSError *error))errorCallback completion:(void (^)(void))completion __attribute__((deprecated));
 @end
 @interface NSManagedObjectContext (MagicalThreadingShortHand)
-+ (NSManagedObjectContext *) fake_contextForCurrentThread;
++ (NSManagedObjectContext *) MR_contextForCurrentThread;
 + (NSManagedObjectContext *) contextThatNotifiesDefaultContextOnMainThread;
 + (NSManagedObjectContext *) contextThatNotifiesDefaultContextOnMainThreadWithCoordinator:(NSPersistentStoreCoordinator *)coordinator;
 + (void) resetContextForCurrentThread;

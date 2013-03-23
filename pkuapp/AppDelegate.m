@@ -114,7 +114,7 @@
 - (AppUser *)appUser
 {
     if (nil == _appUser) {
-        NSArray *array = [AppUser findAll];
+        NSArray *array = [AppUser MR_findAll];
 
         _appUser = [array lastObject];
     }
@@ -127,9 +127,9 @@
     [defaults setBool:NO forKey:@"didLogin"];
     NSSet *courses = self.appUser.courses;
     [self.appUser removeCourses:courses];
-    [self.appUser deleteInContext:[NSManagedObjectContext fake_defaultContext]];
+    [self.appUser MR_deleteInContext:[NSManagedObjectContext MR_defaultContext]];
 
-    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     [NSUserDefaults resetStandardUserDefaults];
 
     self.appUser = nil;
@@ -192,14 +192,14 @@
         
     
          if (_appUser == nil) {
-             self.appUser = (AppUser *) [AppUser createInContext:[NSManagedObjectContext fake_defaultContext]];
+             self.appUser = (AppUser *) [AppUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
          }
 
         self.appUser.deanid = username;
         self.appUser.password = password;
     
         [[NSOperationQueue  mainQueue] addOperationWithBlock:^{
-            [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         }];
 
 
@@ -230,7 +230,7 @@
     
     self.appUser.realname = dictProfile[@"realname"];
 
-    [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
   
     return error;
 }
@@ -261,7 +261,7 @@
     
     
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }];
 
  
@@ -299,7 +299,7 @@
     NSDictionary *dictCourse;
     
     NSString *stringPredicate;// = [NSMutableString stringWithCapacity:0];
-    NSManagedObjectContext *context = [NSManagedObjectContext fake_defaultContext];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
 
 	for (int i = 0 ;i < jsonCourse.count; i++){
         dictCourse = jsonCourse[i];
@@ -308,11 +308,11 @@
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:stringPredicate];
 
-        NSArray *_array = [Course findAllWithPredicate:predicate inContext:context];
+        NSArray *_array = [Course MR_findAllWithPredicate:predicate inContext:context];
 
         Course *_course = nil;
         if (!_array || !_array.count) {
-            _course = (Course *)[Course createInContext:context];
+            _course = (Course *)[Course MR_createInContext:context];
             
             [self saveCourse:_course withDict:dictCourse];
 
@@ -335,7 +335,7 @@
     [self.appUser addCourses:courseset];
 
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [[NSManagedObjectContext fake_defaultContext] saveToPersistentStoreAndWait];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }];
 
     return error;
@@ -539,7 +539,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(mergeChanges:)
                                                  name:NSManagedObjectContextDidSaveNotification
-                                               object:[NSManagedObjectContext fake_defaultContext]];
+                                               object:[NSManagedObjectContext MR_defaultContext]];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -632,7 +632,7 @@
 
 - (void)updateContext:(NSNotification *)notification
 {
-	NSManagedObjectContext *mainContext = [NSManagedObjectContext fake_defaultContext];
+	NSManagedObjectContext *mainContext = [NSManagedObjectContext MR_defaultContext];
 	[mainContext mergeChangesFromContextDidSaveNotification:notification];
 
 }

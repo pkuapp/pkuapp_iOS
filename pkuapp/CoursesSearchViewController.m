@@ -25,13 +25,13 @@
 - (NSFetchedResultsController *)fetchedResultController{
     if (fetchedResultController == nil) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext fake_defaultContext]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
         NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCompare:)];
         request.entity = entity;
         request.sortDescriptors = @[sortD];
         
         [request setFetchBatchSize:2000];
-        fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[NSManagedObjectContext fake_defaultContext] sectionNameKeyPath:@"courseSectionName" cacheName:@"nameFilter"];
+        fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[NSManagedObjectContext MR_defaultContext] sectionNameKeyPath:@"courseSectionName" cacheName:@"nameFilter"];
     }
     return fetchedResultController;
 }
@@ -124,13 +124,13 @@
 {
     if (resultArray == nil) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext fake_defaultContext]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
         NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCompare:)];
         request.entity = entity;
         request.sortDescriptors = @[sortD];
         
         [request setFetchBatchSize:2000];
-        resultArray = [[NSManagedObjectContext fake_defaultContext] executeFetchRequest:request error:NULL];
+        resultArray = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:request error:NULL];
 
     }
     return resultArray;

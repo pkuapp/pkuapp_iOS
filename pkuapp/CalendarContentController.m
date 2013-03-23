@@ -301,7 +301,7 @@
 {
     if (managedObjectContext == nil)
     {
-        managedObjectContext = [NSManagedObjectContext fake_defaultContext];
+        managedObjectContext = [NSManagedObjectContext MR_defaultContext];
     }
     return managedObjectContext;
 }

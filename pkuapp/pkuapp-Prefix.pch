@@ -14,6 +14,5 @@
     #import <CoreData/CoreData.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
-#define MR_SHORTHAND
 #import "CoreData+MagicalRecord.h"
 #endif
