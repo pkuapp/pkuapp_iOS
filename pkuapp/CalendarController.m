@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSDate *dateForDisplay;
 @property (assign, nonatomic) float currentCenterOffset;
 @property (assign, nonatomic) float currentLength;
-@property (weak, atomic) CalendarContentController *reuseController;
+@property (strong, atomic) CalendarContentController *reuseController;
 @property (strong, nonatomic) EKEventStore *store;
 @property (nonatomic, retain) EKCalendar *defaultCalendar;
 
