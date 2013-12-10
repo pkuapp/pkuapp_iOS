@@ -92,7 +92,6 @@
     return _noticeCenterHelper;
 }
 
-#pragma mark - //define for TTStyledTextLabel
 
 
 #pragma mark - IPGate delegate
@@ -120,6 +119,12 @@
 }
 
 #pragma mark - TableView delegate and dataSource setup
+- (void)reloadAll {
+    self.arrayCourses = nil;
+    self.arrayNotices = nil;
+    self.noticeCenterHelper = nil;
+    [self.tableView reloadData];
+}
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     
@@ -413,14 +418,25 @@
 {
     
 	if (0 == buttonIndex) {
-        [self.delegate logout];
+        if ([self.delegate isLoggedin]) {
+            [self.delegate logout];
+            [self reloadAll];
+        }
+        else
+            [self.delegate showWithLoginView];
 	}
 	
 }
 -(void) performActionSheet
 {
-	UIActionSheet *menu = [[ UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"登出" otherButtonTitles:nil];
-	[menu showInView:self.view];
+    NSString *title;
+    if ([self.delegate isLoggedin]) {
+        title = @"登出";
+    }
+    else
+        title = @"登录";
+    UIActionSheet *menu = [[ UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:title otherButtonTitles:nil];
+    [menu showInView:self.view];
 }
 
 

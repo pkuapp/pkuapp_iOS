@@ -52,5 +52,6 @@
 - (IBAction)navToCoursesView;
 - (void)performFetch;
 - (void)navToCourseDetail:(Course *)course;
+- (void)reloadAll;
 @end
 
