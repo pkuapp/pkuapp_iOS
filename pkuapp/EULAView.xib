@@ -41,7 +41,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                                 <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="25" maxX="0.0" maxY="-25"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="29" maxX="0.0" maxY="-29"/>
                                 <connections>
                                     <outlet property="dataSource" destination="80" id="86"/>
                                     <outlet property="delegate" destination="80" id="87"/>
