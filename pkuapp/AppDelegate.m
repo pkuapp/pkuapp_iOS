@@ -354,7 +354,7 @@
 
 - (void)showWithLoginView {
     FirstViewController *fv = [[FirstViewController alloc] initWithNibName:@"FirstView" bundle:nil];
-    //[self.navigationBar pushNavigationItem:[[UINavigationItem alloc] initWithTitle:@"登录"] animated:YES];
+    
     //    [self.navigationController pushViewController:fv animated:YES];
     [self.mvc presentModalViewController:fv animated:YES];
 }
