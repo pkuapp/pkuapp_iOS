@@ -355,7 +355,9 @@
     [super didReceiveMemoryWarning];
 }
 
-
+- (void)didSelectCancelBtn {
+    [self.delegate.mvc dismissModalViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad
 {
@@ -364,6 +366,7 @@
     self.title = @"登录";
     self.tableView.allowsSelection = NO;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectNeXTBtn)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(didSelectCancelBtn)];
     self.navigationController.navigationBar.tintColor = navBarBgColor;
     self.didInputUsername = NO;
     self.tableView.backgroundColor = tableBgColor;

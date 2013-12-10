@@ -356,7 +356,8 @@
     FirstViewController *fv = [[FirstViewController alloc] initWithNibName:@"FirstView" bundle:nil];
     
     //    [self.navigationController pushViewController:fv animated:YES];
-    [self.mvc presentModalViewController:fv animated:YES];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:fv];
+    [self.mvc presentModalViewController:nav animated:YES];
 }
 - (void)showWelcomeView {
     [self.mvc presentModalViewController:self.wvc animated:YES];    
