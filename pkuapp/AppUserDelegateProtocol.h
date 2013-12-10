@@ -13,7 +13,9 @@
 @property(nonatomic, weak, readonly) AppUser *appUser;
 - (BOOL)authUserForAppWithUsername:(NSString *)username password:(NSString *)password deanCode:(NSString *)deanCode sessionid:(NSString *)sid error:(NSString *)stringError;
 - (BOOL)refreshAppSession;
+- (BOOL)isLoggedin;
 - (void)updateAppUserProfile;
 - (void)updateServerCourses;
 - (void)logout;
+- (void)showWithLoginView;
 @end

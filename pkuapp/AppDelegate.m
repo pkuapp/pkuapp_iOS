@@ -38,6 +38,7 @@
 @implementation iOSOneAppDelegate
 
 @synthesize window = _window;
+@synthesize mv;
 @synthesize operationQueue;
 @synthesize wifiTester,internetTester,globalTester,freeTester,localTester;
 @synthesize netStatus;
@@ -111,6 +112,7 @@
 {
     self.progressHub = nil;
 }
+
 - (AppUser *)appUser
 {
     if (nil == _appUser) {
@@ -119,6 +121,10 @@
         _appUser = [array lastObject];
     }
     return _appUser;
+}
+
+- (BOOL)isLoggedin {
+    return (self.appUser != nil);
 }
 
 -(void)logout
@@ -134,9 +140,7 @@
 
     self.appUser = nil;
     [AppUser releaseSharedUser];
-    self.wvc = nil;
-    [self showWithLoginView];
-    
+    self.wvc = nil;    
 }
 
 
@@ -347,7 +351,14 @@
 }
 
 #pragma mark - ShowView
+
 - (void)showWithLoginView {
+    FirstViewController *fv = [[FirstViewController alloc] initWithNibName:@"FirstView" bundle:nil];
+    //[self.navigationBar pushNavigationItem:[[UINavigationItem alloc] initWithTitle:@"登录"] animated:YES];
+    //    [self.navigationController pushViewController:fv animated:YES];
+    [self.mvc presentModalViewController:fv animated:YES];
+}
+- (void)showWelcomeView {
     [self.mvc presentModalViewController:self.wvc animated:YES];    
 }
 
@@ -364,6 +375,7 @@
 }
 
 - (void)didLogin {
+    [self.mv reloadAll];
     EKEventStore *store = [[EKEventStore alloc] init];
     if([store respondsToSelector:@selector(requestAccessToEntityType:completion:)]) {
         [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
@@ -385,7 +397,7 @@
     return _wvc;
 }
 
-- (UIViewController *)mv{
+- (MainViewController *)mv{
     if (mv == nil) {
         mv = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
     }
@@ -569,7 +581,7 @@
 	if ([userDefaults boolForKey:@"didLogin"]){
         
         if ([userDefaults integerForKey:@"VersionReLogin"] > VersionReLogin) {
-            [self showWithLoginView];
+            [self showWelcomeView];
             NSLog(@"didiLogin");
         }
         else{
@@ -585,7 +597,7 @@
         
 	}
     else {
-        [self showWithLoginView];
+        [self showWelcomeView];
     }
     
 

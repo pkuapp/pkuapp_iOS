@@ -25,9 +25,8 @@
 
     UINavigationController *mvc;
 
-    UIViewController *mv;
 }
-@property (nonatomic, strong, readonly) UIViewController *mv;
+@property (nonatomic, strong, readonly) MainViewController *mv;
 @property (nonatomic, strong) IBOutlet UIWindow *window;
 @property (nonatomic, strong, readonly) NSOperationQueue *operationQueue;
 @property (nonatomic, strong, readonly) UINavigationController *mvc;
