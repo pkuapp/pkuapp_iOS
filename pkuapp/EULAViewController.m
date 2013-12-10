@@ -9,6 +9,7 @@
 #import "EULAViewController.h"
 #import "FirstViewController.h"
 #import "Environment.h"
+#import "AppDelegate.h"
 
 @implementation EULAViewController
 @synthesize secondNavController;
@@ -18,9 +19,12 @@
 @synthesize tableView;
 @synthesize navdelegate;
 - (IBAction)didSelectAgreeBtn:(id)sender{
-    FirstViewController *fv = [[FirstViewController alloc] initWithNibName:@"FirstView" bundle:nil];
+//    FirstViewController *fv = [[FirstViewController alloc] initWithNibName:@"FirstView" bundle:nil];
     //[self.navigationBar pushNavigationItem:[[UINavigationItem alloc] initWithTitle:@"登录"] animated:YES];
-    [self.navigationController pushViewController:fv animated:YES];
+//    [self.navigationController pushViewController:fv animated:YES];
+    iOSOneAppDelegate *app_delegate= (iOSOneAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [app_delegate.mvc dismissModalViewControllerAnimated:YES];
+
 }
 
 - (IBAction)didSelectDisagreeBtn:(id)sender {
